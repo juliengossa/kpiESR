@@ -240,23 +240,47 @@ kpiesr_plot_tdb <- function(rentrée, uai,
 #' @param kpis
 #' @param labels
 #'
+#'
 #' @return
 #' @export
 #'
 #' @examples
-kpiesr_classement <- function(rentrée, type, kpis, labels) {
+kpiesr_classement <- function(rentrée, type, kpis, labels=NA, historique=c()) {
 
-  esr.pnl %>%
+  classement <- esr.pnl %>%
     ungroup() %>%
     filter(Rentrée == rentrée, Type == type, kpi %in% kpis) %>%
     select(Libellé, kpi, value_label, norm_label, rang) %>%
     mutate(kpi = factor(kpi,levels=kpis)) %>% arrange(kpi,rang) %>%
     pivot_wider(names_from = kpi, values_from = c(value_label,norm_label,rang)) %>%
-    select(2*length(kpis)+2, length(kpis)+2, 0:length(kpis)+1) %>%
-    setNames(c("Rang","Ecart", "Libellé", labels))
+    merge(
+      esr.pnl %>%
+        ungroup() %>%
+        filter(Rentrée %in% historique, Type == type, kpi %in% kpis[1]) %>%
+        select(Libellé, Rentrée, value_label) %>%
+        pivot_wider(names_from = Rentrée, values_from = value_label)
+    ) %>%
+    select(paste0("rang_",kpis[1]), paste0("norm_label_",kpis[1]),
+           Libellé,
+           paste0("value_label_",kpis),
+           as.character(historique)
+           ) %>%
+    arrange(!!sym(paste0("rang_",kpis[1])))
+
+  if(!is.na(labels))
+    classement <- setNames(classement, c("Rang","Ecart", "Libellé", labels, as.character(historique)))
+
+  return(classement)
 }
 
 # kpiesr_classement(rentrée, "Université",
 #                  c("kpi.K.resPetu", "kpi.FIN.P.ressources", "kpi.ETU.S.cycle.1.L", "kpi.ETU.S.cycle.2.M"),
-#                  c("Ressources par   \nétudiant","Ressources","Effectif L","Effectif M"))
-
+#                  c("Ressources par étudiant","Ressources","Effectif L","Effectif M"),
+#                  seq(2012,2016))
+#
+# kpiesr_classement(rentrée, "Université",
+#                   c("kpi.K.proPres",
+#                     "kpi.FIN.P.ressources",
+#                     "kpi.FIN.S.ressourcesPropres"),
+#                   c("Taux","Res.","Res. Propres"),
+#                   seq(2012,2016))

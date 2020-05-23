@@ -41,17 +41,20 @@ kpiesr_plot_evol <- function(rentrées, uais, lfc, ilfc, type=NA,
   ylim[2] <- max(ylim[2],max(df.uai$value))
 
   p <- ggplot(df.evol, aes(x=as.factor(Rentrée), y=value)) +
-    geom_hline(yintercept = value.median) +
-    geom_boxplot(aes(fill=kpi), fill=lfc$colors[ilfc+1], alpha=style$bp_alpha)  +
+    #geom_hline(yintercept = value.median) +
+    geom_boxplot(aes(fill=kpi), fill=lfc$colors[ilfc+1],
+                 color=style$bp_color,
+                 alpha=style$bp_alpha, width=style$bp_width)  +
     geom_line(data = df.uai,
               aes(group = Libellé, colour = Libellé),
               size=style$line_size,
+              lineend = 'round', linejoin = 'mitre',
               arrow = arrow(length=unit(0.30,"cm"),type="closed",angle=30)) +
-    geom_point(data = df.uai,
-              aes(group = Libellé, colour = Libellé,
-                  text = paste0(lfc$desc[ilfc],"\nValeur : ",value_label," ; ",y_labels(value),
-                                "\nClassement : ", rang)),
-              size=style$line_size+2) +
+    # geom_point(data = df.uai,
+    #           aes(group = Libellé, colour = Libellé,
+    #               text = paste0(lfc$desc[ilfc],"\nValeur : ",value_label," ; ",y_labels(value),
+    #                             "\nClassement : ", rang)),
+    #           size=style$line_size+2) +
     scale_x_discrete(limits = as.character(rentrées)) +
     scale_y_continuous(labels = y_labels) +
     scale_color_manual(values = lfc$colors) +
@@ -61,7 +64,8 @@ kpiesr_plot_evol <- function(rentrées, uais, lfc, ilfc, type=NA,
     kpiesr_theme +
     theme(axis.text.x = element_text(angle=90), ) +
     { if(style$y_scale == FALSE) theme(strip.text = element_blank(), axis.text.y = element_blank(), panel.grid = element_blank()) } +
-    { if(style$x_scale == FALSE) theme(axis.text.x = element_blank()) }
+    { if(style$x_scale == FALSE) theme(axis.text.x = element_blank()) } +
+    { if(style$grid == FALSE) theme(panel.grid.major.y = element_blank()) }
 
   return(p)
 }

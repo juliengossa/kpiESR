@@ -66,7 +66,6 @@ kpiesr_plot_norm <- function(rentrée, uai, lfc,
   if(type == "Grand établissement" && lfc$factor[1] == "kpi.ADM.P.formations")
     return(kpiesr_plot_missingdata)
 
-
   if(omit.first) {
     lfc$factors <- lfc$factors[-1]
     lfc$labels  <- lfc$labels[-1]
@@ -110,17 +109,24 @@ kpiesr_plot_norm <- function(rentrée, uai, lfc,
       mutate_at(c("mean","max","min"),list(~ value_labels(kpi,.)))
 
 
-  p <- ggplot(df, aes(x=kpi,y=y)) +
-    geom_violin(aes(fill=kpi, text = kpiesr_kpi_stats(df.stats,kpi)),
-                color="black", width=style$bp_width) +
+  p <- ggplot(df, aes(x=kpi,y=y))
+
+  if (style$bp_style == "violin")
+    p <- p + geom_violin(aes(fill=kpi, text = kpiesr_kpi_stats(df.stats,kpi)),
+                    color="black", width=style$bp_width)
+  else
+    p <- p + geom_beeswarm(aes(color=kpi))
+
+  p <- p +
     geom_point(data = df.etab,
                aes(text = paste0(ifelse(omit.first, "Pourcentage de : ",""),
                                  lfc$desc,
                                  "\nEcart à la moyenne : ",percent_format(y),
                                  "\nClassement : ",rang,"/", df.stats[df.stats$kpi==kpi,]$count)),
-               size=style$point_size, fill=lfc$colors[1], color="black", shape=21, alpha=0.9) +
+               size=style$point_size, fill=lfc$colors[1],
+               color="black", shape=21, alpha=style$point_alpha) +
     geom_line(data = df.etab, aes(group=UAI),
-              color=lfc$colors[1], size=style$line_size, alpha=0.9) +
+              color=lfc$colors[1], size=style$line_size, alpha=style$point_alpha) +
     geom_text(data = df.etab, aes(label=norm_label, text=""),
               color="white",       size=style$text_size, fontface="bold") +
     { if(!style$plotly)
@@ -132,6 +138,7 @@ kpiesr_plot_norm <- function(rentrée, uai, lfc,
     scale_x_discrete(labels=lfc$labels, position = style$x_scale_pos) +
     scale_y_continuous(labels = percent_format) +
     scale_fill_manual(values=lfc$colors[-1]) +
+    scale_color_manual(values=lfc$colors[-1]) +
     guides(color=FALSE, fill=FALSE) +
     kpiesr_theme +
     { if(style$x_scale == FALSE) theme(axis.text.x = element_blank()) }

@@ -19,4 +19,5 @@ Imports:
     cowplot,
     ggplot2,
     gridExtra,
-    grid
+    grid,
+    ggbeeswarm

@@ -26,11 +26,11 @@ number_format <- function(x) {
 value_labels <- function(kpi, value) {
   case_when(
     grepl("kpi.FIN", kpi)   ~ euro_M(value),
-    kpi == "kpi.K.proPres"  ~ scales::percent(value),
+    kpi == "kpi.K.proPres"  ~ scales::percent(value, accuracy = 1),
     kpi == "kpi.K.resPetu"  ~ euro_k(value),
-    kpi == "kpi.K.selPfor"  ~ scales::percent(value),
+    kpi == "kpi.K.selPfor"  ~ scales::percent(value, accuracy = 1),
     kpi == "kpi.K.titPetu"  ~ format(round(value,1), trim=TRUE),
-    kpi == "kpi.K.titPens"  ~ scales::percent(value),
+    kpi == "kpi.K.titPens"  ~ scales::percent(value, accuracy = 1),
     grepl("kpi.", kpi)      ~ number_format(value)
   )
 }

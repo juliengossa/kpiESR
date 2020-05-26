@@ -1,6 +1,62 @@
-
 # https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-principaux-etablissements-enseignement-superieur/information/?disjunctive.type_d_etablissement
-# Version de décembre 2019
+# Commentaires :
+# - établissement.expérimental seulement pour Université de Paris (avec une type unique aussi)
+# - donner l'année plutôt que "oui" dans "universités.fusionnées"
+
+# Version courante  / 15 avril 2020
+# [1] "uai...identifiant"          "Libellé"                    "sigle"                      "type.d.établissement"
+# [5] "Secteur.d.établissement"    "Établissements.d.enseignement.supérieur.accrédités.à.délivrer.le.doctorat"
+# [7] "localisation"               "Site.internet"
+# [9] "Géolocalisation"            "siret"                      "siren"                      "Identifiant.wikidata"
+# [13] "Elément.wikidata"           "Identifiant.ETER"           "Identifiant.ROR"            "Elément.ROR"
+# [17] "Identifiant.GRID"           "Elément.GRID"               "Identifiant.OrgRef"         "Identifiant.ISNI"
+# [21] "Elément.ISNI"               "Identifiant.Funding.Data"   "Elément.Funding.Data"       "rattachement_identifiants"
+# [25] "rattachement"               "dernier_decret_legifrance"  "Code.commune"               "Commune"
+# [29] "Code.unité.urbaine"         "Unité.urbaine"              "Code.département"           "Département"
+# [33] "Code.académie"              "Académie"                   "Code.région"                "Région"
+# [37] "Ancien.code.région"         "Ancienne.région"            "Mention.distribution"       "Adresse"
+# [41] "Lieu.dit"                   "Boite.postale"              "Code.postal"                "Localité"
+# [45] "Pays"                       "Numéro.de.téléphone"        "qualification_court"        "Qualification"
+# [49] "compte_facebook"            "compte_twitter"             "compte_instagram"           "compte_flickr"
+# [53] "compte_pinterest"           "flux_rss"                   "compte_linkedin"            "compte_viadeo"
+# [57] "compte_france_culture"      "compte_scribd"              "compte_scoopit"             "compte_tumblr"
+# [61] "compte_youtube"             "compte_vimeo"               "compte_dailymotion"         "compte_googleplus"
+# [65] "implantations"              "mooc"                       "Page.Wikipédia.en.français" "Page.Wikipédia.en.anglais"
+# [69] "English.name"               "Site.internet.en.anglais"   "Site.internet.en.chinois"   "Site.internet.en.espagnol"
+# [73] "Site.internet.en.allemand"  "Site.internet.en.italien"   "Identifiant.interne"        "Anciens.codes.uai"
+# [77] "Identifiant.dataESR"        "article"                    "universités.fusionnées"     "Vague.contractuelle"
+
+
+kpiesr_read.etab <- function() {
+
+  curif <- read.table("dataESR/curif.csv",
+                      header=TRUE, sep=';', quote='"', comment.char = "")
+
+  etab <- read.table("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.csv",
+                     header=TRUE, sep=';', quote='"', comment.char = "")  %>%
+    transmute(
+      # UAI = recode(uai,
+      #              '0912408Y' = "0912330N"), #Paris-Sud/Paris Saclay),
+      UAI = uai...identifiant,
+      Libellé = Libellé,
+      Sigle = sigle,
+      Type = fct_rev(type.d.établissement),
+      Type.détaillé = type.d.établissement,
+      Académie = Académie,
+      Rattachement = rattachement,
+      Fusion = (universités.fusionnées == "Oui"),
+      Curif = UAI %in% curif$UAI,
+      url.siteweb = Site.internet,
+      url.wikidata = Elément.wikidata,
+      url.legifrance = dernier_decret_legifrance,
+      twitter = compte_twitter
+    ) %>%
+    filter(!is.na(UAI),!UAI=="")
+}
+
+
+
+# version 2019v1 / 20 décembre 2019
 # [1] "uai"                        "uo_lib"                     "sigle"
 # [4] "type_d_etablissement"       "url"                        "coordonnees"
 # [7] "element_wikidata"           "rattachement_identifiants"  "rattachement"
@@ -12,20 +68,13 @@
 # [25] "code_postal_uai"            "localite_acheminement_uai"  "pays_etranger_acheminement"
 # [28] "numero_telephone_uai"
 
-# Commentaires :
-# - établissement.expérimental seulement pour Université de Paris (avec une type unique aussi)
-# - donner l'année plutôt que "oui" dans "universités.fusionnées"
-
 # types.établissement <- read.table("types-établissement.csv",
 #                                header=TRUE, sep=';', quote='"')
 # types.établissement <- setNames(as.character(types.établissement$Type),types.établissement$Type.détaillé)
 
-
-
-kpiesr_read.etab <- function() {
-
+kpiesr_read.etab.2019v1 <- function() {
   curif <- read.table("dataESR/curif.csv",
-                     header=TRUE, sep=';', quote='"', comment.char = "")
+                      header=TRUE, sep=';', quote='"', comment.char = "")
 
   etab <- read.table("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.csv",
                      header=TRUE, sep=';', quote='"', comment.char = "")  %>%
@@ -57,11 +106,10 @@ kpiesr_read.etab <- function() {
       Type.détaillé = type_d_etablissement,
       Académie = aca_nom,
       Rattachement = rattachement,
-      Curif = UAI %in% curif$UAI,
       url.siteweb = url,
       url.wikidata = element_wikidata,
-      url.legifrance = dernier_decret_legifrance
+      url.legifrance = dernier_decret_legifrance,
+      Curif = UAI %in% curif$UAI
     ) %>%
     filter(!is.na(UAI),!UAI=="")
 }
-

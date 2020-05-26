@@ -85,8 +85,21 @@ kpiesr_ETL_and_save <- function() {
     full_join(etu) %>%
     full_join(adm) %>%
     full_join(etab) %>%
-    filter(!is.na(Rentrée)) %>%
+    filter(!is.na(Rentrée))
+
+  warning(paste0(
+    esr %>% filter(is.na(Libellé)) %>% select(UAI) %>% unique() %>% nrow(),
+    " UAIs n'ont pas de libellé (absence du jeu de données des établissements)"))
+
+  esr <- esr %>%
+    filter(!is.na(Libellé)) %>%
     kpiesr_add_kpis()
+
+  message("Nombre d'établissements :",
+    paste0(capture.output(esr %>%
+      filter(Rentrée == max(Rentrée)) %>%
+      group_by(Rentrée, Type) %>%
+      summarise(compte = n())), collapse = "\n"))
 
   write.csv2(esr,"tdbesr.csv",row.names = FALSE)
 

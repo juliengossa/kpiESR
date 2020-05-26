@@ -15,9 +15,12 @@ LazyData: true
 Imports: 
     tidyr,
     dplyr,
+    ggplot2,
+    forcats,
     ggthemes,
     cowplot,
-    ggplot2,
     gridExtra,
     grid,
     ggbeeswarm
+Depends: 
+    R (>= 2.10)

@@ -39,7 +39,7 @@ norm_labels <- function(kpi, norm) {
   case_when(
     grepl("kpi.....P", kpi)   ~ percent_format(norm),
     grepl("kpi.K", kpi)       ~ percent_format(norm),
-    TRUE                      ~ scales::percent(norm) )
+    TRUE                      ~ scales::percent(norm, accuracy = 1) )
 }
 
 

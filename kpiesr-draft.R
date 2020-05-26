@@ -6,9 +6,9 @@ library(plotly)
 library(ggthemes)
 library(gganimate)
 
-kpiesr_plot_tdb(2017,"0673021V", style.kpi = kpiesr_style())
+kpiesr_plot_tdb(2018,"0673021V", style.kpi = kpiesr_style())
 
-rentrée <- 2017
+rentrée <- 2018
 type <- "Université"
 uai.unistra <- "0673021V"
 uai.uha <- "0681166Y"

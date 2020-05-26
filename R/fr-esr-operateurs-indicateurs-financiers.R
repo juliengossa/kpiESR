@@ -38,11 +38,11 @@ kpiesr_read.fin <- function() {
     filter(!is.na(kpi.FIN.P.ressources),
            !is.na(kpi.FIN.S.masseSalariale),
            !is.na(kpi.FIN.S.ressourcesPropres)) %>%
-    arrange(UAI,Rentrée) %>%
+    arrange(UAI,Rentrée)
     # Enlever les données suspectes
-    filter(
-      !(UAI == "0781944P" & Rentrée == 2012)
-    )
+    # filter(
+    #   !(UAI == "0781944P" & Rentrée == 2012)
+    # )
 
   return(fin)
 }

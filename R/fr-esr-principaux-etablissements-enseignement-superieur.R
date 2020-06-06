@@ -27,20 +27,18 @@
 # [77] "Identifiant.dataESR"        "article"                    "universités.fusionnées"     "Vague.contractuelle"
 
 
-kpiesr_read.etab <- function() {
+kpiesr_read.etab.2020v1 <- function() {
 
   curif <- read.table("dataESR/curif.csv",
                       header=TRUE, sep=';', quote='"', comment.char = "")
 
   etab <- read.table("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.csv",
-                     header=TRUE, sep=';', quote='"', comment.char = "")  %>%
+                     header=TRUE, sep=';', quote='"', comment.char = "") %>%
     transmute(
-      # UAI = recode(uai,
-      #              '0912408Y' = "0912330N"), #Paris-Sud/Paris Saclay),
       UAI = uai...identifiant,
       Libellé = Libellé,
       Sigle = sigle,
-      Type = fct_rev(type.d.établissement),
+      Type = type.d.établissement,
       Type.détaillé = type.d.établissement,
       Académie = Académie,
       Rattachement = rattachement,
@@ -76,11 +74,10 @@ kpiesr_read.etab.2019v1 <- function() {
   curif <- read.table("dataESR/curif.csv",
                       header=TRUE, sep=';', quote='"', comment.char = "")
 
-  etab <- read.table("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.csv",
+  etab <- read.table("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.2019v1.csv",
                      header=TRUE, sep=';', quote='"', comment.char = "")  %>%
     transmute(
-      UAI = recode(uai,
-                   '0912408Y' = "0912330N"), #Paris-Sud/Paris Saclay),
+      UAI = uai,
       Libellé = uo_lib,
       Sigle = sigle,
       #Type = types.établissement[type.d.établissement],
@@ -94,15 +91,10 @@ kpiesr_read.etab.2019v1 <- function() {
                                     "Établissement public expérimental",
                                     "Établissement public expérimental;Université") ~
           "Université",
-        Libellé %in% c(
-          # "École des hautes études en sciences sociales",
-          # "Université Paris-Dauphine",
-          "Université de Lorraine") ~
-          "Université",
         type_d_etablissement %in% c("Grand établissement") ~
           "Grand établissement",
-        TRUE ~ "Autre"),
-      Type = as.factor(Type),
+        TRUE ~ "Autre établissement"),
+      Type = Type,
       Type.détaillé = type_d_etablissement,
       Académie = aca_nom,
       Rattachement = rattachement,
@@ -113,3 +105,28 @@ kpiesr_read.etab.2019v1 <- function() {
     ) %>%
     filter(!is.na(UAI),!UAI=="")
 }
+
+kpiesr_read.etab <- function() {
+  etab.20 <<- kpiesr_read.etab.2020v1()
+  etab.19 <<- kpiesr_read.etab.2019v1()
+
+  etab <- bind_rows(
+    etab.20,
+    etab.19[!etab.19$UAI %in% etab.20$UAI,]
+  ) %>% mutate(
+      Type = factor(Type, levels = c("Université",
+                                     "Grand établissement",
+                                     "École",
+                                     "Regroupement",
+                                     "Autre établissement"))
+    )
+
+
+  etab[etab$Libellé == "Université de Lorraine",]$Type <- "Université"
+  etab[etab$Libellé == "Université de Lorraine",]$Type.détaillé <- "Grand établissement"
+
+  return(etab)
+}
+# UAI = recode(uai,
+#              '0912408Y' = "0912330N"), #Paris-Sud/Paris Saclay),
+#

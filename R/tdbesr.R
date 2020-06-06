@@ -1,9 +1,4 @@
 
-
-# source("tdbesr-style.R",local = TRUE)
-# source("tdbesr-plots-etab.R",local = TRUE)
-# source("tdbesr-plots-evol.R",local = TRUE)
-
 select_kpis <- function(pattern){
   grep(pattern, levels(esr.pnl$kpi),value=TRUE)
 }
@@ -63,6 +58,24 @@ kpiesr_get_uaisnamedlist <- function(esr) {
   return(uais)
 }
 
+kpiesr_data_infos <- function(df,name="Anon") {
+  if(! "Rentrée" %in% colnames(df)) df$Rentrée <- NA
+  if(! "Type" %in% colnames(df)) df$Type <- NA
+
+  message("Informations sur ",name)
+  message("Période des données : ",range(levels(df$Rentrée)))
+  message("Nombre d'établissements :",
+          paste0(capture.output(
+            df %>%
+              group_by(Rentrée, Type) %>%
+              summarise(compte = n()) %>%
+              arrange(desc(Rentrée))
+            ), collapse = "\n")
+          )
+}
+
+
+
 kpiesr_ETL_and_save <- function() {
   # source("fr-esr-principaux-etablissements-enseignement-superieur.R",local = TRUE)
   # source("fr-esr-operateurs-indicateurs-financiers.R",local = TRUE)
@@ -71,14 +84,15 @@ kpiesr_ETL_and_save <- function() {
   # source("fr-esr-parcoursup.R",local = TRUE)
 
   etab <- kpiesr_read.etab()
+  kpiesr_data_infos(etab,"etab")
   fin <- kpiesr_read.fin()
-  message("Période des données FIN : ",min(levels(fin$Rentrée)),"-",max(levels(fin$Rentrée)))
+  kpiesr_data_infos(fin,"FIN")
   ens <- kpiesr_read.ens()
-  message("Période des données ENS : ",min(levels(ens$Rentrée)),"-",max(levels(ens$Rentrée)))
+  kpiesr_data_infos(ens,"ENS")
   etu <- kpiesr_read.etu()
-  message("Période des données ETU : ",min(levels(etu$Rentrée)),"-",max(levels(etu$Rentrée)))
+  kpiesr_data_infos(etu,"ETU")
   adm <- kpiesr_read.adm()
-  message("Période des données ADM : ",min(levels(adm$Rentrée)),"-",max(levels(adm$Rentrée)))
+  kpiesr_data_infos(adm,"ADM")
 
   esr <- fin %>%
     full_join(ens) %>%
@@ -91,15 +105,20 @@ kpiesr_ETL_and_save <- function() {
     esr %>% filter(is.na(Libellé)) %>% select(UAI) %>% unique() %>% nrow(),
     " UAIs n'ont pas de libellé (absence du jeu de données des établissements)"))
 
+  kpiesr_missingunivs <<- etab %>%
+    filter(Type == "Université", ! UAI %in% esr[Type == "Université",]$UAI) %>%
+    select(UAI,Libellé)
+
+  warning("Universités manquantes dans le jeu de données final :\n",
+          capture.output(kpiesr_missingunivs), collapse = "\n")
+
+
   esr <- esr %>%
     filter(!is.na(Libellé)) %>%
     kpiesr_add_kpis()
 
-  message("Nombre d'établissements :",
-    paste0(capture.output(esr %>%
-      filter(Rentrée == max(Rentrée)) %>%
-      group_by(Rentrée, Type) %>%
-      summarise(compte = n())), collapse = "\n"))
+  kpiesr_data_infos(esr,"ESR")
+
 
   write.csv2(esr,"tdbesr.csv",row.names = FALSE)
 

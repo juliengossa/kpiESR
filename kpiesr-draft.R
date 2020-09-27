@@ -8,6 +8,8 @@ library(gganimate)
 
 kpiesr_plot_tdb(2018,"0673021V", style.kpi = kpiesr_style())
 
+kpiesr_plot_tdb(2018,"0755700N", style.kpi = kpiesr_style())
+
 rentrée <- 2018
 type <- "Université"
 uai.unistra <- "0673021V"
@@ -159,4 +161,60 @@ kpiESR::esr.pnl %>% filter(Type=="Université", Rentrée >= 2012, Rentrée <= 20
 
 
 
+esr.pnl %>%
+  filter(kpi %in% c("kpi.ENS.S.LRU")) %>%
+  filter(Rentrée > 2011) %>%
+  group_by(Rentrée,kpi) %>%
+  summarise(value = sum(value, na.rm = TRUE)) %>%
+  ggplot(aes(x=Rentrée,y=value,color=kpi,group=kpi)) + geom_line() +
+  theme_excel_new()
 
+esr %>%
+  filter(Type == "Université", Rentrée > 2011) %>%
+  group_by(Rentrée) %>%
+  summarise(
+    ens = sum(kpi.ENS.S.titulaires, na.rm = TRUE),
+    etu = sum(kpi.ETU.S.cycle.1.L + kpi.ETU.S.cycle.2.M)
+  ) %>%
+  mutate(
+    taux.encadrement = ens/etu,
+    ens.const = etu * first(taux.encadrement),
+    ens.miss = ens.const - ens,
+    ens.evol = ens/first(ens),
+    etu.evol = etu/first(etu)) -> df
+
+
+df %>%
+  select(Rentrée, ens.evol, etu.evol) %>%
+  pivot_longer(-Rentrée) %>%
+  ggplot(aes(x=Rentrée, y=value, colour=name, group=name)) + geom_line(size=2) +
+    scale_y_continuous(labels = scales::percent) +
+    scale_color_discrete(labels=c("enseignants","étudiants"), name="") +
+    ylab("évolution") + ggtitle("Evolution des effectifs enseignants et étudiants\ndans les universités en valeur 2012") +
+    theme_hc()
+
+df %>%
+  ggplot(aes(x=Rentrée,y=ens.miss)) + geom_col()
+
+
+library(ggfortify)
+
+esr %>%
+  filter(Rentrée == 2018) %>%
+  select(starts_with("kpi.k")) %>%
+  select(-kpi.K.selPfor) %>%
+  na.omit() %>%
+  PCA(scale.unit = TRUE, ncp = 5, graph = TRUE)
+
+    #mutate_all(function(x) scales::rescale(x, to = c(-1,1) ) ) %>%
+#PCA(scale.unit = TRUE, ncp = 5, graph = TRUE)
+  prcomp(scale. = TRUE) -> mypca
+
+
+df <- as.data.frame(mypca$rotation)
+df$var <- row.names(df)
+
+df %>%
+  ggplot(aes(x = PC1, y = PC2, label = var)) + geom_point() + geom_text() +
+  geom_segment(xend=0, yend=0) +
+  xlim(-1,1) + ylim(-1,1)

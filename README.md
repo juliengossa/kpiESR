@@ -1,6 +1,5 @@
 kpiESR : les indicateurs clés de performance des établissements
 l’enseignement supérieur et de la recherche
-================
 
 Cette librairie est une exploitation des données ouvertes \#DataESR :
 <https://data.enseignementsup-recherche.gouv.fr>
@@ -64,3 +63,4 @@ colnames(kpiESR::esr.pnl)
     ##  [1] "Type"        "Rentrée"     "UAI"         "Libellé"     "Curif"      
     ##  [6] "kpi"         "value"       "norm"        "value_label" "norm_label" 
     ## [11] "rang"
+

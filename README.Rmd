@@ -1,0 +1,39 @@
+---
+title: "kpiESR : les indicateurs clés de performance des établissements l'enseignement supérieur et de la recherche "
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Cette librairie est une exploitation des données ouvertes #DataESR : https://data.enseignementsup-recherche.gouv.fr
+
+Elle assemble plusieurs jeux de données, et calcule ensuite plusieurs indicateurs clés de performance. Jeux, données et indicateurs sont présentés dans les [tableaux de bord des établissemebts de l'ESR](https://github.com/cpesr/tdbESR-rapport).
+
+## Jeu de données assemblées
+
+Un exemplaire du dernier assemblage est disponible en [format csv](dataESR/tdbesr.csv).
+
+_Attention : ces données peuvent être en retard par rapport aux données publiées sur #DataESR_
+
+
+## Installation du packet R
+
+L'installation du packet nécessite `devtools`.
+
+```{r install, eval = FALSE}
+devtools::install_github("cpesr/kpiESR")
+```
+
+Ensuite, un jeu de donnée est disponible :
+
+```{r esr, warning=FALSE}
+colnames(kpiESR::esr)
+```
+
+En plus du jeu de données `esr`, un autre jeu de donnée "long" est disponible, ajoutant des valeurs normalisées :
+
+```{r esr.pnl}
+colnames(kpiESR::esr.pnl)
+```

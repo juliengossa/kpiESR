@@ -40,8 +40,8 @@ kpiesr_add_kpis <- function (df) {
     kpi.K.proPres = kpi.FIN.S.ressourcesPropres / kpi.FIN.P.ressources ,
     kpi.K.resPetu = kpi.FIN.P.ressources / (kpi.ETU.S.cycle.1.L+kpi.ETU.S.cycle.2.M),
     kpi.K.selPfor = kpi.ADM.S.sélective / kpi.ADM.P.formations,
-    kpi.K.titPetu = kpi.ENS.S.titulaires / kpi.ETU.P.effectif * 100,
-    kpi.K.titPens = kpi.ENS.S.ECtitulaires / kpi.ENS.P.effectif,
+    kpi.K.titPetu = kpi.ENS.S.ECtitulaires / kpi.ETU.P.effectif * 100,
+    kpi.K.titPens = kpi.ENS.S.titulaires / kpi.ENS.P.effectif,
 
     #kpi.K.2.resPens = kpi.FIN.P.ressources / kpi.ENS.P.effectif,
     #kpi.K.4.docPec  = kpi.ETU.S.cycle.3.D / kpi.ENS.S.2.ECtitulaires,
@@ -75,6 +75,25 @@ kpiesr_data_infos <- function(df,name="Anon") {
 }
 
 
+updateUAI <- function(df) {
+  mutate(df,
+    UAI = recode(UAI,
+                 '0383546Y' = "0383493R", #UGA/UGA
+                 '0593279U' = "0597132G", #Valencienne/UPHF
+                 '0912408Y' = "0912330N" #Paris-Sud/Paris Saclay
+    ))
+}
+
+kpiesr_missing_uai_search <- function(uai) {
+  data.frame(
+    dataset = c("etab","fin","ens","etu","adm"),
+    nb = c(
+      kpiesr_read.etab() %>% filter(UAI == uai) %>% nrow(),
+      kpiesr_read.fin() %>% filter(UAI == uai) %>% nrow(),
+      kpiesr_read.ens() %>% filter(UAI == uai) %>% nrow(),
+      kpiesr_read.etu() %>% filter(UAI == uai) %>% nrow(),
+      kpiesr_read.adm() %>% filter(UAI == uai) %>% nrow()))
+}
 
 kpiesr_ETL_and_save <- function() {
   # source("fr-esr-principaux-etablissements-enseignement-superieur.R",local = TRUE)
@@ -83,15 +102,15 @@ kpiesr_ETL_and_save <- function() {
   # source("fr-esr-statistiques-sur-les-effectifs-d-etudiants-inscrits-par-etablissement.R",local = TRUE)
   # source("fr-esr-parcoursup.R",local = TRUE)
 
-  etab <- kpiesr_read.etab()
+  etab <- kpiesr_read.etab() %>% updateUAI()
   kpiesr_data_infos(etab,"etab")
-  fin <- kpiesr_read.fin()
+  fin <- kpiesr_read.fin() %>% updateUAI()
   kpiesr_data_infos(fin,"FIN")
-  ens <- kpiesr_read.ens()
+  ens <- kpiesr_read.ens() %>% updateUAI()
   kpiesr_data_infos(ens,"ENS")
-  etu <- kpiesr_read.etu()
+  etu <- kpiesr_read.etu() %>% updateUAI()
   kpiesr_data_infos(etu,"ETU")
-  adm <- kpiesr_read.adm()
+  adm <- kpiesr_read.adm() %>% updateUAI()
   kpiesr_data_infos(adm,"ADM")
 
   esr <- fin %>%
@@ -106,11 +125,11 @@ kpiesr_ETL_and_save <- function() {
     " UAIs n'ont pas de libellé (absence du jeu de données des établissements)"))
 
   kpiesr_missingunivs <<- etab %>%
-    filter(Type == "Université", ! UAI %in% esr[Type == "Université",]$UAI) %>%
+    filter(Type == "Université", ! UAI %in% esr[esr$Type == "Université",]$UAI) %>%
     select(UAI,Libellé)
 
-  warning("Universités manquantes dans le jeu de données final :\n",
-          capture.output(kpiesr_missingunivs), collapse = "\n")
+  warning("Universités manquantes dans le jeu de données final :\n")
+  warning(paste0(capture.output(kpiesr_missingunivs), collapse = "\n"))
 
 
   esr <- esr %>%
@@ -304,6 +323,8 @@ kpiesr_classement <- function(rentrée, type, kpis, labels=NA, historique=c()) {
 
   return(classement)
 }
+
+
 
 # kpiesr_classement(rentrée, "Université",
 #                  c("kpi.K.resPetu", "kpi.FIN.P.ressources", "kpi.ETU.S.cycle.1.L", "kpi.ETU.S.cycle.2.M"),

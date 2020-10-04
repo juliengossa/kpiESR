@@ -17,8 +17,13 @@ Un exemplaire du dernier assemblage est disponible en [format csv](dataESR/tdbes
 
 _Attention : ces données peuvent être en retard par rapport aux données publiées sur #DataESR_
 
+## Modifications par rapport aux jeux de données originaux
 
-## Installation du packet R
+Pour des raisons de cohérence des indicateurs, et compte tenu de la diversité des profils, les modifications suivantes ont été apportées :
+
+- le type de Université de Lorraine est considéré comme _Université_, au lieu de _Grand établissement_.
+
+## Installation du paquet R
 
 L'installation du packet nécessite `devtools`.
 

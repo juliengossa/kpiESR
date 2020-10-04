@@ -127,6 +127,4 @@ kpiesr_read.etab <- function() {
 
   return(etab)
 }
-# UAI = recode(uai,
-#              '0912408Y' = "0912330N"), #Paris-Sud/Paris Saclay),
-#
+

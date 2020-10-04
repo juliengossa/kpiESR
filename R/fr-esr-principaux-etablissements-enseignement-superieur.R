@@ -107,8 +107,8 @@ kpiesr_read.etab.2019v1 <- function() {
 }
 
 kpiesr_read.etab <- function() {
-  etab.20 <<- kpiesr_read.etab.2020v1()
-  etab.19 <<- kpiesr_read.etab.2019v1()
+  etab.20 <- kpiesr_read.etab.2020v1()
+  etab.19 <- kpiesr_read.etab.2019v1()
 
   etab <- bind_rows(
     etab.20,

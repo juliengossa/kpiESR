@@ -30,8 +30,8 @@ kpiesr_plot_evol <- function(rentrées, uais, lfc, ilfc, type=NA,
   df.uai <- filter(df.evol, UAI %in% uais)
   if(nrow(df.uai)==0) return(kpiesr_plot_missingdata)
 
-  value.median <<- median(filter(df.evol,Rentrée == rentrée.base)$value,na.rm=TRUE)
-  ecartmax <<- max(
+  value.median <- median(filter(df.evol,Rentrée == rentrée.base)$value,na.rm=TRUE)
+  ecartmax <- max(
     value.median - min(df.evol$value,na.rm = TRUE),
     max(df.evol$value,na.rm = TRUE) - value.median)
   ylim <- c(

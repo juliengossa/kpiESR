@@ -8,6 +8,8 @@ library(gganimate)
 
 kpiesr_plot_tdb(2018,"0673021V", style.kpi = kpiesr_style())
 
+kpiesr_plot_tdb(2018,"0595964M", style.kpi = kpiesr_style()) # ULCO
+
 kpiesr_plot_tdb(2018,"0755700N", style.kpi = kpiesr_style())
 
 rentrée <- 2018

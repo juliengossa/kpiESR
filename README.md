@@ -18,7 +18,15 @@ csv](dataESR/tdbesr.csv).
 *Attention : ces données peuvent être en retard par rapport aux données
 publiées sur \#DataESR*
 
-## Installation du packet R
+## Modifications par rapport aux jeux de données originaux
+
+Pour des raisons de cohérence des indicateurs, et compte tenu de la
+diversité des profils, les modifications suivantes ont été apportées :
+
+  - le type de Université de Lorraine est considéré comme *Université*,
+    au lieu de *Grand établissement*.
+
+## Installation du paquet R
 
 L’installation du packet nécessite `devtools`.
 
@@ -26,8 +34,7 @@ L’installation du packet nécessite `devtools`.
 devtools::install_github("cpesr/kpiESR")
 ```
 
-Ensuite, un jeu de donnée est disponible
-    :
+Ensuite, un jeu de donnée est disponible :
 
 ``` r
 colnames(kpiESR::esr)
@@ -54,8 +61,7 @@ colnames(kpiESR::esr)
     ## [37] "kpi.K.titPetu"                  "kpi.K.titPens"
 
 En plus du jeu de données `esr`, un autre jeu de donnée “long” est
-disponible, ajoutant des valeurs normalisées
-    :
+disponible, ajoutant des valeurs normalisées :
 
 ``` r
 colnames(kpiESR::esr.pnl)

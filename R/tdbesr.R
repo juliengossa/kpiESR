@@ -61,14 +61,14 @@ kpiesr_add_kpis <- function (df) {
 }
 
 kpiesr_get_uaisnamedlist <- function(esr) {
-  uais <- list()
+  esr.uais <- list()
   for(type in levels(esr$Type)) {
     df <- subset(esr, Type == type, c(UAI,Libellé)) %>% unique
-    df <- set_encoding_utf8(df)
-    uais[[type]] <- as.list(setNames(as.character(df$UAI),as.character(df$Libellé)))
+    esr.uais[[type]] <- as.list(setNames(as.character(df$UAI),as.character(df$Libellé)))
+    Encoding(names(esr.uais[[type]])) <- "UTF-8"
   }
-
-  return(uais)
+  Encoding(names(esr.uais)) <- "UTF-8"
+  return(esr.uais)
 }
 
 kpiesr_data_infos <- function(df,name="Anon") {
@@ -89,6 +89,7 @@ kpiesr_data_infos <- function(df,name="Anon") {
 
 
 updateUAI <- function(df) {
+  return(df)
   mutate(df,
     UAI = recode(UAI,
                  '0383546Y' = "0383493R", #UGA/UGA
@@ -115,7 +116,7 @@ kpiesr_ETL_and_save <- function() {
   # source("fr-esr-statistiques-sur-les-effectifs-d-etudiants-inscrits-par-etablissement.R",local = TRUE)
   # source("fr-esr-parcoursup.R",local = TRUE)
 
-  etab <- kpiesr_read.etab() %>% updateUAI()
+  etab <- kpiesr_read.etab()
   kpiesr_data_infos(etab,"etab")
   fin <- kpiesr_read.fin() %>% updateUAI()
   kpiesr_data_infos(fin,"FIN")
@@ -137,7 +138,7 @@ kpiesr_ETL_and_save <- function() {
     esr %>% filter(is.na(Libellé)) %>% select(UAI) %>% unique() %>% nrow(),
     " UAIs n'ont pas de libellé (absence du jeu de données des établissements)"))
 
-  kpiesr_missingunivs <<- etab %>%
+  kpiesr_missingunivs <- etab %>%
     filter(Type == "Université", ! UAI %in% esr[esr$Type == "Université",]$UAI) %>%
     select(UAI,Libellé)
 
@@ -158,7 +159,6 @@ kpiesr_ETL_and_save <- function() {
   esr.pnl <- set_encoding_utf8(esr.pnl)
 
   esr.uais <- kpiesr_get_uaisnamedlist(esr)
-  esr.uais <- set_encoding_utf8(esr.uais)
 
   #save(esr, esr.pnl, file = "tdbesr.RData")
   usethis::use_data(esr, esr.pnl, esr.uais, overwrite = TRUE)
@@ -166,8 +166,8 @@ kpiesr_ETL_and_save <- function() {
 
 kpiesr_load <- function(...) {
   load("tdbesr.RData",...)
-  esr <<- esr
-  esr.pnl <<- esr.pnl
+  esr <- esr
+  esr.pnl <- esr.pnl
 }
 
 kpiesr_fusion <- function(uais) {

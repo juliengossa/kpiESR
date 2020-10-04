@@ -1,4 +1,16 @@
 
+
+set_encoding_utf8 <- function(df) {
+  Encoding(names(df)) <- "UTF-8"
+  for (col in colnames(df)){
+    if(typeof(df[[col]]) == "character") {
+      Encoding(df[[col]]) <- "UTF-8"
+    }
+  }
+  return(df)
+}
+
+
 select_kpis <- function(pattern){
   grep(pattern, levels(esr.pnl$kpi),value=TRUE)
 }
@@ -52,6 +64,7 @@ kpiesr_get_uaisnamedlist <- function(esr) {
   uais <- list()
   for(type in levels(esr$Type)) {
     df <- subset(esr, Type == type, c(UAI,Libellé)) %>% unique
+    df <- set_encoding_utf8(df)
     uais[[type]] <- as.list(setNames(as.character(df$UAI),as.character(df$Libellé)))
   }
 
@@ -137,13 +150,15 @@ kpiesr_ETL_and_save <- function() {
     kpiesr_add_kpis()
 
   kpiesr_data_infos(esr,"ESR")
-
+  esr <- set_encoding_utf8(esr)
 
   write.csv2(esr,"tdbesr.csv",row.names = FALSE)
 
   esr.pnl <- kpiesr_pivot_norm_label()
+  esr.pnl <- set_encoding_utf8(esr.pnl)
 
   esr.uais <- kpiesr_get_uaisnamedlist(esr)
+  esr.uais <- set_encoding_utf8(esr.uais)
 
   #save(esr, esr.pnl, file = "tdbesr.RData")
   usethis::use_data(esr, esr.pnl, esr.uais, overwrite = TRUE)

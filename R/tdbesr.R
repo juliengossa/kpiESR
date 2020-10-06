@@ -15,7 +15,7 @@ select_kpis <- function(pattern){
   grep(pattern, levels(esr.pnl$kpi),value=TRUE)
 }
 
-kpiesr_pivot_norm_label <- function() {
+kpiesr_pivot_norm_label <- function(esr) {
 
   esr %>%
     group_by(Type,Rentrée) %>%
@@ -132,7 +132,8 @@ kpiesr_ETL_and_save <- function() {
     full_join(etu) %>%
     full_join(adm) %>%
     full_join(etab) %>%
-    filter(!is.na(Rentrée))
+    filter(!is.na(Rentrée)) %>%
+    mutate(Rentrée = as.factor(as.character(Rentrée)))
 
   warning(paste0(
     esr %>% filter(is.na(Libellé)) %>% select(UAI) %>% unique() %>% nrow(),
@@ -155,7 +156,7 @@ kpiesr_ETL_and_save <- function() {
 
   write.csv2(esr,"tdbesr.csv",row.names = FALSE)
 
-  esr.pnl <- kpiesr_pivot_norm_label()
+  esr.pnl <- kpiesr_pivot_norm_label(esr)
   esr.pnl <- set_encoding_utf8(esr.pnl)
 
   esr.uais <- kpiesr_get_uaisnamedlist(esr)

@@ -99,7 +99,7 @@ kpiesr_lfc <- list(
                  "Effectif étudiant inscrit en diplôme d'établissement (DU, non-national)")
   ),
   ENS = list(
-    labels   = c("Enseignants", "Titulaires","EC","Doc et ATER","LRU"),
+    labels   = c("Enseignants", "Titulaires","EC","Doc et\nATER","LRU"),
     factors  = c("kpi.ENS.P.effectif", "kpi.ENS.S.titulaires", "kpi.ENS.S.ECtitulaires", "kpi.ENS.S.DocATER", "kpi.ENS.S.LRU"),
     colors   = colblues,
     y_labels = identity,
@@ -110,7 +110,7 @@ kpiesr_lfc <- list(
                  "Effectif contrat LRU")
   ),
   FIN = list(
-    labels   = c("Ressources","Masse salariale","Ressources propres"),
+    labels   = c("Ressources","Masse\nsalariale","Ressources\npropres"),
     factors  = c("kpi.FIN.P.ressources", "kpi.FIN.S.masseSalariale", "kpi.FIN.S.ressourcesPropres"),
     colors   = coloranges,
     y_labels = euro_M,
@@ -119,7 +119,7 @@ kpiesr_lfc <- list(
                  "Ressources propres")
   ),
   FIN_N = list(
-    labels   = c("Ressources","Masse salariale","Ressources propres", "DU"),
+    labels   = c("Ressources","Masse\nsalariale","Ressources\npropres", "DU"),
     factors  = c("kpi.FIN.P.ressources","kpi.FIN.S.masseSalariale", "kpi.FIN.S.ressourcesPropres", "kpi.ETU.S.diplomeEtablissement"),
     colors   = c(coloranges[1:3], colgreens[5]),
     y_labels = euro,

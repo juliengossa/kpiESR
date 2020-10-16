@@ -17,34 +17,64 @@ select_kpis <- function(pattern){
 
 kpiesr_pivot_norm_label <- function(esr) {
 
-  esr %>%
+  kpiESR::esr %>%
     group_by(Type,Rentrée) %>%
-    select(Type,Rentrée,UAI,Libellé,Curif,starts_with("kpi.")) %>%
-    #rename_at(vars(starts_with("kpi")), list( ~ paste(.,"value",sep="_"))) %>%
+    select(Type,Rentrée,UAI,Libellé,Curif,starts_with("kpi.")) %>% 
+    #rename_at(vars(starts_with("kpi")), list( ~ paste(.,"valeur",sep="_"))) %>%
 
     mutate_at(vars(starts_with("kpi.FIN.S")), list(norm = ~ ./kpi.FIN.P.ressources)) %>%
     mutate_at(vars(starts_with("kpi.ENS.S")), list(norm = ~ ./kpi.ENS.P.effectif)) %>%
     mutate_at(vars(starts_with("kpi.ETU.S")), list(norm = ~ ./kpi.ETU.P.effectif)) %>%
     mutate_at(vars(starts_with("kpi.ADM.S")), list(norm = ~ ./kpi.ADM.P.formations)) %>%
     #mutate_at(vars(matches("kpi.*_norm")), list( ~ (./mean(.,na.rm=TRUE))-1)) %>%
-    mutate_at(vars(matches("kpi.(FIN|ENS|ETU|ADM).P")), list(norm = ~ (./mean(.,na.rm=TRUE))-1)) %>%
-    mutate_at(vars(starts_with("kpi.K")), list(norm = ~ (./mean(.,na.rm=TRUE))-1)) %>%
-    rename_at(vars(matches("kpi.[^_]*$")), list( ~paste(.,"value",sep="_"))) %>%
+    mutate_at(vars(matches("kpi.....P")), list(norm = ~ .)) %>%
+    mutate_at(vars(starts_with("kpi.K")), list(norm = ~ .)) %>%
+    rename_at(vars(matches("kpi.[^_]*$")), list( ~paste(.,"valeur",sep="_"))) %>%
     pivot_longer(
       cols = -c(Type,Rentrée,UAI,Libellé,Curif),
       names_to = c("kpi", ".value"),
       names_sep = "_"
-    ) %>%
-    #filter(!is.na(value)) %>%
+    ) %>% 
+    filter(!is.na(valeur)) %>%
     mutate(
       kpi = as.factor(kpi),
-      value_label = value_labels(kpi,value),
+      valeur_label = valeur_labels(kpi,valeur),
       norm_label = norm_labels(kpi,norm)
     ) %>%
     group_by(Rentrée, Type, kpi) %>%
-    mutate(rang = dense_rank(desc(norm))) %>%
+    mutate(
+      rang = dense_rank(desc(norm)),
+      norm_y = scales::rescale(-rang)
+      ) %>%
     ungroup()
 }
+
+#test <- kpiesr_pivot_norm_label(esr)
+
+
+kpiesr_get_stats <- function(esr.pnl) {
+  
+  p <- c(0,0.25,0.5,0.75,1)
+  p_names <- map_chr(p, ~paste0(.x*100))
+  p_funs <- map(p, ~partial(quantile, probs = .x, na.rm = TRUE)) %>% 
+    set_names(nm = p_names)
+  
+  merge(
+    esr.pnl %>%
+      group_by(Rentrée,Type,kpi) %>%
+      summarise_at(vars(norm, norm_y), p_funs),
+    esr.pnl %>%
+      group_by(Rentrée,Type,kpi) %>%
+      summarise(
+        norm_moy = mean(norm),
+        nombre = n())
+    ) %>% 
+    ungroup() %>%
+    mutate_at(vars(matches("norm_[^y]")), list( label = ~ norm_labels(kpi,.)))
+}
+
+#kpiesr_get_stats(esr.pnl)
+
 
 
 kpiesr_add_kpis <- function (df) {
@@ -160,9 +190,11 @@ kpiesr_ETL_and_save <- function() {
   esr.pnl <- set_encoding_utf8(esr.pnl)
 
   esr.uais <- kpiesr_get_uaisnamedlist(esr)
+  
+  esr.stats <- kpiesr_get_stats(esr.pnl)
 
   #save(esr, esr.pnl, file = "tdbesr.RData")
-  usethis::use_data(esr, esr.pnl, esr.uais, overwrite = TRUE)
+  usethis::use_data(esr, esr.pnl, esr.uais, esr.stats, overwrite = TRUE)
 }
 
 kpiesr_load <- function(...) {
@@ -172,7 +204,7 @@ kpiesr_load <- function(...) {
 }
 
 kpiesr_fusion <- function(uais) {
-  df <- esr %>% filter(UAI %in% uais)
+  df <- kpiESR::esr %>% filter(UAI %in% uais)
 
   info <- df %>%
     group_by(Rentrée) %>%
@@ -232,7 +264,7 @@ kpiesr_plot_all <- function(rentrée, uai,
 
   plots <- list(
     k.norm = kpiesr_plot_norm(rentrée, uai, lfc[[k.norm.index]],
-                              norm.values=FALSE, omit.first = FALSE,
+                              norm.valeurs=FALSE, omit.first = FALSE,
                               style=style.kpi.k, ...),
     k.evol.abs = kpiesr_plot_evol_all(rentrée, uai, peg.args,
                                       yzooms = zooms.abs,
@@ -314,22 +346,22 @@ kpiesr_plot_tdb <- function(rentrée, uai,
 #' @examples
 kpiesr_classement <- function(rentrée, type, kpis, labels=NA, historique=c()) {
 
-  classement <- esr.pnl %>%
+  classement <- kpiESR::esr.pnl %>%
     ungroup() %>%
     filter(Rentrée == rentrée, Type == type, kpi %in% kpis) %>%
-    select(Libellé, kpi, value_label, norm_label, rang) %>%
+    select(Libellé, kpi,valeur_label, norm_label, rang) %>%
     mutate(kpi = factor(kpi,levels=kpis)) %>% arrange(kpi,rang) %>%
-    pivot_wider(names_from = kpi, values_from = c(value_label,norm_label,rang)) %>%
+    pivot_wider(names_from = kpi, values_from = c(valeur_label,norm_label,rang)) %>%
     merge(
-      esr.pnl %>%
+      kpiESR::esr.pnl %>%
         ungroup() %>%
         filter(Rentrée %in% historique, Type == type, kpi %in% kpis[1]) %>%
-        select(Libellé, Rentrée, value_label) %>%
-        pivot_wider(names_from = Rentrée, values_from = value_label)
+        select(Libellé, Rentrée,valeur_label) %>%
+        pivot_wider(names_from = Rentrée, values_from = valeur_label)
     ) %>%
     select(paste0("rang_",kpis[1]), paste0("norm_label_",kpis[1]),
            Libellé,
-           paste0("value_label_",kpis),
+           paste0("valeur_label_",kpis),
            as.character(historique)
            ) %>%
     arrange(!!sym(paste0("rang_",kpis[1])))

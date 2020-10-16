@@ -23,23 +23,22 @@ number_format <- function(x) {
 
 
 
-value_labels <- function(kpi, value) {
+valeur_labels <- function(kpi, valeur) {
   case_when(
-    grepl("kpi.FIN", kpi)   ~ euro_M(value),
-    kpi == "kpi.K.proPres"  ~ scales::percent(value, accuracy = 1),
-    kpi == "kpi.K.resPetu"  ~ euro_k(value),
-    kpi == "kpi.K.selPfor"  ~ scales::percent(value, accuracy = 1),
-    kpi == "kpi.K.titPetu"  ~ format(round(value,1), trim=TRUE),
-    kpi == "kpi.K.titPens"  ~ scales::percent(value, accuracy = 1),
-    grepl("kpi.", kpi)      ~ number_format(value)
+    grepl("kpi.FIN", kpi)   ~ euro_M(valeur),
+    kpi == "kpi.K.proPres"  ~ scales::percent(valeur, accuracy = 1),
+    kpi == "kpi.K.resPetu"  ~ euro_k(valeur),
+    kpi == "kpi.K.selPfor"  ~ scales::percent(valeur, accuracy = 1),
+    kpi == "kpi.K.titPetu"  ~ format(round(valeur,1), trim=TRUE),
+    kpi == "kpi.K.titPens"  ~ scales::percent(valeur, accuracy = 1),
+    grepl("kpi.", kpi)      ~ number_format(valeur)
   )
 }
 
 norm_labels <- function(kpi, norm) {
   case_when(
-    grepl("kpi.....P", kpi)   ~ percent_format(norm),
-    grepl("kpi.K", kpi)       ~ percent_format(norm),
-    TRUE                      ~ scales::percent(norm, accuracy = 1) )
+    grepl("kpi.....S", kpi) ~ scales::percent(norm, accuracy = 2),
+    TRUE                    ~ valeur_labels(kpi, norm))
 }
 
 
@@ -68,6 +67,14 @@ kpiesr_style <- function(
               bp_text_x = -0.25,
               bp_alpha = 0.8,
               bp_color = "grey",
+              kvt_style = "circle",
+              kvt_point_pos = NA,
+              kvt_alpha = 0.5,
+              kvt_scale_text_y = 0.1,
+              kvt_scale_text_size = 3,
+              kvt_scale_point_size = 2,
+              kvt_guide_bg_size = 30,
+              kvt_max_y = 1.3,
               palette = "Set2",
               x_scale = TRUE,
               x_scale_pos = "bottom",

@@ -23,23 +23,22 @@ number_format <- function(x) {
 
 
 
-value_labels <- function(kpi, value) {
+valeur_labels <- function(kpi, valeur) {
   case_when(
-    grepl("kpi.FIN", kpi)   ~ euro_M(value),
-    kpi == "kpi.K.proPres"  ~ scales::percent(value, accuracy = 1),
-    kpi == "kpi.K.resPetu"  ~ euro_k(value),
-    kpi == "kpi.K.selPfor"  ~ scales::percent(value, accuracy = 1),
-    kpi == "kpi.K.titPetu"  ~ format(round(value,1), trim=TRUE),
-    kpi == "kpi.K.titPens"  ~ scales::percent(value, accuracy = 1),
-    grepl("kpi.", kpi)      ~ number_format(value)
+    grepl("kpi.FIN", kpi)   ~ euro_M(valeur),
+    kpi == "kpi.K.proPres"  ~ scales::percent(valeur, accuracy = 1),
+    kpi == "kpi.K.resPetu"  ~ euro_k(valeur),
+    kpi == "kpi.K.selPfor"  ~ scales::percent(valeur, accuracy = 1),
+    kpi == "kpi.K.titPetu"  ~ format(round(valeur,1), trim=TRUE),
+    kpi == "kpi.K.titPens"  ~ scales::percent(valeur, accuracy = 1),
+    grepl("kpi.", kpi)      ~ number_format(valeur)
   )
 }
 
 norm_labels <- function(kpi, norm) {
   case_when(
-    grepl("kpi.....P", kpi)   ~ percent_format(norm),
-    grepl("kpi.K", kpi)       ~ percent_format(norm),
-    TRUE                      ~ scales::percent(norm, accuracy = 1) )
+    grepl("kpi.....S", kpi) ~ scales::percent(norm, accuracy = 2),
+    TRUE                    ~ valeur_labels(kpi, norm))
 }
 
 
@@ -68,6 +67,15 @@ kpiesr_style <- function(
               bp_text_x = -0.25,
               bp_alpha = 0.8,
               bp_color = "grey",
+              kvt_style = "circle",
+              kvt_point_pos = NA,
+              kvt_alpha = 0.5,
+              kvt_scale_text_y = 0.1,
+              kvt_scale_text_size = 3,
+              kvt_scale_point_size = 2,
+              kvt_guide_bg_size = 30,
+              kvt_plot.margin = ggplot2::unit(c(0,0,0,0), "cm"),
+              kvt_max_y = 1.3,
               palette = "Set2",
               x_scale = TRUE,
               x_scale_pos = "bottom",
@@ -99,7 +107,7 @@ kpiesr_lfc <- list(
                  "Effectif étudiant inscrit en diplôme d'établissement (DU, non-national)")
   ),
   ENS = list(
-    labels   = c("Enseignants", "Titulaires","EC","Doc et ATER","LRU"),
+    labels   = c("Enseignants", "Titulaires","EC","Doc et\nATER","LRU"),
     factors  = c("kpi.ENS.P.effectif", "kpi.ENS.S.titulaires", "kpi.ENS.S.ECtitulaires", "kpi.ENS.S.DocATER", "kpi.ENS.S.LRU"),
     colors   = colblues,
     y_labels = identity,
@@ -110,22 +118,24 @@ kpiesr_lfc <- list(
                  "Effectif contrat LRU")
   ),
   FIN = list(
-    labels   = c("Ressources","Masse salariale","Ressources propres"),
-    factors  = c("kpi.FIN.P.ressources", "kpi.FIN.S.masseSalariale", "kpi.FIN.S.ressourcesPropres"),
+    labels   = c("Ressources","Masse\nsalariale","Ressources\npropres","Investissements"),
+    factors  = c("kpi.FIN.P.ressources", "kpi.FIN.S.masseSalariale", "kpi.FIN.S.ressourcesPropres", "kpi.FIN.S.investissements"),
     colors   = coloranges,
     y_labels = euro_M,
     desc     = c("Ressources totales (produits encaissables)",
                  "Masse salariale (dépenses de personnels)",
-                 "Ressources propres")
+                 "Ressources propres",
+                 "Investissements")
   ),
   FIN_N = list(
-    labels   = c("Ressources","Masse salariale","Ressources propres", "DU"),
-    factors  = c("kpi.FIN.P.ressources","kpi.FIN.S.masseSalariale", "kpi.FIN.S.ressourcesPropres", "kpi.ETU.S.diplomeEtablissement"),
-    colors   = c(coloranges[1:3], colgreens[5]),
+    labels   = c("Ressources","Masse\nsalariale","Ressources\npropres","Investissements", "DU"),
+    factors  = c("kpi.FIN.P.ressources","kpi.FIN.S.masseSalariale", "kpi.FIN.S.ressourcesPropres", "kpi.FIN.S.investissements", "kpi.ETU.S.diplomeEtablissement"),
+    colors   = c(coloranges[1:4], colgreens[5]),
     y_labels = euro,
     desc     = c("Ressources totales (produits encaissables)",
                  "Masse salariale (dépenses de personnels)",
                  "Ressources propres",
+                 "Investissements",
                  "Effectif étudiant inscrit en diplôme d'établissement (DU, non-national)")
   ),
   ADM = list(

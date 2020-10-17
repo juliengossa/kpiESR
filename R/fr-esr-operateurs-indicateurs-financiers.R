@@ -32,12 +32,14 @@ kpiesr_read.fin <- function() {
       #RCE = rce,
       kpi.FIN.P.ressources = Produits.encaissables,
       kpi.FIN.S.masseSalariale = Dépenses.de.personnel,
-      kpi.FIN.S.ressourcesPropres = Ressources.propres...Produits.encaissables * Produits.encaissables / 100
+      kpi.FIN.S.ressourcesPropres = Ressources.propres...Produits.encaissables * Produits.encaissables / 100,
+      kpi.FIN.S.investissements = Acquisitions.d.immobilisations
     ) %>%
     #filter_at(starts_with("fin"),all_vars(!is.na(.))) %>%
     filter(!is.na(kpi.FIN.P.ressources),
            !is.na(kpi.FIN.S.masseSalariale),
-           !is.na(kpi.FIN.S.ressourcesPropres)) %>%
+           !is.na(kpi.FIN.S.ressourcesPropres),
+           !is.na(kpi.FIN.S.investissements)) %>%
     arrange(UAI,Rentrée)
     # Enlever les données suspectes
     # filter(

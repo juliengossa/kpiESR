@@ -47,10 +47,12 @@ kpiesr_plot_kiviat <- function(rentrée, uai, lfc,
     
     ggplot(aes(x=kpi, y=norm_y, group=UAI)) +
     ggiraphExtra::coord_radar() +
-    # geom_polygon(y=1, color="grey", fill=NA) +
-    # geom_polygon(y=0.75, color="grey", fill=NA) +
-    # geom_polygon(y=0.25, color="grey", fill=NA) +
-    # geom_polygon(y=0.5, color="grey", fill=NA) +
+    { if(style$kvt_style != "circle") list(
+      geom_polygon(y=1, color="grey", fill=NA, size=0.2),
+      geom_polygon(y=0.75, color="grey30", fill=NA, size=0.2),
+      geom_polygon(y=0.25, color="grey30", fill=NA, size=0.2),
+      geom_polygon(y=0.5, color="grey", fill=NA, size=0.2))
+    }+
     geom_polygon(y=0, color="white", fill="white") +
     geom_point(y=(style$kvt_max_y+0.2), color="white", size=style$kvt_guide_bg_size) +
     
@@ -94,16 +96,21 @@ kpiesr_plot_kiviat <- function(rentrée, uai, lfc,
     scale_y_continuous(breaks = c(0,0.50,1), limits = c(-0.05,style$kvt_max_y), expand = c(0,0)) +
     scale_x_discrete(labels=lfc$labels) +
     scale_fill_manual(values=lfc$colors[-1]) +
-    theme_void() + theme(
+    scale_color_manual(values=lfc$colors[-1]) +
+    kpiesr_theme + theme(
       panel.grid.major.x = element_line(colour="grey"),
-      panel.grid.major.y = element_line(colour="grey"),
-      axis.text.x = element_text(vjust=0)
-    ) + guides(color=FALSE, fill=FALSE)
+      axis.text.x = element_text(vjust = 0),
+      axis.text.y = element_blank(),
+      plot.margin = style$kvt_plot.margin
+    ) + 
+    { if(style$kvt_style != "circle") theme(panel.grid.major.y = element_blank()) } +
+    guides(color=FALSE, fill=FALSE)
 }
 
 
 # kpiesr_plot_kiviat(2018,kpiESR::esr.uais$Université$`Université de Strasbourg`,
-#                    kpiesr_lfc[["K"]],norm.valeurs=FALSE, omit.first = FALSE)
+#                    kpiesr_lfc[["K"]],norm.valeurs=FALSE, omit.first = FALSE,
+#                    style = kpiesr_style(kvt_style="square"))
 # 
 # kpiesr_plot_kiviat(2017,kpiESR::esr.uais$Université$`Université de Strasbourg`,
 #                    kpiesr_lfc[["K"]],norm.valeurs=FALSE, omit.first = FALSE,

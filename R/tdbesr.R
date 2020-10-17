@@ -163,7 +163,8 @@ kpiesr_ETL_and_save <- function() {
     full_join(adm) %>%
     full_join(etab) %>%
     filter(!is.na(Rentrée)) %>%
-    mutate(Rentrée = as.factor(as.character(Rentrée)))
+    mutate(Rentrée = as.factor(as.character(Rentrée))) %>%
+    arrange(Rentrée)
 
   warning(paste0(
     esr %>% filter(is.na(Libellé)) %>% select(UAI) %>% unique() %>% nrow(),

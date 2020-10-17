@@ -261,10 +261,12 @@ kpiesr_plot_kiviat <- function(rentrée, uai, lfc,
 
   ggplot(aes(x=kpi, y=norm_y, group=UAI)) +
     coord_radar() +
-    # geom_polygon(y=1, color="grey", fill=NA) +
-    # geom_polygon(y=0.75, color="grey", fill=NA) +
-    # geom_polygon(y=0.25, color="grey", fill=NA) +
-    # geom_polygon(y=0.5, color="grey", fill=NA) +
+    { if(style$kvt_style != "circle") list(
+        geom_polygon(y=1, color="grey", fill=NA),
+        geom_polygon(y=0.75, color="grey30", fill=NA),
+        geom_polygon(y=0.25, color="grey30", fill=NA),
+        geom_polygon(y=0.5, color="grey", fill=NA))
+    }+
     geom_polygon(y=0, color="white", fill="white") +
     geom_point(y=(style$kvt_max_y+0.2), color="white", size=style$kvt_guide_bg_size) +
 
@@ -309,14 +311,16 @@ kpiesr_plot_kiviat <- function(rentrée, uai, lfc,
     scale_x_discrete(labels=lfc$labels) +
     theme_void() + theme(
       panel.grid.major.x = element_line(colour="grey"),
-      panel.grid.major.y = element_line(colour="grey"),
       axis.text.x = element_text(vjust=0)
-    ) + guides(color=FALSE, fill=FALSE)
+    ) + 
+    { if(style$kvt_style == "circle") theme(panel.grid.major.y = element_line(colour="grey")) } +
+    guides(color=FALSE, fill=FALSE)
 }
 
 
 kpiesr_plot_kiviat(2017,kpiESR::esr.uais$Université$`Université de Strasbourg`,
-                   kpiesr_lfc[["K"]],norm.valeurs=FALSE, omit.first = FALSE)
+                   kpiesr_lfc[["K"]],norm.valeurs=FALSE, omit.first = FALSE,
+                   style = kpiesr_style(kvt_style = "square"))
 
 kpiesr_plot_kiviat(2017,kpiESR::esr.uais$Université$`Université de Strasbourg`,
                    kpiesr_lfc[["K"]],norm.valeurs=FALSE, omit.first = FALSE,

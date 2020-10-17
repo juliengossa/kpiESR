@@ -74,6 +74,7 @@ kpiesr_style <- function(
               kvt_scale_text_size = 3,
               kvt_scale_point_size = 2,
               kvt_guide_bg_size = 30,
+              kvt_plot.margin = ggplot2::unit(c(0,0,0,0), "cm"),
               kvt_max_y = 1.3,
               palette = "Set2",
               x_scale = TRUE,
@@ -117,22 +118,24 @@ kpiesr_lfc <- list(
                  "Effectif contrat LRU")
   ),
   FIN = list(
-    labels   = c("Ressources","Masse\nsalariale","Ressources\npropres"),
-    factors  = c("kpi.FIN.P.ressources", "kpi.FIN.S.masseSalariale", "kpi.FIN.S.ressourcesPropres"),
+    labels   = c("Ressources","Masse\nsalariale","Ressources\npropres","Investissements"),
+    factors  = c("kpi.FIN.P.ressources", "kpi.FIN.S.masseSalariale", "kpi.FIN.S.ressourcesPropres", "kpi.FIN.S.investissements"),
     colors   = coloranges,
     y_labels = euro_M,
     desc     = c("Ressources totales (produits encaissables)",
                  "Masse salariale (dépenses de personnels)",
-                 "Ressources propres")
+                 "Ressources propres",
+                 "Investissements")
   ),
   FIN_N = list(
-    labels   = c("Ressources","Masse\nsalariale","Ressources\npropres", "DU"),
-    factors  = c("kpi.FIN.P.ressources","kpi.FIN.S.masseSalariale", "kpi.FIN.S.ressourcesPropres", "kpi.ETU.S.diplomeEtablissement"),
-    colors   = c(coloranges[1:3], colgreens[5]),
+    labels   = c("Ressources","Masse\nsalariale","Ressources\npropres","Investissements", "DU"),
+    factors  = c("kpi.FIN.P.ressources","kpi.FIN.S.masseSalariale", "kpi.FIN.S.ressourcesPropres", "kpi.FIN.S.investissements", "kpi.ETU.S.diplomeEtablissement"),
+    colors   = c(coloranges[1:4], colgreens[5]),
     y_labels = euro,
     desc     = c("Ressources totales (produits encaissables)",
                  "Masse salariale (dépenses de personnels)",
                  "Ressources propres",
+                 "Investissements",
                  "Effectif étudiant inscrit en diplôme d'établissement (DU, non-national)")
   ),
   ADM = list(

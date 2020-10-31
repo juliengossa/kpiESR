@@ -1,0 +1,356 @@
+---
+title: "Etude des indicateurs financiers"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+options(dplyr.summarise.inform = FALSE)
+
+library(tidyverse)
+library(ggthemes)
+library(kpiESR)
+library(kableExtra)
+
+fin <- read.table("../dataESR/fr-esr-operateurs-indicateurs-financiers.csv",
+                      header=TRUE, sep=';', quote='"') %>%
+  mutate(
+    exercice = as.factor(exercice),
+    Type = case_when(
+      groupe == "communauté d'universités et établissements" ~ "COMUE",
+      str_detect(groupe,"universités") ~ "Universités",
+      code.du.groupe %in% c("GR20","GR30","GR40","GR50") ~ "Ecoles",
+      TRUE ~ "Autres"
+    ))
+
+exercice.ref <- 2020
+```
+
+## Description du jeu de données
+
+Source : https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-operateurs-indicateurs-financiers/information/
+
+- Variables : `r colnames(fin)`
+- Nombre d'observations : `r nrow(fin)`
+- Exercices : `r range(as.character(fin$exercice))`
+- Nombre d'établissements par groupe à la dernière année :
+```{r nb.etab.groupe}
+fin %>% 
+  filter(exercice == exercice.ref) %>%
+  group_by(code.du.groupe, groupe, Type) %>%
+  summarise(nombre = n()) %>% kable()
+```
+
+- Nombre d'établissements par type à la dernière année :
+```{r nb.etab.type}
+fin %>% 
+  filter(exercice == exercice.ref) %>%
+  group_by(Type) %>%
+  summarise(nombre = n())  %>% kable()
+```
+
+_Attention :_ des changements de périmètre du jeu de données peuvent affecter les résultats.
+
+
+_Erreurs détectées :_
+
+- 14 types manquants ;
+- 1 école d’ingénieur sans s
+- 1 universités pluridisciplinaires avec santé mal groupée (?)
+
+## Analyses globales des ressources 
+
+```{r ressources.global.setup}
+res <- fin %>%
+  select(exercice, etablissement, Type, 
+         Produits.de.fonctionnement.encaissables,
+         Ressources.propres,
+         
+         Droits.d.inscription,
+         Formation.continue..diplômes.propres.et.VAE, 
+         Taxe.d.apprentissage,
+         
+         Valorisation,
+         ANR.hors.investissements.d.avenir, 
+         ANR.investissements.d.avenir,
+         Contrats.et.prestations.de.recherche.hors.ANR,
+         
+         Subventions.de.la.région, 
+         Subventions.Union.Européenne, 
+         Autres.ressources.propres,
+         Autres.Subventions
+         ) %>%
+  mutate(
+    Ressources.formation = rowSums(na.rm = TRUE, select(.,
+         Droits.d.inscription,
+         Formation.continue..diplômes.propres.et.VAE, 
+         Taxe.d.apprentissage)),
+    Ressources.recherche = rowSums(na.rm = TRUE, select(.,
+         Valorisation,
+         ANR.hors.investissements.d.avenir, 
+         ANR.investissements.d.avenir,
+         Contrats.et.prestations.de.recherche.hors.ANR)),
+    Ressources.autres = rowSums(na.rm = TRUE, select(.,
+         Subventions.de.la.région, 
+         Subventions.Union.Européenne, 
+         Autres.ressources.propres,
+         Autres.Subventions)),
+    SCSP = Produits.de.fonctionnement.encaissables - Ressources.propres
+  ) 
+```
+
+### Disponibilité des données
+
+```{r ressources.dispo}
+res %>%
+  group_by(exercice, Type) %>%
+  summarise_all(
+    function(x) sum(!is.na(x))
+  ) %>% kable()
+```
+
+_Erreurs détectées :_
+
+- Observations où la somme des ressources propres est supérieure aux produits encaissables (filtrées dans la suite) : 
+```{r scps.negative}
+res %>% filter(SCSP < 0) %>% select(etablissement, exercice, Produits.de.fonctionnement.encaissables, Ressources.propres, SCSP) %>% kable()
+```
+
+```{r scps.negative.filter, include=FALSE}
+res <- res %>% filter(SCSP >= 0)
+```
+
+
+### Répartition macro des ressources en `r exercice.ref`
+
+```{r ressources.macro}
+res %>%
+  filter(exercice == exercice.ref, SCSP >= 0) %>%
+  select(Type, SCSP, Ressources.formation, Ressources.recherche, Ressources.autres) %>%
+  pivot_longer(cols = -Type, names_to = "Ressource", values_to = "Montant") %>%
+  ggplot(aes(x=Type, y=Montant, fill=Ressource)) + geom_col() +
+  scale_y_continuous(labels = euro_M) +
+  theme_hc()
+```
+
+
+```{r ressources.macro.rel}
+res %>%
+  filter(exercice == exercice.ref, SCSP >= 0) %>%
+  select(Type, SCSP, Ressources.formation, Ressources.recherche, Ressources.autres) %>%
+  pivot_longer(cols = -Type, names_to = "Ressource", values_to = "Montant") %>%
+  ggplot(aes(x=Type, y=Montant, fill=Ressource)) + geom_col(position="fill") +
+  scale_y_continuous(labels = scales::percent) +
+  theme_hc()
+```
+
+
+
+### Evolution macro des ressources 
+
+```{r ressources.macro.evol}
+res %>%
+  select(exercice, SCSP, Ressources.formation, Ressources.recherche, Ressources.autres) %>%
+  pivot_longer(cols = -exercice, names_to = "Ressource", values_to = "Montant") %>%
+  ggplot(aes(x=exercice, y=Montant, fill=Ressource)) + geom_col() +
+  scale_y_continuous(labels = euro_M) +
+  theme_hc()
+```
+
+
+```{r ressources.macro.evol.rel}
+res %>%
+  select(exercice, SCSP, Ressources.formation, Ressources.recherche, Ressources.autres) %>%
+  pivot_longer(cols = -exercice, names_to = "Ressource", values_to = "Montant") %>%
+  ggplot(aes(x=exercice, y=Montant, fill=Ressource)) + geom_col(position="fill") +
+  scale_y_continuous(labels = euro_M) +
+  theme_hc()
+```
+
+
+## Analyse des ressources formation
+
+```{r formation.data}
+df <- res %>%
+  select(exercice, Type,
+         Droits.d.inscription,
+         Formation.continue..diplômes.propres.et.VAE, 
+         Taxe.d.apprentissage) %>%
+  rename( "FC.DU.VAE" = Formation.continue..diplômes.propres.et.VAE) %>%
+  pivot_longer(cols = -c(exercice,Type), 
+               names_to = "Ressource", 
+               values_to = "Montant")
+```
+
+### Répartition par type en `r exercice.ref`
+
+```{r formation.type}
+  df %>% filter(exercice == exercice.ref) %>%
+  ggplot(aes(x=Type, y=Montant, fill=Ressource)) + geom_col() +
+  scale_y_continuous(labels = euro_M) +
+  theme_hc()
+```
+
+```{r formation.type.rel}
+  df %>% filter(exercice == exercice.ref) %>%
+  ggplot(aes(x=Type, y=Montant, fill=Ressource)) + geom_col(position="fill") +
+  scale_y_continuous(labels = euro_M) +
+  theme_hc()
+```
+
+### Evolution
+
+```{r formation.evol}
+  df %>% 
+  ggplot(aes(x=exercice, y=Montant, fill=Ressource)) + geom_col() +
+  scale_y_continuous(labels = euro_M) +
+  theme_hc()
+```
+
+```{r formation.evol.rel}
+  df %>% 
+  ggplot(aes(x=exercice, y=Montant, fill=Ressource)) + geom_col(position="fill") +
+  scale_y_continuous(labels = euro_M) +
+  theme_hc()
+```
+
+
+
+
+
+## Analyse des ressources recherche
+
+```{r recherche.data}
+df <- res %>%
+  select(exercice, Type,
+         Valorisation,
+         ANR.hors.investissements.d.avenir, 
+         ANR.investissements.d.avenir,
+         Contrats.et.prestations.de.recherche.hors.ANR) %>%
+  rename("ANR.hors.PIA" = ANR.hors.investissements.d.avenir,
+         "ANR.PIA" = ANR.investissements.d.avenir,
+         "Contrats.et.presta" = Contrats.et.prestations.de.recherche.hors.ANR) %>%
+  pivot_longer(cols = -c(exercice,Type), 
+               names_to = "Ressource", 
+               values_to = "Montant")
+```
+
+### Répartition par type en `r exercice.ref`
+
+```{r recherche.type}
+  df %>% filter(exercice == exercice.ref) %>%
+  ggplot(aes(x=Type, y=Montant, fill=Ressource)) + geom_col() +
+  scale_y_continuous(labels = euro_M) +
+  theme_hc()
+```
+
+```{r recherche.type.rel}
+  df %>% filter(exercice == exercice.ref) %>%
+  ggplot(aes(x=Type, y=Montant, fill=Ressource)) + geom_col(position="fill") +
+  scale_y_continuous(labels = euro_M) +
+  theme_hc()
+```
+
+### Evolution
+
+```{r recherche.evol}
+  df %>% 
+  ggplot(aes(x=exercice, y=Montant, fill=Ressource)) + geom_col() +
+  scale_y_continuous(labels = euro_M) +
+  theme_hc()
+```
+
+```{r recherche.evol.rel}
+  df %>% 
+  ggplot(aes(x=exercice, y=Montant, fill=Ressource)) + geom_col(position="fill") +
+  scale_y_continuous(labels = euro_M) +
+  theme_hc()
+```
+
+
+
+
+
+## Analyse des autres ressources propres
+
+```{r autres.data}
+df <- res %>%
+  select(exercice, Type,
+         Subventions.de.la.région, 
+         Subventions.Union.Européenne, 
+         Autres.ressources.propres,
+         Autres.Subventions) %>%
+  rename("Région" = Subventions.de.la.région, 
+         "UE" = Subventions.Union.Européenne) %>%
+  pivot_longer(cols = -c(exercice,Type), 
+               names_to = "Ressource", 
+               values_to = "Montant")
+```
+
+### Répartition par type en `r exercice.ref`
+
+```{r autres.type}
+  df %>% filter(exercice == exercice.ref) %>%
+  ggplot(aes(x=Type, y=Montant, fill=Ressource)) + geom_col() +
+  scale_y_continuous(labels = euro_M) +
+  theme_hc()
+```
+
+```{r autres.type.rel}
+  df %>% filter(exercice == exercice.ref) %>%
+  ggplot(aes(x=Type, y=Montant, fill=Ressource)) + geom_col(position="fill") +
+  scale_y_continuous(labels = euro_M) +
+  theme_hc()
+```
+
+### Evolution
+
+```{r autres.evol}
+  df %>% 
+  ggplot(aes(x=exercice, y=Montant, fill=Ressource)) + geom_col() +
+  scale_y_continuous(labels = euro_M) +
+  theme_hc()
+```
+
+```{r autres.evol.rel}
+  df %>% 
+  ggplot(aes(x=exercice, y=Montant, fill=Ressource)) + geom_col(position="fill") +
+  scale_y_continuous(labels = euro_M) +
+  theme_hc()
+```
+
+
+## Analyse SCSP
+
+```{r SCSP.evol}
+res %>%
+  group_by(exercice, Type) %>%
+  summarise(SCSP = sum(SCSP)) %>%
+  ggplot(aes(x=exercice, y=SCSP, color=Type, group=Type)) + geom_line() +
+  scale_y_continuous(labels = euro_M) +
+  theme_hc()
+```
+
+```{r SCSP.evol.rel}
+res %>%
+  group_by(exercice, Type) %>%
+  summarise(SCSP = sum(SCSP)) %>%
+  group_by(Type) %>%
+  mutate(evolution.SCSP = SCSP / first(SCSP) - 1) %>%
+  ggplot(aes(x=exercice, y=evolution.SCSP, color=Type, group=Type)) + geom_line() +
+  #scale_y_continuous(labels = scales::percent) +
+  theme_hc()
+```
+
+
+```{r SCSP.evol.rel2}
+res %>%
+  filter(exercice != "2020") %>%
+  group_by(exercice, Type) %>%
+  summarise(SCSP = sum(SCSP)) %>%
+  group_by(Type) %>%
+  mutate(evolution.SCSP = SCSP / first(SCSP) - 1) %>%
+  ggplot(aes(x=exercice, y=evolution.SCSP, color=Type, group=Type)) + geom_line() +
+  #scale_y_continuous(labels = scales::percent) +
+  theme_hc()
+```

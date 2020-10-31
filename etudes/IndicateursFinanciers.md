@@ -296,11 +296,228 @@ Source :
 *Attention :* des changements de périmètre du jeu de données peuvent
 affecter les résultats.
 
-*Erreurs détectées :*
+*Défauts détectées :*
 
-  - 14 types manquants ;
+  - 17 groupes manquant
+  - 15 nom d’établissement manquant
   - 1 école d’ingénieur sans s
   - 1 universités pluridisciplinaires avec santé mal groupée (?)
+  - Des observations où la somme des ressources propres est supérieure
+    aux produits encaissables (voir plus loin)
+  - Détails des ressources propres manquant pour 2016 et 2017
+
+### Vérification avec kpiESR
+
+Etablissements dans le jeu mais pas dans kpiESR (en 2020) :
+
+<table>
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+Type
+
+</th>
+
+<th style="text-align:left;">
+
+uai…identifiant
+
+</th>
+
+<th style="text-align:left;">
+
+etablissement
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+Autres
+
+</td>
+
+<td style="text-align:left;">
+
+0342032Z
+
+</td>
+
+<td style="text-align:left;">
+
+CINES - Centre informatique national de l’enseignement supérieur
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Autres
+
+</td>
+
+<td style="text-align:left;">
+
+0755354M
+
+</td>
+
+<td style="text-align:left;">
+
+RENATER - Réseau national de communications pour la technologie,
+l’enseignement et la recherche
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Autres
+
+</td>
+
+<td style="text-align:left;">
+
+0671451N
+
+</td>
+
+<td style="text-align:left;">
+
+BNU DE STRASBOURG
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Autres
+
+</td>
+
+<td style="text-align:left;">
+
+075CAMPU
+
+</td>
+
+<td style="text-align:left;">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Autres
+
+</td>
+
+<td style="text-align:left;">
+
+0752744A
+
+</td>
+
+<td style="text-align:left;">
+
+Académie des sciences d’outre-mer
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Autres
+
+</td>
+
+<td style="text-align:left;">
+
+0755449R
+
+</td>
+
+<td style="text-align:left;">
+
+Musée du quai Branly
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Autres
+
+</td>
+
+<td style="text-align:left;">
+
+0341920C
+
+</td>
+
+<td style="text-align:left;">
+
+ABES - Agence bibliographique de l’enseignement supérieur
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Autres
+
+</td>
+
+<td style="text-align:left;">
+
+0772428W
+
+</td>
+
+<td style="text-align:left;">
+
+CTLES - Centre technique du livre de l’enseignement supérieur
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
 
 ## Analyses globales des ressources
 
@@ -5588,3 +5805,458 @@ Universités
 ![](IndicateursFinanciers_files/figure-gfm/SCSP.evol.rel-1.png)<!-- -->
 
 ![](IndicateursFinanciers_files/figure-gfm/SCSP.evol.rel2-1.png)<!-- -->
+
+## ANR investissement d’avenir
+
+Top 15 des établissements qui touchent le plus d’ANR investissement
+d’avenir
+
+<table>
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+uai…identifiant
+
+</th>
+
+<th style="text-align:left;">
+
+etablissement
+
+</th>
+
+<th style="text-align:left;">
+
+Type
+
+</th>
+
+<th style="text-align:left;">
+
+ANR.investissements.d.avenir
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+0912408Y
+
+</td>
+
+<td style="text-align:left;">
+
+</td>
+
+<td style="text-align:left;">
+
+Autres
+
+</td>
+
+<td style="text-align:left;">
+
+99 M€
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+0134009M
+
+</td>
+
+<td style="text-align:left;">
+
+Aix-Marseille université
+
+</td>
+
+<td style="text-align:left;">
+
+Universités
+
+</td>
+
+<td style="text-align:left;">
+
+57 M€
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+0673021V
+
+</td>
+
+<td style="text-align:left;">
+
+Université de Strasbourg
+
+</td>
+
+<td style="text-align:left;">
+
+Universités
+
+</td>
+
+<td style="text-align:left;">
+
+49 M€
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+0062205P
+
+</td>
+
+<td style="text-align:left;">
+
+</td>
+
+<td style="text-align:left;">
+
+Autres
+
+</td>
+
+<td style="text-align:left;">
+
+30 M€
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+0333298F
+
+</td>
+
+<td style="text-align:left;">
+
+Université de Bordeaux
+
+</td>
+
+<td style="text-align:left;">
+
+Universités
+
+</td>
+
+<td style="text-align:left;">
+
+27 M€
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+0694094A
+
+</td>
+
+<td style="text-align:left;">
+
+Université de Lyon
+
+</td>
+
+<td style="text-align:left;">
+
+COMUE
+
+</td>
+
+<td style="text-align:left;">
+
+26 M€
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+0383546Y
+
+</td>
+
+<td style="text-align:left;">
+
+</td>
+
+<td style="text-align:left;">
+
+Autres
+
+</td>
+
+<td style="text-align:left;">
+
+23 M€
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+0755976N
+
+</td>
+
+<td style="text-align:left;">
+
+</td>
+
+<td style="text-align:left;">
+
+Autres
+
+</td>
+
+<td style="text-align:left;">
+
+23 M€
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+0342321N
+
+</td>
+
+<td style="text-align:left;">
+
+Université de Montpellier
+
+</td>
+
+<td style="text-align:left;">
+
+Universités
+
+</td>
+
+<td style="text-align:left;">
+
+19 M€
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+0341089Z
+
+</td>
+
+<td style="text-align:left;">
+
+Université Montpellier 3 - Paul-Valéry
+
+</td>
+
+<td style="text-align:left;">
+
+Universités
+
+</td>
+
+<td style="text-align:left;">
+
+18 M€
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+0952259P
+
+</td>
+
+<td style="text-align:left;">
+
+</td>
+
+<td style="text-align:left;">
+
+Autres
+
+</td>
+
+<td style="text-align:left;">
+
+14 M€
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+0940607Z
+
+</td>
+
+<td style="text-align:left;">
+
+École normale supérieure de Cachan
+
+</td>
+
+<td style="text-align:left;">
+
+Ecoles
+
+</td>
+
+<td style="text-align:left;">
+
+12 M€
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+0251985X
+
+</td>
+
+<td style="text-align:left;">
+
+Université Bourgogne - Franche-Comté
+
+</td>
+
+<td style="text-align:left;">
+
+COMUE
+
+</td>
+
+<td style="text-align:left;">
+
+12 M€
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+0440984F
+
+</td>
+
+<td style="text-align:left;">
+
+Université de Nantes
+
+</td>
+
+<td style="text-align:left;">
+
+Universités
+
+</td>
+
+<td style="text-align:left;">
+
+11 M€
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+0632035V
+
+</td>
+
+<td style="text-align:left;">
+
+Université Clermont Auvergne
+
+</td>
+
+<td style="text-align:left;">
+
+Universités
+
+</td>
+
+<td style="text-align:left;">
+
+10 M€
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>

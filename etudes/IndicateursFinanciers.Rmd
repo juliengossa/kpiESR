@@ -53,11 +53,27 @@ fin %>%
 _Attention :_ des changements de périmètre du jeu de données peuvent affecter les résultats.
 
 
-_Erreurs détectées :_
+_Défauts détectées :_
 
-- 14 types manquants ;
+- `r fin %>% select(uai...identifiant, groupe) %>% filter(groupe == "") %>% unique() %>% nrow()` groupes manquant
+- `r fin %>% select(uai...identifiant, etablissement) %>% filter(etablissement == "") %>% unique() %>% nrow()` nom d'établissement manquant
 - 1 école d’ingénieur sans s
 - 1 universités pluridisciplinaires avec santé mal groupée (?)
+- Des observations où la somme des ressources propres est supérieure aux produits encaissables (voir plus loin)
+- Détails des ressources propres manquant pour 2016 et 2017
+
+### Vérification avec kpiESR
+
+Etablissements dans le jeu mais pas dans kpiESR (en `r exercice.ref`) :
+
+```{r check.kpiESR.out}
+kpi.uais <- unique(kpiESR::esr$UAI)
+fin %>% 
+  filter(! uai...identifiant %in% kpi.uais) %>%
+  filter(exercice == exercice.ref) %>%
+  select(Type, uai...identifiant, etablissement) %>%
+  unique() %>% arrange(desc(Type)) %>% kable()
+```
 
 ## Analyses globales des ressources 
 
@@ -354,4 +370,18 @@ res %>%
   ggplot(aes(x=exercice, y=evolution.SCSP, color=Type, group=Type)) + geom_line() +
   scale_y_continuous(labels = scales::percent) +
   theme_hc()
+```
+
+## ANR investissement d'avenir
+
+Top 15 des établissements qui touchent le plus d'ANR investissement d'avenir
+```{r ANR.PIA}
+fin %>%
+  filter(exercice == "2020") %>%
+  select(uai...identifiant, etablissement, Type, ANR.investissements.d.avenir) %>%
+  arrange(desc(ANR.investissements.d.avenir)) %>%
+  mutate(ANR.investissements.d.avenir = euro_M(ANR.investissements.d.avenir)) %>%
+  head(15) %>% kable()
+
+  
 ```

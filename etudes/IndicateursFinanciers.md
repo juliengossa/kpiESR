@@ -298,13 +298,13 @@ affecter les résultats.
 
 *Défauts détectées :*
 
-  - 17 groupes manquant
-  - 15 nom d’établissement manquant
+  - 17 groupes manquants
+  - 15 nom d’établissement manquants
   - 1 école d’ingénieur sans s
   - 1 universités pluridisciplinaires avec santé mal groupée (?)
   - Des observations où la somme des ressources propres est supérieure
     aux produits encaissables (voir plus loin)
-  - Détails des ressources propres manquant pour 2016 et 2017
+  - Détails des ressources propres manquants pour 2016 et 2017
 
 ### Vérification avec kpiESR
 

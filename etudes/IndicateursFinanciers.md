@@ -5580,3 +5580,11 @@ Universités
     ## Warning: Removed 1809 rows containing missing values (position_stack).
 
 ![](IndicateursFinanciers_files/figure-gfm/autres.evol.rel-1.png)<!-- -->
+
+## Analyse SCSP
+
+![](IndicateursFinanciers_files/figure-gfm/SCSP.evol-1.png)<!-- -->
+
+![](IndicateursFinanciers_files/figure-gfm/SCSP.evol.rel-1.png)<!-- -->
+
+![](IndicateursFinanciers_files/figure-gfm/SCSP.evol.rel2-1.png)<!-- -->

@@ -164,7 +164,7 @@ res %>%
   select(exercice, SCSP, Formation, Recherche, Autres) %>%
   pivot_longer(cols = -exercice, names_to = "Ressource", values_to = "Montant") %>%
   ggplot(aes(x=exercice, y=Montant, fill=Ressource)) + geom_col(position="fill") +
-  scale_y_continuous(labels = euro_M) +
+  scale_y_continuous(labels = scales::percent) +
   theme_hc()
 ```
 
@@ -195,7 +195,7 @@ df <- res %>%
 ```{r formation.type.rel}
   df %>% filter(exercice == exercice.ref) %>%
   ggplot(aes(x=Type, y=Montant, fill=Ressource)) + geom_col(position="fill") +
-  scale_y_continuous(labels = euro_M) +
+  scale_y_continuous(labels = scales::percent) +
   theme_hc()
 ```
 
@@ -211,7 +211,7 @@ df <- res %>%
 ```{r formation.evol.rel}
   df %>% 
   ggplot(aes(x=exercice, y=Montant, fill=Ressource)) + geom_col(position="fill") +
-  scale_y_continuous(labels = euro_M) +
+  scale_y_continuous(labels = scales::percent) +
   theme_hc()
 ```
 
@@ -248,7 +248,7 @@ df <- res %>%
 ```{r recherche.type.rel}
   df %>% filter(exercice == exercice.ref) %>%
   ggplot(aes(x=Type, y=Montant, fill=Ressource)) + geom_col(position="fill") +
-  scale_y_continuous(labels = euro_M) +
+  scale_y_continuous(labels = scales::percent) +
   theme_hc()
 ```
 
@@ -264,7 +264,7 @@ df <- res %>%
 ```{r recherche.evol.rel}
   df %>% 
   ggplot(aes(x=exercice, y=Montant, fill=Ressource)) + geom_col(position="fill") +
-  scale_y_continuous(labels = euro_M) +
+  scale_y_continuous(labels = scales::percent) +
   theme_hc()
 ```
 
@@ -300,7 +300,7 @@ df <- res %>%
 ```{r autres.type.rel}
   df %>% filter(exercice == exercice.ref) %>%
   ggplot(aes(x=Type, y=Montant, fill=Ressource)) + geom_col(position="fill") +
-  scale_y_continuous(labels = euro_M) +
+  scale_y_continuous(labels = scales::percent) +
   theme_hc()
 ```
 
@@ -316,7 +316,7 @@ df <- res %>%
 ```{r autres.evol.rel}
   df %>% 
   ggplot(aes(x=exercice, y=Montant, fill=Ressource)) + geom_col(position="fill") +
-  scale_y_continuous(labels = euro_M) +
+  scale_y_continuous(labels = scales::percent) +
   theme_hc()
 ```
 
@@ -339,7 +339,7 @@ res %>%
   group_by(Type) %>%
   mutate(evolution.SCSP = SCSP / first(SCSP) - 1) %>%
   ggplot(aes(x=exercice, y=evolution.SCSP, color=Type, group=Type)) + geom_line() +
-  #scale_y_continuous(labels = scales::percent) +
+  scale_y_continuous(labels = scales::percent) +
   theme_hc()
 ```
 
@@ -352,6 +352,6 @@ res %>%
   group_by(Type) %>%
   mutate(evolution.SCSP = SCSP / first(SCSP) - 1) %>%
   ggplot(aes(x=exercice, y=evolution.SCSP, color=Type, group=Type)) + geom_line() +
-  #scale_y_continuous(labels = scales::percent) +
+  scale_y_continuous(labels = scales::percent) +
   theme_hc()
 ```

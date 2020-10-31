@@ -410,19 +410,19 @@ Autres.Subventions
 
 <th style="text-align:right;">
 
-Ressources.formation
+Formation
 
 </th>
 
 <th style="text-align:right;">
 
-Ressources.recherche
+Recherche
 
 </th>
 
 <th style="text-align:right;">
 
-Ressources.autres
+Autres
 
 </th>
 

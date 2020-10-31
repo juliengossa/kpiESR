@@ -6,6 +6,7 @@ output: github_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 options(dplyr.summarise.inform = FALSE)
+knitr::opts_chunk$set(fig.width = 7, fig.height = 3.9375)
 
 library(tidyverse)
 library(ggthemes)
@@ -81,16 +82,16 @@ res <- fin %>%
          Autres.Subventions
          ) %>%
   mutate(
-    Ressources.formation = rowSums(na.rm = TRUE, select(.,
+    Formation = rowSums(na.rm = TRUE, select(.,
          Droits.d.inscription,
          Formation.continue..diplômes.propres.et.VAE, 
          Taxe.d.apprentissage)),
-    Ressources.recherche = rowSums(na.rm = TRUE, select(.,
+    Recherche = rowSums(na.rm = TRUE, select(.,
          Valorisation,
          ANR.hors.investissements.d.avenir, 
          ANR.investissements.d.avenir,
          Contrats.et.prestations.de.recherche.hors.ANR)),
-    Ressources.autres = rowSums(na.rm = TRUE, select(.,
+    Autres = rowSums(na.rm = TRUE, select(.,
          Subventions.de.la.région, 
          Subventions.Union.Européenne, 
          Autres.ressources.propres,
@@ -126,7 +127,7 @@ res <- res %>% filter(SCSP >= 0)
 ```{r ressources.macro}
 res %>%
   filter(exercice == exercice.ref, SCSP >= 0) %>%
-  select(Type, SCSP, Ressources.formation, Ressources.recherche, Ressources.autres) %>%
+  select(Type, SCSP, Formation, Recherche, Autres) %>%
   pivot_longer(cols = -Type, names_to = "Ressource", values_to = "Montant") %>%
   ggplot(aes(x=Type, y=Montant, fill=Ressource)) + geom_col() +
   scale_y_continuous(labels = euro_M) +
@@ -137,7 +138,7 @@ res %>%
 ```{r ressources.macro.rel}
 res %>%
   filter(exercice == exercice.ref, SCSP >= 0) %>%
-  select(Type, SCSP, Ressources.formation, Ressources.recherche, Ressources.autres) %>%
+  select(Type, SCSP, Formation, Recherche, Autres) %>%
   pivot_longer(cols = -Type, names_to = "Ressource", values_to = "Montant") %>%
   ggplot(aes(x=Type, y=Montant, fill=Ressource)) + geom_col(position="fill") +
   scale_y_continuous(labels = scales::percent) +
@@ -150,7 +151,7 @@ res %>%
 
 ```{r ressources.macro.evol}
 res %>%
-  select(exercice, SCSP, Ressources.formation, Ressources.recherche, Ressources.autres) %>%
+  select(exercice, SCSP, Formation, Recherche, Autres) %>%
   pivot_longer(cols = -exercice, names_to = "Ressource", values_to = "Montant") %>%
   ggplot(aes(x=exercice, y=Montant, fill=Ressource)) + geom_col() +
   scale_y_continuous(labels = euro_M) +
@@ -160,7 +161,7 @@ res %>%
 
 ```{r ressources.macro.evol.rel}
 res %>%
-  select(exercice, SCSP, Ressources.formation, Ressources.recherche, Ressources.autres) %>%
+  select(exercice, SCSP, Formation, Recherche, Autres) %>%
   pivot_longer(cols = -exercice, names_to = "Ressource", values_to = "Montant") %>%
   ggplot(aes(x=exercice, y=Montant, fill=Ressource)) + geom_col(position="fill") +
   scale_y_continuous(labels = euro_M) +

@@ -79,8 +79,10 @@ kpiesr_get_stats <- function(esr.pnl) {
 
 kpiesr_add_kpis <- function (df) {
   mutate(df,
-    kpi.K.proPres = kpi.FIN.S.ressourcesPropres / kpi.FIN.P.ressources ,
+    kpi.K.dotPres = kpi.FIN.S.SCSP / kpi.FIN.P.ressources ,
     kpi.K.resPetu = kpi.FIN.P.ressources / (kpi.ETU.S.cycle.1.L+kpi.ETU.S.cycle.2.M),
+    kpi.K.forPetu = kpi.FIN.S.recettesFormation / kpi.ETU.P.effectif,
+    kpi.K.recPect = kpi.FIN.S.recettesFormation / kpi.ENS.S.ECtitulaires,
     kpi.K.selPfor = kpi.ADM.S.sélective / kpi.ADM.P.formations,
     kpi.K.titPetu = kpi.ENS.S.ECtitulaires / kpi.ETU.P.effectif * 100,
     kpi.K.titPens = kpi.ENS.S.titulaires / kpi.ENS.P.effectif,

@@ -28,6 +28,7 @@ kpiesr_plot_kiviat <- function(rentrée, uai, lfc,
   if(omit.first) {
     lfc$factors <- lfc$factors[-1]
     lfc$labels  <- lfc$labels[-1]
+    lfc$colors  <- lfc$colors[-1]
     lfc$desc    <- lfc$desc[-1]
   }
   
@@ -77,12 +78,13 @@ kpiesr_plot_kiviat <- function(rentrée, uai, lfc,
               size=style$kvt_scale_text_size, color="black")+
     #vjust=svjust, hjust=shjust) +
     
-    geom_polygon(fill=lfc$colors[1], color=lfc$colors[1], 
+    geom_polygon(aes(fill=UAI, color=UAI),
                  alpha=style$kvt_alpha, size=style$line_size) +
     
-    geom_point(aes(y=point_y, fill=kpi), #y=1.3,
+    geom_point(aes(y=point_y, color=UAI), #y=1.3,
+               fill = lfc$colors,
                size=style$point_size,
-               color=lfc$colors[1], shape=21) +
+               shape=21) +
     geom_text(aes(y=point_y, label=norm_label, text=""), #y=1.3,
               color="black",       size=style$text_size, fontface="bold") +
     
@@ -95,8 +97,8 @@ kpiesr_plot_kiviat <- function(rentrée, uai, lfc,
     
     scale_y_continuous(breaks = c(0,0.50,1), limits = c(-0.05,style$kvt_max_y), expand = c(0,0)) +
     scale_x_discrete(labels=lfc$labels) +
-    scale_fill_manual(values=lfc$colors[-1]) +
-    scale_color_manual(values=lfc$colors[-1]) +
+    #scale_fill_manual(values=lfc$colors) +
+    #scale_color_manual(values=lfc$colors) +
     kpiesr_theme + theme(
       panel.grid.major.x = element_line(colour="grey"),
       axis.text.x = element_text(vjust = 0),
@@ -111,7 +113,7 @@ kpiesr_plot_kiviat <- function(rentrée, uai, lfc,
 # kpiesr_plot_kiviat(2018,kpiESR::esr.uais$Université$`Université de Strasbourg`,
 #                    kpiesr_lfc[["K"]],norm.valeurs=FALSE, omit.first = FALSE,
 #                    style = kpiesr_style(kvt_style="square"))
-# 
+
 # kpiesr_plot_kiviat(2017,kpiESR::esr.uais$Université$`Université de Strasbourg`,
 #                    kpiesr_lfc[["K"]],norm.valeurs=FALSE, omit.first = FALSE,
 #                    style = kpiesr_style(kvt_point_pos = 1.5, kvt_max_y=2))
@@ -119,7 +121,7 @@ kpiesr_plot_kiviat <- function(rentrée, uai, lfc,
 # 
 # kpiesr_plot_kiviat(2017,kpiESR::esr.uais$Université$`Université de Strasbourg`,
 #                    kpiesr_lfc[["ETU"]],norm.valeurs=FALSE, omit.first = TRUE)
-# 
+
 # kpiesr_plot_kiviat(2017,kpiESR::esr.uais$Université$`Université de Strasbourg`,
 #                    kpiesr_lfc[["ENS"]],norm.valeurs=FALSE, omit.first = TRUE)
 # 

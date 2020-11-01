@@ -184,7 +184,7 @@ kpiesr_lfc <- list(
                  "kpi.K.titPetu",
                  "kpi.K.titPens",
                  "kpi.K.dotPres"),
-    colors   = c(coloranges[3],coloranges[4],coloranges[1],colgreens[5],coloranges[5],colblues[5]),
+    colors   = c(coloranges[1],coloranges[4],coloranges[1],colgreens[5],coloranges[5],colblues[5]),
     y_labels = identity,
     desc     = c("Ressources divisées par le nombre d'étudiants",
                  "Recettes recherche divisées par le nombre d'enseignants-chercheurs titulaires",

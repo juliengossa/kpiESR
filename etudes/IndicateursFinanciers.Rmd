@@ -353,7 +353,7 @@ res %>%
   group_by(exercice, Type) %>%
   summarise(SCSP = sum(SCSP)) %>%
   group_by(Type) %>%
-  mutate(evolution.SCSP = SCSP / first(SCSP) - 1) %>%
+  mutate(evolution.SCSP = (SCSP / first(SCSP) - 1) /100) %>%
   ggplot(aes(x=exercice, y=evolution.SCSP, color=Type, group=Type)) + geom_line() +
   scale_y_continuous(labels = scales::percent) +
   theme_hc()
@@ -366,7 +366,7 @@ res %>%
   group_by(exercice, Type) %>%
   summarise(SCSP = sum(SCSP)) %>%
   group_by(Type) %>%
-  mutate(evolution.SCSP = SCSP / first(SCSP) - 1) %>%
+  mutate(evolution.SCSP = (SCSP / first(SCSP) - 1) /100) %>%
   ggplot(aes(x=exercice, y=evolution.SCSP, color=Type, group=Type)) + geom_line() +
   scale_y_continuous(labels = scales::percent) +
   theme_hc()

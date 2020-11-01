@@ -55,9 +55,9 @@ kpiesr_pivot_norm_label <- function(esr) {
 kpiesr_get_stats <- function(esr.pnl) {
   
   p <- c(0,0.25,0.5,0.75,1)
-  p_names <- map_chr(p, ~paste0(.x*100))
-  p_funs <- map(p, ~partial(quantile, probs = .x, na.rm = TRUE)) %>% 
-    set_names(nm = p_names)
+  p_names <- purrr::map_chr(p, ~paste0(.x*100))
+  p_funs <-  purrr::map(p, ~purrr::partial(quantile, probs = .x, na.rm = TRUE)) %>% 
+    purrr::set_names(nm = p_names)
   
   merge(
     esr.pnl %>%

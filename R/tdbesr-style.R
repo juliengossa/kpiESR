@@ -27,7 +27,7 @@ valeur_labels <- function(kpi, valeur) {
   case_when(
     grepl("kpi.FIN", kpi)   ~ euro_M(valeur),
     kpi == "kpi.K.dotPres"  ~ scales::percent(valeur, accuracy = 1),
-    kpi == "kpi.K.forPetu"  ~ euro_k(valeur),
+    kpi == "kpi.K.forPetu"  ~ euro(valeur),
     kpi == "kpi.K.recPect"  ~ euro_k(valeur),
     kpi == "kpi.K.resPetu"  ~ euro_k(valeur),
     kpi == "kpi.K.selPfor"  ~ scales::percent(valeur, accuracy = 1),
@@ -173,7 +173,7 @@ kpiesr_lfc <- list(
   ),
   K = list(
     labels   = c("Ressources\npar étudiant",
-                 "Recettes recherche\npar enseignant-chercheur",
+                 "Recettes recherche\npar EC",
                  "Recettes formation\npar étudiant",
                  "Taux\nd'encadrement", 
                  "Taux de\ntitularité",

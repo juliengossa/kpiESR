@@ -21,6 +21,7 @@ Imports:
     cowplot,
     grid,
     ggbeeswarm,
-    ggiraphExtra
+    ggiraphExtra,
+    purrr
 Depends: 
     R (>= 2.10)

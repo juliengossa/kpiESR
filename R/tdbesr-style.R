@@ -95,6 +95,7 @@ colblues   <- rev(RColorBrewer::brewer.pal(6, "Blues"))
 colgreens  <- rev(RColorBrewer::brewer.pal(6, "Greens"))
 coloranges <- rev(RColorBrewer::brewer.pal(7, "Oranges"))
 colpurples <- rev(RColorBrewer::brewer.pal(6, "Purples"))
+colrdbu <- rev(RColorBrewer::brewer.pal(8, "RdBu"))[2:7]
 
 kpiesr_lfc <- list(
   ETU = list(
@@ -173,8 +174,8 @@ kpiesr_lfc <- list(
   ),
   K = list(
     labels   = c("Ressources\npar étudiant",
-                 "Recettes recherche\npar EC",
-                 "Recettes formation\npar étudiant",
+                 "Recettes\nrecherche\npar EC",
+                 "Recetttes\nformation\npar étudiant",
                  "Taux\nd'encadrement", 
                  "Taux de\ntitularité",
                  "Taux de SCSP" ),
@@ -184,7 +185,7 @@ kpiesr_lfc <- list(
                  "kpi.K.titPetu",
                  "kpi.K.titPens",
                  "kpi.K.dotPres"),
-    colors   = c(coloranges[1],coloranges[4],coloranges[1],colgreens[5],coloranges[5],colblues[5]),
+    colors   = colrdbu, #c(coloranges[1],coloranges[4],coloranges[1],colgreens[5],coloranges[5],colblues[5]),
     y_labels = identity,
     desc     = c("Ressources divisées par le nombre d'étudiants",
                  "Recettes recherche divisées par le nombre d'enseignants-chercheurs titulaires",

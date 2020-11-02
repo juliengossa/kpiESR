@@ -67,6 +67,15 @@ kpiesr_plot_kiviat(2018,uai,kpiesr_lfc[["ENS"]])
 kpiesr_plot_kiviat(2018,uai,kpiesr_lfc[["FIN"]])
 kpiesr_plot_kiviat(2018,uai,kpiesr_lfc[["ADM"]])
 kpiesr_plot_kiviat(2018,uai,kpiesr_lfc[["K"]], omit.first = FALSE)
+kpiesr_plot_kiviat(2018,uai,kpiesr_lfc[["K"]], omit.first = FALSE, 
+                   style=kpiesr_style(kvt_style="square"))
+kpiesr_plot_kiviat(2018,uai,kpiesr_lfc[["K"]], omit.first = FALSE, 
+                   style=kpiesr_style(kvt_style="square", kvt_point_pos=1.2))
+
+
+kpiesr_plot_kiviat(2018,c("0681166Y", "0673021V"),kpiesr_lfc[["K"]], omit.first = FALSE, 
+                   style=kpiesr_style(kvt_style="square", kvt_point_pos=1.2))
+
 
 kpiesr_plot_evol(seq(2012,2017), c(uai), kpiesr_lfc$K,1,
                  plot.type="abs", yzoom=0.5,

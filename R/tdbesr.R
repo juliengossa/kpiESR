@@ -15,9 +15,9 @@ select_kpis <- function(pattern){
   grep(pattern, levels(esr.pnl$kpi),value=TRUE)
 }
 
-kpiesr_pivot_norm_label <- function(esr) {
+kpiesr_pivot_norm_label <- function(esr, rentrée.ref=2012) {
 
-  kpiESR::esr %>%
+  df <- kpiESR::esr %>%
     group_by(Type,Rentrée) %>%
     select(Type,Rentrée,UAI,Libellé,Curif,starts_with("kpi.")) %>% 
     #rename_at(vars(starts_with("kpi")), list( ~ paste(.,"valeur",sep="_"))) %>%
@@ -47,6 +47,11 @@ kpiesr_pivot_norm_label <- function(esr) {
       norm_y = scales::rescale(-rang)
       ) %>%
     ungroup()
+  
+  merge(df, df %>% filter(Rentrée==rentrée.ref) %>% transmute(UAI=UAI, kpi=kpi, norm.ref = norm)) %>%
+    group_by(UAI, kpi) %>%
+    mutate( evolution = norm / norm.ref - 1) %>% 
+    select(-norm.ref)
 }
 
 #test <- kpiesr_pivot_norm_label(esr)
@@ -62,7 +67,7 @@ kpiesr_get_stats <- function(esr.pnl) {
   merge(
     esr.pnl %>%
       group_by(Rentrée,Type,kpi) %>%
-      summarise_at(vars(norm, norm_y), p_funs),
+      summarise_at(vars(norm, norm_y, evolution), p_funs),
     esr.pnl %>%
       group_by(Rentrée,Type,kpi) %>%
       summarise(
@@ -89,7 +94,7 @@ kpiesr_add_kpis <- function (df) {
 
     #kpi.K.2.resPens = kpi.FIN.P.ressources / kpi.ENS.P.effectif,
     #kpi.K.4.docPec  = kpi.ETU.S.cycle.3.D / kpi.ENS.S.2.ECtitulaires,
-  )
+  ) 
 }
 
 kpiesr_get_uaisnamedlist <- function(esr) {
@@ -195,7 +200,8 @@ kpiesr_ETL_and_save <- function() {
   esr.uais <- kpiesr_get_uaisnamedlist(esr)
   
   esr.stats <- kpiesr_get_stats(esr.pnl)
-
+  esr.stats <- set_encoding_utf8(esr.stats)
+  
   #save(esr, esr.pnl, file = "tdbesr.RData")
   usethis::use_data(esr, esr.pnl, esr.uais, esr.stats, overwrite = TRUE)
 }

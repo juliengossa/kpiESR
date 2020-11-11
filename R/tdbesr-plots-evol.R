@@ -71,7 +71,72 @@ kpiesr_plot_evol <- function(rentrées, uais, lfc, ilfc, type=NA,
 }
 
 
+linearize <- function(x) {
+  x1 <- x[1]
+  x2 <- x[length(x)]
+  xd = (x2 - x1) / (length(x)-1)
+  
+  seq(x1,x2,xd)
+}
 
+
+
+kpiesr_plot_evol_min <- function(rentrées, uai, lfc, ilfc, type=NA,
+                             plot.type="abs",
+                             style = kpiESR::kpiesr_style(),
+                             y_labels = lfc$y_labels) {
+  
+  if(is.na(type)) type <- as.character(subset(kpiESR::esr, UAI == uai, Type)[1,1])
+
+  df.all <<- merge(
+    kpiESR::esr.pnl %>% filter(Type==type,
+                               Rentrée %in% rentrées,
+                               kpi == lfc$factors[ilfc],
+                               UAI == uai),
+    kpiESR::esr.stats %>% filter(Type==type,
+                               Rentrée %in% rentrées,
+                               kpi == lfc$factors[ilfc])) %>%
+    { if (plot.type == "abs")
+        transmute(., Rentrée=Rentrée, kpi=kpi, 
+                  y=norm, y_25=norm_25, y_50=norm_50, y_75=norm_75) %>%
+        mutate_at(c("y", "y_25", "y_75"), ~ . - first(y_50)) %>%
+        mutate_at(c("y_50"), ~ . - first(y_50)) 
+      else
+        transmute(., Rentrée=Rentrée, kpi=kpi, 
+                  kpi=kpi, y=evolution, y_25=evolution_25, y_50=evolution_50, y_75=evolution_75)
+    } 
+
+  
+  if(style$evol_linear)
+    df.all <- df.all %>%
+      mutate_at(c("y_25", "y_50", "y_75"), linearize)
+  
+
+  #limits = c(min(stats$norm_0),max(stats$norm_100))
+
+  ggplot(df.all, aes(x=Rentrée)) +
+    geom_area(aes(y=y_75), color=style$evol_fill, fill=style$evol_fill, group=1) +
+    geom_area(aes(y=y_25), color=style$evol_fill, fill=style$evol_fill, group=1) +
+    geom_line(aes(y=y_50), color="white", size=1, group=1) +
+    geom_line(aes(y=y, color=kpi, group=kpi),
+              size=style$line_size,
+              lineend = 'round', linejoin = 'mitre',
+              arrow = arrow(length=unit(0.30,"cm"),type="closed",angle=30)) +
+    #ylim(limits) +
+    theme_void() + guides(color=FALSE)
+    
+}
+
+# kpiesr_plot_evol_min(rentrées = seq(2012,2018),
+#                      uai = "0673021V",
+#                      kpiESR::kpiesr_lfc[["K"]], 6,
+#                      style = kpiesr_style(evol_linear = TRUE))
+# 
+# kpiesr_plot_evol_min(rentrées = seq(2012,2018),
+#                      uai = "0673021V",
+#                      kpiESR::kpiesr_lfc[["K"]], 6,
+#                      plot.type="norm",
+#                      style = kpiesr_style(evol_linear = TRUE))
 
 kpiesr_plot_evol_all <- function(rentrée, uai, peg.args, type=NA, yzooms=list(),
                                  style = kpiesr_style(), ...) {

@@ -73,6 +73,11 @@ kpiesr_plot_kiviat(2018,uai,kpiesr_lfc[["K"]], omit.first = FALSE,
                    style=kpiesr_style(kvt_style="square", kvt_point_pos=1.2))
 
 
+
+kpiesr_plot_kiviat(2018,uai,kpiesr_lfc[["K"]], omit.first = FALSE,
+                   style=kpiesr_style(kvt_scale_text_y = 0))
+
+
 kpiesr_plot_kiviat(2018,c("0681166Y", "0673021V"),kpiesr_lfc[["K"]], omit.first = FALSE, 
                    style=kpiesr_style(kvt_style="square", kvt_point_pos=1.2))
 

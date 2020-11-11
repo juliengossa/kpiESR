@@ -36,7 +36,7 @@ kpiesr_plot_kiviat <- function(rentrée, uais, lfc,
   # shjust = c(0,0,1.1,1.1)
   # svjust = c(0,1.1,1.1,0)
   
-    etab <<- kpiESR::esr.pnl %>% filter(Type==type, Rentrée==rentrée, kpi %in% lfc$factors, UAI %in% uais) %>%
+    etab <- kpiESR::esr.pnl %>% filter(Type==type, Rentrée==rentrée, kpi %in% lfc$factors, UAI %in% uais) %>%
     mutate(kpi = factor(kpi,lfc$factors)) %>%
     arrange(kpi) %>% 
     { if(is.na(style$kvt_point_pos)) 
@@ -45,31 +45,31 @@ kpiesr_plot_kiviat <- function(rentrée, uais, lfc,
         mutate(.,point_y = style$kvt_point_pos)
     } 
 
-    stats <<- kpiESR::esr.stats %>% filter(Type==type, Rentrée==rentrée, kpi %in% lfc$factors) %>%
+    stats <- kpiESR::esr.stats %>% filter(Type==type, Rentrée==rentrée, kpi %in% lfc$factors) %>%
       mutate(kpi = factor(kpi,lfc$factors)) %>%
       arrange(kpi) 
     
     ggplot(stats, aes(x=kpi, y=norm_y)) +
     ggiraphExtra::coord_radar() +
-    geom_polygon(aes(y=norm_y_0), group=1, color="white", fill="white") +
+    geom_polygon(y=0, group=1, color="white", fill="white") +
     geom_point(y=(style$kvt_max_y+0.2), color="white", size=style$kvt_guide_bg_size) +
     { if(style$kvt_style != "circle") list(
-      geom_polygon(aes(y=norm_y_100), group=1, color="grey", fill=NA, size=0.4),
-      geom_polygon(aes(y=norm_y_75), group=1, color="grey", fill=NA, size=0.2),
-      geom_polygon(aes(y=norm_y_50), group=1, color="grey", fill=NA, size=0.4),
-      geom_polygon(aes(y=norm_y_25), group=1, color="grey", fill=NA, size=0.2),
-      geom_polygon(aes(y=norm_y_0), group=1, color="grey", fill=NA, size=0.4))
+      geom_polygon(y=1.00, group=1, color="grey", fill=NA, size=0.4),
+      geom_polygon(y=0.75, group=1, color="grey", fill=NA, size=0.2),
+      geom_polygon(y=0.50, group=1, color="grey", fill=NA, size=0.4),
+      geom_polygon(y=0.25, group=1, color="grey", fill=NA, size=0.2),
+      geom_polygon(y=0.00, group=1, color="grey", fill=NA, size=0.4))
     } +
 
-    geom_point(aes(y = norm_y_0, color=kpi),
+    geom_point(y=0.00, color=lfc$colors,
                size=style$kvt_scale_point_size+1) +
-    geom_point(aes(y = norm_y_25), color=lfc$colors,
+    geom_point(y=0.25, color=lfc$colors,
                size=style$kvt_scale_point_size) +
-    geom_point(aes(y = norm_y_50), color=lfc$colors,
+    geom_point(y=0.50, color=lfc$colors,
                size=style$kvt_scale_point_size+1) +
-    geom_point(aes(y = norm_y_75), color=lfc$colors,
+    geom_point(y=0.75, color=lfc$colors,
                size=style$kvt_scale_point_size) +
-    geom_point(aes(y = norm_y_100), color=lfc$colors,
+    geom_point(y=1.00, color=lfc$colors,
                size=style$kvt_scale_point_size+1) +
 
     geom_text(aes(y = norm_y_0+style$kvt_scale_text_y, label=norm_0_label),
@@ -99,7 +99,7 @@ kpiesr_plot_kiviat <- function(rentrée, uais, lfc,
     #geom_hline(yintercept = 0.5) +
 
 
-    scale_y_continuous(breaks = c(0,0.50,1), limits = c(-0.05,style$kvt_max_y), expand = c(0,0)) +
+    scale_y_continuous(breaks = c(0,0.50,1), limits = c(style$kvt_min_y,style$kvt_max_y), expand = c(0,0)) +
     scale_x_discrete(labels=lfc$labels) +
     #scale_fill_manual(values=lfc$colors) +
     #scale_color_manual(values=lfc$colors) +

@@ -51,6 +51,9 @@ kpiesr_read.fin <- function() {
                                      Contrats.et.prestations.de.recherche.hors.ANR)),
       kpi.FIN.S.investissements = Acquisitions.d.immobilisations
     ) %>%
+    mutate(
+      kpi.FIN.S.recettesFormation = na_if(kpi.FIN.S.recettesFormation, 0),
+      kpi.FIN.S.recettesRecherche = na_if(kpi.FIN.S.recettesRecherche, 0)) %>%
     #filter_at(starts_with("fin"),all_vars(!is.na(.))) %>%
     # filter(!is.na(kpi.FIN.P.ressources),
     #        !is.na(kpi.FIN.S.masseSalariale),

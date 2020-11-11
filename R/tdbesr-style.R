@@ -2,15 +2,15 @@
 
 euro_M <- function(x) {
   #return(scales::dollar(x, prefix="",suffix=" M€", scale = 1/1000000, largest_with_cents = 1, big.mark = " "))
-  return(paste0(round(x/1000000,0)," M€"))
+  return(paste0(round(x/1000000,0),"M€"))
 }
 
 euro_k <- function(x) {
-  return(paste0(round(x/1000,1)," k€"))
+  return(paste0(round(x/1000,1),"k€"))
 }
 
 euro <- function(x) {
-  return(paste0(round(x,0)," €"))
+  return(paste0(round(x,0),"€"))
 }
 
 percent_format <- function(x) {
@@ -59,7 +59,7 @@ norm_labels <- function(kpi, norm) {
 #'
 #' @examples
 kpiesr_style <- function(
-              point_size = 20,
+              point_size = 18,
               line_size = 3,
               text_size = 4,
               point_alpha = 1,
@@ -69,6 +69,8 @@ kpiesr_style <- function(
               bp_text_x = -0.25,
               bp_alpha = 0.8,
               bp_color = "grey",
+              evol_linear = TRUE,
+              evol_fill = "gray95",
               kvt_style = "circle",
               kvt_point_pos = NA,
               kvt_alpha = 0.5,
@@ -77,6 +79,7 @@ kpiesr_style <- function(
               kvt_scale_point_size = 2,
               kvt_guide_bg_size = 30,
               kvt_plot.margin = ggplot2::unit(c(0,0,0,0), "cm"),
+              kvt_min_y = -0.25,
               kvt_max_y = 1.3,
               palette = "Set2",
               x_scale = TRUE,

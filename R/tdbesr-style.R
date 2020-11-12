@@ -39,7 +39,7 @@ valeur_labels <- function(kpi, valeur) {
 
 norm_labels <- function(kpi, norm) {
   case_when(
-    grepl("kpi.....S", kpi) ~ scales::percent(norm, accuracy = 2),
+    grepl("kpi.....S", kpi) ~ scales::percent(norm, accuracy = 1),
     TRUE                    ~ valeur_labels(kpi, norm))
 }
 

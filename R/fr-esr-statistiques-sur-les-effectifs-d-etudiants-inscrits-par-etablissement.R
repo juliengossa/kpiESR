@@ -1,4 +1,6 @@
 #  https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-statistiques-sur-les-effectifs-d-etudiants-inscrits-par-etablissement/information/
+#  version du 9 mars 2020
+#
 # [1] "RENTREE"
 # [2] "RENTREE_lib"
 # [3] "Identifiant.Paysage"

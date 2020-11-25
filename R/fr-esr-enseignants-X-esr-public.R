@@ -1,25 +1,29 @@
 
 # https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-enseignants-titulaires-esr-public/information/?disjunctive.annee
-# [1] "Rentrée"                   "Année.universitaire"       "Établissement"
-# [4] "Type.établissement"        "Région"                    "Académie"
-# [7] "Sexe"                      "Categorie.de.personnels"   "Grandes.disciplines"
-# [10] "Groupes.CNU"               "Sections.CNU"              "ID.académie"
+# Version du 28 octobre 2020
+#
+# [1] "Rentrée"                   "Année.universitaire"       "Établissement"            
+# [4] "Type.établissement"        "Région"                    "Académie"                 
+# [7] "Sexe"                      "Categorie.de.personnels"   "Grandes.disciplines"      
+# [10] "Groupes.CNU"               "Sections.CNU"              "ID.académie"              
 # [13] "ID.région"                 "Identifiant.établissement" "Code.categorie.personnels"
-# [16] "Code.groupe.CNU"           "Code.grande.discipline"    "effectif"
-# [19] "code_section_cnu"          "geolocalisation"           "classe_age3"
-# [22] "quotite"
+# [16] "Code.groupe.CNU"           "Code.grande.discipline"    "effectif"                 
+# [19] "code_section_cnu"          "geolocalisation"           "id_Paysage"               
+# [22] "classe_age3"               "quotite"      
 
 # https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-enseignants-nonpermanents-esr-public/information/
-# [1] "Rentrée"                         "Année.universitaire"
-# [3] "Établissement"                   "Type.établissement"
-# [5] "Région"                          "Académie"
-# [7] "Sexe"                            "Categorie.de.personnels"
-# [9] "Grande.discipline"               "Groupes.CNU"
-# [11] "Identifiant.établissement"       "ID.région"
-# [13] "ID.académie"                     "Code.groupe.CNU"
-# [15] "Code.grande.discipline"          "EFFECTIF"
-# [17] "geolocalisation"                 "code.categorie.personnels"
-# [19] "categorie.personnels.regroupées" "quotite"
+# Version du 29 avril 2020
+#
+# [1] "Rentrée"                         "Année.universitaire"            
+# [3] "Établissement"                   "Type.établissement"             
+# [5] "Région"                          "Académie"                       
+# [7] "Sexe"                            "Categorie.de.personnels"        
+# [9] "Grande.discipline"               "Groupes.CNU"                    
+# [11] "Identifiant.établissement"       "ID.région"                      
+# [13] "ID.académie"                     "Code.groupe.CNU"                
+# [15] "Code.grande.discipline"          "EFFECTIF"                       
+# [17] "geolocalisation"                 "code.categorie.personnels"      
+# [19] "quotite"                         "categorie.personnels.regroupées"
 
 kpiesr_read.ens <- function() {
 

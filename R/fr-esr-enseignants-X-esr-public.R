@@ -25,10 +25,10 @@
 
 kpiesr_read.ens <- function() {
 
-  ens.tit <- read.csv2("dataESR/fr-esr-enseignants-titulaires-esr-public.csv") %>%
-    #filter(Rentrée > 2011) %>% # Les données 2010 et 2011 ne sont pas disponibles pour les non titulaires
+  ens.tit <- read.csv2("dataESR/fr-esr-enseignants-titulaires-esr-public.csv") %>% 
     transmute(
       UAI = etablissement_id_uai,
+      Etablissement = Établissement,
       Rentrée,
       Catégorie = case_when(
         Code.categorie.personnels == "AM2D" ~ "AM2D",
@@ -36,9 +36,10 @@ kpiesr_read.ens <- function() {
       Discipline = Code.grande.discipline,
       Effectif = effectif)
 
-  ens.np <- read.csv2("dataESR/fr-esr-enseignants-nonpermanents-esr-public.csv")  %>%
+  ens.np <- read.csv2("dataESR/fr-esr-enseignants-nonpermanents-esr-public.csv")  %>% 
     transmute(
       UAI = etablissement_id_uai,
+      Etablissement = Établissement,
       Rentrée,
       Catégorie = case_when(
         code.categorie.personnels %in% c("LRU","MCF ASS-INV", "PR ASS-INV") ~ "LRU_Associés",
@@ -48,12 +49,13 @@ kpiesr_read.ens <- function() {
       Effectif)
 
   ens <- bind_rows(ens.tit,ens.np) %>%
-    group_by(UAI, Rentrée, Catégorie) %>%
+    group_by(UAI, Etablissement, Rentrée, Catégorie) %>%
     summarise(Effectif = sum(Effectif,na.rm = TRUE)) %>%
     ungroup() %>%
     pivot_wider(names_from = Catégorie, values_from = Effectif, values_fill = list(Effectif=NA)) %>%
     mutate(
       UAI,
+      Etablissement,
       Rentrée = as.factor(Rentrée),
       kpi.ENS.P.effectif      = EC+AM2D+Doc_ATER+LRU_Associés+Autres,
       kpi.ENS.S.titulaires    = EC+AM2D,

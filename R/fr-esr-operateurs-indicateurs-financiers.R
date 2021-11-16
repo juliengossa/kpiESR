@@ -54,6 +54,7 @@ kpiesr_read.fin <- function() {
     transmute(
       #UAI = uai.actuel,
       UAI = uai...identifiant,
+      Etablissement = Etablissement,
       Rentrée = as.factor(exercice-1), # l'exercice comptable est sur l'année civile
       #RCE = rce,
       kpi.FIN.P.ressources = Produits.de.fonctionnement.encaissables,

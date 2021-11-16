@@ -159,6 +159,7 @@ kpiesr_read.etu <- function() {
     filter(Attention == "") %>%
     transmute(
       UAI = Identifiant.s..UAI,
+      Etablissement = Établissement,
       Rentrée = as.factor(rentree),
       kpi.ETU.P.effectif = Nombre.d.étudiants.inscrits..inscriptions.principales..hors.doubles.inscriptions.CPGE,
       kpi.ETU.S.cycle.1.L = Cycle.universitaire..cursus.LMD....L..1er.cycle.,

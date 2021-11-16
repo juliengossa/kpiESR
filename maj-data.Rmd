@@ -9,6 +9,16 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 options(knitr.table.format = "pipe")
 library(tidyverse)
 library(kpiESR)
+
+spoilerTable <- function(df) {
+  cat("\n<details>\n")
+  cat("  <summary>Voir les données</summary>\n\n")
+  
+  print(kableExtra::kable(df, format="pipe"))
+  
+  cat("\n\n</details>\n")
+}
+
 ```
 
 ```{r data}
@@ -26,15 +36,19 @@ données (enseignants, étudiants et finances).
 
 ## Portée
 
-```{r portée}
+  
+```{r portée, results='asis'}
 bind_rows(
+  etab.21 %>% summarise(data = "etab.21", Nb.uais = n_distinct(UAI)),
+  etab.20 %>% summarise(data = "etab.20", Nb.uais = n_distinct(UAI)),
+  etab.19 %>% summarise(data = "etab.19", Nb.uais = n_distinct(UAI)),
   ens %>% summarise(data = "ens",
     Rentrée.min = min(Rentrée), Rentrée.max = max(Rentrée), Nb.uais = n_distinct(UAI)),
   etu %>% summarise(data = "etu",
     Rentrée.min = min(Rentrée), Rentrée.max = max(Rentrée), Nb.uais = n_distinct(UAI)),
   fin %>% summarise(data = "fin",
     Rentrée.min = min(Rentrée), Rentrée.max = max(Rentrée), Nb.uais = n_distinct(UAI))
-) %>% kableExtra::kable(format="pipe")
+) %>% spoilerTable()
 ```
 
 
@@ -53,17 +67,22 @@ uaijoins <- etab.21 %>% select(UAI, etab.21 = Etablissement) %>% unique() %>%
 
 ### UAI manquants 
 
-```{r uai.manquants}
-etab.21 %>% filter(is.na(UAI)) %>% kableExtra::kable(format="pipe")
+```{r uai.manquants, results='asis'}
+bind_rows(
+  etab.21 %>% filter(is.na(UAI)) %>% transmute(dataset="etab.21",UAI,Etablissement),
+  ens %>% filter(is.na(UAI)) %>% transmute(dataset="ens",UAI,Etablissement),
+  etu %>% filter(is.na(UAI)) %>% transmute(dataset="etu",UAI,Etablissement),
+  fin %>% filter(is.na(UAI)) %>% transmute(dataset="fin",UAI,Etablissement)
+  ) %>% spoilerTable()
 ```
 
 ### Universités : valeurs manquantes depuis etab.21
 
-```{r checkuais.na.21}
+```{r checkuais.na.21, results='asis'}
 uaijoins %>%
   filter(str_detect(etab.21,"niversité")) %>%
   filter(is.na(ens)|is.na(etu)|is.na(fin)) %>%
-  kableExtra::kable(format="pipe")
+  spoilerTable()
 ```
 
 ```{r etab.lookup.fun}
@@ -75,6 +94,9 @@ etab.lookup <- function(etab="aucunetab",uai="aucunuai") {
     kableExtra::kable(format="pipe")
 }
 ```
+
+<details>
+  <summary>Voir détail universités manquantes</summary>
 
 #### Nantes
 
@@ -116,30 +138,32 @@ etab.lookup(etab="Lille")
 etab.lookup(etab="grenoble")
 ```
 
+</details>
+
 ### Universités : etab.21
 
-```{r checkuais.université.21}
+```{r checkuais.université.21, results='asis'}
 uaijoins %>%
   filter(str_detect(etab.21,"niversité")) %>%
   arrange(etab.21) %>%
-  kableExtra::kable(format="pipe")
+  spoilerTable()
 ```
 
 
-### Toutes les valeurs manquantes 
+### Toutes les valeurs manquantes pour les universités
 
-```{r checkuais.na.20-19}
+```{r checkuais.na.20-19, results='asis'}
 uaijoins %>%
   filter(str_detect(etab.20,"niversité")|str_detect(etab.19,"niversité")) %>%
   filter(is.na(ens)|is.na(etu)|is.na(fin)) %>%
-  kableExtra::kable(format="pipe")
+  spoilerTable()
 ```
 
 ### Correspondances UAI
 
 Ces correspondances sont construites manuellement et appliquées aux jeux de données.
 
-```{r checkuai.match}
+```{r checkuai.match, results='asis'}
 correspondances.uai <- bind_rows(
   c("from"="0440984F","to"="0442953W", "note"="Changement de statut au 1er janvier 2022"),
   c("from"="0755700N","to"="0756036D", "note"="Potentiel changement de périmètre en 2019"),
@@ -149,7 +173,7 @@ correspondances.uai <- bind_rows(
   c("from"="0383493R","to"="0383546Y", "note"="Changement de statut en 2019 et possibles changements de périmètre avant")
 )
 
-correspondances.uai %>% kableExtra::kable(format="pipe")
+correspondances.uai %>% spoilerTable()
 ```
 
 
@@ -158,24 +182,50 @@ correspondances.uai %>% kableExtra::kable(format="pipe")
 
 Etablissements non université présents dans etab.21 et les trois jeux de données.
 
-```{r nonuniv.complet}
+```{r nonuniv.complet, results='asis'}
 nonuniv.complet <- uaijoins %>%
   filter(!(str_detect(etab.21,"niversité")|str_detect(etab.20,"niversité")|str_detect(etab.19,"niversité"))) %>%
   filter(!is.na(ens),!is.na(etu),!is.na(fin)) %>%
   arrange(etab.21,etab.20,etab.19) 
 
-nonuniv.complet %>% kableExtra::kable(format="pipe")
+nonuniv.complet %>% spoilerTable()
 ```
+
+
+## Etablissement des jeux de données, inconnus dans etab.x
+
+```{r checkuais.horsetab, message=F}
+etab.uais <- unique(c(etab.21$UAI,etab.20$UAI,etab.19$UAI))
+horsetab <- ens %>% group_by(UAI,etab.ens=Etablissement) %>% summarise(ens = paste(range(Rentrée), collapse = "-")) %>% unique() %>%
+  full_join(etu %>% group_by(UAI,etab.etu=Etablissement) %>% summarise(etu = paste(range(Rentrée), collapse = "-")) %>% unique() ) %>%
+  full_join(fin %>% group_by(UAI,etab.fin=Etablissement) %>% summarise(fin = paste(range(Rentrée), collapse = "-")) %>% unique() ) %>%
+  filter(!UAI %in% etab.uais) 
+```
+
+```{r checkuais.horsetab.doubleuai, results='asis'}
+horsetab %>% 
+  filter(str_detect(UAI,";")) %>% 
+  mutate(sepUAI = UAI) %>%
+  separate_rows(sepUAI,sep = ';') %>%
+  rename(doubleUAI = UAI, UAI = sepUAI) %>%
+  left_join(etab.21 %>% select(UAI,etab.21=Etablissement)) %>%
+  left_join(etab.20 %>% select(UAI,etab.20=Etablissement)) %>%
+  left_join(etab.19 %>% select(UAI,etab.19=Etablissement)) %>%
+  spoilerTable() 
+```
+
 
 ## Wikidata manquants 
 
-```{r wikidata}
+```{r wikidata, results='asis'}
 etab.21 %>%
   filter(is.na(url.wikidata)) %>%
   arrange(Type) %>% 
   select(UAI,Etablissement, url.wikidata) %>% 
-  kableExtra::kable(format="pipe")
+  spoilerTable()
 ```
+
+Fix manuel :
 
 ```{r fixfun}
 fix_etab <- function(etab, fixdf) {
@@ -188,7 +238,7 @@ fix_etab <- function(etab, fixdf) {
 }
 ```
 
-```{r wikidata.fix}
+```{r wikidata.fixv, results='asis'}
 wikidata.fix <- bind_rows(
   c(UAI="0442953W",url.wikidata="https://www.wikidata.org/entity/Q259388"),  
   c(UAI="0597132G",url.wikidata="https://www.wikidata.org/entity/Q1548539"),
@@ -197,7 +247,7 @@ wikidata.fix <- bind_rows(
   c(UAI="0597239Y",url.wikidata="https://www.wikidata.org/entity/Q3551621")
 )
 
- wikidata.fix %>% kableExtra::kable(format="pipe")
+ wikidata.fix %>% spoilerTable()
 ```
 
 ## Sigles manquants pour les universités 
@@ -215,23 +265,25 @@ alias.wikidata <- etab.21 %>%
   select(UAI,Etablissement,Sigle=wikidata.alias) 
 ```
 
-```{r sigles.wikidata.print}
-alias.wikidata %>% kableExtra::kable(format="pipe")
+```{r sigles.wikidata.print, results='asis'}
+alias.wikidata %>% spoilerTable()
 ```
 
 ### Sigles toujours manquants
 
-```{r sigles.manquants}
+```{r sigles.manquants, results='asis'}
 etab.21 %>%
   fix_etab(alias.wikidata) %>%
   filter(is.na(Sigle)) %>%
   arrange(Type) %>% 
   select(UAI,Etablissement,Sigle, url.wikidata) %>% 
-  kableExtra::kable(format="pipe")
+  spoilerTable()
 ```
 
-
-
+Correction manuelle :
+```{r sigles.manquants.fix, echo=TRUE}
+alias.wikidata <- bind_rows(alias.wikidata, c(UAI="0597165T",Etablissement="Junia",Sigle="Junia"))
+```
 
 
 

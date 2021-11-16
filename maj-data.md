@@ -1,6 +1,6 @@
 Mise à jour des données
 ================
-2021-11-16
+2021-11-17
 
 Ce document identifie les correspondances de code UAI entre trois
 versions du jeu de donnée sur les établissements (2021, 2020 et 2019),
@@ -8,21 +8,43 @@ et trois jeux de données (enseignants, étudiants et finances).
 
 ## Portée
 
-| data | Rentrée.min | Rentrée.max | Nb.uais |
-|:-----|:------------|:------------|--------:|
-| ens  | 2010        | 2019        |     175 |
-| etu  | 2006        | 2020        |     215 |
-| fin  | 2009        | 2020        |     189 |
+<details>
+<summary>
+Voir les données
+</summary>
+
+| data    | Nb.uais | Rentrée.min | Rentrée.max |
+|:--------|--------:|:------------|:------------|
+| etab.21 |     260 | NA          | NA          |
+| etab.20 |     264 | NA          | NA          |
+| etab.19 |     327 | NA          | NA          |
+| ens     |     175 | 2010        | 2019        |
+| etu     |     215 | 2006        | 2020        |
+| fin     |     189 | 2009        | 2020        |
+
+</details>
 
 ## Vérification UAIs
 
 ### UAI manquants
 
-| UAI | Etablissement                                | Sigle       | Type  | Type.détaillé | Académie | Rattachement | Fusion | url.siteweb | url.wikidata | url.legifrance | twitter |
-|:----|:---------------------------------------------|:------------|:------|:--------------|:---------|:-------------|:-------|:------------|:-------------|:---------------|:--------|
-| NA  | Groupe Institut catholique d’arts et métiers | Groupe ICAM | École | École         | Paris    | NA           | NA     | NA          | NA           | NA             | NA      |
+<details>
+<summary>
+Voir les données
+</summary>
+
+| dataset | UAI | Etablissement                                |
+|:--------|:----|:---------------------------------------------|
+| etab.21 | NA  | Groupe Institut catholique d’arts et métiers |
+
+</details>
 
 ### Universités : valeurs manquantes depuis etab.21
+
+<details>
+<summary>
+Voir les données
+</summary>
 
 | UAI      | etab.21                              | etab.20                              | etab.19 | ens | etu       | fin       |
 |:---------|:-------------------------------------|:-------------------------------------|:--------|:----|:----------|:----------|
@@ -31,6 +53,12 @@ et trois jeux de données (enseignants, étudiants et finances).
 | 0342490X | Université de Montpellier            | NA                                   | NA      | NA  | NA        | NA        |
 | 0632084Y | Université Clermont Auvergne         | NA                                   | NA      | NA  | 2020-2020 | NA        |
 | 0597239Y | Université de Lille                  | NA                                   | NA      | NA  | NA        | NA        |
+
+</details>
+<details>
+<summary>
+Voir détail universités manquantes
+</summary>
 
 #### Nantes
 
@@ -80,7 +108,14 @@ et trois jeux de données (enseignants, étudiants et finances).
 | 0383412C | NA                        | NA                        | Université Grenoble Alpes    | NA        | 2009-2018 | 2015-2018 |
 | 0383493R | NA                        | NA                        | Université de Grenoble Alpes | 2015-2018 | 2015-2018 | 2015-2018 |
 
+</details>
+
 ### Universités : etab.21
+
+<details>
+<summary>
+Voir les données
+</summary>
 
 | UAI      | etab.21                                            | etab.20                                            | etab.19                                            | ens       | etu       | fin       |
 |:---------|:---------------------------------------------------|:---------------------------------------------------|:---------------------------------------------------|:----------|:----------|:----------|
@@ -156,7 +191,14 @@ et trois jeux de données (enseignants, étudiants et finances).
 | 0311382J | Université Toulouse Capitole                       | Université Toulouse 1 - Capitole                   | Université Toulouse 1 - Capitole                   | 2010-2019 | 2006-2020 | 2009-2020 |
 | 0311384L | Université Toulouse III - Paul Sabatier            | Université de Toulouse 3 - Paul Sabatier           | Université de Toulouse 3 - Paul Sabatier           | 2010-2019 | 2006-2020 | 2009-2020 |
 
-### Toutes les valeurs manquantes
+</details>
+
+### Toutes les valeurs manquantes pour les universités
+
+<details>
+<summary>
+Voir les données
+</summary>
 
 | UAI      | etab.21                              | etab.20                              | etab.19                                                                     | ens | etu       | fin       |
 |:---------|:-------------------------------------|:-------------------------------------|:----------------------------------------------------------------------------|:----|:----------|:----------|
@@ -179,10 +221,17 @@ et trois jeux de données (enseignants, étudiants et finances).
 | 0755581J | NA                                   | NA                                   | HESAM Université                                                            | NA  | NA        | 2015-2019 |
 | 0772502B | NA                                   | NA                                   | Université Paris-Est Marne-la-Vallée                                        | NA  | NA        | 2009-2018 |
 
+</details>
+
 ### Correspondances UAI
 
 Ces correspondances sont construites manuellement et appliquées aux jeux
 de données.
+
+<details>
+<summary>
+Voir les données
+</summary>
 
 | from     | to       | note                                                                     |
 |:---------|:---------|:-------------------------------------------------------------------------|
@@ -193,10 +242,17 @@ de données.
 | 0597065J | 0597239Y | Changement de statut en 2020 et possibles changements de périmètre avant |
 | 0383493R | 0383546Y | Changement de statut en 2019 et possibles changements de périmètre avant |
 
+</details>
+
 ## Non université données complètes
 
 Etablissements non université présents dans etab.21 et les trois jeux de
 données.
+
+<details>
+<summary>
+Voir les données
+</summary>
 
 | UAI      | etab.21                                                                       | etab.20                                                                       | etab.19                                                                       | ens       | etu       | fin       |
 |:---------|:------------------------------------------------------------------------------|:------------------------------------------------------------------------------|:------------------------------------------------------------------------------|:----------|:----------|:----------|
@@ -235,7 +291,40 @@ données.
 | 0310133B | Sciences Po Toulouse                                                          | Institut d’études politiques de Toulouse                                      | Institut d’études politiques de Toulouse                                      | 2010-2019 | 2006-2020 | 2009-2020 |
 | 0311381H | Toulouse INP                                                                  | Institut national polytechnique de Toulouse                                   | Institut national polytechnique de Toulouse                                   | 2010-2019 | 2006-2020 | 2009-2020 |
 
+</details>
+
+## Etablissement des jeux de données, inconnus dans etab.x
+
+<details>
+<summary>
+Voir les données
+</summary>
+
+| doubleUAI         | etab.ens                                                      | ens       | etab.etu                                                      | etu       | etab.fin | fin | UAI      | etab.21                                                       | etab.20                                                       | etab.19                                                       |
+|:------------------|:--------------------------------------------------------------|:----------|:--------------------------------------------------------------|:----------|:---------|:----|:---------|:--------------------------------------------------------------|:--------------------------------------------------------------|:--------------------------------------------------------------|
+| 0180974L;0411068N | Institut national des sciences appliquées Centre Val de Loire | 2012-2019 | Institut national des sciences appliquées Centre Val de Loire | 2013-2020 | NA       | NA  | 0180974L | Institut national des sciences appliquées Centre Val de Loire | Institut national des sciences appliquées Centre Val de Loire | Institut national des sciences appliquées Centre Val de Loire |
+| 0180974L;0411068N | Institut national des sciences appliquées Centre Val de Loire | 2012-2019 | Institut national des sciences appliquées Centre Val de Loire | 2013-2020 | NA       | NA  | 0411068N | NA                                                            | NA                                                            | NA                                                            |
+| 0597139P;0590349J | Centrale Lille Institut                                       | 2010-2019 | Centrale Lille Institut                                       | 2006-2020 | NA       | NA  | 0597139P | Centrale Lille Institut                                       | Centrale Lille Institut                                       | NA                                                            |
+| 0597139P;0590349J | Centrale Lille Institut                                       | 2010-2019 | Centrale Lille Institut                                       | 2006-2020 | NA       | NA  | 0590349J | NA                                                            | NA                                                            | Centrale Lille Institut                                       |
+| 0632086A;0632033T | SIGMA Clermont                                                | 2015-2019 | SIGMA Clermont                                                | 2015-2019 | NA       | NA  | 0632086A | NA                                                            | NA                                                            | NA                                                            |
+| 0632086A;0632033T | SIGMA Clermont                                                | 2015-2019 | SIGMA Clermont                                                | 2015-2019 | NA       | NA  | 0632033T | NA                                                            | SIGMA Clermont                                                | SIGMA Clermont                                                |
+| 0772502B;0932056E | Université Paris-Est Marne-la-Vallée                          | 2010-2018 | Université Paris-Est Marne-la-Vallée                          | 2006-2018 | NA       | NA  | 0772502B | NA                                                            | NA                                                            | Université Paris-Est Marne-la-Vallée                          |
+| 0772502B;0932056E | Université Paris-Est Marne-la-Vallée                          | 2010-2018 | Université Paris-Est Marne-la-Vallée                          | 2006-2018 | NA       | NA  | 0932056E | NA                                                            | NA                                                            | NA                                                            |
+| 0912423P;0940607Z | École normale supérieure Paris-Saclay                         | 2010-2018 | École normale supérieure Paris-Saclay                         | 2006-2018 | NA       | NA  | 0912423P | NA                                                            | NA                                                            | NA                                                            |
+| 0912423P;0940607Z | École normale supérieure Paris-Saclay                         | 2010-2018 | École normale supérieure Paris-Saclay                         | 2006-2018 | NA       | NA  | 0940607Z | NA                                                            | NA                                                            | École normale supérieure Paris-Saclay                         |
+| 0912423P;0940607Z | Université Paris-Saclay                                       | 2019-2019 | École normale supérieure Paris-Saclay                         | 2006-2018 | NA       | NA  | 0912423P | NA                                                            | NA                                                            | NA                                                            |
+| 0912423P;0940607Z | Université Paris-Saclay                                       | 2019-2019 | École normale supérieure Paris-Saclay                         | 2006-2018 | NA       | NA  | 0940607Z | NA                                                            | NA                                                            | École normale supérieure Paris-Saclay                         |
+| 0693817Z;0920812H | NA                                                            | NA        | École normale supérieure lettres et sciences humaines         | 2006-2008 | NA       | NA  | 0693817Z | NA                                                            | NA                                                            | NA                                                            |
+| 0693817Z;0920812H | NA                                                            | NA        | École normale supérieure lettres et sciences humaines         | 2006-2008 | NA       | NA  | 0920812H | NA                                                            | NA                                                            | NA                                                            |
+
+</details>
+
 ## Wikidata manquants
+
+<details>
+<summary>
+Voir les données
+</summary>
 
 | UAI      | Etablissement                                                    | url.wikidata |
 |:---------|:-----------------------------------------------------------------|:-------------|
@@ -251,6 +340,15 @@ données.
 | 0632084Y | Université Clermont Auvergne                                     | NA           |
 | 0597239Y | Université de Lille                                              | NA           |
 
+</details>
+
+Fix manuel :
+
+<details>
+<summary>
+Voir les données
+</summary>
+
 | UAI      | url.wikidata                               |
 |:---------|:-------------------------------------------|
 | 0442953W | <https://www.wikidata.org/entity/Q259388>  |
@@ -259,9 +357,16 @@ données.
 | 0632084Y | <https://www.wikidata.org/entity/Q1319786> |
 | 0597239Y | <https://www.wikidata.org/entity/Q3551621> |
 
+</details>
+
 ## Sigles manquants pour les universités
 
 ### Sigles récupérables sur wikidata
+
+<details>
+<summary>
+Voir les données
+</summary>
 
 | UAI      | Etablissement                                | Sigle                               |
 |:---------|:---------------------------------------------|:------------------------------------|
@@ -309,8 +414,23 @@ données.
 | 9740478B | Université de La Réunion                     | UFOI                                |
 | 9830445S | Université de la Nouvelle-Calédonie          | Université de la Nouvelle-Calédonie |
 
+</details>
+
 ### Sigles toujours manquants
+
+<details>
+<summary>
+Voir les données
+</summary>
 
 | UAI      | Etablissement | Sigle | url.wikidata |
 |:---------|:--------------|:------|:-------------|
 | 0597165T | Junia         | NA    | NA           |
+
+</details>
+
+Correction manuelle :
+
+``` r
+alias.wikidata <- bind_rows(alias.wikidata, c(UAI="0597165T",Etablissement="Junia",Sigle="Junia"))
+```

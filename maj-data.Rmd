@@ -5,10 +5,10 @@ date: "`r Sys.Date()`"
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+options(knitr.table.format = "pipe")
 library(tidyverse)
 library(kpiESR)
-
 ```
 
 ```{r data}
@@ -34,9 +34,8 @@ bind_rows(
     Rentrée.min = min(Rentrée), Rentrée.max = max(Rentrée), Nb.uais = n_distinct(UAI)),
   fin %>% summarise(data = "fin",
     Rentrée.min = min(Rentrée), Rentrée.max = max(Rentrée), Nb.uais = n_distinct(UAI))
-) %>% kableExtra::kable()
+) %>% kableExtra::kable(format="pipe")
 ```
-
 
 
 
@@ -52,13 +51,19 @@ uaijoins <- etab.21 %>% select(UAI, etab.21 = Etablissement) %>% unique() %>%
 
 ## Vérification UAIs
 
+### UAI manquants 
+
+```{r uai.manquants}
+etab.21 %>% filter(is.na(UAI)) %>% kableExtra::kable(format="pipe")
+```
+
 ### Universités : valeurs manquantes depuis etab.21
 
 ```{r checkuais.na.21}
 uaijoins %>%
   filter(str_detect(etab.21,"niversité")) %>%
   filter(is.na(ens)|is.na(etu)|is.na(fin)) %>%
-  kableExtra::kable()
+  kableExtra::kable(format="pipe")
 ```
 
 ```{r etab.lookup.fun}
@@ -67,7 +72,7 @@ etab.lookup <- function(etab="aucunetab",uai="aucunuai") {
   uaijoins %>%
     filter(str_detect(str_to_lower(etab.21),etab)|str_detect(str_to_lower(etab.20),etab)|str_detect(str_to_lower(etab.19),etab)|UAI==uai) %>%
     filter(str_detect(etab.21,"niversité")|str_detect(etab.20,"niversité")|str_detect(etab.19,"niversité")) %>%
-    kableExtra::kable()
+    kableExtra::kable(format="pipe")
 }
 ```
 
@@ -117,7 +122,7 @@ etab.lookup(etab="grenoble")
 uaijoins %>%
   filter(str_detect(etab.21,"niversité")) %>%
   arrange(etab.21) %>%
-  kableExtra::kable()
+  kableExtra::kable(format="pipe")
 ```
 
 
@@ -127,7 +132,7 @@ uaijoins %>%
 uaijoins %>%
   filter(str_detect(etab.20,"niversité")|str_detect(etab.19,"niversité")) %>%
   filter(is.na(ens)|is.na(etu)|is.na(fin)) %>%
-  kableExtra::kable()
+  kableExtra::kable(format="pipe")
 ```
 
 ### Correspondances UAI
@@ -144,7 +149,7 @@ correspondances.uai <- bind_rows(
   c("from"="0383493R","to"="0383546Y", "note"="Changement de statut en 2019 et possibles changements de périmètre avant")
 )
 
-correspondances.uai %>% kableExtra::kable()
+correspondances.uai %>% kableExtra::kable(format="pipe")
 ```
 
 
@@ -159,16 +164,74 @@ nonuniv.complet <- uaijoins %>%
   filter(!is.na(ens),!is.na(etu),!is.na(fin)) %>%
   arrange(etab.21,etab.20,etab.19) 
 
-nonuniv.complet %>% kableExtra::kable()
+nonuniv.complet %>% kableExtra::kable(format="pipe")
 ```
 
+## Wikidata manquants 
+
+```{r wikidata}
+etab.21 %>%
+  filter(is.na(url.wikidata)) %>%
+  arrange(Type) %>% 
+  select(UAI,Etablissement, url.wikidata) %>% 
+  kableExtra::kable(format="pipe")
+```
+
+```{r fixfun}
+fix_etab <- function(etab, fixdf) {
+  fixdf <- fixdf %>% arrange(UAI)
+  etab <- etab %>% arrange(UAI)
+  
+  etab %>% 
+    mutate(across(names(fixdf),
+                  ~ replace(.x, UAI %in% fixdf$UAI, fixdf[[cur_column()]])))
+}
+```
+
+```{r wikidata.fix}
+wikidata.fix <- bind_rows(
+  c(UAI="0442953W",url.wikidata="https://www.wikidata.org/entity/Q259388"),  
+  c(UAI="0597132G",url.wikidata="https://www.wikidata.org/entity/Q1548539"),
+  c(UAI="0342490X",url.wikidata="https://www.wikidata.org/entity/Q776223"),
+  c(UAI="0632084Y",url.wikidata="https://www.wikidata.org/entity/Q1319786"),
+  c(UAI="0597239Y",url.wikidata="https://www.wikidata.org/entity/Q3551621")
+)
+
+ wikidata.fix %>% kableExtra::kable(format="pipe")
+```
 
 ## Sigles manquants pour les universités 
 
-```{r sigles}
-etab.21 %>%
-  filter(str_detect(Etablissement,"niversité"), is.na(Sigle)) %>%
+### Sigles récupérables sur wikidata
+
+```{r sigles.wikidata.load, results='hide', cache=TRUE}
+wikidataESR::wdesr_get_cache()
+
+alias.wikidata <- etab.21 %>%
+  fix_etab(wikidata.fix) %>%
+  filter(is.na(Sigle), !is.na(url.wikidata)) %>%
   arrange(Type) %>% 
-  select(UAI,Etablissement,Sigle,url.wikidata) %>%
-  kableExtra::kable()
+  mutate(wikidata.alias = wikidataESR::wdesr_get_data(str_replace(url.wikidata,"https://www.wikidata.org/entity/",""))$alias) %>%
+  select(UAI,Etablissement,Sigle=wikidata.alias) 
 ```
+
+```{r sigles.wikidata.print}
+alias.wikidata %>% kableExtra::kable(format="pipe")
+```
+
+### Sigles toujours manquants
+
+```{r sigles.manquants}
+etab.21 %>%
+  fix_etab(alias.wikidata) %>%
+  filter(is.na(Sigle)) %>%
+  arrange(Type) %>% 
+  select(UAI,Etablissement,Sigle, url.wikidata) %>% 
+  kableExtra::kable(format="pipe")
+```
+
+
+
+
+
+

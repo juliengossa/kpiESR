@@ -16,7 +16,7 @@ kpiesr_plot_tdb(2018,"0755700N", style.kpi = kpiesr_style())
 
 rentrée <- 2018
 type <- "Université"
-uai.unistra <- "0673021V"
+ uai.unistra <- "0673021V"
 uai.uha <- "0681166Y"
 uai.ubm <- "0331766R"
 uai.nimes <- "0301687W"

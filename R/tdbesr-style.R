@@ -125,7 +125,7 @@ kpiesr_lfc <- list(
                  "Titulaires",
                  "EC",
                  "Doc et\nATER",
-                 "LRU"),
+                 "LRU_Associés"),
     factors  = c("kpi.ENS.P.effectif", 
                  "kpi.ENS.S.titulaires", 
                  "kpi.ENS.S.ECtitulaires", 
@@ -137,7 +137,7 @@ kpiesr_lfc <- list(
                  "Effectif enseignant titulaire",
                  "Effectif enseignant-chercheur titulaire",
                  "Effectif doctorant et ATER",
-                 "Effectif contrat LRU")
+                 "Effectif contrat LRU et Associés/Invités")
   ),
   FIN = list(
     labels   = c("Ressources",

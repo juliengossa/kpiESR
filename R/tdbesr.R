@@ -128,11 +128,16 @@ kpiesr_data_infos <- function(df,name="Anon") {
 updateUAI <- function(df) {
   return(df)
   mutate(df,
-    UAI = recode(UAI,
+    UAI = recode(str_to_upper(UAI),
                  '0383546Y' = "0383493R", #UGA/UGA
                  '0593279U' = "0597132G", #Valencienne/UPHF
-                 '0912408Y' = "0912330N" #Paris-Sud/Paris Saclay
-    ))
+                 '0912408Y' = "0912330N", #Paris-Sud/Paris Saclay
+                 '0440984F' = "0442953W", #Université de Nantes/Nantes Université
+                 '0342321N' = "0342490X", #Université de Montpellier/Université de Montpellier
+                 '0632035V' = "0632084Y", #Université Clermont Auvergne/Université Clermont Auvergne
+                 '0597065J' = "0597239Y" #Université de Lille/Université de Lille
+    )
+  )
 }
 
 kpiesr_missing_uai_search <- function(uai) {

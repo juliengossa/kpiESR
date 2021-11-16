@@ -3,7 +3,67 @@
 # - établissement.expérimental seulement pour Université de Paris (avec une type unique aussi)
 # - donner l'année plutôt que "oui" dans "universités.fusionnées"
 
-# Version courante  / 15 avril 2020
+# Version courante  / 13 aout 2021
+# [1] "Libellé"                                 "nom_court"                               "sigle"                                   "type.d.établissement"                   
+# [5] "typologie_d_universites_et_assimiles"    "secteur_d_etablissement"                 "vague_contractuelle"                     "localisation"                           
+# [9] "Site.internet"                           "Géolocalisation"                         "uai...identifiant"                       "siret"                                  
+# [13] "siren"                                   "rna"                                     "Identifiant.wikidata"                    "Elément.wikidata"                       
+# [17] "identifiant_idref"                       "Identifiant.ETER"                        "Identifiant.ROR"                         "Elément.ROR"                            
+# [21] "Identifiant.GRID"                        "Elément.GRID"                            "Identifiant.OrgRef"                      "Identifiant.ISNI"                       
+# [25] "Elément.ISNI"                            "identifiant_funding_data"                "Elément.Funding.Data"                    "identifiant_dataesr"                    
+# [29] "anciens_codes_uai"                       "rattachement_identifiants"               "rattachement"                            "association_identifiants"               
+# [33] "association"                             "date_creation"                           "texte_de_ref_creation_lib"               "texte_de_ref_creation"                  
+# [37] "date_fermeture"                          "texte_de_ref_fermeture_lib"              "texte_de_ref_fermeture"                  "dernier_decret_legifrance_lib"          
+# [41] "dernier_decret_legifrance"               "Code.commune"                            "Commune"                                 "Code.unité.urbaine"                     
+# [45] "Unité.urbaine"                           "Code.département"                        "Département"                             "Code.académie"                          
+# [49] "Académie"                                "Code.région"                             "Région"                                  "Ancien.code.région"                     
+# [53] "Ancienne.région"                         "Mention.distribution"                    "Adresse"                                 "Lieu.dit"                               
+# [57] "Boite.postale"                           "Code.postal"                             "Localité"                                "Pays"                                   
+# [61] "Numéro.de.téléphone"                     "statut_juridique_court"                  "Statut.juridique"                        "qualification_court"                    
+# [65] "Qualification"                           "compte_facebook"                         "compte_twitter"                          "compte_instagram"                       
+# [69] "compte_flickr"                           "compte_pinterest"                        "flux_rss"                                "compte_linkedin"                        
+# [73] "compte_viadeo"                           "compte_france_culture"                   "compte_scribd"                           "compte_scoopit"                         
+# [77] "compte_tumblr"                           "compte_youtube"                          "compte_vimeo"                            "compte_dailymotion"                     
+# [81] "autres"                                  "compte_gitHub"                           "Page.Wikipédia.en.français"              "Page.Wikipédia.en.anglais"              
+# [85] "scanr"                                   "hal"                                     "mooc"                                    "article"                                
+# [89] "uo_lib_officiel"                         "English.name"                            "Site.internet.en.anglais"                "Site.internet.en.chinois"               
+# [93] "Site.internet.en.espagnol"               "Site.internet.en.allemand"               "Site.internet.en.italien"                "Effectifs.d.étudiants.inscrits.2010.11" 
+# [97] "Effectifs.d.étudiants.inscrits.2011.12"  "Effectifs.d.étudiants.inscrits.2012.13"  "Effectifs.d.étudiants.inscrits.2013.14"  "Effectifs.d.étudiants.inscrits.2014.15" 
+# [101] "Effectifs.d.étudiants.inscrits.2015.16"  "Effectifs.d.étudiants.inscrits.2016.17"  "Effectifs.d.étudiants.inscrits.2017.18"  "uai_rgp_loi_esr_2013"                   
+# [105] "universites_fusionnees"                  "etablissement_experimental"              "implantations"                           "identifiant_programmes_lolf"            
+# [109] "statut_operateur_lolf"                   "libelle_missions_lolf"                   "libelle_programmes_lolf"                 "libelle_programme_lolf_chef_de_file"    
+# [113] "identifiants_autres_programmes_lolf"     "libelles_autres_programmes_lolf"         "identifiant_programme_lolf_chef_de_file" "libelle_mission_chef_de_file"           
+# [117] "compte_googleplus"  
+
+
+kpiesr_read.etab.2021v1 <- function() {
+  
+  etab <- read.csv2("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.csv", 
+                    na.string = "") %>%
+    transmute(
+      UAI = uai...identifiant,
+      Etablissement = Libellé,
+      Sigle = ifelse(!is.na(sigle),sigle,nom_court),
+      Type = type.d.établissement,
+      Type.détaillé = type.d.établissement,
+      Académie = Académie,
+      Rattachement = rattachement,
+      Fusion = (universites_fusionnees == "Oui"),
+      url.siteweb = Site.internet,
+      url.wikidata = Elément.wikidata,
+      url.legifrance = dernier_decret_legifrance,
+      twitter = compte_twitter
+    ) 
+}
+
+
+
+# https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-principaux-etablissements-enseignement-superieur/information/?disjunctive.type_d_etablissement
+# Commentaires :
+# - établissement.expérimental seulement pour Université de Paris (avec une type unique aussi)
+# - donner l'année plutôt que "oui" dans "universités.fusionnées"
+
+# Version 15 avril 2020
 # [1] "uai...identifiant"          "Libellé"                    "sigle"                      "type.d.établissement"
 # [5] "Secteur.d.établissement"    "Établissements.d.enseignement.supérieur.accrédités.à.délivrer.le.doctorat"
 # [7] "localisation"               "Site.internet"
@@ -29,21 +89,17 @@
 
 kpiesr_read.etab.2020v1 <- function() {
 
-  curif <- read.table("dataESR/curif.csv",
-                      header=TRUE, sep=';', quote='"', comment.char = "")
-
-  etab <- read.table("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.csv",
-                     header=TRUE, sep=';', quote='"', comment.char = "") %>%
+  etab <- read.csv2("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.2020v1.csv", 
+                    na.strings = "") %>%
     transmute(
       UAI = uai...identifiant,
-      Libellé = Libellé,
+      Etablissement = Libellé,
       Sigle = sigle,
       Type = type.d.établissement,
       Type.détaillé = type.d.établissement,
       Académie = Académie,
       Rattachement = rattachement,
       Fusion = (universités.fusionnées == "Oui"),
-      Curif = UAI %in% curif$UAI,
       url.siteweb = Site.internet,
       url.wikidata = Elément.wikidata,
       url.legifrance = dernier_decret_legifrance,
@@ -71,14 +127,12 @@ kpiesr_read.etab.2020v1 <- function() {
 # types.établissement <- setNames(as.character(types.établissement$Type),types.établissement$Type.détaillé)
 
 kpiesr_read.etab.2019v1 <- function() {
-  curif <- read.table("dataESR/curif.csv",
-                      header=TRUE, sep=';', quote='"', comment.char = "")
 
-  etab <- read.table("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.2019v1.csv",
-                     header=TRUE, sep=';', quote='"', comment.char = "")  %>%
+  etab <- read.csv2("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.2019v1.csv",
+                     na.strings = "")  %>%
     transmute(
       UAI = uai,
-      Libellé = uo_lib,
+      Etablissement = uo_lib,
       Sigle = sigle,
       #Type = types.établissement[type.d.établissement],
       Type = case_when(
@@ -100,31 +154,29 @@ kpiesr_read.etab.2019v1 <- function() {
       Rattachement = rattachement,
       url.siteweb = url,
       url.wikidata = element_wikidata,
-      url.legifrance = dernier_decret_legifrance,
-      Curif = UAI %in% curif$UAI
+      url.legifrance = dernier_decret_legifrance
     ) %>%
     filter(!is.na(UAI),!UAI=="")
 }
 
 kpiesr_read.etab <- function() {
+  etab.21 <- kpiesr_read.etab.2021v1()
   etab.20 <- kpiesr_read.etab.2020v1()
   etab.19 <- kpiesr_read.etab.2019v1()
+  
+  #etiquettes <- read.csv("dataESR/etiquettes.csv")
 
   etab <- bind_rows(
-    etab.20,
-    etab.19[!etab.19$UAI %in% etab.20$UAI,]
+    etab.21,
+    etab.20 %>% filter(!UAI %in% etab.21$UAI),
+    etab.19 %>% filter(!UAI %in% etab.21$UAI, !UAI %in% etab.20$UAI,)
   ) %>% mutate(
       Type = factor(Type, levels = c("Université",
                                      "Grand établissement",
                                      "École",
                                      "Regroupement",
                                      "Autre établissement"))
-    )
-
-
-  etab[etab$Libellé == "Université de Lorraine",]$Type <- "Université"
-  etab[etab$Libellé == "Université de Lorraine",]$Type.détaillé <- "Grand établissement"
-
+    ) 
   return(etab)
 }
 

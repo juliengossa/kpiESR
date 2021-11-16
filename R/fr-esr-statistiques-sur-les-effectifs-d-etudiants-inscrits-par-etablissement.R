@@ -155,13 +155,13 @@
 
 kpiesr_read.etu <- function() {
 
-  etu <- read.table("dataESR/fr-esr-statistiques-sur-les-effectifs-d-etudiants-inscrits-par-etablissement.csv",
-                    header=TRUE, sep=';', quote='"') %>%
+  etu <- read.csv2("dataESR/fr-esr-statistiques-sur-les-effectifs-d-etudiants-inscrits-par-etablissement-hcp.csv") %>% 
+    filter(Attention == "") %>%
     transmute(
-      UAI = ETABLISSEMENT,
-      Rentrée = as.factor(RENTREE),
+      UAI = Identifiant.s..UAI,
+      Rentrée = as.factor(rentree),
       kpi.ETU.P.effectif = Nombre.d.étudiants.inscrits..inscriptions.principales..hors.doubles.inscriptions.CPGE,
-      kpi.ETU.S.cycle.1.L = Cycle.universitaire..cursus.LMD....L..1er.cycle.-(Nombre.d.étudiants.inscrits..inscriptions.principales..y.compris.doubles.inscriptions.CPGE-kpi.ETU.P.effectif),
+      kpi.ETU.S.cycle.1.L = Cycle.universitaire..cursus.LMD....L..1er.cycle.,
       kpi.ETU.S.cycle.2.M = Cycle.universitaire..cursus.LMD....M..2ème.cycle.,
       kpi.ETU.S.cycle.3.D = Cycle.universitaire..cursus.LMD....D..3ème.cycle.,
       #kpi.ETU.S.diplome.national = Type.de.diplôme...Diplômes.nationaux,

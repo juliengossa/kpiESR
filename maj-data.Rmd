@@ -1,0 +1,174 @@
+---
+title: "Mise à jour des données"
+output: github_document
+date: "`r Sys.Date()`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(kpiESR)
+
+```
+
+```{r data}
+etab.21 <- kpiesr_read.etab.2021v1() 
+etab.20 <- kpiesr_read.etab.2020v1() 
+etab.19 <- kpiesr_read.etab.2019v1()
+ens <- kpiesr_read.ens() %>% mutate(Rentrée = as.character(Rentrée))
+etu <- kpiesr_read.etu() %>% mutate(Rentrée = as.character(Rentrée))
+fin <- kpiesr_read.fin() %>% mutate(Rentrée = as.character(Rentrée))
+```
+
+Ce document identifie les correspondances de code UAI entre trois versions
+du jeu de donnée sur les établissements (2021, 2020 et 2019), et trois jeux de 
+données (enseignants, étudiants et finances).
+
+## Portée
+
+```{r portée}
+bind_rows(
+  ens %>% summarise(data = "ens",
+    Rentrée.min = min(Rentrée), Rentrée.max = max(Rentrée), Nb.uais = n_distinct(UAI)),
+  etu %>% summarise(data = "etu",
+    Rentrée.min = min(Rentrée), Rentrée.max = max(Rentrée), Nb.uais = n_distinct(UAI)),
+  fin %>% summarise(data = "fin",
+    Rentrée.min = min(Rentrée), Rentrée.max = max(Rentrée), Nb.uais = n_distinct(UAI))
+) %>% kableExtra::kable()
+```
+
+
+
+
+
+```{r checkuais, message=F}
+uaijoins <- etab.21 %>% select(UAI, etab.21 = Etablissement) %>% unique() %>%
+  full_join(etab.20 %>% select(UAI, etab.20 = Etablissement) %>% unique() ) %>%
+  full_join(etab.19 %>% select(UAI, etab.19 = Etablissement) %>% unique() ) %>%
+  full_join(ens %>% group_by(UAI) %>% summarise(ens = paste(range(Rentrée), collapse = "-")) %>% unique() ) %>%
+  full_join(etu %>% group_by(UAI) %>% summarise(etu = paste(range(Rentrée), collapse = "-")) %>% unique() ) %>%
+  full_join(fin %>% group_by(UAI) %>% summarise(fin = paste(range(Rentrée), collapse = "-")) %>% unique() )
+```
+
+## Vérification UAIs
+
+### Universités : valeurs manquantes depuis etab.21
+
+```{r checkuais.na.21}
+uaijoins %>%
+  filter(str_detect(etab.21,"niversité")) %>%
+  filter(is.na(ens)|is.na(etu)|is.na(fin)) %>%
+  kableExtra::kable()
+```
+
+```{r etab.lookup.fun}
+etab.lookup <- function(etab="aucunetab",uai="aucunuai") {
+  etab <- str_to_lower(etab)
+  uaijoins %>%
+    filter(str_detect(str_to_lower(etab.21),etab)|str_detect(str_to_lower(etab.20),etab)|str_detect(str_to_lower(etab.19),etab)|UAI==uai) %>%
+    filter(str_detect(etab.21,"niversité")|str_detect(etab.20,"niversité")|str_detect(etab.19,"niversité")) %>%
+    kableExtra::kable()
+}
+```
+
+#### Nantes
+
+```{r etab.lookup.nantes}
+etab.lookup(uai="0440984F")
+```
+
+#### PSL 
+
+```{r etab.lookup.psl}
+etab.lookup(etab="Paris sciences et lettres")
+```
+
+```{r etab.lookup.dauphine}
+etab.lookup(etab="dauphine")
+```
+
+#### Montpellier
+
+```{r etab.lookup.montpellier}
+etab.lookup(etab="montpellier")
+```
+
+#### Clermont
+
+```{r etab.lookup.Clermont}
+etab.lookup(etab="Clermont")
+```
+
+#### Lille
+
+```{r etab.lookup.Lille}
+etab.lookup(etab="Lille")
+```
+
+#### Grenoble
+
+```{r etab.lookup.grenoble}
+etab.lookup(etab="grenoble")
+```
+
+### Universités : etab.21
+
+```{r checkuais.université.21}
+uaijoins %>%
+  filter(str_detect(etab.21,"niversité")) %>%
+  arrange(etab.21) %>%
+  kableExtra::kable()
+```
+
+
+### Toutes les valeurs manquantes 
+
+```{r checkuais.na.20-19}
+uaijoins %>%
+  filter(str_detect(etab.20,"niversité")|str_detect(etab.19,"niversité")) %>%
+  filter(is.na(ens)|is.na(etu)|is.na(fin)) %>%
+  kableExtra::kable()
+```
+
+### Correspondances UAI
+
+Ces correspondances sont construites manuellement et appliquées aux jeux de données.
+
+```{r checkuai.match}
+correspondances.uai <- bind_rows(
+  c("from"="0440984F","to"="0442953W", "note"="Changement de statut au 1er janvier 2022"),
+  c("from"="0755700N","to"="0756036D", "note"="Potentiel changement de périmètre en 2019"),
+  c("from"="0342321N","to"="0342490X", "note"="Changement de statut en 2021"),
+  c("from"="0632035V","to"="0632084Y", "note"="Changement de statut en 2020"),
+  c("from"="0597065J","to"="0597239Y", "note"="Changement de statut en 2020 et possibles changements de périmètre avant"),
+  c("from"="0383493R","to"="0383546Y", "note"="Changement de statut en 2019 et possibles changements de périmètre avant")
+)
+
+correspondances.uai %>% kableExtra::kable()
+```
+
+
+
+## Non université données complètes
+
+Etablissements non université présents dans etab.21 et les trois jeux de données.
+
+```{r nonuniv.complet}
+nonuniv.complet <- uaijoins %>%
+  filter(!(str_detect(etab.21,"niversité")|str_detect(etab.20,"niversité")|str_detect(etab.19,"niversité"))) %>%
+  filter(!is.na(ens),!is.na(etu),!is.na(fin)) %>%
+  arrange(etab.21,etab.20,etab.19) 
+
+nonuniv.complet %>% kableExtra::kable()
+```
+
+
+## Sigles manquants pour les universités 
+
+```{r sigles}
+etab.21 %>%
+  filter(str_detect(Etablissement,"niversité"), is.na(Sigle)) %>%
+  arrange(Type) %>% 
+  select(UAI,Etablissement,Sigle,url.wikidata) %>%
+  kableExtra::kable()
+```

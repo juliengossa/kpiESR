@@ -1,3 +1,23 @@
+# https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-operateurs-indicateurs-financiers/information/
+# Version du 13 aout 2021
+# 
+# [1] "uai...identifiant"                                   "exercice"                                            "Acquisitions.d.immobilisations"                     
+# [4] "ANR.hors.investissements.d.avenir"                   "ANR.investissements.d.avenir"                        "Autres.ressources.propres"                          
+# [7] "Autres.Subventions"                                  "Besoin.en.fonds.de.roulement"                        "CAF...Produits.encaissables"                        
+# [10] "Charges.externes"                                    "Charges.externes...Produits.encaissables"            "Contrats.et.prestations.de.recherche.hors.ANR"      
+# [13] "Droits.d.inscription"                                "Fonds.de.roulement.net.global"                       "Produits.de.fonctionnement.encaissables"            
+# [16] "Ressources.propres...Produits.encaissables"          "Taxe.d.apprentissage"                                "Valorisation"                                       
+# [19] "rce"                                                 "vague"                                               "typologie"                                          
+# [22] "groupe"                                              "uai.actuel"                                          "etablissement"                                      
+# [25] "commune"                                             "academie"                                            "region"                                             
+# [28] "code.du.groupe"                                      "code.de.la.commune"                                  "code.de.l.academie"                                 
+# [31] "code.de.la.region"                                   "source"                                              "CAF...Acquisitions.d.immobilisations"               
+# [34] "Capacité.d.autofinancement"                          "Charges.de.fonctionnement.décaissables"              "Charges.décaissables...Produits.encaissables"       
+# [37] "Dépenses.de.personnel"                               "Dépenses.de.personnel...Produits.encaissables"       "Excédent.Brut.d.Exploitation..EBE."                 
+# [40] "Fonds.de.roulement.en.jours.de.charges.décaissables" "Formation.continue..diplômes.propres.et.VAE"         "Recettes.propres"                                   
+# [43] "Ressources.propres.encaissables"                     "Résultat.net.comptable"                              "Résultat.net.comptable.hors.SIE"                    
+# [46] "Solde.budgétaire"                                    "Subventions.Union.Européenne"                        "Subventions.de.la.région"                           
+# [49] "Trésorerie"                                          "Trésorerie.en.jours.de.charges.décaissables"        
 
 # https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-operateurs-indicateurs-financiers/information/
 # Version du 12 octobre 2020
@@ -30,8 +50,7 @@
 
 
 kpiesr_read.fin <- function() {
-  fin <- read.table("dataESR/fr-esr-operateurs-indicateurs-financiers.csv",
-                        header=TRUE, sep=';', quote='"') %>%
+  fin <- read.csv2("dataESR/fr-esr-operateurs-indicateurs-financiers.csv", na.strings="", dec=".") %>%
     transmute(
       #UAI = uai.actuel,
       UAI = uai...identifiant,
@@ -39,7 +58,7 @@ kpiesr_read.fin <- function() {
       #RCE = rce,
       kpi.FIN.P.ressources = Produits.de.fonctionnement.encaissables,
       kpi.FIN.S.masseSalariale = Dépenses.de.personnel,
-      kpi.FIN.S.SCSP = kpi.FIN.P.ressources - Ressources.propres,
+      kpi.FIN.S.SCSP = kpi.FIN.P.ressources - Ressources.propres.encaissables,
       kpi.FIN.S.recettesFormation = rowSums(na.rm = TRUE, select(.,
                                      Droits.d.inscription,
                                      Formation.continue..diplômes.propres.et.VAE, 

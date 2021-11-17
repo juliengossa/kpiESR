@@ -21,6 +21,14 @@ spoilerTable <- function(df) {
 
 ```
 
+
+Ce document décrit le processus de mise à jour des données kpiESR, et notamment
+la fusion et l'amélioration de trois versions du jeu de donnée sur les 
+établissements (2021, 2020 et 2019), et trois jeux de données 
+(enseignants, étudiants et finances).
+
+Ces jeux sont notés `etab.21`, `etab.20`, `etab.19`, `ens`, `etu` et `fin`.
+
 ```{r data}
 etab.21 <- kpiesr_read.etab.2021v1() 
 etab.20 <- kpiesr_read.etab.2020v1() 
@@ -30,13 +38,7 @@ etu <- kpiesr_read.etu() %>% mutate(Rentrée = as.character(Rentrée))
 fin <- kpiesr_read.fin() %>% mutate(Rentrée = as.character(Rentrée))
 ```
 
-Ce document identifie les correspondances de code UAI entre trois versions
-du jeu de donnée sur les établissements (2021, 2020 et 2019), et trois jeux de 
-données (enseignants, étudiants et finances).
 
-## Portée
-
-  
 ```{r portée, results='asis'}
 bind_rows(
   etab.21 %>% summarise(data = "etab.21", Nb.uais = n_distinct(UAI)),
@@ -51,6 +53,25 @@ bind_rows(
 ) %>% spoilerTable()
 ```
 
+### Méthodologie :
+
+1. Recherche des UAI manquants dans tous les jeux de données
+1. Constitution des données universités
+    1. Identification des universités dans `etab.21`
+    1. Identification des correspondances manquantes avec `ens`, `etu` et `fin`
+    1. Recherche de ces correspondances dans `etab.20` et `etab.19`
+    1. Recherche de correspondances dans les établissements hors `etab.x`
+    1. Création manuelle des corrections
+    1. Vérification des données manquantes après correction
+1. Constitution des données non université
+    1. Identification des établissements avec données complètes 
+    1. Vérification d'éventuelle données complètes hors `etab.21`
+    1. Constitution de la liste des non universités avec données complètes
+1. Autres données manquantes
+    1. Détection et correction des wikidata manquants
+    1. Détection et correction des sigles manquants avec wikidata
+    1. Détection et correction manuelle des sigles encore manquants
+1. Fusion des jeux de données
 
 
 
@@ -63,9 +84,27 @@ uaijoins <- etab.21 %>% select(UAI, etab.21 = Etablissement) %>% unique() %>%
   full_join(fin %>% group_by(UAI) %>% summarise(fin = paste(range(Rentrée), collapse = "-")) %>% unique() )
 ```
 
-## Vérification UAIs
+```{r checkuais.horsetab, message=F}
+etab.uais <- unique(c(etab.21$UAI,etab.20$UAI,etab.19$UAI))
+horsetab <- ens %>% group_by(UAI,etab.ens=Etablissement) %>% summarise(ens = paste(range(Rentrée), collapse = "-")) %>% unique() %>%
+  full_join(etu %>% group_by(UAI,etab.etu=Etablissement) %>% summarise(etu = paste(range(Rentrée), collapse = "-")) %>% unique() ) %>%
+  full_join(fin %>% group_by(UAI,etab.fin=Etablissement) %>% summarise(fin = paste(range(Rentrée), collapse = "-")) %>% unique() ) %>%
+  filter(!UAI %in% etab.uais) 
 
-### UAI manquants 
+horsetab.doubleuai <- horsetab %>% 
+  filter(str_detect(UAI,";")) %>% 
+  mutate(sepUAI = UAI) %>%
+  separate_rows(sepUAI,sep = ';') %>%
+  rename(doubleUAI = UAI, UAI = sepUAI) %>%
+  left_join(etab.21 %>% select(UAI,etab.21=Etablissement)) %>%
+  left_join(etab.20 %>% select(UAI,etab.20=Etablissement)) %>%
+  left_join(etab.19 %>% select(UAI,etab.19=Etablissement))
+
+```
+
+
+## UAI manquants 
+
 
 ```{r uai.manquants, results='asis'}
 bind_rows(
@@ -76,7 +115,18 @@ bind_rows(
   ) %>% spoilerTable()
 ```
 
-### Universités : valeurs manquantes depuis etab.21
+## Constitution des données universités
+
+### Identification des universités dans `etab.21`
+
+```{r checkuais.université.21, results='asis'}
+uaijoins %>%
+  filter(str_detect(etab.21,"niversité")) %>%
+  arrange(etab.21) %>%
+  spoilerTable()
+```
+
+### Identification des correspondances manquantes 
 
 ```{r checkuais.na.21, results='asis'}
 uaijoins %>%
@@ -84,6 +134,8 @@ uaijoins %>%
   filter(is.na(ens)|is.na(etu)|is.na(fin)) %>%
   spoilerTable()
 ```
+
+### Recherche des correspondances manquantes
 
 ```{r etab.lookup.fun}
 etab.lookup <- function(etab="aucunetab",uai="aucunuai") {
@@ -140,12 +192,25 @@ etab.lookup(etab="grenoble")
 
 </details>
 
-### Universités : etab.21
 
-```{r checkuais.université.21, results='asis'}
-uaijoins %>%
-  filter(str_detect(etab.21,"niversité")) %>%
-  arrange(etab.21) %>%
+
+### Recherche de correspondances dans les établissements hors `etab.x`
+
+#### Double UAIS
+
+```{r checkuais.horsetab.doubleuai, results='asis'}
+horsetab.doubleuai %>% 
+  filter(str_detect(doubleUAI,";")) %>%
+  filter(Reduce(`|`, across(starts_with("etab"), ~ str_detect(.x,"niversité")))) %>%
+  spoilerTable()
+```
+
+#### Autres UAIs
+
+```{r checkuais.horsetab.autre, results='asis'}
+horsetab %>% 
+  filter(!str_detect(UAI,";")) %>%
+  filter(Reduce(`|`, across(starts_with("etab"), ~ str_detect(.x,"niversité")))) %>%
   spoilerTable()
 ```
 
@@ -159,22 +224,56 @@ uaijoins %>%
   spoilerTable()
 ```
 
-### Correspondances UAI
+### Création manuelle des corrections
 
 Ces correspondances sont construites manuellement et appliquées aux jeux de données.
 
 ```{r checkuai.match, results='asis'}
 correspondances.uai <- bind_rows(
-  c("from"="0440984F","to"="0442953W", "note"="Changement de statut au 1er janvier 2022"),
-  c("from"="0755700N","to"="0756036D", "note"="Potentiel changement de périmètre en 2019"),
-  c("from"="0342321N","to"="0342490X", "note"="Changement de statut en 2021"),
-  c("from"="0632035V","to"="0632084Y", "note"="Changement de statut en 2020"),
-  c("from"="0597065J","to"="0597239Y", "note"="Changement de statut en 2020 et possibles changements de périmètre avant"),
-  c("from"="0383493R","to"="0383546Y", "note"="Changement de statut en 2019 et possibles changements de périmètre avant")
+  c(Etablissement="",
+    from="0440984F",to="0442953W", note="Changement de statut de l'Université de Nantes au 1er janvier 2022"),
+  c(Etablissement="PSL",
+    from="0755700N",to="0756036D", note="Potentiel changement de périmètre en 2019"),
+  c(Etablissement="Université de Montpellier",
+    from="0342321N",to="0342490X", note="Changement de statut en 2021"),
+  c(Etablissement="Université Clermont Auvergne",
+    from="0632035V",to="0632084Y", note="Changement de statut en 2020"),
+  c(Etablissement="Université de Lille",
+    from="0597065J",to="0597239Y", note="Changement de statut en 2020 et possibles changements de périmètre avant"),
+  c(Etablissement="Université de Grenoble Alpes",
+    from="0383493R",to="0383546Y", note="Changement de statut en 2019 et possibles changements de périmètre avant")
 )
 
 correspondances.uai %>% spoilerTable()
 ```
+
+### Vérification des données manquantes après correction
+
+```{r check.etab21.univ, results='asis'}
+fix_uai <- function(df,correspondances.uai) {
+  replist <- correspondances.uai$to 
+  names(replist) <- correspondances.uai$from
+  
+  return(mutate(df, UAI=recode(UAI,!!!replist)))
+}
+
+univ21 <- etab.21 %>% select(UAI, etab.21 = Etablissement) %>% filter(str_detect(etab.21,"niversité")) %>%
+  left_join(ens %>% fix_uai(correspondances.uai) %>% group_by(UAI) %>% summarise(ens = paste(range(Rentrée), collapse = "-")))  %>%
+  left_join(etu %>% fix_uai(correspondances.uai) %>% group_by(UAI) %>% summarise(etu = paste(range(Rentrée), collapse = "-"))) %>%
+  left_join(fin %>% fix_uai(correspondances.uai) %>% group_by(UAI) %>% summarise(fin = paste(range(Rentrée), collapse = "-")))
+
+univ21 %>%
+  filter(is.na(ens)|is.na(etu)|is.na(fin)) %>%
+  spoilerTable()
+```
+
+### Toutes les universités `etab.21` après correction
+
+```{r all.etab21.univ, results='asis'}
+univ21 %>%
+  spoilerTable()
+```
+
 
 
 
@@ -192,29 +291,6 @@ nonuniv.complet %>% spoilerTable()
 ```
 
 
-## Etablissement des jeux de données, inconnus dans etab.x
-
-```{r checkuais.horsetab, message=F}
-etab.uais <- unique(c(etab.21$UAI,etab.20$UAI,etab.19$UAI))
-horsetab <- ens %>% group_by(UAI,etab.ens=Etablissement) %>% summarise(ens = paste(range(Rentrée), collapse = "-")) %>% unique() %>%
-  full_join(etu %>% group_by(UAI,etab.etu=Etablissement) %>% summarise(etu = paste(range(Rentrée), collapse = "-")) %>% unique() ) %>%
-  full_join(fin %>% group_by(UAI,etab.fin=Etablissement) %>% summarise(fin = paste(range(Rentrée), collapse = "-")) %>% unique() ) %>%
-  filter(!UAI %in% etab.uais) 
-```
-
-```{r checkuais.horsetab.doubleuai, results='asis'}
-horsetab %>% 
-  filter(str_detect(UAI,";")) %>% 
-  mutate(sepUAI = UAI) %>%
-  separate_rows(sepUAI,sep = ';') %>%
-  rename(doubleUAI = UAI, UAI = sepUAI) %>%
-  left_join(etab.21 %>% select(UAI,etab.21=Etablissement)) %>%
-  left_join(etab.20 %>% select(UAI,etab.20=Etablissement)) %>%
-  left_join(etab.19 %>% select(UAI,etab.19=Etablissement)) %>%
-  spoilerTable() 
-```
-
-
 ## Wikidata manquants 
 
 ```{r wikidata, results='asis'}
@@ -225,7 +301,7 @@ etab.21 %>%
   spoilerTable()
 ```
 
-Fix manuel :
+Correction manuelle :
 
 ```{r fixfun}
 fix_etab <- function(etab, fixdf) {
@@ -233,7 +309,7 @@ fix_etab <- function(etab, fixdf) {
   etab <- etab %>% arrange(UAI)
   
   etab %>% 
-    mutate(across(names(fixdf),
+    mutate(across(names(fixdf %>% select(-UAI)),
                   ~ replace(.x, UAI %in% fixdf$UAI, fixdf[[cur_column()]])))
 }
 ```

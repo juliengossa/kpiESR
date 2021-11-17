@@ -67,7 +67,7 @@ bind_rows(
     1. Identification des établissements avec données complètes 
     1. Vérification d'éventuelle données complètes hors `etab.21`
     1. Constitution de la liste des non universités avec données complètes
-1. Autres données manquantes
+1. Constitution du jeu de données des établissements
     1. Détection et correction des wikidata manquants
     1. Détection et correction des sigles manquants avec wikidata
     1. Détection et correction manuelle des sigles encore manquants
@@ -137,12 +137,12 @@ uaijoins %>%
 
 ### Recherche des correspondances manquantes
 
-```{r etab.lookup.fun}
-etab.lookup <- function(etab="aucunetab",uai="aucunuai") {
+```{r etab_lookup.fun}
+etab_lookup <- function(etab="aucunetab",uai="aucunuai") {
   etab <- str_to_lower(etab)
   uaijoins %>%
     filter(str_detect(str_to_lower(etab.21),etab)|str_detect(str_to_lower(etab.20),etab)|str_detect(str_to_lower(etab.19),etab)|UAI==uai) %>%
-    filter(str_detect(etab.21,"niversité")|str_detect(etab.20,"niversité")|str_detect(etab.19,"niversité")) %>%
+    #filter(str_detect(etab.21,"niversité")|str_detect(etab.20,"niversité")|str_detect(etab.19,"niversité")) %>%
     kableExtra::kable(format="pipe")
 }
 ```
@@ -152,42 +152,42 @@ etab.lookup <- function(etab="aucunetab",uai="aucunuai") {
 
 #### Nantes
 
-```{r etab.lookup.nantes}
-etab.lookup(uai="0440984F")
+```{r etab_lookup.nantes}
+etab_lookup(uai="0440984F")
 ```
 
 #### PSL 
 
-```{r etab.lookup.psl}
-etab.lookup(etab="Paris sciences et lettres")
+```{r etab_lookup.psl}
+etab_lookup(etab="Paris sciences et lettres")
 ```
 
-```{r etab.lookup.dauphine}
-etab.lookup(etab="dauphine")
+```{r etab_lookup.dauphine}
+etab_lookup(etab="dauphine")
 ```
 
 #### Montpellier
 
-```{r etab.lookup.montpellier}
-etab.lookup(etab="montpellier")
+```{r etab_lookup.montpellier}
+etab_lookup(etab="montpellier")
 ```
 
 #### Clermont
 
-```{r etab.lookup.Clermont}
-etab.lookup(etab="Clermont")
+```{r etab_lookup.Clermont}
+etab_lookup(etab="Clermont")
 ```
 
 #### Lille
 
-```{r etab.lookup.Lille}
-etab.lookup(etab="Lille")
+```{r etab_lookup.Lille}
+etab_lookup(etab="Lille")
 ```
 
 #### Grenoble
 
-```{r etab.lookup.grenoble}
-etab.lookup(etab="grenoble")
+```{r etab_lookup.grenoble}
+etab_lookup(etab="grenoble")
 ```
 
 </details>
@@ -257,10 +257,14 @@ fix_uai <- function(df,correspondances.uai) {
   return(mutate(df, UAI=recode(UAI,!!!replist)))
 }
 
+ens <- ens %>% fix_uai(correspondances.uai)
+etu <- etu %>% fix_uai(correspondances.uai)
+fin <- fin %>% fix_uai(correspondances.uai)
+
 univ21 <- etab.21 %>% select(UAI, etab.21 = Etablissement) %>% filter(str_detect(etab.21,"niversité")) %>%
-  left_join(ens %>% fix_uai(correspondances.uai) %>% group_by(UAI) %>% summarise(ens = paste(range(Rentrée), collapse = "-")))  %>%
-  left_join(etu %>% fix_uai(correspondances.uai) %>% group_by(UAI) %>% summarise(etu = paste(range(Rentrée), collapse = "-"))) %>%
-  left_join(fin %>% fix_uai(correspondances.uai) %>% group_by(UAI) %>% summarise(fin = paste(range(Rentrée), collapse = "-")))
+  left_join(ens %>% group_by(UAI) %>% summarise(ens = paste(range(Rentrée), collapse = "-")))  %>%
+  left_join(etu %>% group_by(UAI) %>% summarise(etu = paste(range(Rentrée), collapse = "-"))) %>%
+  left_join(fin %>% group_by(UAI) %>% summarise(fin = paste(range(Rentrée), collapse = "-")))
 
 univ21 %>%
   filter(is.na(ens)|is.na(etu)|is.na(fin)) %>%
@@ -277,31 +281,66 @@ univ21 %>%
 
 
 
-## Non université données complètes
+## Non université, à jour sur les dernière données
 
-Etablissements non université présents dans etab.21 et les trois jeux de données.
+```{r nonuniv, results='asis'}
+nonuniv <- uaijoins %>% select(UAI:etab.19) %>%
+  full_join(ens %>% filter(Rentrée == "2019") %>% select(UAI,etab.ens=Etablissement)) %>%
+  full_join(etu %>% filter(Rentrée == "2020") %>% select(UAI,etab.etu=Etablissement)) %>%
+  full_join(fin %>% filter(Rentrée == "2020") %>% select(UAI,etab.fin=Etablissement)) %>%
+  filter(across(everything(), ~ is.na(.x) | !(str_detect(.x,"niversité"))))
+```
+### Non université, à jour et complet
 
 ```{r nonuniv.complet, results='asis'}
-nonuniv.complet <- uaijoins %>%
-  filter(!(str_detect(etab.21,"niversité")|str_detect(etab.20,"niversité")|str_detect(etab.19,"niversité"))) %>%
-  filter(!is.na(ens),!is.na(etu),!is.na(fin)) %>%
-  arrange(etab.21,etab.20,etab.19) 
+nonuniv.complet <- nonuniv %>% 
+  filter(!is.na(etab.ens),!is.na(etab.etu),!is.na(etab.fin)) 
 
 nonuniv.complet %>% spoilerTable()
 ```
 
+#### Correction : UAI manquants dans `etab.21` présents dans `etab.20`
 
-## Wikidata manquants 
+```{r nonuniv.manquants, results='asis'}
+nonuniv.complet.etab20 <- nonuniv %>% 
+  filter(!is.na(etab.ens),!is.na(etab.etu),!is.na(etab.fin)) %>%
+  filter(is.na(etab.21)) 
+
+nonuniv.complet.etab20 %>% spoilerTable()
+```
+
+### Non université, à jour mais incomplet
+
+```{r nonuniv.incomplet, results='asis'}
+nonuniv %>% 
+  filter(is.na(etab.ens)|is.na(etab.etu)|is.na(etab.fin)) %>%
+  spoilerTable()
+```
+
+## Constitution du jeu de données des établissements
+
+```{r build.etab, results='asis'}
+etab <- bind_rows(
+  etab.21 %>% filter(UAI %in% univ21$UAI) %>% mutate(Groupe = "Université"),
+  etab.21 %>% filter(UAI %in% nonuniv.complet$UAI) %>% mutate(Groupe = "Autre"),
+  etab.20 %>% filter(UAI %in% nonuniv.complet.etab20$UAI) %>% mutate(Groupe = "Autre")
+  )
+
+etab %>% spoilerTable()
+```
+
+
+### Wikidata manquants 
 
 ```{r wikidata, results='asis'}
-etab.21 %>%
+etab %>%
   filter(is.na(url.wikidata)) %>%
   arrange(Type) %>% 
   select(UAI,Etablissement, url.wikidata) %>% 
   spoilerTable()
 ```
 
-Correction manuelle :
+#### Correction manuelle 
 
 ```{r fixfun}
 fix_etab <- function(etab, fixdf) {
@@ -314,8 +353,8 @@ fix_etab <- function(etab, fixdf) {
 }
 ```
 
-```{r wikidata.fixv, results='asis'}
-wikidata.fix <- bind_rows(
+```{r fix.wikidatav, results='asis'}
+fix.wikidata <- bind_rows(
   c(UAI="0442953W",url.wikidata="https://www.wikidata.org/entity/Q259388"),  
   c(UAI="0597132G",url.wikidata="https://www.wikidata.org/entity/Q1548539"),
   c(UAI="0342490X",url.wikidata="https://www.wikidata.org/entity/Q776223"),
@@ -323,18 +362,19 @@ wikidata.fix <- bind_rows(
   c(UAI="0597239Y",url.wikidata="https://www.wikidata.org/entity/Q3551621")
 )
 
- wikidata.fix %>% spoilerTable()
+etab <- fix_etab(etab, fix.wikidata) 
+
+fix.wikidata %>% spoilerTable()
 ```
 
-## Sigles manquants pour les universités 
+### Sigles manquants pour les universités 
 
-### Sigles récupérables sur wikidata
+#### Sigles récupérables sur wikidata
 
 ```{r sigles.wikidata.load, results='hide', cache=TRUE}
 wikidataESR::wdesr_get_cache()
 
-alias.wikidata <- etab.21 %>%
-  fix_etab(wikidata.fix) %>%
+fix.alias.wikidata <- etab %>%
   filter(is.na(Sigle), !is.na(url.wikidata)) %>%
   arrange(Type) %>% 
   mutate(wikidata.alias = wikidataESR::wdesr_get_data(str_replace(url.wikidata,"https://www.wikidata.org/entity/",""))$alias) %>%
@@ -342,24 +382,35 @@ alias.wikidata <- etab.21 %>%
 ```
 
 ```{r sigles.wikidata.print, results='asis'}
-alias.wikidata %>% spoilerTable()
+etab <- fix_etab(etab, fix.alias.wikidata)
+
+fix.alias.wikidata %>% spoilerTable()
 ```
 
 ### Sigles toujours manquants
 
 ```{r sigles.manquants, results='asis'}
-etab.21 %>%
-  fix_etab(alias.wikidata) %>%
+etab %>%
+  fix_etab(fix.alias.wikidata) %>%
   filter(is.na(Sigle)) %>%
   arrange(Type) %>% 
   select(UAI,Etablissement,Sigle, url.wikidata) %>% 
   spoilerTable()
 ```
 
-Correction manuelle :
-```{r sigles.manquants.fix, echo=TRUE}
-alias.wikidata <- bind_rows(alias.wikidata, c(UAI="0597165T",Etablissement="Junia",Sigle="Junia"))
+## Jeu de données établissement final
+
+### Statistiques
+
+```{r final.stat, results='asis'}
+etab %>% 
+  group_by(Groupe) %>%
+  summarise(comple = n()) %>%
+  spoilerTable()
 ```
 
+### Données complètes
 
-
+```{r final, results='asis'}
+etab %>% spoilerTable()
+```

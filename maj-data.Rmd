@@ -71,6 +71,7 @@ bind_rows(
     1. Détection et correction des wikidata manquants
     1. Détection et correction des sigles manquants avec wikidata
     1. Détection et correction manuelle des sigles encore manquants
+    1. Définition du groupage des établissements
 1. Fusion des jeux de données
 
 
@@ -321,9 +322,9 @@ nonuniv %>%
 
 ```{r build.etab, results='asis'}
 etab <- bind_rows(
-  etab.21 %>% filter(UAI %in% univ21$UAI) %>% mutate(Groupe = "Université"),
-  etab.21 %>% filter(UAI %in% nonuniv.complet$UAI) %>% mutate(Groupe = "Autre"),
-  etab.20 %>% filter(UAI %in% nonuniv.complet.etab20$UAI) %>% mutate(Groupe = "Autre")
+  etab.21 %>% filter(UAI %in% univ21$UAI),
+  etab.21 %>% filter(UAI %in% nonuniv.complet$UAI),
+  etab.20 %>% filter(UAI %in% nonuniv.complet.etab20$UAI)
   )
 
 etab %>% spoilerTable()
@@ -387,7 +388,7 @@ etab <- fix_etab(etab, fix.alias.wikidata)
 fix.alias.wikidata %>% spoilerTable()
 ```
 
-### Sigles toujours manquants
+#### Sigles toujours manquants
 
 ```{r sigles.manquants, results='asis'}
 etab %>%
@@ -397,6 +398,22 @@ etab %>%
   select(UAI,Etablissement,Sigle, url.wikidata) %>% 
   spoilerTable()
 ```
+
+### Groupage des établissements
+
+```{r groupage, echo=TRUE}
+groupage <- function(df) {
+  ifelse(str_detect(df$Etablissement,"niversité"),"Université","Autre")
+}
+```
+
+```{r groupage.do}
+etab <- etab %>% mutate(Groupe=groupage(.))
+ens <- ens %>% mutate(Groupe=groupage(.))
+etu <- etu %>% mutate(Groupe=groupage(.))
+fin <- fin %>% mutate(Groupe=groupage(.))
+```
+
 
 ## Jeu de données établissement final
 

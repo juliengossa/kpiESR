@@ -45,7 +45,6 @@ kpiesr_read.etab.2021v1 <- function() {
       Etablissement = Libellé,
       Sigle = ifelse(!is.na(sigle),sigle,nom_court),
       Type = type.d.établissement,
-      Type.détaillé = type.d.établissement,
       Académie = Académie,
       Rattachement = rattachement,
       Fusion = (universites_fusionnees == "Oui"),
@@ -96,7 +95,6 @@ kpiesr_read.etab.2020v1 <- function() {
       Etablissement = Libellé,
       Sigle = sigle,
       Type = type.d.établissement,
-      Type.détaillé = type.d.établissement,
       Académie = Académie,
       Rattachement = rattachement,
       Fusion = (universités.fusionnées == "Oui"),
@@ -134,22 +132,7 @@ kpiesr_read.etab.2019v1 <- function() {
       UAI = uai,
       Etablissement = uo_lib,
       Sigle = sigle,
-      #Type = types.établissement[type.d.établissement],
-      Type = case_when(
-        type_d_etablissement %in% c("Association d'établissements",
-                                    "Communauté d'universités et établissements",
-                                    "Pôle de recherche et d'enseignement supérieur",
-                                    "Convention de coordination territoriale" ) ~
-          "Regroupement",
-        type_d_etablissement %in% c("Université",
-                                    "Établissement public expérimental",
-                                    "Établissement public expérimental;Université") ~
-          "Université",
-        type_d_etablissement %in% c("Grand établissement") ~
-          "Grand établissement",
-        TRUE ~ "Autre établissement"),
-      Type = Type,
-      Type.détaillé = type_d_etablissement,
+      Type = type_d_etablissement,
       Académie = aca_nom,
       Rattachement = rattachement,
       url.siteweb = url,
@@ -169,14 +152,8 @@ kpiesr_read.etab <- function() {
   etab <- bind_rows(
     etab.21,
     etab.20 %>% filter(!UAI %in% etab.21$UAI),
-    etab.19 %>% filter(!UAI %in% etab.21$UAI, !UAI %in% etab.20$UAI,)
-  ) %>% mutate(
-      Type = factor(Type, levels = c("Université",
-                                     "Grand établissement",
-                                     "École",
-                                     "Regroupement",
-                                     "Autre établissement"))
-    ) 
+    etab.19 %>% filter(!UAI %in% etab.21$UAI, !UAI %in% etab.20$UAI)
+  ) 
   return(etab)
 }
 

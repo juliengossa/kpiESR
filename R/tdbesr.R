@@ -11,29 +11,24 @@ set_encoding_utf8 <- function(df) {
 }
 
 
-select_kpis <- function(pattern){
-  grep(pattern, levels(esr.pnl$kpi),value=TRUE)
-}
+# select_kpis <- function(pattern){
+#   grep(pattern, levels(esr.pnl$kpi),value=TRUE)
+# }
 
 kpiesr_pivot_norm_label <- function(esr, rentrée.ref=2012) {
 
-  df <- kpiESR::esr %>%
-    group_by(Type,Rentrée) %>%
-    select(Type,Rentrée,UAI,Libellé,Curif,starts_with("kpi.")) %>% 
-    #rename_at(vars(starts_with("kpi")), list( ~ paste(.,"valeur",sep="_"))) %>%
+  df <- esr %>%
+    mutate(across(starts_with("kpi.FIN.S"), list(norm = ~ ./kpi.FIN.P.ressources))) %>%
+    mutate(across(starts_with("kpi.ENS.S"), list(norm = ~ ./kpi.ENS.P.effectif))) %>%
+    mutate(across(starts_with("kpi.ETU.S"), list(norm = ~ ./kpi.ETU.P.effectif))) %>%
 
-    mutate_at(vars(starts_with("kpi.FIN.S")), list(norm = ~ ./kpi.FIN.P.ressources)) %>%
-    mutate_at(vars(starts_with("kpi.ENS.S")), list(norm = ~ ./kpi.ENS.P.effectif)) %>%
-    mutate_at(vars(starts_with("kpi.ETU.S")), list(norm = ~ ./kpi.ETU.P.effectif)) %>%
-    mutate_at(vars(starts_with("kpi.ADM.S")), list(norm = ~ ./kpi.ADM.P.formations)) %>%
-    #mutate_at(vars(matches("kpi.*_norm")), list( ~ (./mean(.,na.rm=TRUE))-1)) %>%
-    mutate_at(vars(matches("kpi.....P")), list(norm = ~ .)) %>%
-    mutate_at(vars(starts_with("kpi.K")), list(norm = ~ .)) %>%
-    rename_at(vars(matches("kpi.[^_]*$")), list( ~paste(.,"valeur",sep="_"))) %>%
+    mutate(across(matches("kpi.....P"), list(norm = ~ .))) %>%
+    mutate(across(starts_with("kpi.K"), list(norm = ~ .))) %>%
+    rename_with(~ paste0(.,"_valeur"), matches("kpi.[^_]*$")) %>%
     pivot_longer(
-      cols = -c(Type,Rentrée,UAI,Libellé,Curif),
+      cols = starts_with("kpi"),
       names_to = c("kpi", ".value"),
-      names_sep = "_"
+      names_pattern = "(.*)_(valeur|norm)"
     ) %>% 
     filter(!is.na(valeur)) %>%
     mutate(
@@ -41,17 +36,24 @@ kpiesr_pivot_norm_label <- function(esr, rentrée.ref=2012) {
       valeur_label = valeur_labels(kpi,valeur),
       norm_label = norm_labels(kpi,norm)
     ) %>%
-    group_by(Rentrée, Type, kpi) %>%
+    group_by(Groupe, Rentrée, kpi) %>%
     mutate(
-      rang = dense_rank(desc(norm)),
-      norm_y = scales::rescale(-rang)
+      rang = dense_rank(desc(norm))
       ) %>%
     ungroup()
   
-  merge(df, df %>% filter(Rentrée==rentrée.ref) %>% transmute(UAI=UAI, kpi=kpi, norm.ref = norm)) %>%
-    group_by(UAI, kpi) %>%
-    mutate( evolution = norm / norm.ref - 1) %>% 
-    select(-norm.ref)
+  # merge(df, df %>% filter(Rentrée==rentrée.ref) %>% transmute(UAI=UAI, kpi=kpi, norm.ref = norm)) %>%
+  #   group_by(UAI, kpi) %>%
+  #   mutate( evolution = norm / norm.ref - 1) %>% 
+  #   select(-norm.ref)
+  
+  df <- df %>% 
+    filter(Rentrée >= rentrée.ref) %>%
+    group_by(Groupe,UAI,kpi) %>%
+    arrange(Groupe,UAI,kpi,Rentrée) %>%
+    mutate( evolution = norm / first(norm) * 100 ) %>%
+    ungroup()
+  
 }
 
 #test <- kpiesr_pivot_norm_label(esr)
@@ -85,13 +87,13 @@ kpiesr_get_stats <- function(esr.pnl) {
 kpiesr_add_kpis <- function (df) {
   mutate(df,
     kpi.K.dotPres = kpi.FIN.S.SCSP / kpi.FIN.P.ressources ,
-    kpi.K.resPetu = kpi.FIN.P.ressources / (kpi.ETU.S.cycle.1.L+kpi.ETU.S.cycle.2.M),
+    kpi.K.resPetu = kpi.FIN.P.ressources / (kpi.ETU.S.cycle1_L+kpi.ETU.S.cycle2_M),
     kpi.K.forPetu = kpi.FIN.S.recettesFormation / kpi.ETU.P.effectif,
     kpi.K.recPect = kpi.FIN.S.recettesFormation / kpi.ENS.S.ECtitulaires,
-    kpi.K.selPfor = kpi.ADM.S.sélective / kpi.ADM.P.formations,
     kpi.K.titPetu = kpi.ENS.S.ECtitulaires / kpi.ETU.P.effectif * 100,
     kpi.K.titPens = kpi.ENS.S.titulaires / kpi.ENS.P.effectif,
 
+    #kpi.K.selPfor = kpi.ADM.S.sélective / kpi.ADM.P.formations,
     #kpi.K.2.resPens = kpi.FIN.P.ressources / kpi.ENS.P.effectif,
     #kpi.K.4.docPec  = kpi.ETU.S.cycle.3.D / kpi.ENS.S.2.ECtitulaires,
   ) 
@@ -108,107 +110,44 @@ kpiesr_get_uaisnamedlist <- function(esr) {
   return(esr.uais)
 }
 
-kpiesr_data_infos <- function(df,name="Anon") {
-  if(! "Rentrée" %in% colnames(df)) df$Rentrée <- NA
-  if(! "Type" %in% colnames(df)) df$Type <- NA
 
-  message("Informations sur ",name)
-  message("Période des données : ",range(levels(df$Rentrée)))
-  message("Nombre d'établissements :",
-          paste0(capture.output(
-            df %>%
-              group_by(Rentrée, Type) %>%
-              summarise(compte = n()) %>%
-              arrange(desc(Rentrée))
-            ), collapse = "\n")
-          )
-}
+kpiesr_ETL_and_save <- function(etab, ens, etu, fin) {
 
+  esr.raw <- fin %>% rename(Etablissement.FIN = Etablissement, Type.FIN = Type) %>%
+    full_join(ens %>% rename(Etablissement.ENS = Etablissement, Type.ENS = Type)) %>%
+    full_join(etu %>% rename(Etablissement.ETU = Etablissement, Type.ETU = Type)) %>%
+    select(Groupe,UAI,Rentrée,starts_with("Etablissement"),starts_with("Type"), everything())
+  
+  esr.ensemble <- esr.raw %>% 
+    group_by(Rentrée) %>%
+    summarise(across(starts_with("kpi"), ~ sum(.x,na.rm = TRUE))) %>%
+    na_if(0) %>%
+    mutate(Groupe = "Ensemble", UAI="Ensemble", Etablissement="Ensemble")
 
-updateUAI <- function(df) {
-  return(df)
-  mutate(df,
-    UAI = recode(str_to_upper(UAI),
-                 '0383546Y' = "0383493R", #UGA/UGA
-                 '0593279U' = "0597132G", #Valencienne/UPHF
-                 '0912408Y' = "0912330N", #Paris-Sud/Paris Saclay
-                 '0440984F' = "0442953W", #Université de Nantes/Nantes Université
-                 '0342321N' = "0342490X", #Université de Montpellier/Université de Montpellier
-                 '0632035V' = "0632084Y", #Université Clermont Auvergne/Université Clermont Auvergne
-                 '0597065J' = "0597239Y" #Université de Lille/Université de Lille
-    )
-  )
-}
+  esr.groupe <- esr.raw %>% 
+    group_by(Rentrée, Groupe) %>%
+    summarise(across(starts_with("kpi"), ~ sum(.x,na.rm = TRUE))) %>%
+    na_if(0) %>%
+    mutate(UAI=Groupe, Etablissement=Groupe, Groupe="Groupe")
+  
+  esr <- bind_rows(
+    left_join(etab %>% select(Groupe,UAI,Etablissement), 
+              esr.raw %>% select(UAI,Rentrée,starts_with("kpi"))),
+    esr.groupe,
+    esr.ensemble
+    ) %>%
+    mutate(Groupe = factor(Groupe,levels=c(levels(etab$Groupe),"Groupe","Ensemble")))
 
-kpiesr_missing_uai_search <- function(uai) {
-  data.frame(
-    dataset = c("etab","fin","ens","etu","adm"),
-    nb = c(
-      kpiesr_read.etab() %>% filter(UAI == uai) %>% nrow(),
-      kpiesr_read.fin() %>% filter(UAI == uai) %>% nrow(),
-      kpiesr_read.ens() %>% filter(UAI == uai) %>% nrow(),
-      kpiesr_read.etu() %>% filter(UAI == uai) %>% nrow(),
-      kpiesr_read.adm() %>% filter(UAI == uai) %>% nrow()))
-}
-
-kpiesr_ETL_and_save <- function() {
-  # source("fr-esr-principaux-etablissements-enseignement-superieur.R",local = TRUE)
-  # source("fr-esr-operateurs-indicateurs-financiers.R",local = TRUE)
-  # source("fr-esr-enseignants-X-esr-public.R",local = TRUE)
-  # source("fr-esr-statistiques-sur-les-effectifs-d-etudiants-inscrits-par-etablissement.R",local = TRUE)
-  # source("fr-esr-parcoursup.R",local = TRUE)
-
-  etab <- kpiesr_read.etab()
-  kpiesr_data_infos(etab,"etab")
-  fin <- kpiesr_read.fin() %>% updateUAI()
-  kpiesr_data_infos(fin,"FIN")
-  ens <- kpiesr_read.ens() %>% updateUAI()
-  kpiesr_data_infos(ens,"ENS")
-  etu <- kpiesr_read.etu() %>% updateUAI()
-  kpiesr_data_infos(etu,"ETU")
-  adm <- kpiesr_read.adm() %>% updateUAI()
-  kpiesr_data_infos(adm,"ADM")
-
-  esr <- fin %>%
-    full_join(ens) %>%
-    full_join(etu) %>%
-    full_join(adm) %>%
-    full_join(etab) %>%
-    filter(!is.na(Rentrée)) %>%
-    mutate(Rentrée = as.factor(as.character(Rentrée))) %>%
-    arrange(Rentrée)
-
-  warning(paste0(
-    esr %>% filter(is.na(Libellé)) %>% select(UAI) %>% unique() %>% nrow(),
-    " UAIs n'ont pas de libellé (absence du jeu de données des établissements)"))
-
-  kpiesr_missingunivs <- etab %>%
-    filter(Type == "Université", ! UAI %in% esr[esr$Type == "Université",]$UAI) %>%
-    select(UAI,Libellé)
-
-  warning("Universités manquantes dans le jeu de données final :\n")
-  warning(paste0(capture.output(kpiesr_missingunivs), collapse = "\n"))
-
-
-  esr <- esr %>%
-    filter(!is.na(Libellé)) %>%
-    kpiesr_add_kpis()
-
-  kpiesr_data_infos(esr,"ESR")
+  esr <- kpiesr_add_kpis(esr)
   esr <- set_encoding_utf8(esr)
-
-  write.csv2(esr,"tdbesr.csv",row.names = FALSE)
 
   esr.pnl <- kpiesr_pivot_norm_label(esr)
   esr.pnl <- set_encoding_utf8(esr.pnl)
 
-  esr.uais <- kpiesr_get_uaisnamedlist(esr)
-  
-  esr.stats <- kpiesr_get_stats(esr.pnl)
-  esr.stats <- set_encoding_utf8(esr.stats)
-  
-  #save(esr, esr.pnl, file = "tdbesr.RData")
-  usethis::use_data(esr, esr.pnl, esr.uais, esr.stats, overwrite = TRUE)
+  #esr.uais <- kpiesr_get_uaisnamedlist(esr)
+
+  write.csv2(esr,"tdbesr.csv",row.names = FALSE)
+  usethis::use_data(etab, esr, esr.pnl, esr.raw, overwrite = TRUE)
 }
 
 kpiesr_load <- function(...) {
@@ -217,30 +156,30 @@ kpiesr_load <- function(...) {
   esr.pnl <- esr.pnl
 }
 
-kpiesr_fusion <- function(uais) {
-  df <- kpiESR::esr %>% filter(UAI %in% uais)
-
-  info <- df %>%
-    group_by(Rentrée) %>%
-    summarise(
-      UAI = paste(uais,collapse=('_')),
-      Libellé = paste(unique(df$Libellé),collapse=('_')),
-      Sigle = paste(unique(df$Sigle),collapse=('_')),
-      Type = first(df$Type),
-      Type.détaillé = first(df$Type.détaillé),
-      Académie = first(df$Académie),
-      Rattachement = NA,
-      url.sitewe = NA,
-      url.wikidata = NA,
-      url.legifrance = NA
-    )
-
-  kpis <- df %>%
-    group_by(Rentrée) %>%
-    summarise_at(vars(starts_with("kpi")), ~sum(.))
-
-  merge(info,kpis) %>% kpiesr_add_kpis
-}
+# kpiesr_fusion <- function(uais) {
+#   df <- kpiESR::esr %>% filter(UAI %in% uais)
+# 
+#   info <- df %>%
+#     group_by(Rentrée) %>%
+#     summarise(
+#       UAI = paste(uais,collapse=('_')),
+#       Libellé = paste(unique(df$Libellé),collapse=('_')),
+#       Sigle = paste(unique(df$Sigle),collapse=('_')),
+#       Type = first(df$Type),
+#       Type.détaillé = first(df$Type.détaillé),
+#       Académie = first(df$Académie),
+#       Rattachement = NA,
+#       url.sitewe = NA,
+#       url.wikidata = NA,
+#       url.legifrance = NA
+#     )
+# 
+#   kpis <- df %>%
+#     group_by(Rentrée) %>%
+#     summarise_at(vars(starts_with("kpi")), ~sum(.))
+# 
+#   merge(info,kpis) %>% kpiesr_add_kpis
+# }
 
 
 

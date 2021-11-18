@@ -403,15 +403,21 @@ etab %>%
 
 ```{r groupage, echo=TRUE}
 groupage <- function(df) {
-  ifelse(str_detect(df$Etablissement,"niversité"),"Université","Autre")
+  factor(
+    ifelse(str_detect(df$Etablissement,"niversité") & !str_detect(df$Etablissement,"echnologie"),
+           "Université","Autre"),
+    levels = c("Université","Autre"))
 }
 ```
 
 ```{r groupage.do}
-etab <- etab %>% mutate(Groupe=groupage(.))
-ens <- ens %>% mutate(Groupe=groupage(.))
-etu <- etu %>% mutate(Groupe=groupage(.))
-fin <- fin %>% mutate(Groupe=groupage(.))
+
+add_groupe <- function(df) df %>% mutate(Groupe=groupage(.)) %>% select(Groupe,everything())
+
+etab <- add_groupe(etab)
+ens <- add_groupe(ens)
+etu <- add_groupe(etu)
+fin <- add_groupe(fin)
 ```
 
 
@@ -422,12 +428,21 @@ fin <- fin %>% mutate(Groupe=groupage(.))
 ```{r final.stat, results='asis'}
 etab %>% 
   group_by(Groupe) %>%
-  summarise(comple = n()) %>%
+  summarise(compte = n()) %>%
   spoilerTable()
 ```
 
-### Données complètes
+### Liste complète des établissements
 
-```{r final, results='asis'}
+```{r final.etab, results='asis'}
 etab %>% spoilerTable()
 ```
+
+### Fusion des données
+
+```{r final}
+kpiesr_ETL_and_save(etab,ens,etu,fin)
+```
+
+[tdbesr.csv](tdbesr.csv)
+

@@ -29,6 +29,7 @@ kpiesr_read.ens <- function() {
     transmute(
       UAI = etablissement_id_uai,
       Etablissement = Établissement,
+      Type = Type.établissement,
       Rentrée,
       Catégorie = case_when(
         Code.categorie.personnels == "AM2D" ~ "AM2D",
@@ -40,6 +41,7 @@ kpiesr_read.ens <- function() {
     transmute(
       UAI = etablissement_id_uai,
       Etablissement = Établissement,
+      Type = Type.établissement,
       Rentrée,
       Catégorie = case_when(
         code.categorie.personnels %in% c("LRU","MCF ASS-INV", "PR ASS-INV") ~ "LRU_Associés",
@@ -49,14 +51,15 @@ kpiesr_read.ens <- function() {
       Effectif)
 
   ens <- bind_rows(ens.tit,ens.np) %>%
-    group_by(UAI, Etablissement, Rentrée, Catégorie) %>%
+    group_by(UAI, Etablissement, Type, Rentrée, Catégorie) %>%
     summarise(Effectif = sum(Effectif,na.rm = TRUE)) %>%
     ungroup() %>%
     pivot_wider(names_from = Catégorie, values_from = Effectif, values_fill = list(Effectif=NA)) %>%
-    mutate(
+    transmute(
       UAI,
       Etablissement,
-      Rentrée = as.factor(Rentrée),
+      Type,
+      Rentrée,
       kpi.ENS.P.effectif      = EC+AM2D+Doc_ATER+LRU_Associés+Autres,
       kpi.ENS.S.titulaires    = EC+AM2D,
       kpi.ENS.S.ECtitulaires  = EC,

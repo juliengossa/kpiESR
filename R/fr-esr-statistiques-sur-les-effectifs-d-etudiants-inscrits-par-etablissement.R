@@ -160,12 +160,13 @@ kpiesr_read.etu <- function() {
     transmute(
       UAI = Identifiant.s..UAI,
       Etablissement = Établissement,
-      Rentrée = as.factor(rentree),
+      Type = Type.d.établissement,
+      Rentrée = rentree,
       kpi.ETU.P.effectif = Nombre.d.étudiants.inscrits..inscriptions.principales..hors.doubles.inscriptions.CPGE,
-      kpi.ETU.S.cycle.1.L = Cycle.universitaire..cursus.LMD....L..1er.cycle.,
-      kpi.ETU.S.cycle.2.M = Cycle.universitaire..cursus.LMD....M..2ème.cycle.,
-      kpi.ETU.S.cycle.3.D = Cycle.universitaire..cursus.LMD....D..3ème.cycle.,
+      kpi.ETU.S.cycle1_L = Cycle.universitaire..cursus.LMD....L..1er.cycle.,
+      kpi.ETU.S.cycle2_M = Cycle.universitaire..cursus.LMD....M..2ème.cycle.,
+      kpi.ETU.S.cycle3_D = Cycle.universitaire..cursus.LMD....D..3ème.cycle.,
       #kpi.ETU.S.diplome.national = Type.de.diplôme...Diplômes.nationaux,
-      kpi.ETU.S.diplomeEtablissement = Type.de.diplôme...Diplômes.d.établissement
+      kpi.ETU.S.DU_DE = Type.de.diplôme...Diplômes.d.établissement
   )
 }

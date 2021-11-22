@@ -24,7 +24,7 @@ hack_label <- function(x) {
   case_when(
     x<=1 ~ scales::percent(x,accuracy = 1),
     x<=100 ~ format(x,digits=3, nsmall=1, scientific = FALSE),
-    x<=2000 ~ euro(x),
+    #x<=2000 ~ euro(x),
     TRUE ~ euro_k(x)
   )
 }

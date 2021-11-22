@@ -22,6 +22,7 @@ Imports:
     grid,
     ggbeeswarm,
     ggiraphExtra,
-    purrr
+    purrr,
+    stringr
 Depends: 
     R (>= 2.10)

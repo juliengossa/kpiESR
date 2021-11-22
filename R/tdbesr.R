@@ -24,15 +24,16 @@ kpiesr_pivot_norm_label <- function(esr, rentrée.ref=2012) {
 
     mutate(across(matches("kpi.....P"), list(norm = ~ .))) %>%
     mutate(across(starts_with("kpi.K"), list(norm = ~ .))) %>%
-    rename_with(~ paste0(.,"_valeur"), matches("kpi.[^_]*$")) %>%
+    rename_with(~ paste0(.,"_valeur"), matches("^kpi.*$") & !matches("^.*norm$")) %>%
     pivot_longer(
       cols = starts_with("kpi"),
       names_to = c("kpi", ".value"),
       names_pattern = "(.*)_(valeur|norm)"
     ) %>% 
-    filter(!is.na(valeur)) %>%
+    #filter(!is.na(valeur)) %>%
+    mutate(kpi = as.factor(kpi)) %>%
+    group_by(kpi) %>%
     mutate(
-      kpi = as.factor(kpi),
       valeur_label = valeur_labels(kpi,valeur),
       norm_label = norm_labels(kpi,norm)
     ) %>%
@@ -51,7 +52,7 @@ kpiesr_pivot_norm_label <- function(esr, rentrée.ref=2012) {
     filter(Rentrée >= rentrée.ref) %>%
     group_by(Groupe,UAI,kpi) %>%
     arrange(Groupe,UAI,kpi,Rentrée) %>%
-    mutate( evolution = norm / first(norm) * 100 ) %>%
+    mutate( evolution = valeur / first(valeur) * 100 ) %>%
     ungroup()
   
 }
@@ -59,28 +60,43 @@ kpiesr_pivot_norm_label <- function(esr, rentrée.ref=2012) {
 #test <- kpiesr_pivot_norm_label(esr)
 
 
-kpiesr_get_stats <- function(esr.pnl) {
+kpiesr_get_stats <- function(esr.pnl, rentrée.ref = 2013) {
   
   p <- c(0,0.25,0.5,0.75,1)
   p_names <- purrr::map_chr(p, ~paste0(.x*100))
   p_funs <-  purrr::map(p, ~purrr::partial(quantile, probs = .x, na.rm = TRUE)) %>% 
     purrr::set_names(nm = p_names)
   
-  merge(
-    esr.pnl %>%
-      group_by(Rentrée,Type,kpi) %>%
-      summarise_at(vars(norm, norm_y, evolution), p_funs),
-    esr.pnl %>%
-      group_by(Rentrée,Type,kpi) %>%
-      summarise(
-        norm_moy = mean(norm),
-        nombre = n())
-    ) %>% 
+  df <- esr.pnl %>%
+    filter(Groupe != "Ensemble", Groupe != "Groupe") %>%
+    group_by(UAI, kpi) %>% 
+    filter(min(Rentrée)<=rentrée.ref) 
+    
+  df %>%
+    group_by(Groupe,kpi,Rentrée) %>%
+    summarise(Nombre = n()) %>%
+    kableExtra::kable(., format="simple") %>%
+    paste0(collapse = '\n') %>%
+    message()
+
+  bind_rows(
+    group_by(df, Rentrée,Groupe,kpi) %>%
+    summarise(
+      across(c(norm, evolution), p_funs),
+      Nombre = n()),
+    group_by(df, Rentrée,kpi) %>%
+    summarise(
+      across(c(norm, evolution), p_funs),
+      Nombre = n()) %>%
+    mutate(Groupe = "Ensemble")
+    ) %>%
     ungroup() %>%
-    mutate_at(vars(matches("norm_[^y]")), list( label = ~ norm_labels(kpi,.)))
+    arrange(Groupe,kpi,Rentrée) %>%
+    select(Groupe,kpi,Rentrée, starts_with("norm"), starts_with("evolution"))
+  
 }
 
-#kpiesr_get_stats(esr.pnl)
+#esr.stats <- kpiesr_get_stats(kpiESR::esr.pnl)
 
 
 
@@ -90,7 +106,7 @@ kpiesr_add_kpis <- function (df) {
     kpi.K.resPetu = kpi.FIN.P.ressources / (kpi.ETU.S.cycle1_L+kpi.ETU.S.cycle2_M),
     kpi.K.forPetu = kpi.FIN.S.recettesFormation / kpi.ETU.P.effectif,
     kpi.K.recPect = kpi.FIN.S.recettesFormation / kpi.ENS.S.ECtitulaires,
-    kpi.K.titPetu = kpi.ENS.S.ECtitulaires / kpi.ETU.P.effectif * 100,
+    kpi.K.ensPetu = kpi.ENS.P.effectif / kpi.ETU.P.effectif * 100,
     kpi.K.titPens = kpi.ENS.S.titulaires / kpi.ENS.P.effectif,
 
     #kpi.K.selPfor = kpi.ADM.S.sélective / kpi.ADM.P.formations,
@@ -111,7 +127,7 @@ kpiesr_get_uaisnamedlist <- function(esr) {
 }
 
 
-kpiesr_ETL_and_save <- function(etab, ens, etu, fin) {
+kpiesr_ETL_and_save <- function(etab, ens, etu, fin, rentrée.ref=2012) {
 
   esr.raw <- fin %>% rename(Etablissement.FIN = Etablissement, Type.FIN = Type) %>%
     full_join(ens %>% rename(Etablissement.ENS = Etablissement, Type.ENS = Type)) %>%
@@ -141,13 +157,17 @@ kpiesr_ETL_and_save <- function(etab, ens, etu, fin) {
   esr <- kpiesr_add_kpis(esr)
   esr <- set_encoding_utf8(esr)
 
-  esr.pnl <- kpiesr_pivot_norm_label(esr)
+  esr.pnl <- kpiesr_pivot_norm_label(esr, rentrée.ref)
   esr.pnl <- set_encoding_utf8(esr.pnl)
+  
+  esr.stats <- kpiesr_get_stats(esr.pnl, rentrée.ref)
 
   #esr.uais <- kpiesr_get_uaisnamedlist(esr)
-
+  
+  esr.etab <- etab
+  
   write.csv2(esr,"tdbesr.csv",row.names = FALSE)
-  usethis::use_data(etab, esr, esr.pnl, esr.raw, overwrite = TRUE)
+  usethis::use_data(esr, esr.pnl, esr.stats, esr.raw, esr.etab, overwrite = TRUE)
 }
 
 kpiesr_load <- function(...) {
@@ -183,103 +203,6 @@ kpiesr_load <- function(...) {
 
 
 
-#' Title
-#'
-#' @param rentr
-#' @param uai
-#' @param style.kpi.k
-#' @param style.kpi
-#'
-#' @return
-#' @export
-#'
-#' @examples
-kpiesr_plot_all <- function(rentrée, uai,
-                            style.kpi.k=kpiesr_style(),
-                            style.kpi=kpiesr_style(),
-                            lfc = kpiesr_lfc,
-                            adm = FALSE,
-                            ...) {
-
-  if(adm) {
-    k.norm.index <- "K_ADM"
-    zooms.abs <- c(0.5, 0.5, 1, 1, 0.5,  1)
-    zooms.evol <- c(0.6, 0.6, 0.4, 0.15, 0.15,  1)
-  }
-  else {
-    k.norm.index <- "K"
-    zooms.abs <- c(0.5, 0.5, 1, 0.5,  1)
-    zooms.evol <- c(0.6, 0.6, 0.15, 0.15,  1)
-  }
-
-  style.abs <- style.kpi
-  style.abs$x_scale = TRUE
-
-  plots <- list(
-    k.norm = kpiesr_plot_norm(rentrée, uai, lfc[[k.norm.index]],
-                              norm.valeurs=FALSE, omit.first = FALSE,
-                              style=style.kpi.k, ...),
-    k.evol.abs = kpiesr_plot_evol_all(rentrée, uai, peg.args,
-                                      yzooms = zooms.abs,
-                                      plot.type="abs",
-                                      style = style.abs),
-    k.evol.norm = kpiesr_plot_evol_all(rentrée, uai, peg.args,
-                                      yzooms = zooms.evol,
-                                      plot.type="norm",
-                                      style = style.kpi),
-
-    absnorm = list(
-      etu.abs = kpiesr_plot_primaire(rentrée,uai,lfc[["ETU"]], style=style.kpi, ...),
-      etu.norm = kpiesr_plot_norm(rentrée,uai,lfc[["ETU"]], style=style.kpi,...),
-
-      ens.abs = kpiesr_plot_primaire(rentrée,uai,lfc[["ENS"]], style=style.kpi,...),
-      ens.norm = kpiesr_plot_norm(rentrée,uai,lfc[["ENS"]], style=style.kpi,...),
-
-      fin.abs = kpiesr_plot_primaire(rentrée,uai,lfc[["FIN"]], style=style.kpi,...),
-      fin.norm = kpiesr_plot_norm(rentrée,uai,lfc[["FIN_N"]], style=style.kpi,...)
-      )
-  )
-
-  if(adm)
-    plots$absnorm <- append(plots$absnorm, c(
-      adm.abs = kpiesr_plot_primaire(rentrée,uai,lfc[["ADM"]], style=style.kpi,...),
-      adm.norm = kpiesr_plot_norm(rentrée,uai,lfc[["ADM"]], style=style.kpi,...)
-    ))
-
-  return(plots)
-}
-
-
-#' Title
-#'
-#' @param rentr
-#' @param uai
-#' @param big_style
-#' @param ...
-#'
-#' @return
-#' @export
-#'
-#' @examples
-kpiesr_plot_tdb <- function(rentrée, uai,
-                            style.kpi.k=kpiesr_style(),
-                            style.kpi=kpiesr_style(), ...) {
-
-  plots <- kpiesr_plot_all(rentrée, uai, style.kpi.k, style.kpi,...)
-
-  pg <-
-    plot_grid(ncol = 1, rel_heights = c(1,1),
-              plot_grid(ncol=1, rel_heights = c(2,1,1), #align = "v",
-                plots$k.norm,
-                plot_grid(plotlist = plots$k.evol.abs, nrow=1, align = "hv"),
-                plot_grid(plotlist = plots$k.evol.norm, nrow=1, align = "hv")
-                ),
-              plot_grid (ncol = 2, align = "v", plotlist = plots$absnorm)
-    )
-
-  return(pg)
-
-}
 
 #kpiesr_plot_tdb(2017,uai)
 

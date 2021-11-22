@@ -1,8 +1,7 @@
 
 
 euro_M <- function(x) {
-  #return(scales::dollar(x, prefix="",suffix=" M€", scale = 1/1000000, largest_with_cents = 1, big.mark = " "))
-  return(paste0(round(x/1000000,0),"M€"))
+  return(scales::dollar(x, prefix="",suffix=" M€", scale = 1/1000000, largest_with_cents = 1, big.mark = " "))
 }
 
 euro_k <- function(x) {
@@ -21,28 +20,44 @@ number_format <- function(x) {
   format(round(x), big.mark=" ", trim=TRUE)
 }
 
-
+hack_label <- function(x) {
+  case_when(
+    x<=1 ~ scales::percent(x,accuracy = 1),
+    x<=100 ~ format(x,digits=3, nsmall=1, scientific = FALSE),
+    x<=2000 ~ euro(x),
+    TRUE ~ euro_k(x)
+  )
+}
 
 valeur_labels <- function(kpi, valeur) {
   case_when(
+    is.na(valeur) ~ "N/A",
     kpi == "kpi.K.dotPres"  ~ scales::percent(valeur, accuracy = 1),
     kpi == "kpi.K.forPetu"  ~ euro(valeur),
     kpi == "kpi.K.recPect"  ~ euro_k(valeur),
     kpi == "kpi.K.resPetu"  ~ euro_k(valeur),
     kpi == "kpi.K.selPfor"  ~ scales::percent(valeur, accuracy = 1),
-    kpi == "kpi.K.titPetu"  ~ format(round(valeur,1), trim=TRUE),
+    kpi == "kpi.K.ensPetu"  ~ as.character(round(valeur, 1)),
     kpi == "kpi.K.titPens"  ~ scales::percent(valeur, accuracy = 1),
-    grepl("kpi.FIN", kpi)   ~ euro_M(valeur),
-    grepl("kpi.", kpi)      ~ number_format(valeur)
+    str_detect(kpi,"kpi.FIN") ~ euro_M(valeur),
+    TRUE                    ~ number_format(valeur)
   )
 }
 
 norm_labels <- function(kpi, norm) {
   case_when(
-    grepl("kpi.....S", kpi) ~ scales::percent(norm, accuracy = 1),
+    is.na(norm) ~ "N/A",
+    str_detect(kpi,"kpi.....S") ~ scales::percent(norm, accuracy = 1),
     TRUE                    ~ valeur_labels(kpi, norm))
 }
 
+omit_first <- function(lfc) {
+  lfc$factors <- lfc$factors[-1]
+  lfc$labels  <- lfc$labels[-1]
+  lfc$desc    <- lfc$desc[-1]
+  
+  return(lfc)  
+}
 
 #' Title
 #'
@@ -59,10 +74,12 @@ norm_labels <- function(kpi, norm) {
 #'
 #' @examples
 kpiesr_style <- function(
-              point_size = 18,
-              line_size = 3,
-              text_size = 4,
+              point_size = 20,
+              line_size = 1,
+              text_size = 5,
               point_alpha = 1,
+              label_wrap = 15,
+              primaire_margin = 1.15,
               primaire_plot.margin = ggplot2::unit(c(0.5,0,0,0), "cm"),
               bp_style = "beeswarm",
               bp_width = 1,
@@ -98,7 +115,7 @@ colblues   <- rev(RColorBrewer::brewer.pal(6, "Blues"))
 colgreens  <- rev(RColorBrewer::brewer.pal(6, "Greens"))
 coloranges <- rev(RColorBrewer::brewer.pal(7, "Oranges"))
 colpurples <- rev(RColorBrewer::brewer.pal(6, "Purples"))
-colrdbu <- rev(RColorBrewer::brewer.pal(8, "RdBu"))[2:7]
+colrdbu <- RColorBrewer::brewer.pal(8, "RdBu")[c(1:3,6:8)]
 
 kpiesr_lfc <- list(
   ETU = list(
@@ -144,44 +161,41 @@ kpiesr_lfc <- list(
                  "Masse salariale",
                  "SCSP",
                  "Recettes formation",
-                 "Recettes recherche",
-                 "Investissements"),
+                 "Recettes recherche"),
     factors  = c("kpi.FIN.P.ressources", 
                  "kpi.FIN.S.masseSalariale", 
                  "kpi.FIN.S.SCSP", 
                  "kpi.FIN.S.recettesFormation", 
-                 "kpi.FIN.S.recettesRecherche", 
-                 "kpi.FIN.S.investissements"),
+                 "kpi.FIN.S.recettesRecherche"),
     colors   = coloranges[1:6],
     y_labels = euro_M,
     desc     = c("Ressources totales (produits encaissables)",
                  "Masse salariale (dépenses de personnels)",
                  "Subvention pour charge de service public (dotation d'Etat directe)",
                  "Droits d'inscription, Diplôme d'établissement, Formation continue, VAE et Taxe d'apprentissage",
-                 "Valorisation, ANR en et hors investissement d'avenir, contrats et prestations de recherche",
-                 "Investissements (Acquisions d'immobilisation")
+                 "Valorisation, ANR en et hors investissement d'avenir, contrats et prestations de recherche")
   ),
   K = list(
-    labels   = c("Ressources par étudiant",
-                 "Recettes recherche par EC",
-                 "Recetttes formation par étudiant",
+    labels   = c("Taux de titularité",
+                 "Taux de SCSP",
                  "Taux d'encadrement", 
-                 "Taux de titularité",
-                 "Taux de SCSP" ),
-    factors  = c("kpi.K.resPetu", 
-                 "kpi.K.recPect",
+                 "Ressources par étudiant",
+                 "Recetttes formation par étudiant",
+                 "Recettes recherche par EC"),
+    factors  = c("kpi.K.titPens",
+                 "kpi.K.dotPres",
+                 "kpi.K.ensPetu",
+                 "kpi.K.resPetu",
                  "kpi.K.forPetu",
-                 "kpi.K.titPetu",
-                 "kpi.K.titPens",
-                 "kpi.K.dotPres"),
+                 "kpi.K.recPect"),
     colors   = colrdbu, #c(coloranges[1],coloranges[4],coloranges[1],colgreens[5],coloranges[5],colblues[5]),
     y_labels = identity,
-    desc     = c("Ressources divisées par le nombre d'étudiants",
-                 "Recettes recherche divisées par le nombre d'enseignants-chercheurs titulaires",
-                 "Recettes formation divisées par le nombre d'étudiants",
+    desc     = c("Part des titulaires dans les enseignants",
+                 "Part des Subventions pour charge de service public dans les ressources",
                  "Nombre d'enseignants titulaires pour 100 étudiants",
-                 "Part des titulaires dans les enseignants",
-                 "Part des Subventions pour charge de service public dans les ressources")
+                 "Ressources divisées par le nombre d'étudiants",
+                 "Recettes formation divisées par le nombre d'étudiants",
+                 "Recettes recherche divisées par le nombre d'enseignants-chercheurs titulaires")
   )
 )
 

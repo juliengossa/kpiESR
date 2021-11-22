@@ -26,7 +26,7 @@ kpiesr_plot_evol <- function(rentrées, uais, lfc, ilfc, type=NA,
       filter(is.finite(valeur))
     y_labels <- percent_format
   }
-
+  
   df.uai <- filter(df.evol, UAI %in% uais)
   if(nrow(df.uai)==0) return(kpiesr_plot_missingdata)
 
@@ -66,7 +66,7 @@ kpiesr_plot_evol <- function(rentrées, uais, lfc, ilfc, type=NA,
     { if(style$y_scale == FALSE) theme(strip.text = element_blank(), axis.text.y = element_blank(), panel.grid = element_blank()) } +
     { if(style$x_scale == FALSE) theme(axis.text.x = element_blank()) } +
     { if(style$grid == FALSE) theme(panel.grid.major.y = element_blank()) }
-
+  
   return(p)
 }
 
@@ -82,38 +82,38 @@ linearize <- function(x) {
 
 
 kpiesr_plot_evol_min <- function(rentrées, uai, lfc, ilfc, type=NA,
-                             plot.type="abs",
-                             style = kpiESR::kpiesr_style(),
-                             y_labels = lfc$y_labels) {
+                                 plot.type="abs",
+                                 style = kpiESR::kpiesr_style(),
+                                 y_labels = lfc$y_labels) {
   
   if(is.na(type)) type <- as.character(subset(kpiESR::esr, UAI == uai, Type)[1,1])
-
+  
   df.all <<- merge(
     kpiESR::esr.pnl %>% filter(Type==type,
                                Rentrée %in% rentrées,
                                kpi == lfc$factors[ilfc],
                                UAI == uai),
     kpiESR::esr.stats %>% filter(Type==type,
-                               Rentrée %in% rentrées,
-                               kpi == lfc$factors[ilfc])) %>%
+                                 Rentrée %in% rentrées,
+                                 kpi == lfc$factors[ilfc])) %>%
     { if (plot.type == "abs")
-        transmute(., Rentrée=Rentrée, kpi=kpi, 
-                  y=norm, y_25=norm_25, y_50=norm_50, y_75=norm_75) %>%
+      transmute(., Rentrée=Rentrée, kpi=kpi, 
+                y=norm, y_25=norm_25, y_50=norm_50, y_75=norm_75) %>%
         mutate_at(c("y", "y_25", "y_75"), ~ . - first(y_50)) %>%
         mutate_at(c("y_50"), ~ . - first(y_50)) 
       else
         transmute(., Rentrée=Rentrée, kpi=kpi, 
                   kpi=kpi, y=evolution, y_25=evolution_25, y_50=evolution_50, y_75=evolution_75)
     } 
-
+  
   
   if(style$evol_linear)
     df.all <- df.all %>%
-      mutate_at(c("y_25", "y_50", "y_75"), linearize)
+    mutate_at(c("y_25", "y_50", "y_75"), linearize)
   
-
+  
   #limits = c(min(stats$norm_0),max(stats$norm_100))
-
+  
   ggplot(df.all, aes(x=Rentrée)) +
     geom_area(aes(y=y_75), color=style$evol_fill, fill=style$evol_fill, group=1) +
     geom_area(aes(y=y_25), color=style$evol_fill, fill=style$evol_fill, group=1) +
@@ -124,7 +124,7 @@ kpiesr_plot_evol_min <- function(rentrées, uai, lfc, ilfc, type=NA,
               arrow = arrow(length=unit(0.30,"cm"),type="closed",angle=30)) +
     #ylim(limits) +
     theme_void() + guides(color=FALSE)
-    
+  
 }
 
 # kpiesr_plot_evol_min(rentrées = seq(2012,2018),
@@ -140,10 +140,10 @@ kpiesr_plot_evol_min <- function(rentrées, uai, lfc, ilfc, type=NA,
 
 kpiesr_plot_evol_all <- function(rentrée, uai, peg.args, type=NA, yzooms=list(),
                                  style = kpiesr_style(), ...) {
-
+  
   plots <- list()
   for(i in seq(1,length(peg.args))) {
-
+    
     args <- append(list(
       rentrées=seq(2012,rentrée),
       type=type,
@@ -152,11 +152,11 @@ kpiesr_plot_evol_all <- function(rentrée, uai, peg.args, type=NA, yzooms=list()
       peg.args[[i]])
     if(i < length(yzooms)) args <- append(args, list(yzoom=yzooms[i]))
     args <- c(args, ...)
-
+    
     plot <- do.call(kpiesr_plot_evol, args)
     plots[[i]] <- plot
   }
-
+  
   return(plots)
 }
 

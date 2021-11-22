@@ -12,25 +12,28 @@
 #'
 #' @examples
 kpiesr_plot_primaire  <- function(rentrée, uai, lfc,
+                                  facet = TRUE,
                                   style = kpiesr_style()) {
   df <- kpiESR::esr.pnl %>%
-    filter(UAI==uai, Rentrée==rentrée, kpi %in% lfc$factors)
+    filter(UAI==uai, Rentrée==rentrée, kpi %in% lfc$factors) %>%
+    mutate(kpi = factor(kpi,levels=lfc$factors, labels=lfc$labels))
 
-    if(nrow(filter(df,!is.na(valeur))) == 0)
-      return(kpiesr_plot_missingdata)
+  # if(nrow(filter(df,!is.na(valeur))) == 0)
+  #   return(kpiesr_plot_missingdata)
 
-    ggplot(df, aes(x=kpi,y=valeur,fill=kpi,text=paste0(lfc$desc,"\n",valeur_label))) +
-      geom_bar(stat = "identity",color="black") +
-      { if(!style$plotly) geom_text(aes(label=valeur_label), vjust=-0.4, size = style$text_size, fontface="bold") } +
-      scale_x_discrete(labels=lfc$labels, limits=lfc$factors) +
-      scale_fill_manual(values=lfc$colors, limits=lfc$factors) +
-      scale_y_continuous(labels = lfc$y_labels) +
-      guides(color=FALSE, fill=FALSE) +
-      kpiesr_theme +
-      coord_cartesian(clip = 'off') +
-      theme(plot.margin = style$primaire_plot.margin)
+  ggplot(df, aes(x=kpi,y=valeur,fill=kpi, text=paste0(lfc$desc,"\n",valeur_label))) +
+    geom_bar(stat = "identity") +
+    { if(!style$plotly) geom_text(aes(label=valeur_label), size=style$text_size, vjust=-0.4) } +
+    scale_fill_manual(values=lfc$colors, limits=lfc$labels) +
+    #scale_x_discrete(limits=lfc$labels) +
+    scale_y_continuous(labels = lfc$y_labels) +
+    guides(color="none", fill="none") +
+    expand_limits(y=max(df$valeur)*style$primaire_margin) +
+    { if(facet) facet_wrap(.~kpi, scales="free_x", nrow = 1, labeller = label_wrap_gen(style$label_wrap)) } +
+    coord_cartesian(clip = 'off') 
 }
 
+# kpiesr_plot_primaire(2019, "0251215K", kpiesr_lfc[["ETU"]], facet = TRUE)
 
 kpiesr_kpi_stats <- function(df.stats,thekpi) {
   lapply(thekpi,function(p) {
@@ -129,4 +132,9 @@ kpiesr_plot_norm <- function(rentrée, uai, lfc,
   return(p)
 }
 
-#kpiesr_plot_norm(2018,"0673021V",kpiesr_lfc[["K"]], norm.valeurs = TRUE, omit.first = FALSE)
+# kpiesr_plot_norm(2017,uai,kpiesr_lfc[["ETU"]])
+# kpiesr_plot_norm(2017,uai,kpiesr_lfc[["ETU"]], style=kpiesr_style(bp_style = "violin"))
+# kpiesr_plot_norm(2017,uai,kpiesr_lfc[["ENS"]])
+# kpiesr_plot_norm(2018,uai,kpiesr_lfc[["FIN"]],omit.first = FALSE)
+# kpiesr_plot_norm(2017,uai,kpiesr_lfc[["ADM"]])
+# kpiesr_plot_norm(2017,uai,kpiesr_lfc[["K"]], omit.first = FALSE)

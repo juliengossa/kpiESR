@@ -361,7 +361,7 @@ fix.wikidata <- bind_rows(
   c(UAI="0342490X",url.wikidata="https://www.wikidata.org/entity/Q776223"),
   c(UAI="0632084Y",url.wikidata="https://www.wikidata.org/entity/Q1319786"),
   c(UAI="0597239Y",url.wikidata="https://www.wikidata.org/entity/Q3551621")
-)
+)b
 
 etab <- fix_etab(etab, fix.wikidata) 
 
@@ -404,8 +404,16 @@ etab %>%
 ```{r groupage, echo=TRUE}
 groupage <- function(df) {
   factor(
-    ifelse(str_detect(df$Etablissement,"niversité") & !str_detect(df$Etablissement,"echnologie"),
-           "Université","Autre"),
+    case_when(
+      df$Etablissement == "Université Paris sciences et lettres" ~ "Autre",
+      df$Etablissement %in% c("Université de la Polynésie Française",
+                              "Université de Guyane",
+                              "Université de Corse Pasquale Paoli",
+                              "Université de la Nouvelle-Calédonie",
+                              "Université des Antilles") ~ "Autre",
+      str_detect(df$Etablissement,"echnologie") ~ "Autre",
+      str_detect(df$Etablissement,"niversité") ~ "Université",
+      TRUE ~ "Autre"),
     levels = c("Université","Autre"))
 }
 ```
@@ -435,13 +443,13 @@ etab %>%
 ### Liste complète des établissements
 
 ```{r final.etab, results='asis'}
-etab %>% spoilerTable()
+etab %>% arrange(Groupe,Etablissement) %>% spoilerTable() 
 ```
 
 ### Fusion des données
 
 ```{r final}
-kpiesr_ETL_and_save(etab,ens,etu,fin)
+kpiesr_ETL_and_save(etab,ens,etu,fin, rentrée.ref = 2013)
 ```
 
 [tdbesr.csv](tdbesr.csv)

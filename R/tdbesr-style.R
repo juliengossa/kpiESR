@@ -81,6 +81,8 @@ kpiesr_style <- function(
               label_wrap = 15,
               primaire_margin = 1.15,
               evol_text = TRUE,
+              bs_point_size = 1,
+              strip_labeller = identity,
               kvt_style = "circle",
               kvt_point_pos = NA,
               kvt_alpha = 0.5,
@@ -104,10 +106,10 @@ kpiesr_style <- function(
 }
 
 
-colblues   <- rev(RColorBrewer::brewer.pal(6, "Blues"))
-colgreens  <- rev(RColorBrewer::brewer.pal(6, "Greens"))
-coloranges <- rev(RColorBrewer::brewer.pal(7, "Oranges"))
-colpurples <- rev(RColorBrewer::brewer.pal(6, "Purples"))
+colblues   <- rev(RColorBrewer::brewer.pal(10, "Blues"))
+colgreens  <- rev(RColorBrewer::brewer.pal(10, "Greens"))
+coloranges <- rev(RColorBrewer::brewer.pal(10, "Oranges"))
+colpurples <- rev(RColorBrewer::brewer.pal(10, "Purples"))
 colrdbu <- RColorBrewer::brewer.pal(8, "RdBu")[c(1:3,6:8)]
 
 kpiesr_lfc <- list(
@@ -160,7 +162,7 @@ kpiesr_lfc <- list(
                  "kpi.FIN.S.SCSP", 
                  "kpi.FIN.S.recettesFormation", 
                  "kpi.FIN.S.recettesRecherche"),
-    colors   = coloranges[1:6],
+    colors   = coloranges[1:5],
     y_labels = euro_M,
     desc     = c("Ressources totales (produits encaissables)",
                  "Masse salariale (dépenses de personnels)",
@@ -191,6 +193,19 @@ kpiesr_lfc <- list(
                  "Recettes recherche divisées par le nombre d'enseignants-chercheurs titulaires")
   )
 )
+
+lfc_dont_labeller <-function(labels) {
+  return( c(
+    paste("Total",labels[1]),
+    paste("dont",labels[-1])
+    ))
+}
+
+lfc_pc_labeller <-function(labels) {
+  return( 
+    paste("%",labels)
+  )
+}
 
 peg.args <- list(
   list(kpiesr_lfc$K, 1, y_labels = scales::percent),

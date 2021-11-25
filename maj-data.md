@@ -1,6 +1,6 @@
 Mise à jour des données
 ================
-2021-11-22
+2021-11-25
 
 Ce document décrit le processus de mise à jour des données kpiESR, et
 notamment la fusion et l’amélioration de trois versions du jeu de donnée
@@ -344,6 +344,20 @@ Voir les données
 </details>
 
 ### Vérification des données manquantes après correction
+
+    ## Warning in fix_uai(., correspondances.uai): Duplicates detected during fix_uai. Keeping first. 
+    ##        UAI Rentrée dupe_count                 Etablissement Type
+    ## 1 0383546Y    2019          2 EPE université Grenoble Alpes   NA
+    ## 2 0383546Y    2019          2 EPE Université Grenoble Alpes   NA
+    ##   kpi.FIN.P.ressources kpi.FIN.S.masseSalariale kpi.FIN.S.SCSP
+    ## 1            475310540                382155932      369429887
+    ## 2                   NA                       NA             NA
+    ##   kpi.FIN.S.recettesFormation kpi.FIN.S.recettesRecherche
+    ## 1                    18166562                    47832347
+    ## 2                          NA                          NA
+    ##   kpi.FIN.S.investissements
+    ## 1                  37589153
+    ## 2                        NA
 
 <details>
 <summary>

@@ -22,6 +22,9 @@ kpiesr_plot_primaire_try <- function(rentrée, uai, lfc,
 kpiesr_plot_primaire  <- function(rentrée, uai, lfc,
                                   facet = TRUE,
                                   style = kpiesr_style()) {
+  
+  lfc$labels <- style$strip_labeller(lfc$labels)
+  
   df <- kpiESR::esr.pnl %>%
     filter(UAI==uai, Rentrée==rentrée, kpi %in% lfc$factors) %>%
     mutate(kpi = factor(kpi,levels=lfc$factors, labels=lfc$labels)) 
@@ -34,7 +37,7 @@ kpiesr_plot_primaire  <- function(rentrée, uai, lfc,
     { if(!style$plotly) geom_text(aes(label=valeur_label), size=style$text_size, vjust=-0.4) } +
     scale_fill_manual(values=lfc$colors, limits=lfc$labels) +
     #scale_x_discrete(limits=lfc$labels) +
-    scale_y_continuous(labels = lfc$y_labels) +
+    #scale_y_continuous(labels = lfc$y_labels) +
     guides(color="none", fill="none") +
     expand_limits(y=max(df$valeur)*style$primaire_margin) +
     { if(facet) facet_wrap(.~kpi, scales="free_x", nrow = 1, labeller = label_wrap_gen(style$label_wrap)) } +

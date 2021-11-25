@@ -34,7 +34,9 @@ kpiesr_plot_evol <- function(rentrée, uai, groupe, lfc,
     filter(kpi %in% lfc$factors) %>%
     mutate(kpi = factor(kpi, levels=lfc$factors, labels=lfc$labels))
 
-  df.na <- df %>% filter(UAI==uai, Rentrée == rentrée, is.na(evolution)) %>%
+  df.na <- df %>% filter(UAI==uai) %>% 
+    group_by(kpi) %>% summarize(n = sum(!is.na(evolution))) %>%
+    filter(n==0) %>%
     mutate(Rentrée = "2016", evolution = 100)
   
   df <- df %>% filter(!is.na(evolution))

@@ -250,12 +250,18 @@ correspondances.uai %>% spoilerTable()
 
 ### Vérification des données manquantes après correction
 
-```{r check.etab21.univ, results='asis'}
+```{r check.etab21.univ, results='asis', warning=TRUE}
 fix_uai <- function(df,correspondances.uai) {
   replist <- correspondances.uai$to 
   names(replist) <- correspondances.uai$from
   
-  return(mutate(df, UAI=recode(UAI,!!!replist)))
+  res <- mutate(df, UAI=recode(UAI,!!!replist))
+  
+  dupes <- res %>% janitor::get_dupes(UAI,Rentrée)
+  if (nrow(dupes>0)) warning("Duplicates detected during fix_uai. Keeping first. \n",
+                             paste(capture.output(dupes), collapse="\n"))
+  
+  return(res %>% group_by(UAI,Rentrée) %>% slice_head(n=1) %>% ungroup())
 }
 
 ens <- ens %>% fix_uai(correspondances.uai)
@@ -361,7 +367,7 @@ fix.wikidata <- bind_rows(
   c(UAI="0342490X",url.wikidata="https://www.wikidata.org/entity/Q776223"),
   c(UAI="0632084Y",url.wikidata="https://www.wikidata.org/entity/Q1319786"),
   c(UAI="0597239Y",url.wikidata="https://www.wikidata.org/entity/Q3551621")
-)b
+)
 
 etab <- fix_etab(etab, fix.wikidata) 
 

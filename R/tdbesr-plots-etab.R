@@ -29,12 +29,15 @@ kpiesr_plot_primaire  <- function(rentrée, uai, lfc,
     filter(UAI==uai, Rentrée==rentrée, kpi %in% lfc$factors) %>%
     mutate(kpi = factor(kpi,levels=lfc$factors, labels=lfc$labels)) 
 
-  if(nrow(filter(df,!is.na(valeur))) == 0)
-    return(kpiesr_plot_missingdata)
+  if(nrow(filter(df,!is.na(valeur))) == 0) return(kpiesr_plot_missingdata)
+  
+  df.na <- df %>% filter(is.na(valeur)) %>%
+    mutate(valeur = mean(df$valeur,na.rm=TRUE))
 
-  ggplot(df, aes(x=kpi,y=valeur,fill=kpi, text=paste0(lfc$desc,"\n",valeur_label))) +
+  ggplot(df, aes(x=kpi,y=valeur,fill=kpi)) + #, text=paste0(lfc$desc,"\n",valeur_label))) +
     geom_bar(stat = "identity") +
     { if(!style$plotly) geom_text(aes(label=valeur_label), size=style$text_size, vjust=-0.4) } +
+    geom_text(data=df.na,label="N/A") +
     scale_fill_manual(values=lfc$colors, limits=lfc$labels) +
     #scale_x_discrete(limits=lfc$labels) +
     #scale_y_continuous(labels = lfc$y_labels) +

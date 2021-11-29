@@ -36,15 +36,18 @@ kpiesr_plot_evol <- function(rentrée, uai, groupe, lfc,
 
   df.na <- df %>% filter(UAI==uai) %>% 
     group_by(kpi) %>% summarize(n = sum(!is.na(evolution))) %>%
-    filter(n==0) %>%
+    filter(n<3) %>%
     mutate(Rentrée = "2016", evolution = 100)
   
-  df <- df %>% filter(!is.na(evolution))
+  if(nrow(df.na)==length(lfc$factors)) return(kpiesr_plot_missingdata)
   
-  df.uai <- df %>% filter(UAI==uai, !is.na(evolution)) 
-  df.groupe <- df %>% filter(Etablissement == groupe, !is.na(evolution)) 
-  df.ensemble <- df %>% filter(Etablissement == "Ensemble", !is.na(evolution)) 
-  df.series <- bind_rows(df.uai,df.groupe,df.ensemble)  %>% filter(kpi %in% df.uai$kpi)
+  df <- df %>% filter(!is.na(evolution), !kpi %in% df.na$kpi)
+  
+  df.uai <- df %>% filter(UAI==uai) %>% mutate()
+  df.groupe <- df %>% filter(Etablissement == groupe) 
+  df.ensemble <- df %>% filter(Etablissement == "Ensemble") 
+  df.series <- bind_rows(df.uai,df.groupe,df.ensemble)  %>% filter(kpi %in% df.uai$kpi) %>%
+    mutate(Etablissement = factor(Etablissement,levels=unique(Etablissement)))
   df.points <- df.uai %>% group_by(kpi) %>% slice_max(Rentrée)
   
   
@@ -68,22 +71,25 @@ kpiesr_plot_evol <- function(rentrée, uai, groupe, lfc,
     geom_hline(data=df.minmax, aes(yintercept = min_25), alpha = 0) +
     geom_hline(data=df.minmax, aes(yintercept = max_75), alpha = 0) +
     #geom_ribbon(aes(ymin=evolution_0, ymax=evolution_100), alpha=0.25, color="white") +
-    geom_ribbon(aes(ymin=evolution_25, ymax=evolution_75), alpha=0.25, color="white") +
-    geom_line(data=df.series, aes(y=evolution, group = Groupe, 
-                                  linetype = Groupe, size = Groupe)) +
+    geom_ribbon(aes(ymin=evolution_25, ymax=evolution_75), alpha=0.25, color="white", fill="grey") +
+    geom_line(data=df.series, aes(y=evolution, group = Etablissement, 
+                                  linetype = Etablissement, size = Etablissement), color='grey') +
+    geom_line(data=df.uai, aes(y=evolution, group = Etablissement, 
+                                  linetype = Etablissement, size = Etablissement)) +
     geom_point(data=df.points, aes(y=evolution), size=style$line_size*3) +
-    geom_text(data=df.na, aes(y=evolution), label="N/A", color="black") +
+    geom_label(data=df.na, aes(y=evolution), label="N/A", color="black", fill="white") +
     { if (style$evol_text) geom_text(data=df.points, aes(y=evolution, label=round(evolution,0)), 
-                                     size=style$text_size, color="black", vjust=0.5, hjust=0, nudge_x = 0.5) } +
+                                     size=style$text_size, color="black",
+                                     vjust=0.5, hjust=0, nudge_x = 0.5) } +
     facet_wrap(.~kpi, scales="free_y", nrow = 1, labeller = label_wrap_gen(style$label_wrap), drop = FALSE) +
     scale_x_discrete(breaks=c("2013","2019")) +
-    scale_y_continuous(breaks=scale_breaker) +#scales::breaks_extended(n = 3, w = c(0.25, 0.2, 0.5, 0.05))) +
+    scale_y_continuous(breaks=scale_breaker, position = style$yaxis_position) +#scales::breaks_extended(n = 3, w = c(0.25, 0.2, 0.5, 0.05))) +
     scale_color_manual(values=lfc$colors,breaks=lfc$labels) +
     scale_fill_manual(values=lfc$colors,breaks=lfc$labels) +
-    scale_size_manual(values=c(style$line_size,style$line_size/1.5,style$line_size/2),
-                      labels=unique(df.series$Etablissement)) +
-    scale_linetype_manual(values=c(1,2,4),
-                          labels=unique(df.series$Etablissement)) +
+    scale_size_manual(values=c(style$line_size,style$line_size/2,style$line_size/2)) +
+                      #labels=unique(df.series$Etablissement)) +
+    scale_linetype_manual(values=c(1,2,1) )+
+                          #labels=unique(df.series$Etablissement)) +
     coord_cartesian(clip = "off") +
     guides(color="none", fill="none") 
 }

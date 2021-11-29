@@ -315,3 +315,24 @@ rf %>%
   View()
 
 
+
+etiquettes %>% transmute(
+  UAI=recode(UAI,!!!replist),
+  Etablissement = Libellé,
+  PerimEx = case_when(
+    IDEx ~ "IDEx",
+    ISITE ~ "ISITE",
+    TRUE ~ NA_character_
+    ),
+  Association = case_when(
+    Udice ~ "Udice",
+    AUREF ~ "AUREF",
+    CURIF ~ "ex CURIF",
+    TRUE ~ NA_character_
+    )
+  ) 
+
+replist <- correspondances.uai$to 
+names(replist) <- correspondances.uai$from
+
+res <- mutate(df, UAI=recode(UAI,!!!replist))

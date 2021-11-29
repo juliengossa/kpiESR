@@ -55,13 +55,14 @@ kpiesr_read.ens <- function() {
     summarise(Effectif = sum(Effectif,na.rm = TRUE)) %>%
     ungroup() %>%
     pivot_wider(names_from = Catégorie, values_from = Effectif, values_fill = list(Effectif=NA)) %>%
+    rowwise() %>%
     transmute(
       UAI,
       Etablissement,
       Type,
       Rentrée,
-      kpi.ENS.P.effectif      = EC+AM2D+Doc_ATER+LRU_Associés+Autres,
-      kpi.ENS.S.titulaires    = EC+AM2D,
+      kpi.ENS.P.effectif      = sum(EC,AM2D,Doc_ATER,LRU_Associés,Autres,na.rm = TRUE),
+      kpi.ENS.S.titulaires    = sum(EC,AM2D,na.rm = TRUE),
       kpi.ENS.S.ECtitulaires  = EC,
       kpi.ENS.S.DocATER       = Doc_ATER,
       kpi.ENS.S.LRU           = LRU_Associés,

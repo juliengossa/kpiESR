@@ -106,7 +106,7 @@ kpiesr_add_kpis <- function (df) {
     kpi.K.resPetu = kpi.FIN.P.ressources / (kpi.ETU.S.cycle1_L+kpi.ETU.S.cycle2_M),
     kpi.K.forPetu = kpi.FIN.S.recettesFormation / kpi.ETU.P.effectif,
     kpi.K.recPect = kpi.FIN.S.recettesFormation / kpi.ENS.S.ECtitulaires,
-    kpi.K.ensPetu = kpi.ENS.P.effectif / kpi.ETU.P.effectif * 100,
+    kpi.K.ensPetu = kpi.ENS.P.effectif / (kpi.ETU.S.cycle1_L+kpi.ETU.S.cycle2_M) * 100,
     kpi.K.titPens = kpi.ENS.S.titulaires / kpi.ENS.P.effectif,
 
     #kpi.K.selPfor = kpi.ADM.S.sélective / kpi.ADM.P.formations,
@@ -127,32 +127,22 @@ kpiesr_get_uaisnamedlist <- function(esr) {
 }
 
 
-kpiesr_ETL_and_save <- function(etab, ens, etu, fin, rentrée.ref=2012) {
+kpiesr_ETL_and_save <- function(etab, esr, esr.uais, rentrée.ref=2013) {
 
-  esr.raw <- fin %>% rename(Etablissement.FIN = Etablissement, Type.FIN = Type) %>%
-    full_join(ens %>% rename(Etablissement.ENS = Etablissement, Type.ENS = Type)) %>%
-    full_join(etu %>% rename(Etablissement.ETU = Etablissement, Type.ETU = Type)) %>%
-    select(Groupe,UAI,Rentrée,starts_with("Etablissement"),starts_with("Type"), everything())
-  
-  esr.ensemble <- esr.raw %>% 
+  esr.ensemble <- esr %>% 
     group_by(Rentrée) %>%
     summarise(across(starts_with("kpi"), ~ sum(.x,na.rm = TRUE))) %>%
     na_if(0) %>%
     mutate(Groupe = "Ensemble", UAI="Ensemble", Etablissement="Ensemble")
 
-  esr.groupe <- esr.raw %>% 
+  esr.groupe <- esr %>% 
+    filter(UAI %in% esr.uais$dans.evol) %>%
     group_by(Rentrée, Groupe) %>%
     summarise(across(starts_with("kpi"), ~ sum(.x,na.rm = TRUE))) %>%
     na_if(0) %>%
     mutate(UAI=Groupe, Etablissement=Groupe, Groupe="Groupe")
   
-  esr <- bind_rows(
-    left_join(etab %>% select(Groupe,UAI,Etablissement), 
-              esr.raw %>% select(UAI,Rentrée,starts_with("kpi"))),
-    esr.groupe,
-    esr.ensemble
-    ) %>%
-    mutate(Groupe = factor(Groupe,levels=c(levels(etab$Groupe),"Groupe","Ensemble")))
+  esr <- bind_rows(esr,esr.groupe,esr.ensemble) 
 
   esr <- kpiesr_add_kpis(esr)
   esr <- set_encoding_utf8(esr)
@@ -160,14 +150,14 @@ kpiesr_ETL_and_save <- function(etab, ens, etu, fin, rentrée.ref=2012) {
   esr.pnl <- kpiesr_pivot_norm_label(esr, rentrée.ref)
   esr.pnl <- set_encoding_utf8(esr.pnl)
   
-  esr.stats <- kpiesr_get_stats(esr.pnl, rentrée.ref)
-
-  #esr.uais <- kpiesr_get_uaisnamedlist(esr)
+  esr.stats <- kpiesr_get_stats(
+    esr.pnl %>% filter(UAI %in% esr.uais$dans.evol), 
+    rentrée.ref)
   
   esr.etab <- etab
   
   write.csv2(esr,"tdbesr.csv",row.names = FALSE)
-  usethis::use_data(esr, esr.pnl, esr.stats, esr.raw, esr.etab, overwrite = TRUE)
+  usethis::use_data(esr, esr.pnl, esr.stats, esr.etab, esr.uais, overwrite = TRUE)
 }
 
 kpiesr_load <- function(...) {

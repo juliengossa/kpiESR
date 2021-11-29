@@ -19,6 +19,8 @@ spoilerTable <- function(df) {
   cat("\n\n</details>\n")
 }
 
+rentrée.d <- 2013
+rentrée.f <- 2019
 ```
 
 
@@ -71,59 +73,210 @@ bind_rows(
     1. Détection et correction des wikidata manquants
     1. Détection et correction des sigles manquants avec wikidata
     1. Détection et correction manuelle des sigles encore manquants
-    1. Définition du groupage des établissements
+1. Définition du groupage des établissements
+    1. Utilisation d'un groupement manuel basé sur `etab.21`
+    1. Groupage automatique des établissements hors `etab.21`
+      1. Groupage dans `Universités et assimilés` des établissements dont le nom contient "Université"
+      1. Groupage dans `Autres` pour les autres.
+    1. Vérification des groupages automatiques
 1. Fusion des jeux de données
 
+### Attention
+
+La cohérence du périmètres global `Ensemble` dépend de la cohérence du périmètre
+des jeux de données.
+
+La cohérence des périmètres sur les groupes dépend aussi des établissements identifiés dans 
+`etab.21`, sauf pour les université où elle dépend également du groupage automatique.
+
+```{r functions}
+fix_uai <- function(df,correspondances.uai) {
+  replist <- correspondances.uai$to 
+  names(replist) <- correspondances.uai$from
+  
+  res <- mutate(df, UAI=recode(UAI,!!!replist))
+  
+  if("Rentrée" %in% names(df)) {
+    dupes <- res %>% janitor::get_dupes(UAI,Rentrée)
+    if (nrow(dupes>0)) warning("Duplicates detected during fix_uai. Keeping first. \n",
+                               paste(capture.output(dupes), collapse="\n"))
+    
+    return(res %>% group_by(UAI,Rentrée) %>% slice_head(n=1) %>% ungroup())
+  }
+  
+  return(res %>% group_by(UAI) %>% slice_head(n=1) %>% ungroup())
+}
 
 
-```{r checkuais, message=F}
-uaijoins <- etab.21 %>% select(UAI, etab.21 = Etablissement) %>% unique() %>%
-  full_join(etab.20 %>% select(UAI, etab.20 = Etablissement) %>% unique() ) %>%
-  full_join(etab.19 %>% select(UAI, etab.19 = Etablissement) %>% unique() ) %>%
-  full_join(ens %>% group_by(UAI) %>% summarise(ens = paste(range(Rentrée), collapse = "-")) %>% unique() ) %>%
-  full_join(etu %>% group_by(UAI) %>% summarise(etu = paste(range(Rentrée), collapse = "-")) %>% unique() ) %>%
-  full_join(fin %>% group_by(UAI) %>% summarise(fin = paste(range(Rentrée), collapse = "-")) %>% unique() )
+uaijoiner <- function() {
+  etab %>% select(UAI, Etablissement, Groupe, dataset) %>% 
+    full_join(ens %>% group_by(UAI) %>% summarise(ens.etab=paste(unique(Etablissement),collapse=' ; '), ens.d = min(Rentrée), ens.f = max(Rentrée)) ) %>%
+    full_join(etu %>% group_by(UAI) %>% summarise(etu.etab=paste(unique(Etablissement),collapse=' ; '), etu.d = min(Rentrée), etu.f = max(Rentrée)) ) %>%
+    full_join(fin %>% group_by(UAI) %>% summarise(fin.etab=paste(unique(Etablissement),collapse=' ; '), fin.d = min(Rentrée), fin.f = max(Rentrée)) ) %>%
+    arrange(dataset,Etablissement)
+}
+
 ```
 
-```{r checkuais.horsetab, message=F}
-etab.uais <- unique(c(etab.21$UAI,etab.20$UAI,etab.19$UAI))
-horsetab <- ens %>% group_by(UAI,etab.ens=Etablissement) %>% summarise(ens = paste(range(Rentrée), collapse = "-")) %>% unique() %>%
-  full_join(etu %>% group_by(UAI,etab.etu=Etablissement) %>% summarise(etu = paste(range(Rentrée), collapse = "-")) %>% unique() ) %>%
-  full_join(fin %>% group_by(UAI,etab.fin=Etablissement) %>% summarise(fin = paste(range(Rentrée), collapse = "-")) %>% unique() ) %>%
-  filter(!UAI %in% etab.uais) 
+## Fusion des jeux de données sur les établissements
 
-horsetab.doubleuai <- horsetab %>% 
-  filter(str_detect(UAI,";")) %>% 
-  mutate(sepUAI = UAI) %>%
-  separate_rows(sepUAI,sep = ';') %>%
-  rename(doubleUAI = UAI, UAI = sepUAI) %>%
-  left_join(etab.21 %>% select(UAI,etab.21=Etablissement)) %>%
-  left_join(etab.20 %>% select(UAI,etab.20=Etablissement)) %>%
-  left_join(etab.19 %>% select(UAI,etab.19=Etablissement))
+```{r full.etab, results='asis'}
+cpesr.etab <- read.csv2("dataESR/fr-cpesr-etablissements.csv")
 
+etab <- bind_rows(
+  etab.21 %>% mutate(dataset = "etab.21"), 
+  etab.20 %>% mutate(dataset = "etab.20"), 
+  etab.19 %>% mutate(dataset = "etab.19")) %>%
+  group_by(UAI) %>%
+  slice_head() %>%
+  left_join(cpesr.etab %>% select(-Etablissement)) %>%
+  mutate(dataset = factor(
+    ifelse(UAI %in% cpesr.etab$UAI,"CPESR",dataset),
+    levels=c("CPESR","etab.21","etab.20","etab.19"))) %>%
+  select(Groupe,everything()) %>% 
+  ungroup() %>%
+  arrange(Groupe,Type,Etablissement)
+
+
+etab %>% spoilerTable()
 ```
 
 
-## UAI manquants 
+### Ajout des établissements hors `etab.x`
 
+```{r horsetab, results='asis'}
+uaijoins <- uaijoiner()
 
-```{r uai.manquants, results='asis'}
-bind_rows(
-  etab.21 %>% filter(is.na(UAI)) %>% transmute(dataset="etab.21",UAI,Etablissement),
-  ens %>% filter(is.na(UAI)) %>% transmute(dataset="ens",UAI,Etablissement),
-  etu %>% filter(is.na(UAI)) %>% transmute(dataset="etu",UAI,Etablissement),
-  fin %>% filter(is.na(UAI)) %>% transmute(dataset="fin",UAI,Etablissement)
-  ) %>% spoilerTable()
+horsetab <- uaijoins %>% 
+  filter(is.na(dataset)) %>% 
+  transmute(UAI, Etablissement = case_when(
+    !is.na(ens.etab) ~ ens.etab,
+    !is.na(etu.etab) ~ etu.etab,
+    !is.na(fin.etab) ~ fin.etab 
+    ) )
+
+etab <- bind_rows(etab,horsetab)
+uaijoins <- uaijoiner()
+
+horsetab %>% spoilerTable()
 ```
+
+### Doubles UAIS
+
+```{r doubleuai, results='asis'}
+uaijoins %>% 
+  filter(is.na(dataset)) %>% 
+  filter(str_detect(UAI,";")) %>%
+  spoilerTable()
+```
+
+```{r doubleuai.lookup, results='asis'}
+uaijoins %>% 
+  filter(is.na(dataset)) %>% 
+  filter(str_detect(UAI,";")) %>%
+  transmute(dUAI=UAI,UAI,ens.etab,etu.etab) %>%
+  separate_rows(UAI,sep=";") %>%
+  left_join(etab) %>%
+  spoilerTable()
+```
+
+
+##### Correction des doubles UAI
+
+```{r doubleuai.fix, results='asis'}
+correspondances.doubleuai <- bind_rows(
+  c(Etablissement="INSA CVL	",
+    from="0180974L;0411068N",to="0180974L", note="Double UAI"),
+  c(Etablissement="INSA CVL	",
+    from="0411068N",to="0180974L", note="Double UAI"),
+  c(Etablissement="Centrale Lille Institut",
+    from="0597139P;0590349J",to="0597139P", note="Double UAI"),
+  c(Etablissement="Centrale Lille Institut",
+    from="0590349J",to="0597139P", note="Double UAI"),
+  c(Etablissement="SIGMA Clermont",
+    from="0632086A;0632033T",to="0632033T", note="Double UAI"),
+  c(Etablissement="SIGMA Clermont",
+    from="0632086A",to="0632033T", note="Double UAI"),
+  c(Etablissement="UPEM",
+    from="0772502B;0932056E",to="0772502B", note="Double UAI"),
+  c(Etablissement="ENS Paris Saclay",
+    from="0912423P;0940607Z",to="0940607Z", note="Double UAI"),
+  c(Etablissement="ENS Paris Saclay",
+    from="0912423P",to="0940607Z", note="Double UAI"),
+)
+
+ens <- ens %>% fix_uai(correspondances.doubleuai)
+etu <- etu %>% fix_uai(correspondances.doubleuai)
+fin <- fin %>% fix_uai(correspondances.doubleuai)
+etab <- etab %>% fix_uai(correspondances.doubleuai)
+
+uaijoins <- uaijoiner()
+
+correspondances.doubleuai %>% spoilerTable()
+```
+
+
+### Groupes manquants 
+
+```{r add.grp, results='asis'}
+etab.missingrp <- etab %>% filter(is.na(Groupe)) 
+
+etab.missingrp %>% spoilerTable()
+```
+
+#### Détection des groupes  
+
+```{r add.grp.add, results='asis'}
+etab <- etab %>%
+  mutate(Groupe = factor(case_when(
+    !is.na(Groupe) ~ Groupe,
+    Type == "Université" ~ "Universités et assimilés",
+    Type == "Communauté d’universités et établissements" ~ "Universités et assimilés",
+    str_detect(Etablissement,"niversité") & !str_detect(Etablissement,"Université de technologie") ~ "Universités et assimilés",
+    TRUE ~ "Autres"),
+    levels = c(unique(cpesr.etab$Groupe),"Autres")))
+
+etab %>% filter(UAI %in% etab.missingrp$UAI) %>% spoilerTable()
+```
+
+### Vérification détection automatique des universités
+
+```{r add.grp.check.univ, results='asis'}
+etab %>% 
+  filter(UAI %in% etab.missingrp$UAI, Groupe == "Universités et assimilés") %>%
+  spoilerTable()
+```
+
+### Vérification détection automatique des autres
+
+```{r add.grp.add.check.autres, results='asis'}
+etab %>% 
+  filter(UAI %in% etab.missingrp$UAI, Groupe != "Universités et assimilés") %>%
+  spoilerTable()
+```
+
+
+### Retrait des UAI manquants 
+
+```{r checkuais, results="asis"}
+uaijoins <- uaijoiner()
+
+etab.missinguai <- uaijoins %>% filter(is.na(UAI))
+etab <- etab %>% filter(!is.na(UAI))
+
+etab.missinguai %>% spoilerTable()
+```
+
 
 ## Constitution des données universités
 
-### Identification des universités dans `etab.21`
+### Identification des universités dans `etab.cpesr`
 
 ```{r checkuais.université.21, results='asis'}
+uaijoins <- uaijoiner()
+
 uaijoins %>%
-  filter(str_detect(etab.21,"niversité")) %>%
-  arrange(etab.21) %>%
+  filter(dataset == "CPESR", Groupe == "Universités et assimilés") %>%
   spoilerTable()
 ```
 
@@ -131,19 +284,21 @@ uaijoins %>%
 
 ```{r checkuais.na.21, results='asis'}
 uaijoins %>%
-  filter(str_detect(etab.21,"niversité")) %>%
-  filter(is.na(ens)|is.na(etu)|is.na(fin)) %>%
+  filter(dataset == "CPESR", Groupe == "Universités et assimilés") %>%
+  filter(is.na(ens.etab)|is.na(etu.etab)|is.na(fin.etab)) %>%
   spoilerTable()
 ```
 
 ### Recherche des correspondances manquantes
 
 ```{r etab_lookup.fun}
-etab_lookup <- function(etab="aucunetab",uai="aucunuai") {
-  etab <- str_to_lower(etab)
+etab_lookup <- function(et) {
+  et <- str_to_lower(et)
   uaijoins %>%
-    filter(str_detect(str_to_lower(etab.21),etab)|str_detect(str_to_lower(etab.20),etab)|str_detect(str_to_lower(etab.19),etab)|UAI==uai) %>%
-    #filter(str_detect(etab.21,"niversité")|str_detect(etab.20,"niversité")|str_detect(etab.19,"niversité")) %>%
+    filter(
+      str_detect(str_to_lower(ens.etab),et)|
+      str_detect(str_to_lower(etu.etab),et)|
+      str_detect(str_to_lower(fin.etab),et)) %>%
     kableExtra::kable(format="pipe")
 }
 ```
@@ -154,76 +309,45 @@ etab_lookup <- function(etab="aucunetab",uai="aucunuai") {
 #### Nantes
 
 ```{r etab_lookup.nantes}
-etab_lookup(uai="0440984F")
+etab_lookup("nantes")
 ```
 
 #### PSL 
 
 ```{r etab_lookup.psl}
-etab_lookup(etab="Paris sciences et lettres")
+etab_lookup("Paris sciences et lettres")
 ```
 
 ```{r etab_lookup.dauphine}
-etab_lookup(etab="dauphine")
+etab_lookup("dauphine")
 ```
 
 #### Montpellier
 
 ```{r etab_lookup.montpellier}
-etab_lookup(etab="montpellier")
+etab_lookup("montpellier")
 ```
 
 #### Clermont
 
 ```{r etab_lookup.Clermont}
-etab_lookup(etab="Clermont")
+etab_lookup("Clermont")
 ```
 
 #### Lille
 
 ```{r etab_lookup.Lille}
-etab_lookup(etab="Lille")
+etab_lookup("Lille")
 ```
 
 #### Grenoble
 
 ```{r etab_lookup.grenoble}
-etab_lookup(etab="grenoble")
+etab_lookup("grenoble")
 ```
 
 </details>
 
-
-
-### Recherche de correspondances dans les établissements hors `etab.x`
-
-#### Double UAIS
-
-```{r checkuais.horsetab.doubleuai, results='asis'}
-horsetab.doubleuai %>% 
-  filter(str_detect(doubleUAI,";")) %>%
-  filter(Reduce(`|`, across(starts_with("etab"), ~ str_detect(.x,"niversité")))) %>%
-  spoilerTable()
-```
-
-#### Autres UAIs
-
-```{r checkuais.horsetab.autre, results='asis'}
-horsetab %>% 
-  filter(!str_detect(UAI,";")) %>%
-  filter(Reduce(`|`, across(starts_with("etab"), ~ str_detect(.x,"niversité")))) %>%
-  spoilerTable()
-```
-
-
-### Toutes les valeurs manquantes pour les universités
-
-```{r checkuais.na.20-19, results='asis'}
-uaijoins %>%
-  filter(str_detect(etab.20,"niversité")|str_detect(etab.19,"niversité")) %>%
-  filter(is.na(ens)|is.na(etu)|is.na(fin)) %>%
-  spoilerTable()
-```
 
 ### Création manuelle des corrections
 
@@ -231,7 +355,7 @@ Ces correspondances sont construites manuellement et appliquées aux jeux de don
 
 ```{r checkuai.match, results='asis'}
 correspondances.uai <- bind_rows(
-  c(Etablissement="",
+  c(Etablissement="Nantes Université",
     from="0440984F",to="0442953W", note="Changement de statut de l'Université de Nantes au 1er janvier 2022"),
   c(Etablissement="PSL",
     from="0755700N",to="0756036D", note="Potentiel changement de périmètre en 2019"),
@@ -248,92 +372,93 @@ correspondances.uai <- bind_rows(
 correspondances.uai %>% spoilerTable()
 ```
 
+
 ### Vérification des données manquantes après correction
 
 ```{r check.etab21.univ, results='asis', warning=TRUE}
-fix_uai <- function(df,correspondances.uai) {
-  replist <- correspondances.uai$to 
-  names(replist) <- correspondances.uai$from
-  
-  res <- mutate(df, UAI=recode(UAI,!!!replist))
-  
-  dupes <- res %>% janitor::get_dupes(UAI,Rentrée)
-  if (nrow(dupes>0)) warning("Duplicates detected during fix_uai. Keeping first. \n",
-                             paste(capture.output(dupes), collapse="\n"))
-  
-  return(res %>% group_by(UAI,Rentrée) %>% slice_head(n=1) %>% ungroup())
-}
-
 ens <- ens %>% fix_uai(correspondances.uai)
 etu <- etu %>% fix_uai(correspondances.uai)
 fin <- fin %>% fix_uai(correspondances.uai)
 
-univ21 <- etab.21 %>% select(UAI, etab.21 = Etablissement) %>% filter(str_detect(etab.21,"niversité")) %>%
-  left_join(ens %>% group_by(UAI) %>% summarise(ens = paste(range(Rentrée), collapse = "-")))  %>%
-  left_join(etu %>% group_by(UAI) %>% summarise(etu = paste(range(Rentrée), collapse = "-"))) %>%
-  left_join(fin %>% group_by(UAI) %>% summarise(fin = paste(range(Rentrée), collapse = "-")))
+uaijoins <- uaijoiner()
 
-univ21 %>%
-  filter(is.na(ens)|is.na(etu)|is.na(fin)) %>%
-  spoilerTable()
-```
-
-### Toutes les universités `etab.21` après correction
-
-```{r all.etab21.univ, results='asis'}
-univ21 %>%
+uaijoins %>%
+  filter(dataset == "CPESR", Groupe == "Universités et assimilés") %>%
+  filter(is.na(ens.etab)|is.na(etu.etab)|is.na(fin.etab)) %>%
   spoilerTable()
 ```
 
 
 
-
-## Non université, à jour sur les dernière données
+## Non université, à jour et complet sur toutes les données
 
 ```{r nonuniv, results='asis'}
-nonuniv <- uaijoins %>% select(UAI:etab.19) %>%
-  full_join(ens %>% filter(Rentrée == "2019") %>% select(UAI,etab.ens=Etablissement)) %>%
-  full_join(etu %>% filter(Rentrée == "2020") %>% select(UAI,etab.etu=Etablissement)) %>%
-  full_join(fin %>% filter(Rentrée == "2020") %>% select(UAI,etab.fin=Etablissement)) %>%
-  filter(across(everything(), ~ is.na(.x) | !(str_detect(.x,"niversité"))))
-```
-### Non université, à jour et complet
-
-```{r nonuniv.complet, results='asis'}
-nonuniv.complet <- nonuniv %>% 
-  filter(!is.na(etab.ens),!is.na(etab.etu),!is.na(etab.fin)) 
-
-nonuniv.complet %>% spoilerTable()
+uaijoins.nonuniv.ajc <- uaijoins %>%
+  filter(Groupe != "Universités et assimilés") %>%
+  filter(ens.d <= rentrée.d, ens.f >= rentrée.f, 
+         etu.d <= rentrée.d, etu.f >= rentrée.f, 
+         fin.d <= rentrée.d, fin.f >= rentrée.f)
 ```
 
-#### Correction : UAI manquants dans `etab.21` présents dans `etab.20`
+### Non université, à jour et complet, dans CPESR 
 
-```{r nonuniv.manquants, results='asis'}
-nonuniv.complet.etab20 <- nonuniv %>% 
-  filter(!is.na(etab.ens),!is.na(etab.etu),!is.na(etab.fin)) %>%
-  filter(is.na(etab.21)) 
+```{r nonuniv.cpesr, results='asis'}
+uaijoins.nonuniv.ajc.cpesr <- uaijoins.nonuniv.ajc %>%
+  filter(dataset == "CPESR") 
 
-nonuniv.complet.etab20 %>% spoilerTable()
+uaijoins.nonuniv.ajc.cpesr %>% spoilerTable()
 ```
 
-### Non université, à jour mais incomplet
+### Non université, à jour et complet, hors CPESR 
 
-```{r nonuniv.incomplet, results='asis'}
-nonuniv %>% 
-  filter(is.na(etab.ens)|is.na(etab.etu)|is.na(etab.fin)) %>%
+```{r nonuniv.horscpesr, results='asis'}
+uaijoins.nonuniv.ajc %>%
+  filter(dataset != "CPESR") %>%
   spoilerTable()
 ```
+
 
 ## Constitution du jeu de données des établissements
 
-```{r build.etab, results='asis'}
-etab <- bind_rows(
-  etab.21 %>% filter(UAI %in% univ21$UAI),
-  etab.21 %>% filter(UAI %in% nonuniv.complet$UAI),
-  etab.20 %>% filter(UAI %in% nonuniv.complet.etab20$UAI)
-  )
+### Marquage des établissements pour les tableaux de bord
 
-etab %>% spoilerTable()
+```{r tdb, results='asis'}
+esr.uais <- list()
+
+esr.uais$dans.tdb <- c(
+  etab %>% filter(dataset == "CPESR" & Groupe == "Universités et assimilés") %>% pull(UAI),
+  uaijoins.nonuniv.ajc.cpesr$UAI)
+
+etab %>% filter(UAI %in% esr.uais$tdb) %>% spoilerTable()
+```
+
+
+#### Etablissement dans les statistiques de groupe
+
+```{r tdb.grpstats, results='asis'}
+esr.uais$dans.evol <- c(
+  etab %>% filter(Groupe == "Universités et assimilés") %>% pull(UAI),
+  uaijoins.nonuniv.ajc$UAI)
+
+etab %>% filter(UAI %in% esr.uais$dans.evol) %>% spoilerTable()
+```
+
+#### Hors norm
+
+```{r tdb.horsnorm, results='asis'}
+esr.uais$hors.norm <- c("0756036D", # PSL
+                        "9760358K", # Mayotte
+                        "9740478B", # Réunion
+                        "9840349G", # Polynésie
+                        "9730429D", # Guyane
+                        "7200664J", # Corse
+                        "9830445S", # Nouvelle-Calédonie
+                        "9710585J", # Antilles
+                        etab %>% filter(Type == "Communauté d'universités et établissements") %>% pull(UAI),
+                        esr %>% filter(kpi.K.recPect > 1e5) %>% pull(UAI)
+)
+
+etab %>% filter(UAI %in% esr.uais$hors.norm) %>% spoilerTable()
 ```
 
 
@@ -341,6 +466,7 @@ etab %>% spoilerTable()
 
 ```{r wikidata, results='asis'}
 etab %>%
+  filter(UAI %in% esr.uais$tdb) %>%
   filter(is.na(url.wikidata)) %>%
   arrange(Type) %>% 
   select(UAI,Etablissement, url.wikidata) %>% 
@@ -379,13 +505,16 @@ fix.wikidata %>% spoilerTable()
 #### Sigles récupérables sur wikidata
 
 ```{r sigles.wikidata.load, results='hide', cache=TRUE}
-wikidataESR::wdesr_get_cache()
+wikidataESR::wdesr_get_cache() 
 
 fix.alias.wikidata <- etab %>%
+  filter(UAI %in% esr.uais$dans.tdb) %>%
   filter(is.na(Sigle), !is.na(url.wikidata)) %>%
   arrange(Type) %>% 
   mutate(wikidata.alias = wikidataESR::wdesr_get_data(str_replace(url.wikidata,"https://www.wikidata.org/entity/",""))$alias) %>%
   select(UAI,Etablissement,Sigle=wikidata.alias) 
+
+wikidataESR::wdesr_save_cache()
 ```
 
 ```{r sigles.wikidata.print, results='asis'}
@@ -398,44 +527,13 @@ fix.alias.wikidata %>% spoilerTable()
 
 ```{r sigles.manquants, results='asis'}
 etab %>%
+  filter(UAI %in% esr.uais$dans.tdb) %>%
   fix_etab(fix.alias.wikidata) %>%
   filter(is.na(Sigle)) %>%
   arrange(Type) %>% 
   select(UAI,Etablissement,Sigle, url.wikidata) %>% 
   spoilerTable()
 ```
-
-### Groupage des établissements
-
-```{r groupage, echo=TRUE}
-groupage <- function(df) {
-  factor(
-    case_when(
-      df$Etablissement == "Université Paris sciences et lettres" ~ "Autre",
-      df$Etablissement %in% c("Université de la Polynésie Française",
-                              "Université de Guyane",
-                              "Université de Corse Pasquale Paoli",
-                              "Université de la Nouvelle-Calédonie",
-                              "Université des Antilles") ~ "Autre",
-      str_detect(df$Etablissement,"echnologie") ~ "Autre",
-      str_detect(df$Etablissement,"niversité") ~ "Université",
-      TRUE ~ "Autre"),
-    levels = c("Université","Autre"))
-}
-```
-
-```{r groupage.do}
-
-add_groupe <- function(df) df %>% mutate(Groupe=groupage(.)) %>% select(Groupe,everything())
-
-etab <- add_groupe(etab)
-ens <- add_groupe(ens)
-etu <- add_groupe(etu)
-fin <- add_groupe(fin)
-```
-
-
-## Jeu de données établissement final
 
 ### Statistiques
 
@@ -455,8 +553,37 @@ etab %>% arrange(Groupe,Etablissement) %>% spoilerTable()
 ### Fusion des données
 
 ```{r final}
-kpiesr_ETL_and_save(etab,ens,etu,fin, rentrée.ref = 2013)
+esr <- ens %>% select(-Etablissement, -Type) %>%
+  full_join(etu %>% select(-Etablissement, -Type)) %>%
+  full_join(fin %>% select(-Etablissement, -Type)) %>%
+  full_join(etab %>% select(Groupe,UAI,Etablissement,Type)) %>%
+  select(Groupe,UAI,Etablissement,Type, Rentrée, everything())
+
+alafin <- c("Autres","Groupe","Ensemble")
+grplvl <- c(
+  esr %>% select(Groupe,UAI) %>% unique() %>% 
+    filter(!Groupe %in% alafin) %>%
+    group_by(Groupe) %>% summarize(n = n()) %>%
+    arrange(desc(n)) %>% pull(Groupe) %>% as.character(),
+  alafin)
+
+esr <- esr %>% mutate(Groupe = factor(Groupe,levels=grplvl)) %>%
+  arrange(Groupe,Etablissement,Rentrée) 
+
+etab <- etab %>% mutate(Groupe = factor(Groupe,levels=grplvl)) %>%
+  arrange(Groupe,Etablissement) 
+
+kpiesr_ETL_and_save(etab,esr,esr.uais,rentrée.ref = 2013)
 ```
 
 [tdbesr.csv](tdbesr.csv)
+
+#### Vérification de la fusion : données mal fusionnées
+
+```{r final.check, results='asis'}
+esr %>% filter(is.na(Groupe)) %>% spoilerTable()
+```
+
+
+
 

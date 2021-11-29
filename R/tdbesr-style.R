@@ -1,11 +1,14 @@
 
 
 euro_M <- function(x) {
-  return(scales::dollar(x, prefix="",suffix=" M€", scale = 1/1000000, largest_with_cents = 1, big.mark = " "))
+  case_when(
+    x < 1e6 ~ paste0(round(x/1e6,2),"M€"),
+    x < 20e6 ~ paste0(round(x/1e6,1),"M€"),
+    TRUE ~ paste0(round(x/1e6,0),"M€"))
 }
 
 euro_k <- function(x) {
-  return(paste0(round(x/1000,1),"k€"))
+  return(paste0(round(x/1e3,1),"k€"))
 }
 
 euro <- function(x) {
@@ -83,6 +86,7 @@ kpiesr_style <- function(
               evol_text = TRUE,
               bs_point_size = 1,
               strip_labeller = identity,
+              yaxis_position = "left",
               kvt_style = "circle",
               kvt_point_pos = NA,
               kvt_alpha = 0.5,
@@ -187,7 +191,7 @@ kpiesr_lfc <- list(
     y_labels = identity,
     desc     = c("Part des titulaires dans les enseignants",
                  "Part des Subventions pour charge de service public dans les ressources",
-                 "Nombre d'enseignants titulaires pour 100 étudiants",
+                 "Nombre d'enseignants titulaires pour 100 étudiants en cycles 1 et 2",
                  "Ressources divisées par le nombre d'étudiants",
                  "Recettes formation divisées par le nombre d'étudiants",
                  "Recettes recherche divisées par le nombre d'enseignants-chercheurs titulaires")

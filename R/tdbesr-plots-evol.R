@@ -34,16 +34,17 @@ kpiesr_plot_evol <- function(rentrée, uai, groupe, lfc,
     filter(kpi %in% lfc$factors) %>%
     mutate(kpi = factor(kpi, levels=lfc$factors, labels=lfc$labels))
 
-  df.na <- df %>% filter(UAI==uai) %>% 
+  df.uai <- df %>% filter(UAI==uai)
+  df.na <- df.uai %>% 
     group_by(kpi) %>% summarize(n = sum(!is.na(evolution))) %>%
     filter(n<3) %>%
     mutate(Rentrée = "2016", evolution = 100)
   
-  if(nrow(df.na)==length(lfc$factors)) return(kpiesr_plot_missingdata)
+  if(nrow(df.na)==nrow(df.uai)) return(kpiesr_plot_missingdata)
   
   df <- df %>% filter(!is.na(evolution), !kpi %in% df.na$kpi)
   
-  df.uai <- df %>% filter(UAI==uai) %>% mutate()
+  
   df.groupe <- df %>% filter(Etablissement == groupe) 
   df.ensemble <- df %>% filter(Etablissement == "Ensemble") 
   df.series <- bind_rows(df.uai,df.groupe,df.ensemble)  %>% filter(kpi %in% df.uai$kpi) %>%

@@ -4,6 +4,8 @@ euro_M <- function(x) {
   case_when(
     x < 1e6 ~ paste0(round(x/1e6,2),"M€"),
     x < 20e6 ~ paste0(round(x/1e6,1),"M€"),
+    x > 10e9 ~ paste0(round(x/1e9,1),"Md€"),
+    x > 1e9 ~ paste0(round(x/1e9,2),"Md€"),
     TRUE ~ paste0(round(x/1e6,0),"M€"))
 }
 

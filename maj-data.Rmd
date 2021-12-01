@@ -31,6 +31,9 @@ la fusion et l'amélioration de trois versions du jeu de donnée sur les
 
 Ces jeux sont notés `etab.21`, `etab.20`, `etab.19`, `ens`, `etu` et `fin`.
 
+Un jeu supplémentaire, noté `etab.cpesr` a été construit semi-manuellement pour 
+ajouter des informations supplémentaires.
+
 ```{r data}
 etab.21 <- kpiesr_read.etab.2021v1() 
 etab.20 <- kpiesr_read.etab.2020v1() 
@@ -57,37 +60,49 @@ bind_rows(
 
 ### Méthodologie :
 
-1. Recherche des UAI manquants dans tous les jeux de données
+1. Constitution du jeu de données `etab` sur les établissements
+  1. Fusion des jeux de données `etab.21`, `etab.20`, `etab.19` et `etab.cpesr`
+  1. Ajout des établissements inconnus mais présents dans `ens`, `etu` et `fin`
+  1. Détection et correction des doubles UAIs
+  1. Détection et correction des groupes manquants
+  1. Vérifications
+  1. Suppression des établissements sans UAI
 1. Constitution des données universités
-    1. Identification des universités dans `etab.21`
+    1. Identification des universités dans `etab.cpesr`
     1. Identification des correspondances manquantes avec `ens`, `etu` et `fin`
-    1. Recherche de ces correspondances dans `etab.20` et `etab.19`
-    1. Recherche de correspondances dans les établissements hors `etab.x`
-    1. Création manuelle des corrections
-    1. Vérification des données manquantes après correction
+    1. Correction manuelle de ces correspondances
+    1. Vérification des corrections
 1. Constitution des données non université
     1. Identification des établissements avec données complètes 
-    1. Vérification d'éventuelle données complètes hors `etab.21`
-    1. Constitution de la liste des non universités avec données complètes
-1. Constitution du jeu de données des établissements
+    1. Vérification d'éventuelle données complètes hors `etab.cpesr`
+1. Constitution du jeu de données complet
+    1. Marquage des établissements
+        1. A inclure dans le document tableaux de bord
+        1. A inclure dans le calcul des statistiques de groupe
+        1. A exclure des visualisation normalisées
     1. Détection et correction des wikidata manquants
     1. Détection et correction des sigles manquants avec wikidata
     1. Détection et correction manuelle des sigles encore manquants
-1. Définition du groupage des établissements
-    1. Utilisation d'un groupement manuel basé sur `etab.21`
-    1. Groupage automatique des établissements hors `etab.21`
-      1. Groupage dans `Universités et assimilés` des établissements dont le nom contient "Université"
-      1. Groupage dans `Autres` pour les autres.
-    1. Vérification des groupages automatiques
 1. Fusion des jeux de données
+    1. Fusion
+    2. Vérification d'éventuels problèmes de fusion
 
 ### Attention
 
-La cohérence du périmètres global `Ensemble` dépend de la cohérence du périmètre
-des jeux de données.
+Les données sont agrégées à trois échelles : _Ensemble_, _Groupe_ et _Etablissement_, 
+avec trois méthodes de constitution des périmètres d'aggrégation :
 
-La cohérence des périmètres sur les groupes dépend aussi des établissements identifiés dans 
-`etab.21`, sauf pour les université où elle dépend également du groupage automatique.
+  - _Ensemble_ agrège toutes les données dans tous les jeux : sa cohérence  dépend de la cohérence du périmètre
+des jeux de données ;
+  - _Groupe_ agrège les données des établissements classés dans chaque groupe, 
+  selon deux approches différentes :
+    - pour les universités, toutes les données disponibles sont agrégées (c'est 
+    indispensable pour surmonter les nombreuses modifications de périmètre internes à ce groupe) ;
+    - pour les autres groupes, seules les données des établissements dont toutes 
+      les données sont disponibles sur toute la période étudiées (ce afin d'éviter
+      d'avoir des séries impactées par les changements de périmètre);
+  - _Etablissement_ agrège les données de chaque établissement, sur les périodes
+      et périmètres disponibles (et est donc impacté par les changement de périmètres).
 
 ```{r functions}
 fix_uai <- function(df,correspondances.uai) {
@@ -118,7 +133,9 @@ uaijoiner <- function() {
 
 ```
 
-## Fusion des jeux de données sur les établissements
+## Constitution du jeu de données `etab` sur les établissements
+
+### Fusion des jeux de données sur les établissements
 
 ```{r full.etab, results='asis'}
 cpesr.etab <- read.csv2("dataESR/fr-cpesr-etablissements.csv")
@@ -137,8 +154,6 @@ etab <- bind_rows(
   ungroup() %>%
   arrange(Groupe,Type,Etablissement)
 
-
-etab %>% spoilerTable()
 ```
 
 
@@ -418,7 +433,7 @@ uaijoins.nonuniv.ajc %>%
 ```
 
 
-## Constitution du jeu de données des établissements
+## Constitution du jeu de données complet
 
 ### Marquage des établissements pour les tableaux de bord
 
@@ -428,6 +443,8 @@ esr.uais <- list()
 esr.uais$dans.tdb <- c(
   etab %>% filter(dataset == "CPESR" & Groupe == "Universités et assimilés") %>% pull(UAI),
   uaijoins.nonuniv.ajc.cpesr$UAI)
+
+#esr.uais$dans.tdb <- etab %>% filter(dataset == "CPESR") %>% pull(UAI)
 
 etab %>% filter(UAI %in% esr.uais$tdb) %>% spoilerTable()
 ```

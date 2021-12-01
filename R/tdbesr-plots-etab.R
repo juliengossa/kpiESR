@@ -32,17 +32,17 @@ kpiesr_plot_primaire  <- function(rentrée, uai, lfc,
   if(nrow(filter(df,!is.na(valeur))) == 0) return(kpiesr_plot_missingdata)
   
   df.na <- df %>% filter(is.na(valeur)) %>%
-    mutate(valeur = mean(df$valeur,na.rm=TRUE))
+    mutate(valeur = max(df$valeur,na.rm=TRUE)/2)
 
   ggplot(df, aes(x=kpi,y=valeur,fill=kpi)) + #, text=paste0(lfc$desc,"\n",valeur_label))) +
     geom_bar(stat = "identity") +
     { if(!style$plotly) geom_text(aes(label=valeur_label), size=style$text_size, vjust=-0.4) } +
-    geom_text(data=df.na,label="N/A") +
+    geom_label(data=df.na,label="N/A", color="black", fill="white") +
     scale_fill_manual(values=lfc$colors, limits=lfc$labels) +
     #scale_x_discrete(limits=lfc$labels) +
     #scale_y_continuous(labels = lfc$y_labels) +
     guides(color="none", fill="none") +
-    expand_limits(y=max(df$valeur)*style$primaire_margin) +
+    expand_limits(y=max(df$valeur,na.rm = TRUE)*style$primaire_margin) +
     { if(facet) facet_wrap(.~kpi, scales="free_x", nrow = 1, labeller = label_wrap_gen(style$label_wrap)) } +
     coord_cartesian(clip = 'off') 
 }

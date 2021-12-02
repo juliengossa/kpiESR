@@ -210,11 +210,11 @@ kpiesr_load <- function(...) {
 #' @export
 #'
 #' @examples
-kpiesr_classement <- function(rentrée, type, kpis, labels=NA, historique=c()) {
+kpiesr_classement_old <- function(rentrée, groupe, kpis, labels=NA, historique=c()) {
 
   classement <- kpiESR::esr.pnl %>%
     ungroup() %>%
-    filter(Rentrée == rentrée, Type == type, kpi %in% kpis) %>%
+    filter(Rentrée == rentrée, Groupe == groupe, kpi %in% kpis) %>%
     select(Libellé, kpi,valeur_label, norm_label, rang) %>%
     mutate(kpi = factor(kpi,levels=kpis)) %>% arrange(kpi,rang) %>%
     pivot_wider(names_from = kpi, values_from = c(valeur_label,norm_label,rang)) %>%
@@ -240,10 +240,26 @@ kpiesr_classement <- function(rentrée, type, kpis, labels=NA, historique=c()) {
 
 
 
-# kpiesr_classement(rentrée, "Université",
-#                  c("kpi.K.resPetu", "kpi.FIN.P.ressources", "kpi.ETU.S.cycle.1.L", "kpi.ETU.S.cycle.2.M"),
-#                  c("Ressources par étudiant","Ressources","Effectif L","Effectif M"),
-#                  seq(2012,2016))
+kpiesr_classement <- function(rentrée, rentrée.deb, groupe, kpis, labels=NA, historique=c()) {
+  
+  classement <- kpiESR::esr %>%
+    filter(Rentrée %in% c(rentrée,rentrée.deb), Groupe == groupe, UAI %in% esr.uais$dans.tdb) %>%
+    select(Etablissement, Rentrée, all_of(kpis)) %>%
+    group_by(Rentrée) %>% mutate(rang = rank(-!!as.name(kpis[[1]]), na.last = "keep")) %>%
+    #pivot_wider(Etablissement, values_from=starts_with("kpi"), names_from = Rentrée) %>%
+    group_by(Etablissement) %>% arrange(rentrée) %>% mutate(evolution = sprintf("%+d", first(rang) - rang)) %>%
+    filter(Rentrée == rentrée) %>%
+    ungroup() %>% arrange(rang) %>%
+    mutate(across(starts_with("kpi"), ~ valeur_labels(cur_column(),.x))) %>%
+    select(Etablissement, rang, evolution, starts_with("kpi"))
+
+  return(classement)
+}
+
+# kpiesr_classement(2019,2013, "Universités et assimilés",
+#                  c("kpi.K.dotPres","kpi.FIN.P.ressources","kpi.FIN.S.SCSP"))
+
+
 #
 # kpiesr_classement(rentrée, "Université",
 #                   c("kpi.K.proPres",

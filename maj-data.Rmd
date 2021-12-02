@@ -201,23 +201,23 @@ uaijoins %>%
 ```{r doubleuai.fix, results='asis'}
 correspondances.doubleuai <- bind_rows(
   c(Etablissement="INSA CVL	",
-    from="0180974L;0411068N",to="0180974L", note="Double UAI"),
+    from="0180974L;0411068N",to="0180974L", note="Potentiel changement de périmètre (correction d'un double UAI)"),
   c(Etablissement="INSA CVL	",
-    from="0411068N",to="0180974L", note="Double UAI"),
+    from="0411068N",to="0180974L", note="Potentiel changement de périmètre (correction d'un double UAI)"),
   c(Etablissement="Centrale Lille Institut",
-    from="0597139P;0590349J",to="0597139P", note="Double UAI"),
+    from="0597139P;0590349J",to="0597139P", note="Potentiel changement de périmètre (correction d'un double UAI)"),
   c(Etablissement="Centrale Lille Institut",
-    from="0590349J",to="0597139P", note="Double UAI"),
+    from="0590349J",to="0597139P", note="Potentiel changement de périmètre (correction d'un double UAI)"),
   c(Etablissement="SIGMA Clermont",
-    from="0632086A;0632033T",to="0632033T", note="Double UAI"),
+    from="0632086A;0632033T",to="0632033T", note="Potentiel changement de périmètre (correction d'un double UAI)"),
   c(Etablissement="SIGMA Clermont",
-    from="0632086A",to="0632033T", note="Double UAI"),
+    from="0632086A",to="0632033T", note="Potentiel changement de périmètre (correction d'un double UAI)"),
   c(Etablissement="UPEM",
-    from="0772502B;0932056E",to="0772502B", note="Double UAI"),
+    from="0772502B;0932056E",to="0772502B", note="Potentiel changement de périmètre (correction d'un double UAI)"),
   c(Etablissement="ENS Paris Saclay",
-    from="0912423P;0940607Z",to="0940607Z", note="Double UAI"),
+    from="0912423P;0940607Z",to="0940607Z", note="Potentiel changement de périmètre (correction d'un double UAI)"),
   c(Etablissement="ENS Paris Saclay",
-    from="0912423P",to="0940607Z", note="Double UAI"),
+    from="0912423P",to="0940607Z", note="Potentiel changement de périmètre (correction d'un double UAI)"),
 )
 
 ens <- ens %>% fix_uai(correspondances.doubleuai)
@@ -550,6 +550,20 @@ etab %>%
   arrange(Type) %>% 
   select(UAI,Etablissement,Sigle, url.wikidata) %>% 
   spoilerTable()
+```
+
+### Ajout des notes 
+
+```{r etab.addnotes, results='asis'}
+notes <- bind_rows(
+  correspondances.uai %>% transmute(UAI = to, Notes = note),
+  correspondances.doubleuai %>% transmute(UAI = to, Notes = note) %>% unique()
+  ) %>%
+  group_by(UAI) %>% summarise(Notes = paste0(Notes, collapse =" ; "))
+
+etab <- left_join(etab,notes)
+
+notes %>% spoilerTable()
 ```
 
 ### Statistiques

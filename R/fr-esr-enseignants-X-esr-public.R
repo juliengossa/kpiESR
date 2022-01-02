@@ -1,33 +1,35 @@
 
 # https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-enseignants-titulaires-esr-public/information/?disjunctive.annee
-# [1] "Rentrée"                   "Année.universitaire"       "Établissement"
-# [4] "Type.établissement"        "Région"                    "Académie"
-# [7] "Sexe"                      "Categorie.de.personnels"   "Grandes.disciplines"
-# [10] "Groupes.CNU"               "Sections.CNU"              "ID.académie"
-# [13] "ID.région"                 "Identifiant.établissement" "Code.categorie.personnels"
-# [16] "Code.groupe.CNU"           "Code.grande.discipline"    "effectif"
-# [19] "code_section_cnu"          "geolocalisation"           "classe_age3"
-# [22] "quotite"
+# Version du 28 octobre 2020
+#
+# [1] "Rentrée"                   "Année.universitaire"       "Établissement"             "Type.établissement"       
+# [5] "Région"                    "Académie"                  "Sexe"                      "Categorie.de.personnels"  
+# [9] "Grandes.disciplines"       "Groupes.CNU"               "Sections.CNU"              "ID.académie"              
+# [13] "ID.région"                 "Identifiant.établissement" "Code.categorie.personnels" "Code.groupe.CNU"          
+# [17] "Code.grande.discipline"    "effectif"                  "code_section_cnu"          "geolocalisation"          
+# [21] "id_Paysage"                "classe_age3"               "quotite"        
 
 # https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-enseignants-nonpermanents-esr-public/information/
-# [1] "Rentrée"                         "Année.universitaire"
-# [3] "Établissement"                   "Type.établissement"
-# [5] "Région"                          "Académie"
-# [7] "Sexe"                            "Categorie.de.personnels"
-# [9] "Grande.discipline"               "Groupes.CNU"
-# [11] "Identifiant.établissement"       "ID.région"
-# [13] "ID.académie"                     "Code.groupe.CNU"
-# [15] "Code.grande.discipline"          "EFFECTIF"
-# [17] "geolocalisation"                 "code.categorie.personnels"
-# [19] "categorie.personnels.regroupées" "quotite"
+# Version du 29 avril 2020
+#
+# [1] "Rentrée"                         "Année.universitaire"            
+# [3] "Établissement"                   "Type.établissement"             
+# [5] "Région"                          "Académie"                       
+# [7] "Sexe"                            "Categorie.de.personnels"        
+# [9] "Grande.discipline"               "Groupes.CNU"                    
+# [11] "Identifiant.établissement"       "ID.région"                      
+# [13] "ID.académie"                     "Code.groupe.CNU"                
+# [15] "Code.grande.discipline"          "EFFECTIF"                       
+# [17] "geolocalisation"                 "code.categorie.personnels"      
+# [19] "quotite"                         "categorie.personnels.regroupées"
 
 kpiesr_read.ens <- function() {
 
-  ens.tit <- read.table("dataESR/fr-esr-enseignants-titulaires-esr-public.csv",
-                        header=TRUE, sep=';', quote='"') %>%
-    filter(Rentrée > 2011) %>% # Les données 2010 et 2011 ne sont pas disponibles pour les non titulaires
+  ens.tit <- read.csv2("dataESR/fr-esr-enseignants-titulaires-esr-public.csv") %>% 
     transmute(
-      Identifiant.établissement,
+      UAI = etablissement_id_uai,
+      Etablissement = Établissement,
+      Type = Type.établissement,
       Rentrée,
       Catégorie = case_when(
         Code.categorie.personnels == "AM2D" ~ "AM2D",
@@ -35,31 +37,35 @@ kpiesr_read.ens <- function() {
       Discipline = Code.grande.discipline,
       Effectif = effectif)
 
-  ens.np <- read.table("dataESR/fr-esr-enseignants-nonpermanents-esr-public.csv",
-                   header=TRUE, sep=';', quote='"')  %>%
+  ens.np <- read.csv2("dataESR/fr-esr-enseignants-nonpermanents-esr-public.csv")  %>% 
     transmute(
-      Identifiant.établissement,
+      UAI = etablissement_id_uai,
+      Etablissement = Établissement,
+      Type = Type.établissement,
       Rentrée,
       Catégorie = case_when(
-        code.categorie.personnels == "LRU" ~ "LRU",
+        code.categorie.personnels %in% c("LRU","MCF ASS-INV", "PR ASS-INV") ~ "LRU_Associés",
         code.categorie.personnels %in% c("ATER", "DOCT AVEC ENS", "DOCT SANS ENS") ~ "Doc_ATER",
         TRUE ~ "Autres"),
       Discipline = Code.grande.discipline,
-      Effectif = EFFECTIF)
+      Effectif)
 
-  ens <- rbind(ens.tit,ens.np) %>%
-    group_by(Identifiant.établissement, Rentrée, Catégorie) %>%
-    summarise(Effectif = sum(Effectif)) %>%
+  ens <- bind_rows(ens.tit,ens.np) %>%
+    group_by(UAI, Etablissement, Type, Rentrée, Catégorie) %>%
+    summarise(Effectif = sum(Effectif,na.rm = TRUE)) %>%
     ungroup() %>%
-    pivot_wider(names_from = Catégorie, values_from = Effectif, values_fill = list(Effectif=0)) %>%
+    pivot_wider(names_from = Catégorie, values_from = Effectif, values_fill = list(Effectif=NA)) %>%
+    rowwise() %>%
     transmute(
-      UAI = Identifiant.établissement,
-      Rentrée = as.factor(Rentrée),
-      kpi.ENS.P.effectif      = EC+AM2D+Doc_ATER+LRU+Autres,
-      kpi.ENS.S.titulaires    = EC+AM2D,
+      UAI,
+      Etablissement,
+      Type,
+      Rentrée,
+      kpi.ENS.P.effectif      = sum(EC,AM2D,Doc_ATER,LRU_Associés,Autres,na.rm = TRUE),
+      kpi.ENS.S.titulaires    = sum(EC,AM2D,na.rm = TRUE),
       kpi.ENS.S.ECtitulaires  = EC,
       kpi.ENS.S.DocATER       = Doc_ATER,
-      kpi.ENS.S.LRU           = LRU,
+      kpi.ENS.S.LRU           = LRU_Associés,
     ) %>%
     arrange(UAI,Rentrée)
 

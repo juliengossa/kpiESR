@@ -1,16 +1,20 @@
 
 
 euro_M <- function(x) {
-  #return(scales::dollar(x, prefix="",suffix=" M€", scale = 1/1000000, largest_with_cents = 1, big.mark = " "))
-  return(paste0(round(x/1000000,0)," M€"))
+  case_when(
+    x < 1e6 ~ paste0(round(x/1e6,2),"M€"),
+    x < 20e6 ~ paste0(round(x/1e6,1),"M€"),
+    x > 10e9 ~ paste0(round(x/1e9,1),"Md€"),
+    x > 1e9 ~ paste0(round(x/1e9,2),"Md€"),
+    TRUE ~ paste0(round(x/1e6,0),"M€"))
 }
 
 euro_k <- function(x) {
-  return(paste0(round(x/1000,1)," k€"))
+  return(paste0(round(x/1e3,1),"k€"))
 }
 
 euro <- function(x) {
-  return(paste0(round(x,0)," €"))
+  return(paste0(round(x,0),"€"))
 }
 
 percent_format <- function(x) {
@@ -21,26 +25,44 @@ number_format <- function(x) {
   format(round(x), big.mark=" ", trim=TRUE)
 }
 
-
+hack_label <- function(x) {
+  case_when(
+    x<=1 ~ scales::percent(x,accuracy = 1),
+    x<=100 ~ format(x,digits=3, nsmall=1, scientific = FALSE),
+    #x<=2000 ~ euro(x),
+    TRUE ~ euro_k(x)
+  )
+}
 
 valeur_labels <- function(kpi, valeur) {
   case_when(
-    grepl("kpi.FIN", kpi)   ~ euro_M(valeur),
-    kpi == "kpi.K.proPres"  ~ scales::percent(valeur, accuracy = 1),
+    is.na(valeur) ~ "N/A",
+    kpi == "kpi.K.dotPres"  ~ scales::percent(valeur, accuracy = 1),
+    kpi == "kpi.K.forPetu"  ~ euro(valeur),
+    kpi == "kpi.K.recPect"  ~ euro_k(valeur),
     kpi == "kpi.K.resPetu"  ~ euro_k(valeur),
     kpi == "kpi.K.selPfor"  ~ scales::percent(valeur, accuracy = 1),
-    kpi == "kpi.K.titPetu"  ~ format(round(valeur,1), trim=TRUE),
+    kpi == "kpi.K.ensPetu"  ~ as.character(round(valeur, 1)),
     kpi == "kpi.K.titPens"  ~ scales::percent(valeur, accuracy = 1),
-    grepl("kpi.", kpi)      ~ number_format(valeur)
+    str_detect(kpi,"kpi.FIN") ~ euro_M(valeur),
+    TRUE                    ~ number_format(valeur)
   )
 }
 
 norm_labels <- function(kpi, norm) {
   case_when(
-    grepl("kpi.....S", kpi) ~ scales::percent(norm, accuracy = 2),
+    is.na(norm) ~ "N/A",
+    str_detect(kpi,"kpi.....S") ~ scales::percent(norm, accuracy = 1),
     TRUE                    ~ valeur_labels(kpi, norm))
 }
 
+omit_first <- function(lfc) {
+  lfc$factors <- lfc$factors[-1]
+  lfc$labels  <- lfc$labels[-1]
+  lfc$desc    <- lfc$desc[-1]
+  
+  return(lfc)  
+}
 
 #' Title
 #'
@@ -58,15 +80,15 @@ norm_labels <- function(kpi, norm) {
 #' @examples
 kpiesr_style <- function(
               point_size = 20,
-              line_size = 3,
-              text_size = 4,
+              line_size = 1,
+              text_size = 5,
               point_alpha = 1,
-              primaire_plot.margin = ggplot2::unit(c(0.5,0,0,0), "cm"),
-              bp_style = "beeswarm",
-              bp_width = 1,
-              bp_text_x = -0.25,
-              bp_alpha = 0.8,
-              bp_color = "grey",
+              label_wrap = 15,
+              primaire_margin = 1.15,
+              evol_text = TRUE,
+              bs_point_size = 1,
+              strip_labeller = identity,
+              yaxis_position = "left",
               kvt_style = "circle",
               kvt_point_pos = NA,
               kvt_alpha = 0.5,
@@ -75,6 +97,7 @@ kpiesr_style <- function(
               kvt_scale_point_size = 2,
               kvt_guide_bg_size = 30,
               kvt_plot.margin = ggplot2::unit(c(0,0,0,0), "cm"),
+              kvt_min_y = -0.25,
               kvt_max_y = 1.3,
               palette = "Set2",
               x_scale = TRUE,
@@ -89,16 +112,25 @@ kpiesr_style <- function(
 }
 
 
-colblues   <- rev(RColorBrewer::brewer.pal(6, "Blues"))
-colgreens  <- rev(RColorBrewer::brewer.pal(6, "Greens"))
-coloranges <- rev(RColorBrewer::brewer.pal(6, "Oranges"))
-colpurples <- rev(RColorBrewer::brewer.pal(6, "Purples"))
+colblues   <- rev(RColorBrewer::brewer.pal(10, "Blues"))
+colgreens  <- rev(RColorBrewer::brewer.pal(10, "Greens"))
+coloranges <- rev(RColorBrewer::brewer.pal(10, "Oranges"))
+colpurples <- rev(RColorBrewer::brewer.pal(10, "Purples"))
+colrdbu <- RColorBrewer::brewer.pal(8, "RdBu")[c(1:3,6:8)]
 
 kpiesr_lfc <- list(
   ETU = list(
-    labels   = c("Etudiants", "Cycle 1 (L)", "Cycle 2 (M)", "Cycle 3 (D)", "DU"),
-    factors  = c("kpi.ETU.P.effectif", "kpi.ETU.S.cycle.1.L", "kpi.ETU.S.cycle.2.M", "kpi.ETU.S.cycle.3.D", "kpi.ETU.S.diplomeEtablissement"),
-    colors   = colgreens,
+    labels   = c("Etudiants", 
+                 "Cycle 1 (L)", 
+                 "Cycle 2 (M)", 
+                 "Cycle 3 (D)", 
+                 "DU"),
+    factors  = c("kpi.ETU.P.effectif", 
+                 "kpi.ETU.S.cycle1_L", 
+                 "kpi.ETU.S.cycle2_M", 
+                 "kpi.ETU.S.cycle3_D", 
+                 "kpi.ETU.S.DU_DE"),
+    colors   = colgreens[1:5],
     y_labels = number_format,
     desc     = c("Effectif total étudiant (Hors double inscription CPGE)",
                  "Effectif étudiant inscrit en premier cycle (L, DUT, etc.)",
@@ -107,84 +139,85 @@ kpiesr_lfc <- list(
                  "Effectif étudiant inscrit en diplôme d'établissement (DU, non-national)")
   ),
   ENS = list(
-    labels   = c("Enseignants", "Titulaires","EC","Doc et\nATER","LRU"),
-    factors  = c("kpi.ENS.P.effectif", "kpi.ENS.S.titulaires", "kpi.ENS.S.ECtitulaires", "kpi.ENS.S.DocATER", "kpi.ENS.S.LRU"),
-    colors   = colblues,
+    labels   = c("Enseignants", 
+                 "Titulaires",
+                 "EC",
+                 "Doc et ATER",
+                 "LRU et Associés"),
+    factors  = c("kpi.ENS.P.effectif", 
+                 "kpi.ENS.S.titulaires", 
+                 "kpi.ENS.S.ECtitulaires", 
+                 "kpi.ENS.S.DocATER", 
+                 "kpi.ENS.S.LRU"),
+    colors   = colblues[1:5],
     y_labels = identity,
     desc     = c("Effectif total enseignant",
                  "Effectif enseignant titulaire",
                  "Effectif enseignant-chercheur titulaire",
                  "Effectif doctorant et ATER",
-                 "Effectif contrat LRU")
+                 "Effectif contrat LRU et Associés/Invités")
   ),
   FIN = list(
-    labels   = c("Ressources","Masse\nsalariale","Ressources\npropres","Investissements"),
-    factors  = c("kpi.FIN.P.ressources", "kpi.FIN.S.masseSalariale", "kpi.FIN.S.ressourcesPropres", "kpi.FIN.S.investissements"),
-    colors   = coloranges,
+    labels   = c("Ressources",
+                 "Masse salariale",
+                 "SCSP",
+                 "Recettes formation",
+                 "Recettes recherche"),
+    factors  = c("kpi.FIN.P.ressources", 
+                 "kpi.FIN.S.masseSalariale", 
+                 "kpi.FIN.S.SCSP", 
+                 "kpi.FIN.S.recettesFormation", 
+                 "kpi.FIN.S.recettesRecherche"),
+    colors   = coloranges[1:5],
     y_labels = euro_M,
     desc     = c("Ressources totales (produits encaissables)",
                  "Masse salariale (dépenses de personnels)",
-                 "Ressources propres",
-                 "Investissements")
-  ),
-  FIN_N = list(
-    labels   = c("Ressources","Masse\nsalariale","Ressources\npropres","Investissements", "DU"),
-    factors  = c("kpi.FIN.P.ressources","kpi.FIN.S.masseSalariale", "kpi.FIN.S.ressourcesPropres", "kpi.FIN.S.investissements", "kpi.ETU.S.diplomeEtablissement"),
-    colors   = c(coloranges[1:4], colgreens[5]),
-    y_labels = euro,
-    desc     = c("Ressources totales (produits encaissables)",
-                 "Masse salariale (dépenses de personnels)",
-                 "Ressources propres",
-                 "Investissements",
-                 "Effectif étudiant inscrit en diplôme d'établissement (DU, non-national)")
-  ),
-  ADM = list(
-    labels    = c("Formations\nPost-Bac","Sélectives","Hyper-\nsélectives","Sur-\nchargées","Sous-\nchargées"),
-    factors  = c("kpi.ADM.P.formations", "kpi.ADM.S.sélective", "kpi.ADM.S.hypersélective", "kpi.ADM.S.surchargées", "kpi.ADM.S.souschargée"),
-    colors   = colpurples,
-    y_labels = identity,
-    desc     = c("Nombre de formations post-bac proposées sur APB ou Parcoursup",
-                 "Nombre de formations post-bac sélectives",
-                 "Nombre de formations post-bac hyper-sélectives",
-                 "Nombre de formations post-bac sur-chargées",
-                 "Nombre de formations post-bac sous-chargées")
+                 "Subvention pour charge de service public (dotation d'Etat directe)",
+                 "Droits d'inscription, Diplôme d'établissement, Formation continue, VAE et Taxe d'apprentissage",
+                 "Valorisation, ANR en et hors investissement d'avenir, contrats et prestations de recherche")
   ),
   K = list(
-    labels   = c("Taux de\nressources\npropres", "Taux de\nressources\npar étudiant", "Taux\nd'encadrement", "Taux de\ntitularité"),
-    factors  = c("kpi.K.proPres", "kpi.K.resPetu", "kpi.K.titPetu", "kpi.K.titPens"),
-    colors   = c("brown4",coloranges[5],coloranges[4],colgreens[5],colblues[5]),
+    labels   = c("Taux de titularité",
+                 "Taux de SCSP",
+                 "Taux d'encadrement", 
+                 "Ressources par étudiant",
+                 "Recetttes formation par étudiant",
+                 "Recettes recherche par EC"),
+    factors  = c("kpi.K.titPens",
+                 "kpi.K.dotPres",
+                 "kpi.K.ensPetu",
+                 "kpi.K.resPetu",
+                 "kpi.K.forPetu",
+                 "kpi.K.recPect"),
+    colors   = colrdbu, #c(coloranges[1],coloranges[4],coloranges[1],colgreens[5],coloranges[5],colblues[5]),
     y_labels = identity,
-    desc     = c("Part des ressources propres dans les ressources",
+    desc     = c("Part des titulaires dans les enseignants",
+                 "Part des Subventions pour charge de service public dans les ressources",
+                 "Nombre d'enseignants titulaires pour 100 étudiants en cycles 1 et 2",
                  "Ressources divisées par le nombre d'étudiants",
-                 "Nombre d'enseignants titulaires pour 100 étudiants",
-                 "Part des titulaires dans les enseignants")
-  ),
-  K_ADM = list(
-    labels   = c("Taux de\nressources\npropres", "Taux de\nressources\npar étudiant", "Taux de\nformations\nsélectives", "Taux\nd'encadrement", "Taux de\ntitularité"),
-    factors  = c("kpi.K.proPres", "kpi.K.resPetu", "kpi.K.selPfor", "kpi.K.titPetu", "kpi.K.titPens"),
-    colors   = c("brown4",coloranges[5],coloranges[4],colpurples[5],colgreens[5],colblues[5]),
-    y_labels = identity,
-    desc     = c("Part des ressources propres dans les ressources",
-                 "Ressources divisées par le nombre d'étudiants",
-                 "Part des formations post-bac sélectives",
-                 "Nombre d'enseignants titulaires pour 100 étudiants",
-                 "Part des titulaires dans les enseignants")
+                 "Recettes formation divisées par le nombre d'étudiants",
+                 "Recettes recherche divisées par le nombre d'enseignants-chercheurs titulaires")
   )
 )
+
+lfc_dont_labeller <-function(labels) {
+  return( c(
+    paste("Total",labels[1]),
+    paste("dont",labels[-1])
+    ))
+}
+
+lfc_pc_labeller <-function(labels) {
+  return( 
+    paste("%",labels)
+  )
+}
 
 peg.args <- list(
   list(kpiesr_lfc$K, 1, y_labels = scales::percent),
   list(kpiesr_lfc$K, 2, y_labels = euro_k         ),
   list(kpiesr_lfc$K, 3, y_labels = identity       ),
   list(kpiesr_lfc$K, 4, y_labels = scales::percent))
-
-peg.args.adm <- list(
-  list(kpiesr_lfc$K, 1, y_labels = scales::percent),
-  list(kpiesr_lfc$K, 2, y_labels = euro_k         ),
-  list(kpiesr_lfc$K, 3, y_labels = scales::percent, rentrée.base=2015),
-  list(kpiesr_lfc$K, 4, y_labels = identity       ),
-  list(kpiesr_lfc$K, 5, y_labels = scales::percent))
-
 
 
 kpiesr_theme <-

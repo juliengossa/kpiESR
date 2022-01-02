@@ -1,4 +1,6 @@
 #  https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-statistiques-sur-les-effectifs-d-etudiants-inscrits-par-etablissement/information/
+#  version du 9 mars 2020
+#
 # [1] "RENTREE"
 # [2] "RENTREE_lib"
 # [3] "Identifiant.Paysage"
@@ -153,16 +155,18 @@
 
 kpiesr_read.etu <- function() {
 
-  etu <- read.table("dataESR/fr-esr-statistiques-sur-les-effectifs-d-etudiants-inscrits-par-etablissement.csv",
-                    header=TRUE, sep=';', quote='"') %>%
+  etu <- read.csv2("dataESR/fr-esr-statistiques-sur-les-effectifs-d-etudiants-inscrits-par-etablissement-hcp.csv") %>% 
+    filter(Attention == "") %>%
     transmute(
-      UAI = ETABLISSEMENT,
-      Rentrée = as.factor(RENTREE),
+      UAI = Identifiant.s..UAI,
+      Etablissement = Établissement,
+      Type = Type.d.établissement,
+      Rentrée = rentree,
       kpi.ETU.P.effectif = Nombre.d.étudiants.inscrits..inscriptions.principales..hors.doubles.inscriptions.CPGE,
-      kpi.ETU.S.cycle.1.L = Cycle.universitaire..cursus.LMD....L..1er.cycle.-(Nombre.d.étudiants.inscrits..inscriptions.principales..y.compris.doubles.inscriptions.CPGE-kpi.ETU.P.effectif),
-      kpi.ETU.S.cycle.2.M = Cycle.universitaire..cursus.LMD....M..2ème.cycle.,
-      kpi.ETU.S.cycle.3.D = Cycle.universitaire..cursus.LMD....D..3ème.cycle.,
+      kpi.ETU.S.cycle1_L = Cycle.universitaire..cursus.LMD....L..1er.cycle.,
+      kpi.ETU.S.cycle2_M = Cycle.universitaire..cursus.LMD....M..2ème.cycle.,
+      kpi.ETU.S.cycle3_D = Cycle.universitaire..cursus.LMD....D..3ème.cycle.,
       #kpi.ETU.S.diplome.national = Type.de.diplôme...Diplômes.nationaux,
-      kpi.ETU.S.diplomeEtablissement = Type.de.diplôme...Diplômes.d.établissement
+      kpi.ETU.S.DU_DE = Type.de.diplôme...Diplômes.d.établissement
   )
 }

@@ -1,0 +1,266 @@
+"UAI";"Etablissement";"Type";"Groupe";"PerimEx";"Association";"Comparable"
+"0134009M";"Aix-Marseille Université";"Université";"Universités et assimilés";"IDEx";"Udice";TRUE
+"0840685N";"Avignon Université";"Université";"Universités et assimilés";NA;"AUREF";TRUE
+"9760358K";"Centre universitaire de Mayotte";"Autre établissement";"Universités et assimilés";NA;NA;FALSE
+"0952259P";"CY Cergy Paris Université";"Université";"Universités et assimilés";"ISITE";NA;TRUE
+"0171463Y";"La Rochelle Université";"Université";"Universités et assimilés";NA;"AUREF";TRUE
+"0720916E";"Le Mans Université";"Université";"Universités et assimilés";NA;"AUREF";TRUE
+"0442953W";"Nantes Université";"Université";"Universités et assimilés";"ISITE";NA;TRUE
+"0755890V";"Sorbonne Université";"Université";"Universités et assimilés";"IDEx";"Udice";TRUE
+"0331766R";"Université Bordeaux Montaigne";"Université";"Universités et assimilés";NA;"AUREF";TRUE
+"0561718N";"Université Bretagne Sud";"Université";"Universités et assimilés";NA;"AUREF";TRUE
+"0691774D";"Université Claude Bernard - Lyon 1";"Université";"Universités et assimilés";"IDEx";"Udice";TRUE
+"0632084Y";"Université Clermont Auvergne";"Université";"Universités et assimilés";"ISITE";NA;TRUE
+"0062205P";"Université Côte d'Azur";"Université";"Universités et assimilés";"IDEx";"Udice";TRUE
+"0490970N";"Université d'Angers";"Université";"Universités et assimilés";NA;"AUREF";TRUE
+"0623957P";"Université d'Artois";"Université";"Universités et assimilés";NA;"AUREF";TRUE
+"0911975C";"Université d'Évry-Val-d'Essonne";"Université";"Universités et assimilés";NA;NA;TRUE
+"0450855K";"Université d'Orléans";"Université";"Universités et assimilés";NA;NA;TRUE
+"0333298F";"Université de Bordeaux";"Université";"Universités et assimilés";"IDEx";"Udice";TRUE
+"0211237F";"Université de Bourgogne";"Université";"Universités et assimilés";"ISITE";NA;TRUE
+"0290346U";"Université de Bretagne Occidentale";"Université";"Universités et assimilés";NA;NA;TRUE
+"0141408E";"Université de Caen Normandie";"Université";"Universités et assimilés";NA;"AUREF";TRUE
+"7200664J";"Université de Corse Pasquale Paoli";"Université";"Universités et assimilés";NA;"AUREF";FALSE
+"0251215K";"Université de Franche-Comté";"Université";"Universités et assimilés";"ISITE";NA;TRUE
+"9730429D";"Université de Guyane";"Université";"Universités et assimilés";NA;NA;FALSE
+"0681166Y";"Université de Haute-Alsace";"Université";"Universités et assimilés";NA;"AUREF";TRUE
+"9830445S";"Université de la Nouvelle-Calédonie";"Université";"Universités et assimilés";NA;NA;FALSE
+"9840349G";"Université de la Polynésie Française";"Université";"Universités et assimilés";NA;NA;FALSE
+"9740478B";"Université de La Réunion";"Université";"Universités et assimilés";NA;"AUREF";FALSE
+"0597239Y";"Université de Lille";"Université";"Universités et assimilés";"ISITE";"ex CURIF";TRUE
+"0870669E";"Université de Limoges";"Université";"Universités et assimilés";NA;"AUREF";TRUE
+"0542493S";"Université de Lorraine";"Grand établissement";"Universités et assimilés";"ISITE";"ex CURIF";TRUE
+"0342490X";"Université de Montpellier";"Université";"Universités et assimilés";"ISITE";"ex CURIF";TRUE
+"0301687W";"Université de Nîmes";"Université";"Universités et assimilés";NA;"AUREF";TRUE
+"0755976N";"Université de Paris";"Université";"Universités et assimilés";"IDEx";"Udice";TRUE
+"0640251A";"Université de Pau et des Pays de l'Adour";"Université";"Universités et assimilés";"ISITE";"AUREF";TRUE
+"0660437S";"Université de Perpignan Via Domitia";"Université";"Universités et assimilés";NA;"AUREF";TRUE
+"0801344B";"Université de Picardie Jules-Verne";"Université";"Universités et assimilés";NA;"AUREF";TRUE
+"0860856N";"Université de Poitiers";"Université";"Universités et assimilés";NA;"AUREF";TRUE
+"0511296G";"Université de Reims Champagne-Ardenne";"Université";"Universités et assimilés";NA;"AUREF";TRUE
+"0350936C";"Université de Rennes 1";"Université";"Universités et assimilés";NA;"ex CURIF";TRUE
+"0761904G";"Université de Rouen Normandie";"Université";"Universités et assimilés";NA;"AUREF";TRUE
+"0673021V";"Université de Strasbourg";"Université";"Universités et assimilés";"IDEx";"Udice";TRUE
+"0830766G";"Université de Toulon";"Université";"Universités et assimilés";NA;"AUREF";TRUE
+"0370800U";"Université de Tours";"Université";"Universités et assimilés";NA;"AUREF";TRUE
+"0781944P";"Université de Versailles Saint-Quentin-en-Yvelines";"Université";"Universités et assimilés";NA;NA;TRUE
+"9710585J";"Université des Antilles";"Université";"Universités et assimilés";NA;NA;FALSE
+"0595964M";"Université du Littoral Côte d’Opale";"Université";"Universités et assimilés";NA;"AUREF";TRUE
+"0383546Y";"Université Grenoble Alpes";"Université";"Universités et assimilés";"IDEx";"Udice";TRUE
+"0383546Y";"Université Grenoble Alpes";"Université";"Universités et assimilés";"IDEx";"Udice";TRUE
+"0772894C";"Université Gustave Eiffel";"Université";"Universités et assimilés";"ISITE";NA;TRUE
+"0421095M";"Université Jean Monnet";"Université";"Universités et assimilés";NA;NA;TRUE
+"0692437Z";"Université Jean Moulin - Lyon 3";"Université";"Universités et assimilés";NA;NA;TRUE
+"0762762P";"Université Le Havre Normandie";"Université";"Universités et assimilés";NA;"AUREF";TRUE
+"0691775E";"Université Lumière - Lyon 2";"Université";"Universités et assimilés";NA;"AUREF";TRUE
+"0751718K";"Université Panthéon-Assas";"Université";"Universités et assimilés";NA;NA;TRUE
+"0751717J";"Université Paris 1 - Panthéon Sorbonne";"Université";"Universités et assimilés";NA;"ex CURIF";TRUE
+"0931827F";"Université Paris 8 - Vincennes - Saint-Denis";"Université";"Universités et assimilés";NA;"AUREF";TRUE
+"0921204J";"Université Paris Nanterre";"Université";"Universités et assimilés";NA;"ex CURIF";TRUE
+"0756036D";"Université Paris sciences et lettres";"Université";"Universités et assimilés";NA;NA;TRUE
+"0941111X";"Université Paris-Est Créteil";"Université";"Universités et assimilés";NA;NA;TRUE
+"0912408Y";"Université Paris-Saclay";"Université";"Universités et assimilés";"IDEx";"Udice";TRUE
+"0341089Z";"Université Paul-Valéry - Montpellier 3";"Université";"Universités et assimilés";NA;"AUREF";TRUE
+"0597132G";"Université Polytechnique Hauts-de-France";"Université";"Universités et assimilés";NA;NA;TRUE
+"0350937D";"Université Rennes 2";"Université";"Universités et assimilés";NA;"AUREF";TRUE
+"0730858L";"Université Savoie Mont Blanc";"Université";"Universités et assimilés";NA;"AUREF";TRUE
+"0751719L";"Université Sorbonne Nouvelle - Paris 3";"Université";"Universités et assimilés";NA;NA;TRUE
+"0931238R";"Université Sorbonne Paris Nord";"Université";"Universités et assimilés";NA;NA;TRUE
+"0311383K";"Université Toulouse - Jean Jaurès";"Université";"Universités et assimilés";NA;"ex CURIF";TRUE
+"0311382J";"Université Toulouse Capitole";"Université";"Universités et assimilés";NA;"AUREF";TRUE
+"0311384L";"Université Toulouse III - Paul Sabatier";"Université";"Universités et assimilés";NA;"ex CURIF";TRUE
+"0212198A";"Agrosup Dijon";"Grand établissement";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0753237L";"Arts et Métiers Sciences et Technologies";"Grand établissement";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0333232J";"Bordeaux INP";"Grand établissement";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0597139P";"Centrale Lille Institut";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0690187D";"Centrale Lyon";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0133774G";"Centrale Marseille";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0440100V";"Centrale Nantes";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0942283W";"Centre des hautes études de la construction";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0755372G";"CESI";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0753471R";"Conservatoire national des arts et métiers";"Grand établissement";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0352337A";"ECAM Rennes Louis de Broglie";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0951819L";"ECAM-EPMI";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0690194L";"École catholique des arts et métiers";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0754431J";"École centrale d'électronique";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0492466P";"École d'ingénieur d'agro-développement international";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0941934S";"École d'ingénieur généraliste en informatique et technologies du numérique";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0310154Z";"École d'ingénieurs de Purpan";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0022134J";"École d'ingénieurs des sciences aérospatiales";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0171435T";"École d'ingénieurs en génie des systèmes industriels";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0951820M";"École de biologie industrielle";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0130230E";"Ecole de l'air et de l'espace";"Grand établissement";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0290119X";"École nationale d'ingénieurs de Brest";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0650048Z";"École nationale d'ingénieurs de Tarbes";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0311256X";"École nationale de l'aviation civile";"Grand établissement";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0312069F";"École nationale de la météorologie";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0772517T";"École nationale des ponts et chaussées";"Grand établissement";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0772496V";"École nationale des sciences géographiques";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0692566P";"École nationale des travaux publics de l'État";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0670189S";"École nationale du génie de l'eau et de l'environnement de Strasbourg";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0912266U";"École nationale supérieure d'informatique pour l'industrie et l'entreprise";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0141720U";"École nationale supérieure d'ingénieurs de Caen";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0350077U";"École nationale supérieure de chimie de Rennes";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0340112M";"École nationale supérieure de chimie de Montpellier";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0951376E";"École nationale supérieure de l'électronique et de ses applications de Cergy";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0860073M";"École nationale supérieure de mécanique et d'aérotechnique de Poitiers";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0250082D";"École nationale supérieure de mécanique et des microtechniques";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0290125D";"École nationale supérieure de techniques avancées Bretagne";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0330203S";"École nationale supérieure des sciences agronomiques de Bordeaux Aquitaine";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0920815L";"École nationale supérieure du pétrole et des moteurs";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0760166T";"École nationale supérieure maritime";"Grand établissement";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0441916U";"École nationale vétérinaire, agroalimentaire et de l'alimentation, Nantes-Atlantique";"Grand établissement";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0290124C";"École navale";"Grand établissement";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0942095S";"École pour l'informatique et les techniques avancées";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0941953M";"École spéciale de mécanique et d'électricité";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0942340H";"École spéciale des travaux publics, du bâtiment et de l'industrie";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0560068V";"École spéciale militaire de Saint-Cyr";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0492246A";"École supérieure angevine en informatique et productique";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0490075R";"École supérieure d'électronique de l'Ouest";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0753560M";"École supérieure d'informatique électronique automatique";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0142182W";"École supérieure d'ingénieurs des travaux de la construction de Caen";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0573389Z";"École supérieure d'ingénieurs des travaux de la construction de Metz";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0941954N";"École supérieure d'ingénieurs des travaux de la construction de Paris";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0801911T";"École supérieure d'ingénieurs en électronique et électrotechnique d'Amiens";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0762378X";"École supérieure d'ingénieurs en génie électrique";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0922563L";"École supérieure d'ingénieurs Léonard-de-Vinci";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0490072M";"École supérieure d’agriculture";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0602099F";"École supérieure de chimie organique et minérale";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0693623N";"École supérieure de chimie physique électronique de Lyon";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0920672F";"École supérieure de fonderie et de forge";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0783664J";"École supérieure des techniques aéronautiques et de construction automobile";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0641923T";"École supérieure des technologies industrielles avancées";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0442278M";"École supérieure du bois";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0920674H";"EPF - École d'ingénieurs";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0932019P";"ESIEE Paris";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"";"Groupe Institut catholique d'arts et métiers";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0590348H";"Hautes études d'ingénieur";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0870997L";"Institut d'ingénierie informatique de Limoges";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0912424R";"Institut Mines-Télécom, au périmètre des écoles IMT Atlantique, Lille Douai, Albi, Alès, Mines Saint-Étienne et Institut Mines-Télécom Business school";"Grand établissement";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0756246G";"Institut national d'enseignement supérieur pour l'agriculture, l'alimentation et l'environnement";"Grand établissement";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0180974L";"Institut national des sciences appliquées Centre Val de Loire";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0690192J";"Institut national des sciences appliquées de Lyon";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0350097R";"Institut national des sciences appliquées de Rennes";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0760165S";"Institut national des sciences appliquées de Rouen Normandie";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0670190T";"Institut national des sciences appliquées de Strasbourg";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0310152X";"Institut national des sciences appliquées de Toulouse";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0910685A";"Institut national des sciences et techniques nucléaires";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0811293R";"Institut national universitaire Jean-François Champollion";"Autre établissement";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0912403T";"Institut polytechnique de Paris";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0942144V";"Institut polytechnique des sciences avancées";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0600071B";"Institut polytechnique UniLaSalle";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0942193Y";"Institut Sup'Biotech de Paris";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0590343C";"Institut supérieur d'agriculture de Lille";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0753559L";"Institut supérieur d'électronique de Paris";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0692353H";"Institut supérieur d’agriculture Rhône-Alpes";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0312760G";"Institut supérieur de l'aéronautique et de l'espace";"Grand établissement";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0292125C";"Institut supérieur de l'électronique et du numérique de Brest";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0130238N";"Institut supérieur du bâtiment et des travaux publics";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0693364G";"Institut textile et chimique";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0930603A";"ISAE-Supméca";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0721484X";"ISMANS";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0597165T";"Junia";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0311381H";"Toulouse INP";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0900424X";"Université de technologie de Belfort-Montbéliard";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0601223D";"Université de technologie de Compiègne";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0101060Y";"Université de technologie de Troyes";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0690193K";"Vet Agro Sup";"Grand établissement";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0831458J";"Yncréa Méditerranée";"École";"Ecoles d'ingénieurs";NA;NA;TRUE
+"0440112H";"Audencia";"École";"Ecoles de commerce";NA;NA;TRUE
+"0290127F";"Brest Business School";"École";"Ecoles de commerce";NA;NA;TRUE
+"0210099U";"Burgundy School of Business";"École";"Ecoles de commerce";NA;NA;TRUE
+"0760168V";"École de management de Normandie";"École";"Ecoles de commerce";NA;NA;TRUE
+"0922369A";"École de management Léonard De Vinci";"École";"Ecoles de commerce";NA;NA;TRUE
+"0783054W";"École des hautes études commerciales de Paris";"École";"Ecoles de commerce";NA;NA;TRUE
+"0490076S";"École supérieure des sciences commerciales d'Angers";"École";"Ecoles de commerce";NA;NA;TRUE
+"0951214D";"École supérieure des sciences économiques et commerciales";"École";"Ecoles de commerce";NA;NA;TRUE
+"0900362E";"École supérieure des technologies et des affaires de Belfort";"École";"Ecoles de commerce";NA;NA;TRUE
+"0590350K";"Edhec Business School";"École";"Ecoles de commerce";NA;NA;TRUE
+"0753547Y";"ESCP Business School";"École";"Ecoles de commerce";NA;NA;TRUE
+"0171427J";"Excelia Group";"École";"Ecoles de commerce";NA;NA;TRUE
+"0753364Z";"IAE Paris - Sorbonne Business School";"École";"Ecoles de commerce";NA;NA;TRUE
+"0542455A";"ICN Business School";"École";"Ecoles de commerce";NA;NA;TRUE
+"0593202K";"Institut d'économie scientifique et de gestion";"École";"Ecoles de commerce";NA;NA;TRUE
+"0771077C";"Institut européen d'administration des affaires";"École";"Ecoles de commerce";NA;NA;TRUE
+"0750252S";"Institut supérieur du commerce de Paris";"École";"Ecoles de commerce";NA;NA;TRUE
+"0752792C";"IPAG Business School";"École";"Ecoles de commerce";NA;NA;TRUE
+"0951798N";"Itescia";"École";"Ecoles de commerce";NA;NA;TRUE
+"0333326L";"KEDGE Business School";"École";"Ecoles de commerce";NA;NA;TRUE
+"0340137P";"MBS";"École";"Ecoles de commerce";NA;NA;TRUE
+"0760167U";"Neoma Business School";"École";"Ecoles de commerce";NA;NA;TRUE
+"0352305R";"Rennes School of Business";"École";"Ecoles de commerce";NA;NA;TRUE
+"0590346F";"Skema Business School";"École";"Ecoles de commerce";NA;NA;TRUE
+"0310156B";"Toulouse Business School";"École";"Ecoles de commerce";NA;NA;TRUE
+"0101059X";"Y SCHOOLS";"École";"Ecoles de commerce";NA;NA;TRUE
+"0753480A";"Collège de France";"Grand établissement";"Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs)";NA;NA;TRUE
+"0350095N";"École des hautes études en santé publique";"Grand établissement";"Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs)";NA;NA;TRUE
+"0753742K";"École des hautes études en sciences sociales";"Grand établissement";"Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs)";NA;NA;TRUE
+"0753489K";"École du Louvre";"École";"Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs)";NA;NA;TRUE
+"0672678X";"École nationale d'administration";"École";"Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs)";NA;NA;TRUE
+"0310143M";"École nationale supérieure de formation de l’enseignement agricole";"École";"Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs)";NA;NA;TRUE
+"0782019W";"École nationale supérieure de paysage";"École";"Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs)";NA;NA;TRUE
+"0692459Y";"École nationale supérieure des sciences de l'information et des bibliothèques";"Grand établissement";"Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs)";NA;NA;TRUE
+"0755026F";"Institut national d'histoire de l'art";"Grand établissement";"Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs)";NA;NA;TRUE
+"0753488J";"Institut national des langues et civilisations orientales";"Grand établissement";"Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs)";NA;NA;TRUE
+"0754446A";"Institut national du patrimoine";"École";"Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs)";NA;NA;TRUE
+"0752559Z";"Institut national du sport, de l'expertise et de la performance";"Grand établissement";"Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs)";NA;NA;TRUE
+"0922605G";"Institut national supérieur de formation et de recherche pour l'éducation des jeunes handicapés et les enseignements adaptés";"École";"Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs)";NA;NA;TRUE
+"0753494R";"Muséum national d'histoire naturelle";"Grand établissement";"Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs)";NA;NA;TRUE
+"0951310H";"École nationale supérieure d'arts de Paris-Cergy";"École";"Ecoles d'art et de design";NA;NA;TRUE
+"0754585B";"École nationale supérieure de création industrielle - Les Ateliers";"École";"Ecoles d'art et de design";NA;NA;TRUE
+"0753470P";"École nationale supérieure des arts décoratifs";"École";"Ecoles d'art et de design";NA;NA;TRUE
+"0590338X";"École nationale supérieure des arts et industries textiles";"École";"Ecoles d'art et de design";NA;NA;TRUE
+"0753667D";"École nationale supérieure des beaux-arts";"École";"Ecoles d'art et de design";NA;NA;TRUE
+"0801367B";"École supérieure d'art et de design d'Amiens";"École";"Ecoles d'art et de design";NA;NA;TRUE
+"0510084P";"École supérieure d'art et de design de Reims";"École";"Ecoles d'art et de design";NA;NA;TRUE
+"0762687H";"École supérieure d'art et design Le Havre-Rouen";"École";"Ecoles d'art et de design";NA;NA;TRUE
+"0141432F";"École supérieure d'arts et médias de Caen - Cherbourg";"École";"Ecoles d'art et de design";NA;NA;TRUE
+"0673048Z";"Haute école des arts du Rhin";"École";"Ecoles d'art et de design";NA;NA;TRUE
+"0310144N";"Institut supérieur des arts de Toulouse";"École";"Ecoles d'art et de design";NA;NA;TRUE
+"0631287G";"École nationale supérieure d'architecture de Clermont-Ferrand";"École";"Ecoles d'architecture";NA;NA;TRUE
+"0760164R";"École nationale supérieure d'architecture de Normandie";"École";"Ecoles d'architecture";NA;NA;TRUE
+"0751877H";"École nationale supérieure d'architecture de Paris-Belleville";"École";"Ecoles d'architecture";NA;NA;TRUE
+"0751875F";"École nationale supérieure d'architecture de Paris-La Villette";"École";"Ecoles d'architecture";NA;NA;TRUE
+"0751871B";"École nationale supérieure d'architecture de Paris-Malaquais";"École";"Ecoles d'architecture";NA;NA;TRUE
+"0670186N";"École nationale supérieure d'architecture de Strasbourg";"École";"Ecoles d'architecture";NA;NA;TRUE
+"0310150V";"École nationale supérieure d'architecture de Toulouse";"École";"Ecoles d'architecture";NA;NA;TRUE
+"0780412Z";"École nationale supérieure d’architecture de Versailles";"École";"Ecoles d'architecture";NA;NA;TRUE
+"0753533H";"École spéciale d'architecture";"École";"Ecoles d'architecture";NA;NA;TRUE
+"0753635U";"Centre de formation des journalistes";"École";"Autres écoles spécialisées";NA;NA;TRUE
+"0312561R";"Centre de ressources, d'expertise et de performance sportives de Toulouse";"École";"Autres écoles spécialisées";NA;NA;TRUE
+"0754493B";"Institut de management et de communication interculturels";"École";"Autres écoles spécialisées";NA;NA;TRUE
+"0492062A";"Institut des relations publiques et de la communication d’Angers";"École";"Autres écoles spécialisées";NA;NA;TRUE
+"0754566F";"Institut français de la mode";"École";"Autres écoles spécialisées";NA;NA;TRUE
+"0753605L";"Institut protestant de théologie";"École";"Autres écoles spécialisées";NA;NA;TRUE
+"0511556P";"Institut régional du travail social de Champagne-Ardennes";"École";"Autres écoles spécialisées";NA;NA;TRUE
+"0783690M";"Institut supérieur international du parfum, de la cosmétique et de l'aromatique alimentaire";"École";"Autres écoles spécialisées";NA;NA;TRUE
+"0490811R";"Facultés libres de l'Ouest";"École";"Instituts catholiques";NA;NA;TRUE
+"0752139T";"Facultés Libres de Philosophie et de Psychologie";"École";"Instituts catholiques";NA;NA;TRUE
+"0590344D";"Institut catholique de Lille";"École";"Instituts catholiques";NA;NA;TRUE
+"0690195M";"Institut catholique de Lyon";"École";"Instituts catholiques";NA;NA;TRUE
+"0753541S";"Institut catholique de Paris";"École";"Instituts catholiques";NA;NA;TRUE
+"0352349N";"Institut catholique de Rennes";"École";"Instituts catholiques";NA;NA;TRUE
+"0310155A";"Institut catholique de Toulouse";"École";"Instituts catholiques";NA;NA;TRUE
+"0851415B";"Institut catholique de Vendée";"École";"Instituts catholiques";NA;NA;TRUE
+"0511931X";"Centre national des arts du cirque";"École";"Ecoles des arts du spectacle";NA;NA;TRUE
+"0753495S";"Conservatoire national supérieur de musique et de danse de Paris";"École";"Ecoles des arts du spectacle";NA;NA;TRUE
+"0693735K";"École nationale supérieure des arts et techniques du théâtre";"École";"Ecoles des arts du spectacle";NA;NA;TRUE
+"0753457A";"École nationale supérieure des métiers de l'image et du son";"École";"Ecoles des arts du spectacle";NA;NA;TRUE
+"0932066R";"École nationale supérieure Louis Lumière";"École";"Ecoles des arts du spectacle";NA;NA;TRUE
+"0754595M";"Pôle supérieur d'enseignement artistique Paris - Boulogne-Billancourt";"École";"Ecoles des arts du spectacle";NA;NA;TRUE
+"0753431X";"Sciences Po";"Grand établissement";"Instituts d'études politiques";NA;NA;TRUE
+"0130221V";"Sciences Po Aix";"Autre établissement";"Instituts d'études politiques";NA;NA;TRUE
+"0330192E";"Sciences Po Bordeaux";"Autre établissement";"Instituts d'études politiques";NA;NA;TRUE
+"0595876S";"Sciences Po Lille";"Autre établissement";"Instituts d'études politiques";NA;NA;TRUE
+"0690173N";"Sciences Po Lyon";"Autre établissement";"Instituts d'études politiques";NA;NA;TRUE
+"0352317D";"Sciences Po Rennes";"Autre établissement";"Instituts d'études politiques";NA;NA;TRUE
+"0310133B";"Sciences Po Toulouse";"Autre établissement";"Instituts d'études politiques";NA;NA;TRUE
+"1340004B";"Casa de Velázquez de Madrid";"Autre établissement";"Ecoles françaises à l'étranger";NA;NA;TRUE
+"1260001S";"École française d'Athènes";"Autre établissement";"Ecoles françaises à l'étranger";NA;NA;TRUE
+"0751794T";"École française d'Extrême-Orient";"Autre établissement";"Ecoles françaises à l'étranger";NA;NA;TRUE
+"1270009V";"École française de Rome";"Autre établissement";"Ecoles françaises à l'étranger";NA;NA;TRUE
+"3010001R";"Institut français d'archéologie orientale du Caire";"Autre établissement";"Ecoles françaises à l'étranger";NA;NA;TRUE
+"0694123G";"École normale supérieure de Lyon";"École";"Ecoles normales supérieures";NA;NA;TRUE
+"0352440M";"École normale supérieure de Rennes";"École";"Ecoles normales supérieures";NA;NA;TRUE
+"0940608A";"École nationale vétérinaire d'Alfort";"École";"Ecoles vétérinaires";NA;NA;TRUE
+"0310153Y";"École nationale vétérinaire de Toulouse";"École";"Ecoles vétérinaires";NA;NA;TRUE

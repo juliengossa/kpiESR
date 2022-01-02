@@ -25,7 +25,7 @@ Pour des raisons de cohérence des indicateurs, et compte tenu de la diversité 
 
 ## Installation du paquet R
 
-L'installation du packet nécessite `devtools`.
+L'installation du paquet nécessite `devtools`.
 
 ```{r install, eval = FALSE}
 devtools::install_github("cpesr/kpiESR")
@@ -41,4 +41,35 @@ En plus du jeu de données `esr`, un autre jeu de donnée "long" est disponible,
 
 ```{r esr.pnl}
 colnames(kpiESR::esr.pnl)
+```
+
+## Description de données
+
+En plus des données explicite sur les établissements, cette librairie ajoute :
+
+```{r observations, include = FALSE}
+print_lfc <-function(lfc) {
+  for(i in seq(1,length(lfc$labels)))
+    cat("  - `",lfc$factors[i],"` : _",lfc$labels[i],"_ ",lfc$desc[i],"\n", sep = '')
+}
+```
+
+### Etudiants
+```{r observations.etu, echo = FALSE, results='asis'}
+print_lfc(kpiESR::kpiesr_lfc$ETU)
+```
+
+### Enseignants
+```{r observations.ens, echo = FALSE, results='asis'}
+print_lfc(kpiESR::kpiesr_lfc$ENS)
+```
+
+### Finances
+```{r observations.fin, echo = FALSE, results='asis'}
+print_lfc(kpiESR::kpiesr_lfc$FIN)
+```
+
+### Indicateurs clés de performance
+```{r observations.k, echo = FALSE, results='asis'}
+print_lfc(kpiESR::kpiesr_lfc$K)
 ```

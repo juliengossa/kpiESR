@@ -44,7 +44,7 @@ kpiesr_plot_evol <- function(rentrée, uai, groupe, lfc,
   
   df <- df %>% filter(!is.na(evolution), !kpi %in% df.na$kpi)
   
-  
+  df.uai <- df %>% filter(UAI==uai)
   df.groupe <- df %>% filter(Etablissement == groupe) 
   df.ensemble <- df %>% filter(Etablissement == "Ensemble") 
   df.series <- bind_rows(df.uai,df.groupe,df.ensemble)  %>% filter(kpi %in% df.uai$kpi) %>%

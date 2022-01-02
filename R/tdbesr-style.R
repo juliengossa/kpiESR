@@ -10,15 +10,15 @@ euro_M <- function(x) {
 }
 
 euro_k <- function(x) {
-  return(paste0(round(x/1e3,1),"k€"))
+  sprintf("%1.0fk€",x/1e3)
 }
 
 euro <- function(x) {
-  return(paste0(round(x,0),"€"))
+  sprintf("%1.0f€",x)
 }
 
 percent_format <- function(x) {
-  sprintf("%+0.1f%%", round(x*100,1))
+  sprintf("%+1.1f%%", round(x*100,1))
 }
 
 number_format <- function(x) {
@@ -41,13 +41,28 @@ valeur_labels <- function(kpi, valeur) {
     kpi == "kpi.K.forPetu"  ~ euro(valeur),
     kpi == "kpi.K.recPect"  ~ euro_k(valeur),
     kpi == "kpi.K.resPetu"  ~ euro_k(valeur),
-    kpi == "kpi.K.selPfor"  ~ scales::percent(valeur, accuracy = 1),
-    kpi == "kpi.K.ensPetu"  ~ as.character(round(valeur, 1)),
+    kpi == "kpi.K.ensPetu"  ~ sprintf("%1.1f",valeur),
     kpi == "kpi.K.titPens"  ~ scales::percent(valeur, accuracy = 1),
     str_detect(kpi,"kpi.FIN") ~ euro_M(valeur),
     TRUE                    ~ number_format(valeur)
   )
 }
+
+valeur_labels_long <- function(kpi, valeur) {
+  case_when(
+    is.na(valeur) ~ "N/A",
+    kpi == "kpi.K.dotPres"  ~ scales::percent(valeur, accuracy = 0.1, suffix=" %"),
+    kpi == "kpi.K.forPetu"  ~ sprintf("%1.0f €",valeur),
+    kpi == "kpi.K.recPect"  ~ sprintf("%1.1f k€",valeur/1e3),
+    kpi == "kpi.K.resPetu"  ~ sprintf("%1.1f k€",valeur/1e3),
+    kpi == "kpi.K.ensPetu"  ~ sprintf("%1.1f",valeur),
+    kpi == "kpi.K.titPens"  ~ scales::percent(valeur, accuracy = 0.1, suffix=" %"),
+    str_detect(kpi,"kpi.FIN") ~ sprintf("%1.1f M€",valeur/1e6),
+    TRUE                    ~ number_format(valeur)
+  )
+}
+
+
 
 norm_labels <- function(kpi, norm) {
   case_when(

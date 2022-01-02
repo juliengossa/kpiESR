@@ -336,3 +336,25 @@ replist <- correspondances.uai$to
 names(replist) <- correspondances.uai$from
 
 res <- mutate(df, UAI=recode(UAI,!!!replist))
+
+
+
+
+etab.cpesr %>% 
+  rename(Groupe.détaillé = Groupe) %>%
+  mutate(Groupe = recode(Groupe.détaillé,
+    "Universités et assimilés" = "Universités et assimilés",
+    "Ecoles d'ingénieurs" = "Ecoles d'ingénieurs",
+    "Ecoles de commerce" = "Autres écoles",
+    "Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs)" = "Grands établissements (hors écoles)",
+    "Ecoles d'art et de design" = "Autres écoles",
+    "Ecoles d'architecture" = "Autres écoles",
+    "Autres écoles écoles spécialisées" = "Autres écoles",
+    "Instituts catholiques" = "Autres écoles",
+    "Ecoles des arts du spectacle" = "Autres écoles",
+    "Instituts d'études politiques" = "Instituts d'études politiques",
+    "Ecoles françaises à l'étranger" = "Autres écoles",
+    "Ecoles normales supérieures" = "Ecoles normales supérieures",
+    "Ecoles vétérinaires" = "Autres écoles"
+  ) ) %>%
+  select(UAI,Etablissement,Groupe,Groupe.détaillé,Type,everything())

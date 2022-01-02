@@ -197,53 +197,28 @@ kpiesr_load <- function(...) {
 #kpiesr_plot_tdb(2017,uai)
 
 
-
-#' Title
-#'
-#' @param rentr
-#' @param type
-#' @param kpis
-#' @param labels
-#'
-#'
-#' @return
-#' @export
-#'
-#' @examples
-kpiesr_classement <- function(rentrée, type, kpis, labels=NA, historique=c()) {
-
-  classement <- kpiESR::esr.pnl %>%
-    ungroup() %>%
-    filter(Rentrée == rentrée, Type == type, kpi %in% kpis) %>%
-    select(Libellé, kpi,valeur_label, norm_label, rang) %>%
-    mutate(kpi = factor(kpi,levels=kpis)) %>% arrange(kpi,rang) %>%
-    pivot_wider(names_from = kpi, values_from = c(valeur_label,norm_label,rang)) %>%
-    merge(
-      kpiESR::esr.pnl %>%
-        ungroup() %>%
-        filter(Rentrée %in% historique, Type == type, kpi %in% kpis[1]) %>%
-        select(Libellé, Rentrée,valeur_label) %>%
-        pivot_wider(names_from = Rentrée, values_from = valeur_label)
-    ) %>%
-    select(paste0("rang_",kpis[1]), paste0("norm_label_",kpis[1]),
-           Libellé,
-           paste0("valeur_label_",kpis),
-           as.character(historique)
-           ) %>%
-    arrange(!!sym(paste0("rang_",kpis[1])))
-
-  if(!is.na(labels))
-    classement <- setNames(classement, c("Rang","Ecart", "Libellé", labels, as.character(historique)))
+kpiesr_classement <- function(rentrée, rentrée.deb, groupe, kpis, labels=NA, historique=c()) {
+  
+  classement <- kpiESR::esr %>%
+    filter(Rentrée %in% c(rentrée,rentrée.deb), Groupe == groupe, UAI %in% esr.uais$dans.tdb) %>%
+    select(Etablissement, Rentrée, all_of(kpis)) %>%
+    group_by(Rentrée) %>% mutate(rang = rank(-!!as.name(kpis[[1]]), na.last = "keep")) %>%
+    #pivot_wider(Etablissement, values_from=starts_with("kpi"), names_from = Rentrée) %>%
+    group_by(Etablissement) %>% arrange(rentrée) %>% 
+    mutate(rang.deb = ifelse(first(Rentrée)==rentrée.deb,first(rang),NA)) %>%
+    mutate(evolution = sprintf("(%+3d)", rang.deb - rang)) %>%
+    filter(Rentrée == rentrée) %>%
+    ungroup() %>% arrange(rang) %>%
+    mutate(across(starts_with("kpi"), ~ valeur_labels_long(cur_column(),.x))) %>%
+    select(rang, Etablissement, starts_with("kpi"), rang.deb, evolution)
 
   return(classement)
 }
 
+# kpiesr_classement(2019,2013, "Universités et assimilés",
+#                  c("kpi.K.dotPres","kpi.FIN.P.ressources","kpi.FIN.S.SCSP"))
 
 
-# kpiesr_classement(rentrée, "Université",
-#                  c("kpi.K.resPetu", "kpi.FIN.P.ressources", "kpi.ETU.S.cycle.1.L", "kpi.ETU.S.cycle.2.M"),
-#                  c("Ressources par étudiant","Ressources","Effectif L","Effectif M"),
-#                  seq(2012,2016))
 #
 # kpiesr_classement(rentrée, "Université",
 #                   c("kpi.K.proPres",

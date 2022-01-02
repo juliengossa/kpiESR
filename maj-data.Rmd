@@ -138,7 +138,24 @@ uaijoiner <- function() {
 ### Fusion des jeux de données sur les établissements
 
 ```{r full.etab, results='asis'}
-cpesr.etab <- read.csv2("dataESR/fr-cpesr-etablissements.csv")
+etab.cpesr <- read.csv2("dataESR/fr-cpesr-etablissements.csv") %>%
+  rename(Groupe.détaillé = Groupe) %>%
+  mutate(Groupe = recode(Groupe.détaillé,
+    "Universités et assimilés" = "Universités et assimilés",
+    "Ecoles d'ingénieurs" = "Ecoles d'ingénieurs (CTI)",
+    "Ecoles de commerce" = "Autres écoles",
+    "Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs)" = "Grands établissements (hors écoles)",
+    "Ecoles d'art et de design" = "Autres écoles",
+    "Ecoles d'architecture" = "Autres écoles",
+    "Autres écoles écoles spécialisées" = "Autres écoles",
+    "Instituts catholiques" = "Autres écoles",
+    "Ecoles des arts du spectacle" = "Autres écoles",
+    "Instituts d'études politiques" = "Instituts d'études politiques",
+    "Ecoles françaises à l'étranger" = "Autres écoles",
+    "Ecoles normales supérieures" = "Ecoles normales supérieures",
+    "Ecoles vétérinaires" = "Autres écoles"
+  ) ) %>%
+  select(UAI,Etablissement,Groupe,Groupe.détaillé,Type,everything())
 
 etab <- bind_rows(
   etab.21 %>% mutate(dataset = "etab.21"), 
@@ -146,9 +163,9 @@ etab <- bind_rows(
   etab.19 %>% mutate(dataset = "etab.19")) %>%
   group_by(UAI) %>%
   slice_head() %>%
-  left_join(cpesr.etab %>% select(-Etablissement)) %>%
+  left_join(etab.cpesr %>% select(-Etablissement)) %>%
   mutate(dataset = factor(
-    ifelse(UAI %in% cpesr.etab$UAI,"CPESR",dataset),
+    ifelse(UAI %in% etab.cpesr$UAI,"CPESR",dataset),
     levels=c("CPESR","etab.21","etab.20","etab.19"))) %>%
   select(Groupe,everything()) %>% 
   ungroup() %>%
@@ -249,7 +266,7 @@ etab <- etab %>%
     Type == "Communauté d’universités et établissements" ~ "Universités et assimilés",
     str_detect(Etablissement,"niversité") & !str_detect(Etablissement,"Université de technologie") ~ "Universités et assimilés",
     TRUE ~ "Autres"),
-    levels = c(unique(cpesr.etab$Groupe),"Autres")))
+    levels = c(unique(etab.cpesr$Groupe),"Autres")))
 
 etab %>% filter(UAI %in% etab.missingrp$UAI) %>% spoilerTable()
 ```
@@ -442,7 +459,12 @@ esr.uais <- list()
 
 esr.uais$dans.tdb <- c(
   etab %>% filter(dataset == "CPESR" & Groupe == "Universités et assimilés") %>% pull(UAI),
-  uaijoins.nonuniv.ajc.cpesr$UAI)
+  uaijoins.nonuniv.ajc.cpesr$UAI,
+  "0753471R", #CNAM
+  "0932066R", #ENSLL
+  "0753480A", #Collège de France
+  "0350095N", #EHESP
+  "0753431X") #Sciences Po
 
 #esr.uais$dans.tdb <- etab %>% filter(dataset == "CPESR") %>% pull(UAI)
 
@@ -460,7 +482,7 @@ esr.uais$dans.evol <- c(
 etab %>% filter(UAI %in% esr.uais$dans.evol) %>% spoilerTable()
 ```
 
-#### Hors norm
+#### Hors norme
 
 ```{r tdb.horsnorm, results='asis'}
 esr.uais$hors.norm <- c("0756036D", # PSL
@@ -471,8 +493,8 @@ esr.uais$hors.norm <- c("0756036D", # PSL
                         "7200664J", # Corse
                         "9830445S", # Nouvelle-Calédonie
                         "9710585J", # Antilles
-                        etab %>% filter(Type == "Communauté d'universités et établissements") %>% pull(UAI),
-                        esr %>% filter(kpi.K.recPect > 1e5) %>% pull(UAI)
+                        etab %>% filter(Type == "Communauté d'universités et établissements") %>% pull(UAI)
+                        #esr %>% filter(kpi.K.recPect > 1e5) %>% pull(UAI)
 )
 
 etab %>% filter(UAI %in% esr.uais$hors.norm) %>% spoilerTable()
@@ -517,7 +539,7 @@ etab <- fix_etab(etab, fix.wikidata)
 fix.wikidata %>% spoilerTable()
 ```
 
-### Sigles manquants pour les universités 
+### Sigles manquants
 
 #### Sigles récupérables sur wikidata
 
@@ -590,10 +612,10 @@ esr <- ens %>% select(-Etablissement, -Type) %>%
   full_join(etab %>% select(Groupe,UAI,Etablissement,Type)) %>%
   select(Groupe,UAI,Etablissement,Type, Rentrée, everything())
 
-alafin <- c("Autres","Groupe","Ensemble")
+alafin <- c("Autres écoles", "Autres","Groupe","Ensemble")
 grplvl <- c(
   esr %>% select(Groupe,UAI) %>% unique() %>% 
-    filter(!Groupe %in% alafin) %>%
+    filter(!Groupe %in% alafin, UAI %in% esr.uais$dans.tdb) %>%
     group_by(Groupe) %>% summarize(n = n()) %>%
     arrange(desc(n)) %>% pull(Groupe) %>% as.character(),
   alafin)

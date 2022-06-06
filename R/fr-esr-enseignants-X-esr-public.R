@@ -2,12 +2,20 @@
 # https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-enseignants-titulaires-esr-public/information/?disjunctive.annee
 # Version du 28 octobre 2020
 #
-# [1] "Rentrée"                   "Année.universitaire"       "Établissement"             "Type.établissement"       
-# [5] "Région"                    "Académie"                  "Sexe"                      "Categorie.de.personnels"  
-# [9] "Grandes.disciplines"       "Groupes.CNU"               "Sections.CNU"              "ID.académie"              
-# [13] "ID.région"                 "Identifiant.établissement" "Code.categorie.personnels" "Code.groupe.CNU"          
-# [17] "Code.grande.discipline"    "effectif"                  "code_section_cnu"          "geolocalisation"          
-# [21] "id_Paysage"                "classe_age3"               "quotite"        
+# [1] "Rentrée"                                                    "Établissement"                                             
+# [3] "Type.établissement"                                         "Sexe"                                                      
+# [5] "Categorie.de.personnels"                                    "Grandes.disciplines"                                       
+# [7] "Groupes.CNU"                                                "Sections.CNU"                                              
+# [9] "Code.categorie.personnels"                                  "Code.groupe.CNU"                                           
+# [11] "Code.grande.discipline"                                     "effectif"                                                  
+# [13] "code_section_cnu"                                           "Année.universitaire"                                       
+# [15] "etablissement_id_paysage"                                   "etablissement_compos_id_paysage"                           
+# [17] "Décomposition.pour.les.universités.à.statuts.expérimentaux" "etablissement_code_academie"                               
+# [19] "Académie"                                                   "etablissement_code_region"                                 
+# [21] "Région"                                                     "etablissement_coordonnees"                                 
+# [23] "etablissement_id_uai_source"                                "etablissement_id_paysage_actuel"                           
+# [25] "etablissement_actuel_lib"                                   "classe_age3"                                               
+# [27] "quotite"                   
 
 # https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-enseignants-nonpermanents-esr-public/information/
 # Version du 29 avril 2020
@@ -27,7 +35,7 @@ kpiesr_read.ens <- function() {
 
   ens.tit <- read.csv2("dataESR/fr-esr-enseignants-titulaires-esr-public.csv") %>% 
     transmute(
-      UAI = etablissement_id_uai,
+      UAI = etablissement_id_uai_source,
       Etablissement = Établissement,
       Type = Type.établissement,
       Rentrée,
@@ -35,7 +43,11 @@ kpiesr_read.ens <- function() {
         Code.categorie.personnels == "AM2D" ~ "AM2D",
         TRUE ~ "EC"),
       Discipline = Code.grande.discipline,
-      Effectif = effectif)
+      Effectif = effectif) %>%
+    group_by(UAI, Etablissement, Type, Rentrée, Catégorie) %>%
+    summarise(Effectif = sum(Effectif,na.rm = TRUE)) %>%
+    ungroup() %>%
+    pivot_wider(names_from = Catégorie, values_from = Effectif, values_fill = list(Effectif=0)) 
 
   ens.np <- read.csv2("dataESR/fr-esr-enseignants-nonpermanents-esr-public.csv")  %>% 
     transmute(
@@ -48,21 +60,22 @@ kpiesr_read.ens <- function() {
         code.categorie.personnels %in% c("ATER", "DOCT AVEC ENS", "DOCT SANS ENS") ~ "Doc_ATER",
         TRUE ~ "Autres"),
       Discipline = Code.grande.discipline,
-      Effectif)
-
-  ens <- bind_rows(ens.tit,ens.np) %>%
+      Effectif) %>%
     group_by(UAI, Etablissement, Type, Rentrée, Catégorie) %>%
     summarise(Effectif = sum(Effectif,na.rm = TRUE)) %>%
     ungroup() %>%
-    pivot_wider(names_from = Catégorie, values_from = Effectif, values_fill = list(Effectif=NA)) %>%
+    pivot_wider(names_from = Catégorie, values_from = Effectif, values_fill = list(Effectif=0))
+
+  ens <- full_join(ens.tit,ens.np) %>%
+    #bind_rows(ens.tit,ens.np) 
     rowwise() %>%
     transmute(
       UAI,
       Etablissement,
       Type,
       Rentrée,
-      kpi.ENS.P.effectif      = sum(EC,AM2D,Doc_ATER,LRU_Associés,Autres,na.rm = TRUE),
-      kpi.ENS.S.titulaires    = sum(EC,AM2D,na.rm = TRUE),
+      kpi.ENS.P.effectif      = sum(EC,AM2D,Doc_ATER,LRU_Associés,Autres),
+      kpi.ENS.S.titulaires    = sum(EC,AM2D),
       kpi.ENS.S.ECtitulaires  = EC,
       kpi.ENS.S.DocATER       = Doc_ATER,
       kpi.ENS.S.LRU           = LRU_Associés,

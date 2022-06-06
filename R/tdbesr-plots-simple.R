@@ -25,13 +25,15 @@ kpiesr_plot_norm_simple <- function(rentrée, uai, groupe, lfc,
   if(groupe == "Ensemble") groupe <- "." 
   
   df.etabs <- bind_rows(
-    df %>% filter(str_detect(as.character(Groupe),as.character(groupe)), !UAI %in% esr.uais$hors.norm, !kpi %in% df.na$kpi),
+    df %>% filter(str_detect(as.character(Groupe),as.character(groupe)), 
+                  !UAI %in% kpiESR::esr.uais$hors.norm,
+                  !kpi %in% df.na$kpi),
     df.uai)
   df.groupe <- df %>% filter(Groupe == "Groupe", UAI==groupe, !kpi %in% df.na$kpi)
   df.ensemble <- df %>% filter(Etablissement == "Ensemble", !kpi %in% df.na$kpi)
   
   
-  ggplot(df.etabs, aes(x=kpi,y=norm,color=kpi,fill=kpi)) +
+  ggplot(df.etabs %>% filter, aes(x=kpi,y=norm,color=kpi,fill=kpi)) +
     geom_hline(data = df.groupe, aes(yintercept=norm), linetype=2, size=style$line_size/2) +
     geom_hline(data = df.ensemble, aes(yintercept=norm), linetype=1, size=style$line_size/2) +
     #geom_boxplot(fill="white") +
@@ -49,7 +51,7 @@ kpiesr_plot_norm_simple <- function(rentrée, uai, groupe, lfc,
     guides(color="none", fill="none") 
 }
 
-# kpiesr_plot_norm_simple(2019,"0130221V","Université", kpiesr_lfc[["K"]]) + ggcpesrthemes::theme_cpesr() + theme(panel.grid.major.y = element_blank())
+# kpiesr_plot_norm_simple(2020,"0130221V","Universités et assimilés", kpiesr_lfc[["K"]]) + ggcpesrthemes::theme_cpesr() + theme(panel.grid.major.y = element_blank())
 # 
 # 
 # kpiesr_plot_norm_simple(2019,uai,"Université", kpiesr_lfc[["K"]]) + ggcpesrthemes::theme_cpesr() + theme(panel.grid.major.y = element_blank())

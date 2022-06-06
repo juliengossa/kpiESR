@@ -106,7 +106,7 @@ kpiesr_add_kpis <- function (df) {
     kpi.K.resPetu = kpi.FIN.P.ressources / (kpi.ETU.S.cycle1_L+kpi.ETU.S.cycle2_M),
     kpi.K.forPetu = kpi.FIN.S.recettesFormation / kpi.ETU.P.effectif,
     kpi.K.recPect = kpi.FIN.S.recettesFormation / kpi.ENS.S.ECtitulaires,
-    kpi.K.ensPetu = kpi.ENS.P.effectif / (kpi.ETU.S.cycle1_L+kpi.ETU.S.cycle2_M) * 100,
+    kpi.K.ensPetu = kpi.ENS.S.titulaires / (kpi.ETU.S.cycle1_L+kpi.ETU.S.cycle2_M) * 100,
     kpi.K.titPens = kpi.ENS.S.titulaires / kpi.ENS.P.effectif,
 
     #kpi.K.selPfor = kpi.ADM.S.sélective / kpi.ADM.P.formations,

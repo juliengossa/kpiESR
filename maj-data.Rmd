@@ -493,6 +493,10 @@ esr.uais$hors.norm <- c("0756036D", # PSL
                         "7200664J", # Corse
                         "9830445S", # Nouvelle-Calédonie
                         "9710585J", # Antilles
+                        "0750736T", # Paris Dauphine
+                        "0751718K", # Panthéon Assas
+                        "0911975C", # Evry Val d'Essone
+                        "0952259P", # CY
                         etab %>% filter(Type == "Communauté d'universités et établissements") %>% pull(UAI)
                         #esr %>% filter(kpi.K.recPect > 1e5) %>% pull(UAI)
 )

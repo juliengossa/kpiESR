@@ -23,7 +23,7 @@ publiées sur \#DataESR*
 Pour des raisons de cohérence des indicateurs, et compte tenu de la
 diversité des profils, les modifications suivantes ont été apportées :
 
-  - le type de Université de Lorraine est considéré comme *Université*,
+-   le type de Université de Lorraine est considéré comme *Université*,
     au lieu de *Grand établissement*.
 
 ## Installation du paquet R
@@ -40,28 +40,20 @@ Ensuite, un jeu de donnée est disponible :
 colnames(kpiESR::esr)
 ```
 
-    ##  [1] "UAI"                            "Rentrée"                       
-    ##  [3] "kpi.FIN.P.ressources"           "kpi.FIN.S.masseSalariale"      
-    ##  [5] "kpi.FIN.S.SCSP"                 "kpi.FIN.S.recettesFormation"   
-    ##  [7] "kpi.FIN.S.recettesRecherche"    "kpi.FIN.S.investissements"     
-    ##  [9] "kpi.ENS.P.effectif"             "kpi.ENS.S.titulaires"          
-    ## [11] "kpi.ENS.S.ECtitulaires"         "kpi.ENS.S.DocATER"             
-    ## [13] "kpi.ENS.S.LRU"                  "kpi.ETU.P.effectif"            
-    ## [15] "kpi.ETU.S.cycle.1.L"            "kpi.ETU.S.cycle.2.M"           
-    ## [17] "kpi.ETU.S.cycle.3.D"            "kpi.ETU.S.diplomeEtablissement"
-    ## [19] "kpi.ADM.P.formations"           "kpi.ADM.S.sélective"           
-    ## [21] "kpi.ADM.S.hypersélective"       "kpi.ADM.S.surchargées"         
-    ## [23] "kpi.ADM.S.souschargée"          "err.ADM"                       
-    ## [25] "Libellé"                        "Sigle"                         
-    ## [27] "Type"                           "Type.détaillé"                 
-    ## [29] "Académie"                       "Rattachement"                  
-    ## [31] "Fusion"                         "Curif"                         
-    ## [33] "url.siteweb"                    "url.wikidata"                  
-    ## [35] "url.legifrance"                 "twitter"                       
-    ## [37] "kpi.K.dotPres"                  "kpi.K.resPetu"                 
-    ## [39] "kpi.K.forPetu"                  "kpi.K.recPect"                 
-    ## [41] "kpi.K.selPfor"                  "kpi.K.titPetu"                 
-    ## [43] "kpi.K.titPens"
+    ##  [1] "Groupe"                      "UAI"                        
+    ##  [3] "Etablissement"               "Type"                       
+    ##  [5] "Rentrée"                     "kpi.ENS.P.effectif"         
+    ##  [7] "kpi.ENS.S.titulaires"        "kpi.ENS.S.ECtitulaires"     
+    ##  [9] "kpi.ENS.S.DocATER"           "kpi.ENS.S.LRU"              
+    ## [11] "kpi.ETU.P.effectif"          "kpi.ETU.S.cycle1_L"         
+    ## [13] "kpi.ETU.S.cycle2_M"          "kpi.ETU.S.cycle3_D"         
+    ## [15] "kpi.ETU.S.DU_DE"             "kpi.FIN.P.ressources"       
+    ## [17] "kpi.FIN.S.masseSalariale"    "kpi.FIN.S.SCSP"             
+    ## [19] "kpi.FIN.S.recettesFormation" "kpi.FIN.S.recettesRecherche"
+    ## [21] "kpi.FIN.S.investissements"   "kpi.K.dotPres"              
+    ## [23] "kpi.K.resPetu"               "kpi.K.forPetu"              
+    ## [25] "kpi.K.recPect"               "kpi.K.ensPetu"              
+    ## [27] "kpi.K.titPens"
 
 En plus du jeu de données `esr`, un autre jeu de donnée “long” est
 disponible, ajoutant des valeurs normalisées :
@@ -70,9 +62,9 @@ disponible, ajoutant des valeurs normalisées :
 colnames(kpiESR::esr.pnl)
 ```
 
-    ##  [1] "Type"         "Rentrée"      "UAI"          "Libellé"      "Curif"       
-    ##  [6] "kpi"          "valeur"       "norm"         "valeur_label" "norm_label"  
-    ## [11] "rang"         "norm_y"
+    ##  [1] "Groupe"        "UAI"           "Etablissement" "Type"         
+    ##  [5] "Rentrée"       "kpi"           "valeur"        "norm"         
+    ##  [9] "valeur_label"  "norm_label"    "rang"          "evolution"
 
 ## Description de données
 
@@ -81,55 +73,53 @@ ajoute :
 
 ### Etudiants
 
-  - `kpi.ETU.P.effectif` : *Etudiants* Effectif total étudiant (Hors
+-   `kpi.ETU.P.effectif` : *Etudiants* Effectif total étudiant (Hors
     double inscription CPGE)
-  - `kpi.ETU.S.cycle.1.L` : *Cycle 1 (L)* Effectif étudiant inscrit en
+-   `kpi.ETU.S.cycle1_L` : *Cycle 1 (L)* Effectif étudiant inscrit en
     premier cycle (L, DUT, etc.)
-  - `kpi.ETU.S.cycle.2.M` : *Cycle 2 (M)* Effectif étudiant inscrit en
+-   `kpi.ETU.S.cycle2_M` : *Cycle 2 (M)* Effectif étudiant inscrit en
     deuxième cycle (M)
-  - `kpi.ETU.S.cycle.3.D` : *Cycle 3 (D)* Effectif étudiant inscrit en
+-   `kpi.ETU.S.cycle3_D` : *Cycle 3 (D)* Effectif étudiant inscrit en
     troisième cycle (Doctorat, HDR)
-  - `kpi.ETU.S.diplomeEtablissement` : *DU* Effectif étudiant inscrit en
-    diplôme d’établissement (DU, non-national)
+-   `kpi.ETU.S.DU_DE` : *DU* Effectif étudiant inscrit en diplôme
+    d’établissement (DU, non-national)
 
 ### Enseignants
 
-  - `kpi.ENS.P.effectif` : *Enseignants* Effectif total enseignant
-  - `kpi.ENS.S.titulaires` : *Titulaires* Effectif enseignant titulaire
-  - `kpi.ENS.S.ECtitulaires` : *EC* Effectif enseignant-chercheur
+-   `kpi.ENS.P.effectif` : *Enseignants* Effectif total enseignant
+-   `kpi.ENS.S.titulaires` : *Titulaires* Effectif enseignant titulaire
+-   `kpi.ENS.S.ECtitulaires` : *EC* Effectif enseignant-chercheur
     titulaire
-  - `kpi.ENS.S.DocATER` : *Doc et ATER* Effectif doctorant et ATER
-  - `kpi.ENS.S.LRU` : *LRU* Effectif contrat LRU
+-   `kpi.ENS.S.DocATER` : *Doc et ATER* Effectif doctorant et ATER
+-   `kpi.ENS.S.LRU` : *LRU et Associés* Effectif contrat LRU et
+    Associés/Invités
 
 ### Finances
 
-  - `kpi.FIN.P.ressources` : *Ressources* Ressources totales (produits
+-   `kpi.FIN.P.ressources` : *Ressources* Ressources totales (produits
     encaissables)
-  - `kpi.FIN.S.masseSalariale` : *Masse salariale* Masse salariale
+-   `kpi.FIN.S.masseSalariale` : *Masse salariale* Masse salariale
     (dépenses de personnels)
-  - `kpi.FIN.S.SCSP` : *SCSP* Subvention pour charge de service public
+-   `kpi.FIN.S.SCSP` : *SCSP* Subvention pour charge de service public
     (dotation d’Etat directe)
-  - `kpi.FIN.S.recettesFormation` : *Recettes formation* Droits
+-   `kpi.FIN.S.recettesFormation` : *Recettes formation* Droits
     d’inscription, Diplôme d’établissement, Formation continue, VAE et
     Taxe d’apprentissage
-  - `kpi.FIN.S.recettesRecherche` : *Recettes recherche* Valorisation,
+-   `kpi.FIN.S.recettesRecherche` : *Recettes recherche* Valorisation,
     ANR en et hors investissement d’avenir, contrats et prestations de
     recherche
-  - `kpi.FIN.S.investissements` : *Investissements* Investissements
-    (Acquisions d’immobilisation
 
 ### Indicateurs clés de performance
 
-  - `kpi.K.resPetu` : *Ressources par étudiant* Ressources divisées par
-    le nombre d’étudiants
-  - `kpi.K.recPect` : *Recettes recherche par enseignant-chercheur*
-    Recettes recherche divisées par le nombre d’enseignants-chercheurs
-    titulaires
-  - `kpi.K.forPetu` : *Recettes formation par étudiant* Recettes
-    formation divisées par le nombre d’étudiants
-  - `kpi.K.titPetu` : *Taux d’encadrement* Nombre d’enseignants
-    titulaires pour 100 étudiants
-  - `kpi.K.titPens` : *Taux de titularité* Part des titulaires dans les
+-   `kpi.K.titPens` : *Taux de titularité* Part des titulaires dans les
     enseignants
-  - `kpi.K.dotPres` : *Taux de SCSP* Part des Subventions pour charge de
+-   `kpi.K.dotPres` : *Taux de SCSP* Part des Subventions pour charge de
     service public dans les ressources
+-   `kpi.K.ensPetu` : *Taux d’encadrement* Nombre d’enseignants
+    titulaires pour 100 étudiants en cycles 1 et 2
+-   `kpi.K.resPetu` : *Ressources par étudiant* Ressources divisées par
+    le nombre d’étudiants
+-   `kpi.K.forPetu` : *Recetttes formation par étudiant* Recettes
+    formation divisées par le nombre d’étudiants
+-   `kpi.K.recPect` : *Recettes recherche par EC* Recettes recherche
+    divisées par le nombre d’enseignants-chercheurs titulaires

@@ -28,6 +28,10 @@ kpiesr_plot_all <- function(rentrée, uai, groupe,
     etu.evol = kpiesr_plot_evol_try(rentrée,uai,groupe,lfc[["ETU"]], style=style.o, ...),
     etu.norm = kpiesr_plot_norm_simple_try(rentrée,uai,groupe,omit_first(lfc[["ETU"]]), style=style.o.norm,...),
 
+    bia.abs = kpiesr_plot_primaire_try(rentrée,uai,lfc[["BIA"]], style=style.o,...),
+    bia.evol = kpiesr_plot_evol_try(rentrée,uai,groupe,lfc[["BIA"]], style=style.o,...),
+    bia.norm = kpiesr_plot_norm_simple_try(rentrée,uai,groupe,omit_first(lfc[["BIA"]]), style=style.o.norm,...),
+    
     ens.abs = kpiesr_plot_primaire_try(rentrée,uai,lfc[["ENS"]], style=style.o,...),
     ens.evol = kpiesr_plot_evol_try(rentrée,uai,groupe,lfc[["ENS"]], style=style.o,...),
     ens.norm = kpiesr_plot_norm_simple_try(rentrée,uai,groupe,omit_first(lfc[["ENS"]]), style=style.o.norm,...),

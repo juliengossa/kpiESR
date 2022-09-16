@@ -20,7 +20,7 @@ spoilerTable <- function(df) {
 }
 
 rentrée.d <- 2013
-rentrée.f <- 2019
+rentrée.f <- 2020
 ```
 
 
@@ -35,10 +35,13 @@ Un jeu supplémentaire, noté `etab.cpesr` a été construit semi-manuellement p
 ajouter des informations supplémentaires.
 
 ```{r data}
-etab.21 <- kpiesr_read.etab.2021v1() 
+etab.21.2 <- kpiesr_read.etab.2021v2() 
+etab.21.1 <- kpiesr_read.etab.2021v1() 
 etab.20 <- kpiesr_read.etab.2020v1() 
 etab.19 <- kpiesr_read.etab.2019v1()
-ens <- kpiesr_read.ens() %>% mutate(Rentrée = as.character(Rentrée))
+
+ens <- kpiesr_read.ens(composantes = TRUE) %>% mutate(Rentrée = as.character(Rentrée))
+bia <- kpiesr_read.bia() %>% mutate(Rentrée = as.character(Rentrée))
 etu <- kpiesr_read.etu() %>% mutate(Rentrée = as.character(Rentrée))
 fin <- kpiesr_read.fin() %>% mutate(Rentrée = as.character(Rentrée))
 ```
@@ -46,15 +49,18 @@ fin <- kpiesr_read.fin() %>% mutate(Rentrée = as.character(Rentrée))
 
 ```{r portée, results='asis'}
 bind_rows(
-  etab.21 %>% summarise(data = "etab.21", Nb.uais = n_distinct(UAI)),
+  etab.21.2 %>% summarise(data = "etab.21.2", Nb.uais = n_distinct(UAI)),
+  etab.21.1 %>% summarise(data = "etab.21.1", Nb.uais = n_distinct(UAI)),
   etab.20 %>% summarise(data = "etab.20", Nb.uais = n_distinct(UAI)),
   etab.19 %>% summarise(data = "etab.19", Nb.uais = n_distinct(UAI)),
   ens %>% summarise(data = "ens",
-    Rentrée.min = min(Rentrée), Rentrée.max = max(Rentrée), Nb.uais = n_distinct(UAI)),
+    Rentrée.min = min(Rentrée), Rentrée.max = max(Rentrée), Nb.uais = n_distinct(UAI,na.rm = TRUE)),
+  bia %>% summarise(data = "bia",
+    Rentrée.min = min(Rentrée), Rentrée.max = max(Rentrée), Nb.uais = n_distinct(UAI,na.rm = TRUE)),
   etu %>% summarise(data = "etu",
-    Rentrée.min = min(Rentrée), Rentrée.max = max(Rentrée), Nb.uais = n_distinct(UAI)),
+    Rentrée.min = min(Rentrée), Rentrée.max = max(Rentrée), Nb.uais = n_distinct(UAI,na.rm = TRUE)),
   fin %>% summarise(data = "fin",
-    Rentrée.min = min(Rentrée), Rentrée.max = max(Rentrée), Nb.uais = n_distinct(UAI))
+    Rentrée.min = min(Rentrée), Rentrée.max = max(Rentrée), Nb.uais = n_distinct(UAI,na.rm = TRUE))
 ) %>% spoilerTable()
 ```
 
@@ -92,8 +98,8 @@ bind_rows(
 Les données sont agrégées à trois échelles : _Ensemble_, _Groupe_ et _Etablissement_, 
 avec trois méthodes de constitution des périmètres d'aggrégation :
 
-  - _Ensemble_ agrège toutes les données dans tous les jeux : sa cohérence  dépend de la cohérence du périmètre
-des jeux de données ;
+  - _Ensemble_ agrège toutes les données dans tous les jeux : sa cohérence  dépend 
+  de la cohérence du périmètre des jeux de données ;
   - _Groupe_ agrège les données des établissements classés dans chaque groupe, 
   selon deux approches différentes :
     - pour les universités, toutes les données disponibles sont agrégées (c'est 
@@ -106,6 +112,7 @@ des jeux de données ;
 
 ```{r functions}
 fix_uai <- function(df,correspondances.uai) {
+  correspondances.uai <- correspondances.uai %>% separate_rows(from, sep=';')
   replist <- correspondances.uai$to 
   names(replist) <- correspondances.uai$from
   
@@ -126,6 +133,7 @@ fix_uai <- function(df,correspondances.uai) {
 uaijoiner <- function() {
   etab %>% select(UAI, Etablissement, Groupe, dataset) %>% 
     full_join(ens %>% group_by(UAI) %>% summarise(ens.etab=paste(unique(Etablissement),collapse=' ; '), ens.d = min(Rentrée), ens.f = max(Rentrée)) ) %>%
+    full_join(bia %>% group_by(UAI) %>% summarise(bia.etab=paste(unique(Etablissement),collapse=' ; '), bia.d = min(Rentrée), bia.f = max(Rentrée)) ) %>%
     full_join(etu %>% group_by(UAI) %>% summarise(etu.etab=paste(unique(Etablissement),collapse=' ; '), etu.d = min(Rentrée), etu.f = max(Rentrée)) ) %>%
     full_join(fin %>% group_by(UAI) %>% summarise(fin.etab=paste(unique(Etablissement),collapse=' ; '), fin.d = min(Rentrée), fin.f = max(Rentrée)) ) %>%
     arrange(dataset,Etablissement)
@@ -134,6 +142,8 @@ uaijoiner <- function() {
 ```
 
 ## Constitution du jeu de données `etab` sur les établissements
+
+
 
 ### Fusion des jeux de données sur les établissements
 
@@ -158,7 +168,8 @@ etab.cpesr <- read.csv2("dataESR/fr-cpesr-etablissements.csv") %>%
   select(UAI,Etablissement,Groupe,Groupe.détaillé,Type,everything())
 
 etab <- bind_rows(
-  etab.21 %>% mutate(dataset = "etab.21"), 
+  etab.21.2 %>% mutate(dataset = "etab.21.2"), 
+  etab.21.1 %>% mutate(dataset = "etab.21.1"), 
   etab.20 %>% mutate(dataset = "etab.20"), 
   etab.19 %>% mutate(dataset = "etab.19")) %>%
   group_by(UAI) %>%
@@ -166,7 +177,7 @@ etab <- bind_rows(
   left_join(etab.cpesr %>% select(-Etablissement)) %>%
   mutate(dataset = factor(
     ifelse(UAI %in% etab.cpesr$UAI,"CPESR",dataset),
-    levels=c("CPESR","etab.21","etab.20","etab.19"))) %>%
+    levels=c("CPESR","etab.21.2","etab.21.1","etab.20","etab.19"))) %>%
   select(Groupe,everything()) %>% 
   ungroup() %>%
   arrange(Groupe,Type,Etablissement)
@@ -176,12 +187,53 @@ etab <- bind_rows(
 
 ### Ajout des établissements hors `etab.x`
 
-```{r horsetab, results='asis'}
+```{r horsetab.fun}
+uai_get_missing <- function(df, etab) {
+ df %>%
+    filter(!UAI %in% etab$UAI) %>%
+    group_by(UAI,Etablissement,Type) %>%
+    summarise(
+      Rentrée.min = min(Rentrée),
+      Rentrée.max = max(Rentrée)
+    ) %>%
+    ungroup() %>%
+    arrange(desc(Rentrée.max),Rentrée.min,Etablissement)
+}
+```
+
+
+#### Ens
+
+```{r horsetab.ens, results='asis'}
+uai_get_missing(ens,etab) %>% spoilerTable()
+```
+
+#### Bia
+
+```{r horsetab.bia, results='asis'}
+uai_get_missing(bia,etab) %>% spoilerTable()
+```
+
+#### Etu
+
+```{r horsetab.etu, results='asis'}
+uai_get_missing(etu,etab) %>% spoilerTable()
+```
+
+#### Fin
+
+```{r horsetab.fin, results='asis'}
+uai_get_missing(fin,etab) %>% spoilerTable()
+```
+
+
+```{r horsetab, results='asis', eval=TRUE}
 uaijoins <- uaijoiner()
 
 horsetab <- uaijoins %>% 
   filter(is.na(dataset)) %>% 
   transmute(UAI, Etablissement = case_when(
+    !is.na(bia.etab) ~ bia.etab,
     !is.na(ens.etab) ~ ens.etab,
     !is.na(etu.etab) ~ etu.etab,
     !is.na(fin.etab) ~ fin.etab 
@@ -216,28 +268,19 @@ uaijoins %>%
 ##### Correction des doubles UAI
 
 ```{r doubleuai.fix, results='asis'}
-correspondances.doubleuai <- bind_rows(
-  c(Etablissement="INSA CVL	",
-    from="0180974L;0411068N",to="0180974L", note="Potentiel changement de périmètre (correction d'un double UAI)"),
-  c(Etablissement="INSA CVL	",
-    from="0411068N",to="0180974L", note="Potentiel changement de périmètre (correction d'un double UAI)"),
-  c(Etablissement="Centrale Lille Institut",
-    from="0597139P;0590349J",to="0597139P", note="Potentiel changement de périmètre (correction d'un double UAI)"),
-  c(Etablissement="Centrale Lille Institut",
-    from="0590349J",to="0597139P", note="Potentiel changement de périmètre (correction d'un double UAI)"),
-  c(Etablissement="SIGMA Clermont",
-    from="0632086A;0632033T",to="0632033T", note="Potentiel changement de périmètre (correction d'un double UAI)"),
-  c(Etablissement="SIGMA Clermont",
-    from="0632086A",to="0632033T", note="Potentiel changement de périmètre (correction d'un double UAI)"),
-  c(Etablissement="UPEM",
-    from="0772502B;0932056E",to="0772502B", note="Potentiel changement de périmètre (correction d'un double UAI)"),
-  c(Etablissement="ENS Paris Saclay",
-    from="0912423P;0940607Z",to="0940607Z", note="Potentiel changement de périmètre (correction d'un double UAI)"),
-  c(Etablissement="ENS Paris Saclay",
-    from="0912423P",to="0940607Z", note="Potentiel changement de périmètre (correction d'un double UAI)"),
-)
+correspondances.doubleuai <- tribble(
+  ~ Etablissement, ~ from, ~ to,
+  "INSA CVL", "0180974L;0411068N", "0180974L",
+  "Centrale Lille Institut", "0597139P;0590349J", "0597139P",
+  "SIGMA Clermont", "0632086A;0632033T", "0632033T",
+  "UPEM", "0772502B;0932056E", "0772502B",
+  "ENS Paris Saclay", "0912423P;0940607Z", "0940607Z",
+  "INSA Centre Val de Loire", "0180974L;0411068N", "0180974L"
+) %>%
+  mutate(note = "Potentiel problème de périmètre (double UAI)")
 
 ens <- ens %>% fix_uai(correspondances.doubleuai)
+bia <- bia %>% fix_uai(correspondances.doubleuai)
 etu <- etu %>% fix_uai(correspondances.doubleuai)
 fin <- fin %>% fix_uai(correspondances.doubleuai)
 etab <- etab %>% fix_uai(correspondances.doubleuai)
@@ -409,6 +452,7 @@ correspondances.uai %>% spoilerTable()
 
 ```{r check.etab21.univ, results='asis', warning=TRUE}
 ens <- ens %>% fix_uai(correspondances.uai)
+bia <- bia %>% fix_uai(correspondances.uai)
 etu <- etu %>% fix_uai(correspondances.uai)
 fin <- fin %>% fix_uai(correspondances.uai)
 
@@ -428,6 +472,7 @@ uaijoins %>%
 uaijoins.nonuniv.ajc <- uaijoins %>%
   filter(Groupe != "Universités et assimilés") %>%
   filter(ens.d <= rentrée.d, ens.f >= rentrée.f, 
+         bia.d <= rentrée.d, bia.f >= rentrée.f, 
          etu.d <= rentrée.d, etu.f >= rentrée.f, 
          fin.d <= rentrée.d, fin.f >= rentrée.f)
 ```
@@ -612,6 +657,7 @@ etab %>% arrange(Groupe,Etablissement) %>% spoilerTable()
 ```{r final}
 esr <- ens %>% select(-Etablissement, -Type) %>%
   full_join(etu %>% select(-Etablissement, -Type)) %>%
+  full_join(bia %>% select(-Etablissement, -Type)) %>%
   full_join(fin %>% select(-Etablissement, -Type)) %>%
   full_join(etab %>% select(Groupe,UAI,Etablissement,Type)) %>%
   select(Groupe,UAI,Etablissement,Type, Rentrée, everything())

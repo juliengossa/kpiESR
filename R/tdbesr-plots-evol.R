@@ -7,6 +7,11 @@ scale_breaker <- function(x) {
   return(c(min,100,max))
 }
 
+scale_min_breaker <- function(x) {
+  return(c(min(x)))
+}
+
+
 kpiesr_plot_evol_try <- function(rentrée, uai, groupe, lfc,
                                   style = kpiesr_style()) {
   p <-kpiesr_plot_missingdata
@@ -67,6 +72,10 @@ kpiesr_plot_evol <- function(rentrée, uai, groupe, lfc,
       max_100 = 100-min(evolution_0-100, na.rm = TRUE)
     ) 
   
+  if(style$evol_text_percent) 
+    labelfun <- function(x) sprintf("%+0.0f%%", round(x-100,0)) 
+  else 
+    labelfun <- function(x) round(x,0) 
   
   ggplot(df.stats, aes(x=Rentrée,color=kpi,fill=kpi, group=kpi)) +
     geom_hline(data=df.minmax, aes(yintercept = min_25), alpha = 0) +
@@ -79,11 +88,11 @@ kpiesr_plot_evol <- function(rentrée, uai, groupe, lfc,
                                   linetype = Etablissement, size = Etablissement)) +
     geom_point(data=df.points, aes(y=evolution), size=style$line_size*3) +
     geom_label(data=df.na, aes(y=evolution), label="N/A", color="black", fill="white") +
-    { if (style$evol_text) geom_text(data=df.points, aes(y=evolution, label=round(evolution,0)), 
+    { if (style$evol_text) geom_text(data=df.points, aes(y=evolution, label=labelfun(evolution)), 
                                      size=style$text_size, color="black",
                                      vjust=0.5, hjust=0, nudge_x = 0.5) } +
     facet_wrap(.~kpi, scales="free_y", nrow = 1, labeller = label_wrap_gen(style$label_wrap), drop = FALSE) +
-    scale_x_discrete(breaks=c("2013","2019")) +
+    scale_x_discrete(breaks=scale_min_breaker) +
     scale_y_continuous(breaks=scale_breaker, position = style$yaxis_position) +#scales::breaks_extended(n = 3, w = c(0.25, 0.2, 0.5, 0.05))) +
     scale_color_manual(values=lfc$colors,breaks=lfc$labels) +
     scale_fill_manual(values=lfc$colors,breaks=lfc$labels) +
@@ -99,5 +108,5 @@ kpiesr_plot_evol <- function(rentrée, uai, groupe, lfc,
 # kpiesr_plot_evol(2019,"0673021V","Université", kpiesr_lfc[["K"]], style = kpiesr_style(line_size = 1)) + ggcpesrthemes::theme_cpesr() + theme()
 # kpiesr_plot_evol(2019,"0673021V","Université", kpiesr_lfc[["ENS"]]) + ggcpesrthemes::theme_cpesr() + theme()
 # kpiesr_plot_evol(2019,uai,"Université", kpiesr_lfc[["ETU"]]) + ggcpesrthemes::theme_cpesr() + theme()
-# kpiesr_plot_evol(2019,uai,"Université", kpiesr_lfc[["FIN"]]) + ggcpesrthemes::theme_cpesr() + theme()
+# kpiesr_plot_evol(2019,uai,"Université", kpiesr_lfc[["BIA"]]) + ggcpesrthemes::theme_cpesr() + theme()
 

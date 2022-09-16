@@ -51,12 +51,12 @@ kpiesr_plot_norm_simple <- function(rentrée, uai, groupe, lfc,
     guides(color="none", fill="none") 
 }
 
-# kpiesr_plot_norm_simple(2020,"0130221V","Universités et assimilés", kpiesr_lfc[["K"]]) + ggcpesrthemes::theme_cpesr() + theme(panel.grid.major.y = element_blank())
+# kpiesr_plot_norm_simple(2019,uai,"Universités et assimilés", kpiesr_lfc[["K"]]) + ggcpesrthemes::theme_cpesr() 
 # 
 # 
 # kpiesr_plot_norm_simple(2019,uai,"Université", kpiesr_lfc[["K"]]) + ggcpesrthemes::theme_cpesr() + theme(panel.grid.major.y = element_blank())
 # kpiesr_plot_norm_simple(2019,uai,"Université", omit_first(kpiesr_lfc[["ENS"]])) + ggcpesrthemes::theme_cpesr() + theme(panel.grid.major.y = element_blank())
 # kpiesr_plot_norm_simple(2019,uai,"Université", omit_first(kpiesr_lfc[["ETU"]])) + ggcpesrthemes::theme_cpesr() + theme(panel.grid.major.y = element_blank())
 # kpiesr_plot_norm_simple(2019,uai,"Université", omit_first(kpiesr_lfc[["FIN"]])) + ggcpesrthemes::theme_cpesr() + theme(panel.grid.major.y = element_blank())
-
+# kpiesr_plot_norm_simple(2019,uai,"Université", omit_first(kpiesr_lfc[["BIA"]])) + ggcpesrthemes::theme_cpesr() + theme(panel.grid.major.y = element_blank())
 

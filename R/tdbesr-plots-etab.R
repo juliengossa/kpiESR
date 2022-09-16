@@ -47,7 +47,7 @@ kpiesr_plot_primaire  <- function(rentrée, uai, lfc,
     coord_cartesian(clip = 'off') 
 }
 
-# kpiesr_plot_primaire(2019, "0251215K", kpiesr_lfc[["ETU"]], facet = TRUE)
+#kpiesr_plot_primaire(2019, "0251215K", kpiesr_lfc[["ETU"]], facet = FALSE)
 
 kpiesr_kpi_stats <- function(df.stats,thekpi) {
   lapply(thekpi,function(p) {

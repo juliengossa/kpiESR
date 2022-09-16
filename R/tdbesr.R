@@ -19,6 +19,7 @@ kpiesr_pivot_norm_label <- function(esr, rentrée.ref=2012) {
 
   df <- esr %>%
     mutate(across(starts_with("kpi.FIN.S"), list(norm = ~ ./kpi.FIN.P.ressources))) %>%
+    mutate(across(starts_with("kpi.BIA.S"), list(norm = ~ ./kpi.BIA.P.effectif))) %>%
     mutate(across(starts_with("kpi.ENS.S"), list(norm = ~ ./kpi.ENS.P.effectif))) %>%
     mutate(across(starts_with("kpi.ETU.S"), list(norm = ~ ./kpi.ETU.P.effectif))) %>%
 
@@ -50,6 +51,7 @@ kpiesr_pivot_norm_label <- function(esr, rentrée.ref=2012) {
   
   df <- df %>% 
     filter(Rentrée >= rentrée.ref) %>%
+    filter(!is.na(valeur)) %>%
     group_by(Groupe,UAI,kpi) %>%
     arrange(Groupe,UAI,kpi,Rentrée) %>%
     mutate( evolution = valeur / first(valeur) * 100 ) %>%
@@ -105,9 +107,11 @@ kpiesr_add_kpis <- function (df) {
     kpi.K.dotPres = kpi.FIN.S.SCSP / kpi.FIN.P.ressources ,
     kpi.K.resPetu = kpi.FIN.P.ressources / (kpi.ETU.S.cycle1_L+kpi.ETU.S.cycle2_M),
     kpi.K.forPetu = kpi.FIN.S.recettesFormation / kpi.ETU.P.effectif,
-    kpi.K.recPect = kpi.FIN.S.recettesFormation / kpi.ENS.S.ECtitulaires,
-    kpi.K.ensPetu = kpi.ENS.S.titulaires / (kpi.ETU.S.cycle1_L+kpi.ETU.S.cycle2_M) * 100,
-    kpi.K.titPens = kpi.ENS.S.titulaires / kpi.ENS.P.effectif,
+    kpi.K.recPect = kpi.FIN.S.recettesRecherche / kpi.ENS.S.EC,
+    kpi.K.ensPetu = (kpi.ENS.S.titulaires + kpi.ENS.S.contractuels) / (kpi.ETU.S.cycle1_L+kpi.ETU.S.cycle2_M) * 100,
+    #kpi.K.titPens = kpi.ENS.S.titulaires / kpi.ENS.P.effectif,
+    kpi.K.titPper = (kpi.ENS.S.titulaires + kpi.BIA.S.titulaires) / (kpi.ENS.P.effectif + kpi.BIA.P.effectif),
+    kpi.K.biaPper = kpi.BIA.P.effectif / (kpi.BIA.P.effectif + kpi.ENS.P.effectif)
 
     #kpi.K.selPfor = kpi.ADM.S.sélective / kpi.ADM.P.formations,
     #kpi.K.2.resPens = kpi.FIN.P.ressources / kpi.ENS.P.effectif,

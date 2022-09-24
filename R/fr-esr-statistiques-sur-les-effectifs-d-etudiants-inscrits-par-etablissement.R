@@ -156,20 +156,20 @@
 # [152] "rentree"                                                                                                     
 # [153] "annee" 
 
-kpiesr_read.etu <- function() {
+kpiesr_read.etu <- function(pidfix=list("x"="x")) {
 
   etu <- read.csv2("dataESR/fr-esr-statistiques-sur-les-effectifs-d-etudiants-inscrits-par-etablissement-hcp.csv", na.string = "") %>% 
     filter(Attention != "* Attention : doubles comptes, établissement-composante") %>%
-    transmute(
-      UAI = Identifiant.s..UAI,
-      Etablissement = Établissement,
-      Type = Type.d.établissement,
-      Rentrée = rentree,
-      kpi.ETU.P.effectif = Nombre.d.étudiants.inscrits..inscriptions.principales..hors.doubles.inscriptions.CPGE,
-      kpi.ETU.S.cycle1_L = Cycle.universitaire..cursus.LMD....L..1er.cycle.,
-      kpi.ETU.S.cycle2_M = Cycle.universitaire..cursus.LMD....M..2ème.cycle.,
-      kpi.ETU.S.cycle3_D = Cycle.universitaire..cursus.LMD....D..3ème.cycle.,
+    group_by(
+      pid = recode(etablissement_id_paysage_actuel,!!!pidfix),
+      Rentrée = rentree) %>%
+    mutate(pid = ifelse(pid=="" | is.na(pid),"XIGGw",pid)) %>% # fix crade
+    summarise(
+      kpi.ETU.P.effectif = sum(Nombre.d.étudiants.inscrits..inscriptions.principales..hors.doubles.inscriptions.CPGE, na.rm = TRUE),
+      kpi.ETU.S.cycle1_L = sum(Cycle.universitaire..cursus.LMD....L..1er.cycle., na.rm = TRUE),
+      kpi.ETU.S.cycle2_M = sum(Cycle.universitaire..cursus.LMD....M..2ème.cycle., na.rm = TRUE),
+      kpi.ETU.S.cycle3_D = sum(Cycle.universitaire..cursus.LMD....D..3ème.cycle., na.rm = TRUE),
       #kpi.ETU.S.diplome.national = Type.de.diplôme...Diplômes.nationaux,
-      kpi.ETU.S.DU_DE = Type.de.diplôme...Diplômes.d.établissement
-  )
-}
+      kpi.ETU.S.DU_DE = sum(Type.de.diplôme...Diplômes.d.établissement, na.rm = TRUE) ) %>%
+    ungroup() %>%
+    arrange(pid,Rentrée)}

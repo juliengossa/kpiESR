@@ -32,6 +32,7 @@ kpiesr_pivot_norm_label <- function(esr, rentrée.ref=2012) {
       names_pattern = "(.*)_(valeur|norm)"
     ) %>% 
     #filter(!is.na(valeur)) %>%
+    mutate(norm = replace(norm,is.nan(norm),NA)) %>%
     mutate(kpi = as.factor(kpi)) %>%
     group_by(kpi) %>%
     mutate(
@@ -49,13 +50,16 @@ kpiesr_pivot_norm_label <- function(esr, rentrée.ref=2012) {
   #   mutate( evolution = norm / norm.ref - 1) %>% 
   #   select(-norm.ref)
   
-  df <- df %>% 
+  def.evol <- df %>% 
     filter(Rentrée >= rentrée.ref) %>%
     filter(!is.na(valeur)) %>%
-    group_by(Groupe,UAI,kpi) %>%
-    arrange(Groupe,UAI,kpi,Rentrée) %>%
+    group_by(Groupe,pid,kpi) %>%
+    arrange(Groupe,pid,kpi,Rentrée) %>%
     mutate( evolution = valeur / first(valeur) * 100 ) %>%
+    mutate( evolution = replace(evolution,!is.finite(evolution),NA)) %>%
     ungroup()
+  
+  left_join(df, def.evol)
   
 }
 
@@ -71,8 +75,11 @@ kpiesr_get_stats <- function(esr.pnl, rentrée.ref = 2013) {
   
   df <- esr.pnl %>%
     filter(Groupe != "Ensemble", Groupe != "Groupe") %>%
-    group_by(UAI, kpi) %>% 
-    filter(min(Rentrée)<=rentrée.ref) 
+    filter(Rentrée >= rentrée.ref) %>%
+    group_by(Groupe, kpi) %>%
+    mutate(rentrée.min = min(Rentrée)) %>%
+    group_by(pid, kpi) %>% 
+    filter(min(Rentrée) == rentrée.min)
     
   df %>%
     group_by(Groupe,kpi,Rentrée) %>%
@@ -116,52 +123,43 @@ kpiesr_add_kpis <- function (df) {
     #kpi.K.selPfor = kpi.ADM.S.sélective / kpi.ADM.P.formations,
     #kpi.K.2.resPens = kpi.FIN.P.ressources / kpi.ENS.P.effectif,
     #kpi.K.4.docPec  = kpi.ETU.S.cycle.3.D / kpi.ENS.S.2.ECtitulaires,
-  ) 
+  ) %>%
+    mutate(across(starts_with("kpi"), ~ replace(.x,!is.finite(.x),NA)))
 }
+# 
+# kpiesr_get_uaisnamedlist <- function(esr) {
+#   esr.uais <- list()
+#   for(type in levels(esr$Type)) {
+#     df <- subset(esr, Type == type, c(UAI,Libellé)) %>% unique
+#     esr.uais[[type]] <- as.list(setNames(as.character(df$UAI),as.character(df$Libellé)))
+#     Encoding(names(esr.uais[[type]])) <- "UTF-8"
+#   }
+#   Encoding(names(esr.uais)) <- "UTF-8"
+#   return(esr.uais)
+# }
 
-kpiesr_get_uaisnamedlist <- function(esr) {
-  esr.uais <- list()
-  for(type in levels(esr$Type)) {
-    df <- subset(esr, Type == type, c(UAI,Libellé)) %>% unique
-    esr.uais[[type]] <- as.list(setNames(as.character(df$UAI),as.character(df$Libellé)))
-    Encoding(names(esr.uais[[type]])) <- "UTF-8"
-  }
-  Encoding(names(esr.uais)) <- "UTF-8"
-  return(esr.uais)
-}
 
+kpiesr_add_ensembles <- function(esr, rentrée.ref=2013) {
 
-kpiesr_ETL_and_save <- function(etab, esr, esr.uais, rentrée.ref=2013) {
-
+  est <- esr %>%
+    mutate(Rentrée = as.integer(Rentrée)) %>%
+    arrange(Groupe,Groupe.détaillé,Etablissement,Rentrée)
+  
   esr.ensemble <- esr %>% 
     group_by(Rentrée) %>%
     summarise(across(starts_with("kpi"), ~ sum(.x,na.rm = TRUE))) %>%
     na_if(0) %>%
-    mutate(Groupe = "Ensemble", UAI="Ensemble", Etablissement="Ensemble")
+    mutate(Groupe = "Ensemble", pid="Ensemble", Etablissement="Ensemble")
 
   esr.groupe <- esr %>% 
-    filter(UAI %in% esr.uais$dans.evol) %>%
+    #filter(UAI %in% esr.uais$dans.evol) %>%
     group_by(Rentrée, Groupe) %>%
     summarise(across(starts_with("kpi"), ~ sum(.x,na.rm = TRUE))) %>%
     na_if(0) %>%
-    mutate(UAI=Groupe, Etablissement=Groupe, Groupe="Groupe")
+    mutate(pid=Groupe, Etablissement=Groupe, Groupe="Groupe")
   
-  esr <- bind_rows(esr,esr.groupe,esr.ensemble) 
-
-  esr <- kpiesr_add_kpis(esr)
-  esr <- set_encoding_utf8(esr)
-
-  esr.pnl <- kpiesr_pivot_norm_label(esr, rentrée.ref)
-  esr.pnl <- set_encoding_utf8(esr.pnl)
-  
-  esr.stats <- kpiesr_get_stats(
-    esr.pnl %>% filter(UAI %in% esr.uais$dans.evol), 
-    rentrée.ref)
-  
-  esr.etab <- etab
-  
-  write.csv2(esr,"tdbesr.csv",row.names = FALSE)
-  usethis::use_data(esr, esr.pnl, esr.stats, esr.etab, esr.uais, overwrite = TRUE)
+  esr <- bind_rows(esr,esr.groupe,esr.ensemble) %>%
+    mutate(Groupe = factor(Groupe,levels = unique(Groupe)))
 }
 
 kpiesr_load <- function(...) {
@@ -204,7 +202,7 @@ kpiesr_load <- function(...) {
 kpiesr_classement <- function(rentrée, rentrée.deb, groupe, kpis, labels=NA, historique=c()) {
   
   classement <- kpiESR::esr %>%
-    filter(Rentrée %in% c(rentrée,rentrée.deb), Groupe == groupe, UAI %in% esr.uais$dans.tdb) %>%
+    filter(Rentrée %in% c(rentrée,rentrée.deb), Groupe == groupe, Comparable) %>%
     select(Etablissement, Rentrée, all_of(kpis)) %>%
     group_by(Rentrée) %>% mutate(rang = rank(-!!as.name(kpis[[1]]), na.last = "keep")) %>%
     #pivot_wider(Etablissement, values_from=starts_with("kpi"), names_from = Rentrée) %>%

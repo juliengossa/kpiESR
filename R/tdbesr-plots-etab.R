@@ -1,9 +1,9 @@
 
-kpiesr_plot_primaire_try <- function(rentrée, uai, lfc,
+kpiesr_plot_primaire_try <- function(rentrée, id, lfc,
                                      facet = TRUE,
                                      style = kpiesr_style()) {
   p <-kpiesr_plot_missingdata
-  try(p <- kpiesr_plot_primaire(rentrée, uai, lfc, facet, style) )
+  try(p <- kpiesr_plot_primaire(rentrée, id, lfc, facet, style) )
   return(p)
 }
 
@@ -11,7 +11,7 @@ kpiesr_plot_primaire_try <- function(rentrée, uai, lfc,
 #' Title
 #'
 #' @param rentr
-#' @param uai
+#' @param id
 #' @param lfc
 #' @param style
 #'
@@ -19,14 +19,14 @@ kpiesr_plot_primaire_try <- function(rentrée, uai, lfc,
 #' @export
 #'
 #' @examples
-kpiesr_plot_primaire  <- function(rentrée, uai, lfc,
+kpiesr_plot_primaire  <- function(rentrée, id, lfc,
                                   facet = TRUE,
                                   style = kpiesr_style()) {
   
   lfc$labels <- style$strip_labeller(lfc$labels)
   
   df <- kpiESR::esr.pnl %>%
-    filter(UAI==uai, Rentrée==rentrée, kpi %in% lfc$factors) %>%
+    filter(pid==id, Rentrée==rentrée, kpi %in% lfc$factors) %>%
     mutate(kpi = factor(kpi,levels=lfc$factors, labels=lfc$labels)) 
 
   if(nrow(filter(df,!is.na(valeur))) == 0) return(kpiesr_plot_missingdata)
@@ -47,7 +47,7 @@ kpiesr_plot_primaire  <- function(rentrée, uai, lfc,
     coord_cartesian(clip = 'off') 
 }
 
-#kpiesr_plot_primaire(2019, "0251215K", kpiesr_lfc[["ETU"]], facet = FALSE)
+# kpiesr_plot_primaire(2020, "4k25D", kpiesr_lfc[["ETU"]], facet = FALSE)
 
 kpiesr_kpi_stats <- function(df.stats,thekpi) {
   lapply(thekpi,function(p) {

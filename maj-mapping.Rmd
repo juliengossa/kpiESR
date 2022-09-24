@@ -1,0 +1,435 @@
+---
+title: "MAJ Appariements"
+output: github_document
+date: "`r Sys.Date()`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(dev = "cairo_pdf")
+
+library(tidyverse)
+library(kpiESR)
+library(ggcpesrthemes)
+
+rentrée.ref = 2020
+```
+
+## Chargement des données
+
+```{r etabs.load}
+etabs <- bind_rows(
+  kpiesr_read.etab.2021v2() %>% mutate(dataset = "etab.21.2"),
+  kpiesr_read.etab.2021v1() %>% mutate(dataset = "etab.21.1"),
+  kpiesr_read.etab.2020v1()%>% mutate(dataset = "etab.20"),
+  kpiesr_read.etab.2019v1() %>% mutate(dataset = "etab.19") 
+) %>%
+  group_by(UAI) %>%
+  slice_head(n=1)
+```
+
+
+```{r etabs.stats}
+etabs %>%
+  group_by(dataset) %>%
+  summarise(nb_etabs = n()) %>%
+  kableExtra::kable()
+```
+
+## Chargement des données data
+
+```{r data.load}
+enstit <- read.csv2("dataESR/fr-esr-enseignants-titulaires-esr-public.csv") %>%
+  transmute(
+    pid = etablissement_id_paysage_actuel,
+    UAI = etablissement_id_uai,
+    etab = etablissement_actuel_lib,
+  ) %>%
+  unique() 
+
+ensnp <- read.csv2("dataESR/fr-esr-enseignants-nonpermanents-esr-public.csv") %>%
+  transmute(
+    pid = etablissement_id_paysage_actuel,
+    UAI = etablissement_id_uai,
+    etab = etablissement_actuel_lib,
+  ) %>%
+  unique() 
+
+bia <- read.csv2("dataESR/fr-esr-personnels-biatss-etablissements-publics.csv") %>%
+  transmute(
+    pid = etablissement_id_paysage_actuel,
+    UAI = etablissement_id_uai,
+    etab = etablissement_actuel_lib,
+  ) %>%
+  unique() 
+
+etu <- read.csv2("dataESR/fr-esr-statistiques-sur-les-effectifs-d-etudiants-inscrits-par-etablissement-hcp.csv") %>%
+  filter(Attention != "* Attention : doubles comptes, établissement-composante") %>%
+  transmute(
+    pid = etablissement_id_paysage_actuel,
+    UAI = Identifiant.s..UAI,
+    etab = Établissement,
+  ) %>%
+  unique() 
+
+fin <- read.csv2("dataESR/fr-esr-operateurs-indicateurs-financiers.csv") %>%
+  transmute(
+    pid = id...paysage,
+    UAI = uai...identifiant,
+    etab = Etablissement,
+  ) %>%
+  unique() 
+
+etab.data <- 
+  enstit %>% rename(enstit = etab) %>%
+  full_join(ensnp %>% rename(ensnp = etab)) %>%
+  full_join(bia %>% rename(bia = etab)) %>%
+  full_join(etu %>% rename(etu = etab)) %>%
+  full_join(fin %>% rename(fin = etab)) 
+
+etab.data.long <- bind_rows(
+  enstit %>% mutate(dataset = "enstit"),
+  ensnp %>% mutate(dataset = "ensnp"),
+  bia %>% mutate(dataset = "bia"),
+  etu %>% mutate(dataset = "etu"),
+  fin %>% mutate(dataset = "fin")) %>%
+  separate_rows(UAI,sep=';') %>%
+  group_by(pid,dataset) 
+
+etab.data.milong <- etab.data.long %>%
+  summarise(
+    UAI = paste0(unique(UAI), collapse = ';'),
+    etab = paste0(unique(etab), collapse = ';'))
+```
+
+### Détection des pids manquants
+
+```{r missingpid, results='asis'}
+etab.data %>%
+  filter(is.na(pid)|pid=="") %>%
+  spoiler_table()
+```
+
+### Détection des doubles pid
+
+```{r doublepid, results='asis'}
+etab.data %>%
+  filter(str_detect(pid,";")) %>%
+  spoiler_table()
+```
+
+### Détection des doubles UAI
+
+```{r doubleuai, results='asis'}
+etab.data %>%
+  filter(str_detect(UAI,";")) %>%
+  spoiler_table()
+```
+
+### Détection des UAI vers plusieurs pid
+
+```{r multipid, results='asis'}
+etab.data.long %>%
+  select(-etab) %>%
+  unique() %>%
+  group_by(dataset, UAI) %>%
+  filter(n_distinct(pid) > 1) %>%
+  arrange(UAI) %>%
+  left_join(etab.data %>% 
+              group_by(pid) %>% 
+              summarise(across(enstit:fin, ~ paste0(unique(.x),collapse=';'))),
+            by="pid") %>%
+  spoiler_table()
+```
+
+
+
+
+## Fix fin
+
+### AutoFix fin
+
+```{r autofix.fin, results='asis'}
+autofix.fin <- etab.data %>%
+  filter(is.na(fin)) %>%
+  select(UAI,pid) %>%
+  separate_rows(UAI) %>%
+  unique() %>% 
+  left_join(fin, by="UAI") %>%
+  filter(!is.na(pid.y), pid.x != pid.y)
+
+autofix.fin %>% spoiler_table()
+```
+
+```{r autofix.fin.check, results='asis'}
+autofix.fin %>%
+  group_by(pid.y) %>%
+  filter(n_distinct(pid.x) > 1) %>%
+  spoiler_table("Check")
+```
+
+
+### Modifications manuelles du fix
+
+```{r autofix.fin.man, results='asis'}
+fix.fin <- autofix.fin %>% 
+  filter(pid.x != "") %>%
+  filter(!str_detect(pid.x,";")) %>%
+  add_row(UAI = "Manuel", pid.x = "z3hdL", pid.y = "z3hdL;hy4EW") %>%
+  add_row(UAI = "Manuel", pid.x = "z3hdL", pid.y = "XDl91") %>%
+  add_row(UAI = "Manuel", pid.x = "Z2FY5", pid.y = "Z2FY5;zepT6	")
+
+fix.fin %>% spoiler_table()
+```
+
+
+
+### Application du fix
+
+```{r fix}
+pidfix <- fix.fin$pid.x
+names(pidfix) <- fix.fin$pid.y
+  
+etab.data.long.fixed <- etab.data.long %>%
+  mutate(pid = recode(pid, !!!pidfix)) 
+```
+
+
+### Check : données incomplètes Universités 
+
+```{r data.incomplete.univ}
+incomplete.univ <- etab.data.long.fixed %>% 
+  group_by(pid) %>%
+  filter(n_distinct(dataset) != 5) %>%
+  filter(str_detect(etab,"niversité")) %>%
+  arrange(pid, etab) %>%
+  select(pid, dataset, etab, UAI)
+
+incomplete.univ %>%
+  kableExtra::kable()
+```
+
+
+
+
+## Chargement des données CPESR
+
+```{r cpesr.load}
+etab.cpesr <- read.csv("dataESR/fr-cpesr-etablissements.csv")
+```
+
+```{r cpesr.stats}
+etab.cpesr %>% summarise(nb_etabs = n()) %>% kableExtra::kable()
+```
+
+### Détection des établissements en double
+
+```{r cpesr.double}
+etab.cpesr %>% group_by(UAI) %>% filter(n() > 1) %>% kableExtra::kable()
+```
+
+
+## Ajout des pid à cpesr
+
+```{r cpesr.pid, results='asis'}
+cpesr <- etab.cpesr %>% 
+  left_join(etab.data.long.fixed %>% ungroup() %>% select(UAI,pid) %>% unique() ) %>%
+  select(pid, everything()) 
+```
+
+### université cpesr double pid
+
+```{r cpesr.pid.doublepid, results='asis'}
+cpesr %>% filter(Groupe == "Universités et assimilés") %>% group_by(pid) %>% filter(n()>1) %>% spoiler_table()
+```
+
+### université cpesr sans pid
+
+```{r cpesr.pid.sanspid, results='asis'}
+cpesr %>% filter(Groupe == "Universités et assimilés", is.na(pid)) %>% spoiler_table()
+```
+
+### pid hors cpesr 
+
+```{r cpesr.pid.horscpesr, results='asis'}
+pid.horscpesr <- etab.data.long.fixed %>% 
+  group_by(pid) %>%
+  select(-dataset) %>%
+  slice_head(n=1) %>%
+  filter(!pid %in% cpesr$pid) 
+
+pid.horscpesr %>%
+  left_join(etabs) %>%
+  write.csv2("dataESR/fr-cpesrtmp-etablissements-hors-cpesr.csv")
+
+
+pid.horscpesr %>% spoiler_table()
+```
+
+### pid hors cpesr dans etab
+
+```{r cpesr.pid.horscpesr.dansetab, results='asis'}
+pid.horscpesr %>%
+  left_join(etabs) %>%
+  filter(!is.na(Etablissement)) %>%
+  spoiler_table()
+```
+
+### pid hors cpesr hors etab
+
+```{r cpesr.pid.horscpesr.horsetab, results='asis'}
+pid.horscpesr %>%
+  left_join(etabs) %>%
+  filter(is.na(Etablissement)) %>%
+  spoiler_table()
+```
+
+## Créations du jeu de données établissement
+
+```{r cpesr.creation, results='asis'}
+etab <- left_join(cpesr, etabs %>% select(-Etablissement,-Type)) %>%
+  filter(!is.na(pid)) %>%
+  rename(Groupe.détaillé = Groupe) %>%
+  mutate(Groupe = recode(Groupe.détaillé,
+    "Universités et assimilés" = "Universités et assimilés",
+    "Ecoles d'ingénieurs" = "Ecoles d'ingénieurs",
+    "Ecoles de commerce" = "Autres établissements",
+    "Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs)" = "Autres établissements",
+    "Ecoles d'art et de design" = "Autres établissements",
+    "Ecoles d'architecture" = "Autres établissements",
+    "Autres écoles écoles spécialisées" = "Autres établissements",
+    "Instituts catholiques" = "Autres établissements",
+    "Ecoles des arts du spectacle" = "Autres établissements",
+    "Instituts d'études politiques" = "Autres établissements",
+    "Ecoles françaises à l'étranger" = "Autres établissements",
+    "Ecoles normales supérieures" = "Autres établissements",
+    "Ecoles vétérinaires" = "Autres établissements",
+    "Autres" = "Autres établissements",
+    "Regroupements" = "Regroupements"
+  ) ) %>%
+  mutate(Groupe = factor(Groupe, levels = c(
+    "Universités et assimilés","Regroupements","Ecoles d'ingénieurs","Autres établissements"))) %>%
+  left_join(
+    etab.data.long %>% group_by(pid) %>% summarise(nb_datasets = n_distinct(dataset))
+  ) %>%
+  select(pid,Etablissement,Groupe,Groupe.détaillé,Type,nb_datasets,everything()) %>%
+  ungroup() %>%
+  arrange(Groupe,Groupe.détaillé,Etablissement)
+
+etab %>% 
+  arrange(nb_datasets) %>%
+  group_by(Groupe,nb_datasets) %>% 
+  summarise(nb = n()) %>%
+  pivot_wider(names_from = nb_datasets, values_from = nb, names_prefix = "nb_ds_", values_fill = 0) %>%
+  spoiler_table()
+
+etab <- etab %>%
+  mutate( Plotable = 
+      ( nb_datasets > 3 ) |
+      ( Groupe == "Regroupements" & Etablissement != "Université Bretagne Loire" ) 
+  )
+```
+
+### Vérification doublons
+
+```{r doublons, results='asis'}
+etab %>% group_by(Etablissement) %>% filter(n() > 1) %>% spoiler_table()
+etab %>% group_by(UAI) %>% filter(n() > 1) %>% spoiler_table()
+```
+
+
+### Wikidata manquants 
+
+```{r wikidata, results='asis'}
+etab %>%
+  filter(is.na(url.wikidata)) %>%
+  arrange(desc(Groupe)) %>% 
+  select(Groupe, pid, Etablissement, url.wikidata) %>% 
+  spoiler_table()
+```
+
+#### Correction manuelle 
+
+```{r fixfun}
+fix_etab <- function(etab, fixdf) {
+  fixdf <- fixdf %>% arrange(pid)
+  etab <- etab %>% arrange(pid)
+  
+  etab %>% 
+    mutate(across(names(fixdf %>% select(-pid)),
+                  ~ replace(.x, pid %in% fixdf$pid, fixdf[[cur_column()]])))
+}
+```
+
+```{r fix.wikidatav, results='asis'}
+fix.wikidata <- tribble(
+  ~ "pid", ~ "url.wikidata",
+  "qUCQp", "https://www.wikidata.org/entity/Q259388",  
+  "EW53M", "https://www.wikidata.org/entity/Q1548539",
+  "evv7S", "https://www.wikidata.org/entity/Q776223",
+  "K4lR3", "https://www.wikidata.org/entity/Q1319786",
+  "U8a0v", "https://www.wikidata.org/entity/Q3551621",
+  "6kk6n", "https://www.wikidata.org/entity/Q273604",
+  "VfvdY", "https://www.wikidata.org/entity/Q630461"
+)
+
+etab <- fix_etab(etab, fix.wikidata) 
+
+fix.wikidata %>% spoiler_table()
+```
+
+### Sigles manquants
+
+#### Sigles récupérables sur wikidata
+
+```{r sigles.wikidata.load, results='hide', cache=TRUE}
+wikidataESR::wdesr_get_cache() 
+
+fix.alias.wikidata <- etab %>%
+  #filter(UAI %in% esr.uais$dans.tdb) %>%
+  filter(is.na(Sigle), !is.na(url.wikidata)) %>%
+  arrange(Groupe) %>% 
+  mutate(wikidata.alias = wikidataESR::wdesr_get_data(str_replace(url.wikidata,"https://www.wikidata.org/entity/",""))$alias) %>%
+  select(pid,Etablissement,Sigle=wikidata.alias) 
+
+wikidataESR::wdesr_save_cache()
+```
+
+```{r sigles.wikidata.print, results='asis'}
+etab <- fix_etab(etab, fix.alias.wikidata)
+
+fix.alias.wikidata %>% spoiler_table()
+```
+
+#### Sigles toujours manquants et fix automatique
+
+```{r sigles.manquants, results='asis'}
+etab %>%
+  #filter(UAI %in% esr.uais$dans.tdb) %>%
+  filter(is.na(Sigle)) %>%
+  arrange(Type) %>% 
+  select(UAI,pid, Etablissement,Sigle, url.wikidata) %>% 
+  spoiler_table()
+```
+
+```{r sigles.autofix}
+etab <- etab %>%
+  mutate(Sigle = ifelse(is.na(Sigle),Etablissement,Sigle))
+```
+
+
+### Ecriture des fichiers
+
+```{r final, results='asis'}
+etab <- etab %>%
+  ungroup() %>%
+  arrange(Groupe,Groupe.détaillé,Etablissement)
+
+etab %>% spoiler_table()
+```
+
+
+```{r save}
+write.csv2(etab, "dataESR/fr-cpesrtmp-etablissements.csv", row.names = FALSE)
+write.csv2(fix.fin,"dataESR/fr-cpesrtmp-pidfix.csv", row.names = FALSE)
+```

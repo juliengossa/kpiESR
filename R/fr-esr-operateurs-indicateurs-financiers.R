@@ -27,38 +27,33 @@
 # [47] "Trésorerie"                                          "Trésorerie.en.jours.de.charges.décaissables"        
 
 
-kpiesr_read.fin <- function() {
+kpiesr_read.fin <- function(pidfix=list("x"="x")) {
   fin <- read.csv2("dataESR/fr-esr-operateurs-indicateurs-financiers.csv", na.strings="", dec=".") %>%
-    transmute(
-      #UAI = uai.actuel,
-      UAI = uai...identifiant,
-      Etablissement = Etablissement,
-      Type = NA,
-      Rentrée = exercice-1, # l'exercice comptable est sur l'année civile
+    group_by(
+      pid = recode(id...paysage,!!!pidfix),
+      Rentrée = exercice-1) %>% # l'exercice comptable est sur l'année civile
       #RCE = rce,
-      kpi.FIN.P.ressources = Produits.de.fonctionnement.encaissables,
-      kpi.FIN.S.masseSalariale = Dépenses.de.personnel,
-      kpi.FIN.S.SCSP = kpi.FIN.P.ressources - Ressources.propres.encaissables,
-      kpi.FIN.S.recettesFormation = rowSums(na.rm = TRUE, select(.,
-                                     Droits.d.inscription,
-                                     Formation.continue..diplômes.propres.et.VAE, 
-                                     Taxe.d.apprentissage)),
-      kpi.FIN.S.recettesRecherche = rowSums(na.rm = TRUE, select(.,
-                                     Valorisation,
-                                     ANR.hors.investissements.d.avenir, 
-                                     ANR.investissements.d.avenir,
-                                     Contrats.et.prestations.de.recherche.hors.ANR)),
-      kpi.FIN.S.investissements = Acquisitions.d.immobilisations
+    summarise(
+      kpi.FIN.P.ressources = sum(Produits.de.fonctionnement.encaissables),
+      kpi.FIN.S.masseSalariale = sum(Dépenses.de.personnel),
+      kpi.FIN.S.SCSP = sum(kpi.FIN.P.ressources) - sum(Ressources.propres.encaissables),
+      kpi.FIN.S.recettesFormation = sum(Droits.d.inscription) +
+                                    sum(Formation.continue..diplômes.propres.et.VAE) +
+                                    sum(Taxe.d.apprentissage),
+      kpi.FIN.S.recettesRecherche = sum(Valorisation) +
+                                    sum(ANR.hors.investissements.d.avenir) +
+                                    sum(ANR.investissements.d.avenir) +
+                                    sum(Contrats.et.prestations.de.recherche.hors.ANR),
+      kpi.FIN.S.investissements = sum(Acquisitions.d.immobilisations)
     ) %>%
-    mutate(
-      kpi.FIN.S.recettesFormation = na_if(kpi.FIN.S.recettesFormation, 0),
-      kpi.FIN.S.recettesRecherche = na_if(kpi.FIN.S.recettesRecherche, 0)) %>%
+    # mutate(across(starts_with("kpi"), ~ na_if(.x, 0))) %>%
     #filter_at(starts_with("fin"),all_vars(!is.na(.))) %>%
     # filter(!is.na(kpi.FIN.P.ressources),
     #        !is.na(kpi.FIN.S.masseSalariale),
     #        !is.na(kpi.FIN.S.ressourcesPropres),
     #        !is.na(kpi.FIN.S.investissements)) %>%
-    arrange(UAI,Rentrée)
+    ungroup() %>%
+    arrange(pid,Rentrée)
     # Enlever les données suspectes
     # filter(
     #   !(UAI == "0781944P" & Rentrée == 2012)

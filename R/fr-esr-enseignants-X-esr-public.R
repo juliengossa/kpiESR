@@ -36,55 +36,35 @@
 # [27] "classe_age3"                                                "quotite"      
 
 
-kpiesr_read.ens <- function(composantes = FALSE) {
+kpiesr_read.ens <- function(pidfix=list("x"="x")) {
 
   ens.tit <- read.csv2("dataESR/fr-esr-enseignants-titulaires-esr-public.csv", na.string = "") %>% 
-    { if(composantes) 
-        mutate(.,
-         etablissement_id_uai = etablissement_id_uai_source,
-         Établissement = ifelse(!is.na(Décomposition.pour.les.universités.à.statuts.expérimentaux),
-                                Décomposition.pour.les.universités.à.statuts.expérimentaux,
-                                Établissement),
-          )
-      else . } %>%
     transmute(
-      UAI = etablissement_id_uai,
-      Etablissement = Établissement,
-      Type = Type.établissement,
+      pid = recode(etablissement_id_paysage_actuel,!!!pidfix),
       Rentrée,
       Catégorie = case_when(
         Code.categorie.personnels == "AM2D" ~ "AM2D",
         TRUE ~ "EC"),
       #Discipline = Code.grande.discipline,
       Effectif = effectif) %>%
-    group_by(UAI, Etablissement, Type, Rentrée, Catégorie) %>%
+    group_by(pid, Rentrée, Catégorie) %>%
     summarise(Effectif = sum(Effectif,na.rm = TRUE)) %>%
     ungroup() %>%
     pivot_wider(names_from = Catégorie, values_from = Effectif, values_fill = list(Effectif=0)) 
 
   ens.np <- read.csv2("dataESR/fr-esr-enseignants-nonpermanents-esr-public.csv", na.string = "")  %>% 
-    { if(composantes) 
-      mutate(.,
-             etablissement_id_uai = etablissement_id_uai_source,
-             Établissement = ifelse(!is.na(Décomposition.des.universitéss.à.statuts.expérimentaux),
-                                    Décomposition.des.universitéss.à.statuts.expérimentaux,
-                                    Établissement),
-      )
-      else . } %>%
   transmute(
-    UAI = etablissement_id_uai,
-    Etablissement = Établissement,
-    Type = Type.établissement,
+    pid = recode(etablissement_id_paysage_actuel,!!!pidfix),
     Rentrée,
-      Catégorie = case_when(
-        code_categorie_persg %in% c("LRU","MCF ASS-INV", "PR ASS-INV", "ASS INV (corps NR)") ~ "EC_contractuel",
-        code_categorie_persg %in% c("CONT 2D") ~ "AM2D_contractuel",
-        code_categorie_persg %in% c("ATER") ~ "ATER",
-        code_categorie_persg %in% c("DOCT AVEC ENS","DOCT SANS ENS") ~ "Doc",
-        TRUE ~ "Autres"),
-      #Discipline = Code.grande.discipline,
-      effectif) %>%
-    group_by(UAI, Etablissement, Type, Rentrée, Catégorie) %>%
+    Catégorie = case_when(
+      code_categorie_persg %in% c("LRU","MCF ASS-INV", "PR ASS-INV", "ASS INV (corps NR)") ~ "EC_contractuel",
+      code_categorie_persg %in% c("CONT 2D") ~ "AM2D_contractuel",
+      code_categorie_persg %in% c("ATER") ~ "ATER",
+      code_categorie_persg %in% c("DOCT AVEC ENS","DOCT SANS ENS") ~ "Doc",
+      TRUE ~ "Autres"),
+    #Discipline = Code.grande.discipline,
+    effectif) %>%
+    group_by(pid, Rentrée, Catégorie) %>%
     summarise(Effectif = sum(effectif,na.rm = TRUE)) %>%
     ungroup() %>%
     pivot_wider(names_from = Catégorie, values_from = Effectif, values_fill = list(Effectif=0))
@@ -93,9 +73,7 @@ kpiesr_read.ens <- function(composantes = FALSE) {
     #bind_rows(ens.tit,ens.np) 
     #rowwise() %>%
     transmute(
-      UAI,
-      Etablissement,
-      Type,
+      pid,
       Rentrée,
       kpi.ENS.P.effectif      = EC + AM2D + EC_contractuel + AM2D_contractuel + Doc + ATER + Autres,
       kpi.ENS.S.titulaires    = EC + AM2D,
@@ -103,7 +81,7 @@ kpiesr_read.ens <- function(composantes = FALSE) {
       kpi.ENS.S.DocATER       = Doc + ATER,
       kpi.ENS.S.contractuels  = EC_contractuel + AM2D_contractuel,
     ) %>%
-    arrange(UAI,Rentrée) %>%
+    arrange(pid,Rentrée) %>%
     ungroup()
 
   return(ens)

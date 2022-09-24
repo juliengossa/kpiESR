@@ -3,7 +3,7 @@
 #' Title
 #'
 #' @param rentrée
-#' @param uai
+#' @param id
 #' @param lfc
 #' @param type
 #' @param omit.first
@@ -14,13 +14,13 @@
 #' @export
 #'
 #' @examples
-kpiesr_plot_kiviat <- function(rentrée, uais, lfc,
+kpiesr_plot_kiviat <- function(rentrée, ids, lfc,
                                type=NA,
                                omit.first = TRUE,
                                norm.valeurs = TRUE,
                                style = kpiesr_style()) {
   
-  if(is.na(type)) type <- as.character(subset(kpiESR::esr, UAI %in% uais, Type)[1,1])
+  if(is.na(type)) type <- as.character(subset(kpiESR::esr, pid %in% ids, Type)[1,1])
   
   if(type == "Grand établissement" && lfc$factor[1] == "kpi.ADM.P.formations")
     return(kpiESR::kpiesr_plot_missingdata)
@@ -36,7 +36,7 @@ kpiesr_plot_kiviat <- function(rentrée, uais, lfc,
   # shjust = c(0,0,1.1,1.1)
   # svjust = c(0,1.1,1.1,0)
   
-    etab <- kpiESR::esr.pnl %>% filter(Type==type, Rentrée==rentrée, kpi %in% lfc$factors, UAI %in% uais) %>%
+    etab <- kpiESR::esr.pnl %>% filter(Type==type, Rentrée==rentrée, kpi %in% lfc$factors, pid %in% ids) %>%
     mutate(kpi = factor(kpi,lfc$factors)) %>%
     arrange(kpi) %>% 
     { if(is.na(style$kvt_point_pos)) 
@@ -82,11 +82,11 @@ kpiesr_plot_kiviat <- function(rentrée, uais, lfc,
               size=style$kvt_scale_text_size, color="black")+
     #vjust=svjust, hjust=shjust) +
 
-    geom_polygon(data=etab, aes(fill=UAI, color=UAI, group=UAI),
+    geom_polygon(data=etab, aes(fill=pid, color=pid, group=pid),
                  alpha=style$kvt_alpha, size=style$line_size) +
 
-    geom_point(data=etab, aes(y=point_y, color=UAI), #y=1.3,
-               fill = rep(lfc$colors, each=length(uais)),
+    geom_point(data=etab, aes(y=point_y, color=pid), #y=1.3,
+               fill = rep(lfc$colors, each=length(ids)),
                size=style$point_size,
                shape=21) +
     geom_text(data=etab, aes(y=point_y, label=norm_label, text=""), #y=1.3,

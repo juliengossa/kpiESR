@@ -1,6 +1,6 @@
 Mise à jour des données
 ================
-2022-09-24
+2022-10-02
 
 Ce document décrit le processus de mise à jour des données kpiESR, et
 notamment la constitution d’un jeu de données des établissements, et la
@@ -548,11 +548,11 @@ Voir les données
 
 | pid   | Etablissement                      | Comparable | kpi                         | valeur |      norm | valeur_label | norm_label | rang | evolution |
 |:------|:-----------------------------------|:-----------|:----------------------------|-------:|----------:|:-------------|:-----------|-----:|----------:|
-| cEt92 | Université de La Réunion           | FALSE      | kpi.FIN.S.recettesRecherche | 100915 | 0.0007301 | 0.1M€        | 0%         |   53 | 17.497205 |
-| NLCOF | Université de Corse Pasquale Paoli | FALSE      | kpi.FIN.S.recettesRecherche |  55910 | 0.0008994 | 0.06M€       | 0%         |   52 | 38.170607 |
-| pVJpw | Centre universitaire de Mayotte    | FALSE      | kpi.FIN.S.recettesRecherche |   4824 | 0.0012147 | 0M€          | 0%         |   51 |  4.794037 |
-| z3hdL | Université des Antilles            | FALSE      | kpi.FIN.S.recettesRecherche | 257545 | 0.0027137 | 0.26M€       | 0%         |   50 | 64.406377 |
-| TWBzp | Université Panthéon-Assas          | FALSE      | kpi.FIN.S.recettesRecherche | 463000 | 0.0051441 | 0.46M€       | 1%         |   49 | 57.085046 |
+| cEt92 | Université de La Réunion           | FALSE      | kpi.FIN.S.recettesRecherche | 100915 | 0.0007301 | 0.1M€        | 0%         |   64 | 17.497205 |
+| NLCOF | Université de Corse Pasquale Paoli | FALSE      | kpi.FIN.S.recettesRecherche |  55910 | 0.0008994 | 0.06M€       | 0%         |   63 | 38.170607 |
+| pVJpw | Centre universitaire de Mayotte    | FALSE      | kpi.FIN.S.recettesRecherche |   4824 | 0.0012147 | 0M€          | 0%         |   62 |  4.794037 |
+| z3hdL | Université des Antilles            | FALSE      | kpi.FIN.S.recettesRecherche | 257545 | 0.0027137 | 0.26M€       | 0%         |   61 | 64.406377 |
+| HqAYu | Université Toulouse - Jean Jaurès  | TRUE       | kpi.FIN.S.recettesRecherche | 821181 | 0.0045262 | 0.82M€       | 0%         |   60 | 57.994459 |
 
 </details>
 <details>
@@ -560,13 +560,13 @@ Voir les données
 Voir les données
 </summary>
 
-| pid   | Etablissement                          | Comparable | kpi                         | valeur | norm | valeur_label | norm_label | rang | evolution |
-|:------|:---------------------------------------|:-----------|:----------------------------|-------:|-----:|:-------------|:-----------|-----:|----------:|
-| PpsCQ | Université Paris sciences et lettres   | FALSE      | kpi.FIN.S.recettesRecherche |     NA |   NA | N/A          | N/A        |   NA |        NA |
-| vb71K | Université Paris-Est Créteil           | TRUE       | kpi.FIN.S.recettesRecherche |     NA |   NA | N/A          | N/A        |   NA |        NA |
-| 8k883 | Université Sorbonne Nouvelle - Paris 3 | TRUE       | kpi.FIN.S.recettesRecherche |     NA |   NA | N/A          | N/A        |   NA |        NA |
-| HqAYu | Université Toulouse - Jean Jaurès      | TRUE       | kpi.FIN.S.recettesRecherche |     NA |   NA | N/A          | N/A        |   NA |        NA |
-| 542Id | Université Toulouse Capitole           | TRUE       | kpi.FIN.S.recettesRecherche |     NA |   NA | N/A          | N/A        |   NA |        NA |
+| pid   | Etablissement                        | Comparable | kpi                         | valeur | norm | valeur_label | norm_label | rang | evolution |
+|:------|:-------------------------------------|:-----------|:----------------------------|-------:|-----:|:-------------|:-----------|-----:|----------:|
+| hy4EW | Université de Guyane                 | FALSE      | kpi.FIN.S.recettesRecherche |     NA |   NA | N/A          | N/A        |   NA |        NA |
+| zepT6 | Université de la Polynésie Française | FALSE      | kpi.FIN.S.recettesRecherche |     NA |   NA | N/A          | N/A        |   NA |        NA |
+| 3Z5e6 | Université Gustave Eiffel            | FALSE      | kpi.FIN.S.recettesRecherche |     NA |   NA | N/A          | N/A        |   NA |        NA |
+| tIJ02 | Université Jean Monnet               | TRUE       | kpi.FIN.S.recettesRecherche |     NA |   NA | N/A          | N/A        |   NA |        NA |
+| vb71K | Université Paris-Est Créteil         | TRUE       | kpi.FIN.S.recettesRecherche |     NA |   NA | N/A          | N/A        |   NA |        NA |
 
 </details>
 
@@ -703,11 +703,11 @@ Voir les données
 
 | pid   | Etablissement                      | Comparable | kpi           |    valeur |      norm | valeur_label | norm_label | rang | evolution |
 |:------|:-----------------------------------|:-----------|:--------------|----------:|----------:|:-------------|:-----------|-----:|----------:|
-| pVJpw | Centre universitaire de Mayotte    | FALSE      | kpi.K.recPect |  192.9600 |  192.9600 | 0k€          | 0k€        |   52 |   3.83523 |
-| NLCOF | Université de Corse Pasquale Paoli | FALSE      | kpi.K.recPect |  282.3737 |  282.3737 | 0k€          | 0k€        |   51 |  37.01392 |
-| cEt92 | Université de La Réunion           | FALSE      | kpi.K.recPect |  289.9856 |  289.9856 | 0k€          | 0k€        |   50 |  16.79329 |
-| z3hdL | Université des Antilles            | FALSE      | kpi.K.recPect |  755.2639 |  755.2639 | 1k€          | 1k€        |   49 |  56.28475 |
-| TWBzp | Université Panthéon-Assas          | FALSE      | kpi.K.recPect | 1265.0273 | 1265.0273 | 1k€          | 1k€        |   48 |  62.54400 |
+| pVJpw | Centre universitaire de Mayotte    | FALSE      | kpi.K.recPect |  192.9600 |  192.9600 | 0k€          | 0k€        |   63 |   3.83523 |
+| NLCOF | Université de Corse Pasquale Paoli | FALSE      | kpi.K.recPect |  282.3737 |  282.3737 | 0k€          | 0k€        |   62 |  37.01392 |
+| cEt92 | Université de La Réunion           | FALSE      | kpi.K.recPect |  289.9856 |  289.9856 | 0k€          | 0k€        |   61 |  16.79329 |
+| z3hdL | Université des Antilles            | FALSE      | kpi.K.recPect |  755.2639 |  755.2639 | 1k€          | 1k€        |   60 |  56.28475 |
+| HqAYu | Université Toulouse - Jean Jaurès  | TRUE       | kpi.K.recPect | 1126.4486 | 1126.4486 | 1k€          | 1k€        |   59 |  63.08588 |
 
 </details>
 <details>
@@ -715,13 +715,13 @@ Voir les données
 Voir les données
 </summary>
 
-| pid   | Etablissement                          | Comparable | kpi           | valeur | norm | valeur_label | norm_label | rang | evolution |
-|:------|:---------------------------------------|:-----------|:--------------|-------:|-----:|:-------------|:-----------|-----:|----------:|
-| PpsCQ | Université Paris sciences et lettres   | FALSE      | kpi.K.recPect |     NA |   NA | N/A          | N/A        |   NA |        NA |
-| vb71K | Université Paris-Est Créteil           | TRUE       | kpi.K.recPect |     NA |   NA | N/A          | N/A        |   NA |        NA |
-| 8k883 | Université Sorbonne Nouvelle - Paris 3 | TRUE       | kpi.K.recPect |     NA |   NA | N/A          | N/A        |   NA |        NA |
-| HqAYu | Université Toulouse - Jean Jaurès      | TRUE       | kpi.K.recPect |     NA |   NA | N/A          | N/A        |   NA |        NA |
-| 542Id | Université Toulouse Capitole           | TRUE       | kpi.K.recPect |     NA |   NA | N/A          | N/A        |   NA |        NA |
+| pid   | Etablissement                        | Comparable | kpi           | valeur | norm | valeur_label | norm_label | rang | evolution |
+|:------|:-------------------------------------|:-----------|:--------------|-------:|-----:|:-------------|:-----------|-----:|----------:|
+| zepT6 | Université de la Polynésie Française | FALSE      | kpi.K.recPect |     NA |   NA | N/A          | N/A        |   NA |        NA |
+| 3Z5e6 | Université Gustave Eiffel            | FALSE      | kpi.K.recPect |     NA |   NA | N/A          | N/A        |   NA |        NA |
+| tIJ02 | Université Jean Monnet               | TRUE       | kpi.K.recPect |     NA |   NA | N/A          | N/A        |   NA |        NA |
+| C6Ps7 | Université Paris Dauphine - PSL      | FALSE      | kpi.K.recPect |     NA |   NA | N/A          | N/A        |   NA |        NA |
+| vb71K | Université Paris-Est Créteil         | TRUE       | kpi.K.recPect |     NA |   NA | N/A          | N/A        |   NA |        NA |
 
 </details>
 

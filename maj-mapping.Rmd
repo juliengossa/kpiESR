@@ -383,7 +383,7 @@ fix.wikidata %>% spoiler_table()
 #### Sigles récupérables sur wikidata
 
 ```{r sigles.wikidata.load, results='hide', cache=TRUE}
-wikidataESR::wdesr_get_cache() 
+#wikidataESR::wdesr_get_cache() 
 
 fix.alias.wikidata <- etab %>%
   #filter(UAI %in% esr.uais$dans.tdb) %>%

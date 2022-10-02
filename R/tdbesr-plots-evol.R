@@ -1,19 +1,4 @@
 
-scale_breaker <- function(x) {
-  smax <- c(105,110,120,150,200,300,400)
-  smin <- c(95,90,80,50,0)
-  max <- max(smax[smax < max(x)])
-  min <- min(smin[smin > min(x)])
-  return(c(min,100,max))
-}
-
-scale_min_breaker <- function(x) {
-  x <- ceiling(min(x,na.rm=TRUE))
-  x <- x[x != 0]
-  return(x)
-}
-
-
 kpiesr_plot_evol_try <- function(rentrée, id, groupe, lfc,
                                   style = kpiesr_style()) {
   p <-kpiesr_plot_missingdata
@@ -38,6 +23,7 @@ kpiesr_plot_evol <- function(rentrée, id, groupe, lfc,
                              style = kpiesr_style()) {
   
   df <- kpiESR::esr.pnl %>%
+    filter(Rentrée <= rentrée) %>%
     filter(kpi %in% lfc$factors) %>%
     mutate(kpi = factor(kpi, levels=lfc$factors, labels=lfc$labels)) 
 
@@ -95,7 +81,7 @@ kpiesr_plot_evol <- function(rentrée, id, groupe, lfc,
                                      vjust=0.5, hjust=0, nudge_x = 0.5) } +
     facet_wrap(.~kpi, scales="free", nrow = 1, labeller = label_wrap_gen(style$label_wrap), drop = FALSE) +
     scale_x_continuous(breaks=scale_min_breaker) +
-    scale_y_continuous(breaks=scale_breaker, position = style$yaxis_position) +#scales::breaks_extended(n = 3, w = c(0.25, 0.2, 0.5, 0.05))) +
+    scale_y_continuous(breaks=style$evol_y_breaker, position = style$yaxis_position) +#scales::breaks_extended(n = 3, w = c(0.25, 0.2, 0.5, 0.05))) +
     scale_color_manual(values=lfc$colors,breaks=lfc$labels) +
     scale_fill_manual(values=lfc$colors,breaks=lfc$labels) +
     scale_size_manual(values=c(style$line_size,style$line_size/2,style$line_size/2)) +
@@ -107,7 +93,7 @@ kpiesr_plot_evol <- function(rentrée, id, groupe, lfc,
 }
 
 
-# kpiesr_plot_evol(2020,"4k25D","Ensemble", kpiesr_lfc[["K"]], style = kpiesr_style(line_size = 1)) + ggcpesrthemes::theme_cpesr() + theme()
+# kpiesr_plot_evol(2020,"4k25D","Ensemble", kpiesr_lfc[["K"]], style = kpiesr_style(line_size = 1, evol_y_breaker = scale_100_breaker)) + ggcpesrthemes::theme_cpesr() + theme()
 # kpiesr_plot_evol(2020,"nkbwh","Ensemble", kpiesr_lfc[["K"]], style = kpiesr_style(line_size = 1)) + ggcpesrthemes::theme_cpesr() + theme()
 # kpiesr_plot_evol(2019,"4k25D","Université", kpiesr_lfc[["K"]], style = kpiesr_style(line_size = 1)) + ggcpesrthemes::theme_cpesr() + theme()
 # kpiesr_plot_evol(2019,"4k25D","Université", kpiesr_lfc[["ENS"]]) + ggcpesrthemes::theme_cpesr() + theme()

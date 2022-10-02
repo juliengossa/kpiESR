@@ -40,10 +40,10 @@ kpiesr_read.fin <- function(pidfix=list("x"="x")) {
       kpi.FIN.S.recettesFormation = sum(Droits.d.inscription) +
                                     sum(Formation.continue..diplômes.propres.et.VAE) +
                                     sum(Taxe.d.apprentissage),
-      kpi.FIN.S.recettesRecherche = sum(Valorisation) +
+      kpi.FIN.S.recettesRecherche = sum(Valorisation, na.rm = TRUE) +
                                     sum(ANR.hors.investissements.d.avenir) +
                                     sum(ANR.investissements.d.avenir) +
-                                    sum(Contrats.et.prestations.de.recherche.hors.ANR),
+                                    sum(Contrats.et.prestations.de.recherche.hors.ANR, na.rm = TRUE),
       kpi.FIN.S.investissements = sum(Acquisitions.d.immobilisations)
     ) %>%
     # mutate(across(starts_with("kpi"), ~ na_if(.x, 0))) %>%

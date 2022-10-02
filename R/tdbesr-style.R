@@ -1,4 +1,23 @@
 
+scale_breaker <- function(x) {
+  smax <- c(105,110,120,150,200,300,400)
+  smin <- c(95,90,80,50,0)
+  max <- max(smax[smax < max(x)])
+  min <- min(smin[smin > min(x)])
+  return(c(min,100,max))
+}
+
+scale_100_breaker <- function(x) {
+  return(c(100))
+}
+
+scale_min_breaker <- function(x) {
+  x <- ceiling(min(x,na.rm=TRUE))
+  x <- x[x != 0]
+  return(x)
+}
+
+
 
 euro_M <- function(x) {
   case_when(
@@ -105,7 +124,8 @@ kpiesr_style <- function(
               label_wrap = 15,
               primaire_margin = 1.15,
               evol_text = TRUE,
-              evol_text_percent = TRUE,
+              evol_text_percent = FALSE,
+              evol_y_breaker = scale_breaker,
               bs_point_size = 1,
               strip_labeller = identity,
               yaxis_position = "left",
@@ -138,6 +158,7 @@ colgreens  <- rev(RColorBrewer::brewer.pal(9, "Greens"))
 coloranges <- rev(RColorBrewer::brewer.pal(9, "Oranges"))
 colpurples <- rev(RColorBrewer::brewer.pal(9, "Purples"))
 colrdbu <- RColorBrewer::brewer.pal(8, "RdBu")[c(1:4,6:8)]
+colrdbu[4] <- colpurples[4]
 
 kpiesr_lfc <- list(
   ETU = list(
@@ -234,12 +255,12 @@ kpiesr_lfc <- list(
     colors   = colrdbu, #c(coloranges[1],coloranges[4],coloranges[1],colgreens[5],coloranges[5],colblues[5]),
     y_labels = identity,
     desc     = c("Part des titulaires dans les personnels",
-                 "Part des Subventions pour charge de service public dans les ressources",
-                 "Nombre d'enseignants titulaires pour 100 étudiants en cycles 1 et 2",
+                 "Part des Subventions pour charge de service public (SCSP) dans les ressources",
+                 "Nombre d'enseignants (titulaires et contractuels, hors doctorants et vacataires) pour 100 étudiants en cycles 1 et 2",
                  "Part des personnels BIATSS dans les personnels",
                  "Ressources divisées par le nombre d'étudiants",
                  "Recettes formation divisées par le nombre d'étudiants",
-                 "Recettes recherche divisées par le nombre d'enseignants-chercheurs titulaires")
+                 "Recettes recherche divisées par le nombre d'enseignants-chercheurs (titulaires et contractuels)")
   )
 )
 
@@ -272,3 +293,5 @@ kpiesr_theme <-
 kpiesr_plot_missingdata <-
   ggplot(data.frame(c(x=1))) +
     geom_text(x=0.5,y=0.5, label="Données\nmanquantes") + kpiesr_theme
+
+

@@ -40,20 +40,23 @@ Ensuite, un jeu de donnée est disponible :
 colnames(kpiESR::esr)
 ```
 
-    ##  [1] "Groupe"                      "UAI"                        
-    ##  [3] "Etablissement"               "Type"                       
-    ##  [5] "Rentrée"                     "kpi.ENS.P.effectif"         
-    ##  [7] "kpi.ENS.S.titulaires"        "kpi.ENS.S.ECtitulaires"     
-    ##  [9] "kpi.ENS.S.DocATER"           "kpi.ENS.S.LRU"              
-    ## [11] "kpi.ETU.P.effectif"          "kpi.ETU.S.cycle1_L"         
-    ## [13] "kpi.ETU.S.cycle2_M"          "kpi.ETU.S.cycle3_D"         
-    ## [15] "kpi.ETU.S.DU_DE"             "kpi.FIN.P.ressources"       
-    ## [17] "kpi.FIN.S.masseSalariale"    "kpi.FIN.S.SCSP"             
-    ## [19] "kpi.FIN.S.recettesFormation" "kpi.FIN.S.recettesRecherche"
-    ## [21] "kpi.FIN.S.investissements"   "kpi.K.dotPres"              
-    ## [23] "kpi.K.resPetu"               "kpi.K.forPetu"              
-    ## [25] "kpi.K.recPect"               "kpi.K.ensPetu"              
-    ## [27] "kpi.K.titPens"
+    ##  [1] "Groupe"                      "pid"                        
+    ##  [3] "Etablissement"               "Groupe.détaillé"            
+    ##  [5] "Comparable"                  "Rentrée"                    
+    ##  [7] "kpi.ENS.P.effectif"          "kpi.ENS.S.titulaires"       
+    ##  [9] "kpi.ENS.S.EC"                "kpi.ENS.S.DocATER"          
+    ## [11] "kpi.ENS.S.contractuels"      "kpi.ETU.P.effectif"         
+    ## [13] "kpi.ETU.S.cycle1_L"          "kpi.ETU.S.cycle2_M"         
+    ## [15] "kpi.ETU.S.cycle3_D"          "kpi.ETU.S.DU_DE"            
+    ## [17] "kpi.BIA.P.effectif"          "kpi.BIA.S.A"                
+    ## [19] "kpi.BIA.S.B"                 "kpi.BIA.S.C"                
+    ## [21] "kpi.BIA.S.titulaires"        "kpi.FIN.P.ressources"       
+    ## [23] "kpi.FIN.S.masseSalariale"    "kpi.FIN.S.SCSP"             
+    ## [25] "kpi.FIN.S.recettesFormation" "kpi.FIN.S.recettesRecherche"
+    ## [27] "kpi.FIN.S.investissements"   "kpi.K.dotPres"              
+    ## [29] "kpi.K.resPetu"               "kpi.K.forPetu"              
+    ## [31] "kpi.K.recPect"               "kpi.K.ensPetu"              
+    ## [33] "kpi.K.titPper"               "kpi.K.biaPper"
 
 En plus du jeu de données `esr`, un autre jeu de donnée “long” est
 disponible, ajoutant des valeurs normalisées :
@@ -62,9 +65,10 @@ disponible, ajoutant des valeurs normalisées :
 colnames(kpiESR::esr.pnl)
 ```
 
-    ##  [1] "Groupe"        "UAI"           "Etablissement" "Type"         
-    ##  [5] "Rentrée"       "kpi"           "valeur"        "norm"         
-    ##  [9] "valeur_label"  "norm_label"    "rang"          "evolution"
+    ##  [1] "Groupe"          "pid"             "Etablissement"   "Groupe.détaillé"
+    ##  [5] "Comparable"      "Rentrée"         "kpi"             "valeur"         
+    ##  [9] "norm"            "valeur_label"    "norm_label"      "rang"           
+    ## [13] "evolution"
 
 ## Description de données
 
@@ -87,12 +91,11 @@ ajoute :
 ### Enseignants
 
 -   `kpi.ENS.P.effectif` : *Enseignants* Effectif total enseignant
--   `kpi.ENS.S.titulaires` : *Titulaires* Effectif enseignant titulaire
--   `kpi.ENS.S.ECtitulaires` : *EC* Effectif enseignant-chercheur
-    titulaire
+-   `kpi.ENS.S.titulaires` : *Titulaires* Effectif titulaire
+-   `kpi.ENS.S.EC` : *EC* Effectif enseignant-chercheur
 -   `kpi.ENS.S.DocATER` : *Doc et ATER* Effectif doctorant et ATER
--   `kpi.ENS.S.LRU` : *LRU et Associés* Effectif contrat LRU et
-    Associés/Invités
+-   `kpi.ENS.S.contractuels` : *Autres contractuels* Effectif autres
+    contractuels
 
 ### Finances
 
@@ -111,12 +114,14 @@ ajoute :
 
 ### Indicateurs clés de performance
 
--   `kpi.K.titPens` : *Taux de titularité* Part des titulaires dans les
-    enseignants
+-   `kpi.K.titPper` : *Taux de titularité* Part des titulaires dans les
+    personnels
 -   `kpi.K.dotPres` : *Taux de SCSP* Part des Subventions pour charge de
     service public dans les ressources
--   `kpi.K.ensPetu` : *Taux d’encadrement* Nombre d’enseignants
-    titulaires pour 100 étudiants en cycles 1 et 2
+-   `kpi.K.ensPetu` : *Taux d’encadrement pédagogique* Nombre
+    d’enseignants titulaires pour 100 étudiants en cycles 1 et 2
+-   `kpi.K.biaPper` : *Taux d’encadrement administratif* Part des
+    personnels BIATSS dans les personnels
 -   `kpi.K.resPetu` : *Ressources par étudiant* Ressources divisées par
     le nombre d’étudiants
 -   `kpi.K.forPetu` : *Recetttes formation par étudiant* Recettes

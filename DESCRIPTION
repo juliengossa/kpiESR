@@ -1,11 +1,10 @@
 Package: kpiESR
 Type: Package
 Title: DataViz for DataESR
-Version: 0.1.1
+Version: 0.2
 Author: Julien Gossa 
 Maintainer: Julien Gossa <gossa@unistra.fr>
-Description: 
-    This package provides functions to mine open data 
+Description: This package provides functions to mine open data 
   from the french government about universities and schools
   (ESR: Enseignement Supérieur et Recherche).
     https://data.enseignementsup-recherche.gouv.fr

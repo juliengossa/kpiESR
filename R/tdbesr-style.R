@@ -243,7 +243,7 @@ kpiesr_lfc <- list(
                  "Taux d'encadrement pédagogique",
                  "Taux d'encadrement administratif",
                  "Ressources par étudiant",
-                 "Recetttes formation par étudiant",
+                 "Recettes formation par étudiant",
                  "Recettes recherche par EC"),
     factors  = c("kpi.K.titPper",
                  "kpi.K.dotPres",

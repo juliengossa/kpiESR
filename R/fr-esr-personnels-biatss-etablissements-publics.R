@@ -17,20 +17,24 @@
 
 
 kpiesr_read.bia <- function(pidfix=list("x"="x")) {
-  biatss <- read.csv2("dataESR/fr-esr-personnels-biatss-etablissements-publics.csv", na.string = "") 
+  biatss <- read.csv2("dataESR/fr-esr-personnels-biatss-etablissements-publics.csv", na.string = "") %>%
+    mutate(effectif = ifelse(Effectif == effectif_femmes + effectif_hommes, Effectif, NA))
+  
+  w <- biatss %>% filter(effectif_femmes + effectif_hommes != Effectif)
+  if (nrow(w) > 0) warning("Erreur d'intégrité des données BIATSS : effectif_femmes + effectif_hommes != Effectif", readr::format_csv2(w))
   
   total <- biatss %>% 
     group_by(
       pid = recode(etablissement_id_paysage_actuel,!!!pidfix),
       Rentrée = Année ) %>%
-    summarise(kpi.BIA.P.effectif = sum(Effectif))
+    summarise(kpi.BIA.P.effectif = sum(effectif))
 
   categorie <- biatss %>% 
     group_by(
       pid = recode(etablissement_id_paysage_actuel,!!!pidfix),
       Rentrée = Année, 
       Catégorie ) %>%
-    summarise(effectif = sum(Effectif, na.rm=TRUE)) %>%
+    summarise(effectif = sum(effectif, na.rm=TRUE)) %>%
     pivot_wider(names_from = Catégorie,
                 names_prefix = "kpi.BIA.S.",
                 values_from = effectif, 
@@ -42,7 +46,7 @@ kpiesr_read.bia <- function(pidfix=list("x"="x")) {
       pid = recode(etablissement_id_paysage_actuel,!!!pidfix),
       Rentrée = Année, 
       Type.de.personnel ) %>%
-    summarise(effectif = sum(Effectif, na.rm=TRUE)) %>%
+    summarise(effectif = sum(effectif, na.rm=TRUE)) %>%
     pivot_wider(names_from = Type.de.personnel, 
                 #names_prefix = "kpi.BIA.S.",
                 values_from = effectif, 

@@ -1,4 +1,23 @@
 
+scale_breaker <- function(x) {
+  smax <- c(105,110,120,150,200,300,400)
+  smin <- c(95,90,80,50,0)
+  max <- max(smax[smax < max(x)])
+  min <- min(smin[smin > min(x)])
+  return(c(min,100,max))
+}
+
+scale_100_breaker <- function(x) {
+  return(c(100))
+}
+
+scale_min_breaker <- function(x) {
+  x <- ceiling(min(x,na.rm=TRUE))
+  x <- x[x != 0]
+  return(x)
+}
+
+
 
 euro_M <- function(x) {
   case_when(
@@ -43,6 +62,8 @@ valeur_labels <- function(kpi, valeur) {
     kpi == "kpi.K.resPetu"  ~ euro_k(valeur),
     kpi == "kpi.K.ensPetu"  ~ sprintf("%1.1f",valeur),
     kpi == "kpi.K.titPens"  ~ scales::percent(valeur, accuracy = 1),
+    kpi == "kpi.K.titPper"  ~ scales::percent(valeur, accuracy = 1),
+    kpi == "kpi.K.biaPper"  ~ scales::percent(valeur, accuracy = 1),
     str_detect(kpi,"kpi.FIN") ~ euro_M(valeur),
     TRUE                    ~ number_format(valeur)
   )
@@ -57,6 +78,8 @@ valeur_labels_long <- function(kpi, valeur) {
     kpi == "kpi.K.resPetu"  ~ sprintf("%1.1f k€",valeur/1e3),
     kpi == "kpi.K.ensPetu"  ~ sprintf("%1.1f",valeur),
     kpi == "kpi.K.titPens"  ~ scales::percent(valeur, accuracy = 0.1, suffix=" %"),
+    kpi == "kpi.K.titPper"  ~ scales::percent(valeur, accuracy = 0.1, suffix=" %"),
+    kpi == "kpi.K.biaPper"  ~ scales::percent(valeur, accuracy = 0.1, suffix=" %"),
     str_detect(kpi,"kpi.FIN") ~ sprintf("%1.1f M€",valeur/1e6),
     TRUE                    ~ number_format(valeur)
   )
@@ -101,6 +124,8 @@ kpiesr_style <- function(
               label_wrap = 15,
               primaire_margin = 1.15,
               evol_text = TRUE,
+              evol_text_percent = FALSE,
+              evol_y_breaker = scale_breaker,
               bs_point_size = 1,
               strip_labeller = identity,
               yaxis_position = "left",
@@ -127,11 +152,13 @@ kpiesr_style <- function(
 }
 
 
-colblues   <- rev(RColorBrewer::brewer.pal(10, "Blues"))
-colgreens  <- rev(RColorBrewer::brewer.pal(10, "Greens"))
-coloranges <- rev(RColorBrewer::brewer.pal(10, "Oranges"))
-colpurples <- rev(RColorBrewer::brewer.pal(10, "Purples"))
-colrdbu <- RColorBrewer::brewer.pal(8, "RdBu")[c(1:3,6:8)]
+colblues   <- rev(RColorBrewer::brewer.pal(9, "Blues"))
+colreds   <- rev(RColorBrewer::brewer.pal(9, "Reds"))
+colgreens  <- rev(RColorBrewer::brewer.pal(9, "Greens"))
+coloranges <- rev(RColorBrewer::brewer.pal(9, "Oranges"))
+colpurples <- rev(RColorBrewer::brewer.pal(9, "Purples"))
+colrdbu <- RColorBrewer::brewer.pal(8, "RdBu")[c(1:4,6:8)]
+colrdbu[4] <- colpurples[4]
 
 kpiesr_lfc <- list(
   ETU = list(
@@ -158,19 +185,38 @@ kpiesr_lfc <- list(
                  "Titulaires",
                  "EC",
                  "Doc et ATER",
-                 "LRU et Associés"),
+                 "Autres contractuels"),
     factors  = c("kpi.ENS.P.effectif", 
                  "kpi.ENS.S.titulaires", 
-                 "kpi.ENS.S.ECtitulaires", 
-                 "kpi.ENS.S.DocATER", 
-                 "kpi.ENS.S.LRU"),
+                 "kpi.ENS.S.EC", 
+                 "kpi.ENS.S.DocATER",
+                 "kpi.ENS.S.contractuels"),
     colors   = colblues[1:5],
     y_labels = identity,
     desc     = c("Effectif total enseignant",
-                 "Effectif enseignant titulaire",
-                 "Effectif enseignant-chercheur titulaire",
+                 "Effectif titulaire",
+                 "Effectif enseignant-chercheur",
                  "Effectif doctorant et ATER",
-                 "Effectif contrat LRU et Associés/Invités")
+                 "Effectif autres contractuels")
+  ),
+  BIA = list(
+    labels   = c("BIATSS", 
+                 "Titulaires",
+                 "A",
+                 "B",
+                 "C"),
+    factors  = c("kpi.BIA.P.effectif", 
+                 "kpi.BIA.S.titulaires",
+                 "kpi.BIA.S.A", 
+                 "kpi.BIA.S.B", 
+                 "kpi.BIA.S.C"),
+    colors   = colpurples[1:6],
+    y_labels = identity,
+    desc     = c("Effectif total BIATSS",
+                 "Effectif BIATSS titulaires",
+                 "Effectif BIATSS catégorie A",
+                 "Effectif BIATSS catégorie B",
+                 "Effectif BIATSS catégorie C")
   ),
   FIN = list(
     labels   = c("Ressources",
@@ -194,24 +240,27 @@ kpiesr_lfc <- list(
   K = list(
     labels   = c("Taux de titularité",
                  "Taux de SCSP",
-                 "Taux d'encadrement", 
+                 "Taux d'encadrement pédagogique",
+                 "Taux d'encadrement administratif",
                  "Ressources par étudiant",
-                 "Recetttes formation par étudiant",
+                 "Recettes formation par étudiant",
                  "Recettes recherche par EC"),
-    factors  = c("kpi.K.titPens",
+    factors  = c("kpi.K.titPper",
                  "kpi.K.dotPres",
                  "kpi.K.ensPetu",
+                 "kpi.K.biaPper",
                  "kpi.K.resPetu",
                  "kpi.K.forPetu",
                  "kpi.K.recPect"),
     colors   = colrdbu, #c(coloranges[1],coloranges[4],coloranges[1],colgreens[5],coloranges[5],colblues[5]),
     y_labels = identity,
-    desc     = c("Part des titulaires dans les enseignants",
-                 "Part des Subventions pour charge de service public dans les ressources",
-                 "Nombre d'enseignants titulaires pour 100 étudiants en cycles 1 et 2",
+    desc     = c("Part des titulaires dans les personnels",
+                 "Part des Subventions pour charge de service public (SCSP) dans les ressources",
+                 "Nombre d'enseignants (titulaires et contractuels, hors doctorants et vacataires) pour 100 étudiants en cycles 1 et 2",
+                 "Part des personnels BIATSS dans les personnels",
                  "Ressources divisées par le nombre d'étudiants",
                  "Recettes formation divisées par le nombre d'étudiants",
-                 "Recettes recherche divisées par le nombre d'enseignants-chercheurs titulaires")
+                 "Recettes recherche divisées par le nombre d'enseignants-chercheurs (titulaires et contractuels)")
   )
 )
 
@@ -244,3 +293,5 @@ kpiesr_theme <-
 kpiesr_plot_missingdata <-
   ggplot(data.frame(c(x=1))) +
     geom_text(x=0.5,y=0.5, label="Données\nmanquantes") + kpiesr_theme
+
+

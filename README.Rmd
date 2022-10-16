@@ -73,3 +73,4 @@ print_lfc(kpiESR::kpiesr_lfc$FIN)
 ```{r observations.k, echo = FALSE, results='asis'}
 print_lfc(kpiESR::kpiesr_lfc$K)
 ```
+

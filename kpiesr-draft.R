@@ -358,3 +358,11 @@ etab.cpesr %>%
     "Ecoles vétérinaires" = "Autres écoles"
   ) ) %>%
   select(UAI,Etablissement,Groupe,Groupe.détaillé,Type,everything())
+
+
+esr %>%
+  filter(Groupe == "Universités et assimilés") %>%
+  ggplot(aes(x=Rentrée,y=kpi.K.forPetu, group=Groupe)) +
+  geom_line()
+
+

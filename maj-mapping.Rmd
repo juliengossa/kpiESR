@@ -6,12 +6,12 @@ date: "`r Sys.Date()`"
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
-knitr::opts_chunk$set(dev = "cairo_pdf")
+knitr::opts_chunk$set(render = "cairo_pdf")
 
 library(tidyverse)
 library(kpiESR)
 library(ggcpesrthemes)
-
+theme_set(theme_cpesr())
 rentrée.ref = 2020
 ```
 
@@ -155,16 +155,16 @@ autofix.fin <- etab.data %>%
   select(UAI,pid) %>%
   separate_rows(UAI) %>%
   unique() %>% 
-  left_join(fin, by="UAI") %>%
-  filter(!is.na(pid.y), pid.x != pid.y)
+  left_join(fin %>% rename(pid.fin=pid), by="UAI") %>%
+  filter(!is.na(pid.fin), pid.fin != pid)
 
 autofix.fin %>% spoiler_table()
 ```
 
 ```{r autofix.fin.check, results='asis'}
 autofix.fin %>%
-  group_by(pid.y) %>%
-  filter(n_distinct(pid.x) > 1) %>%
+  group_by(pid.fin) %>%
+  filter(n_distinct(pid) > 1) %>%
   spoiler_table("Check")
 ```
 
@@ -173,11 +173,14 @@ autofix.fin %>%
 
 ```{r autofix.fin.man, results='asis'}
 fix.fin <- autofix.fin %>% 
-  filter(pid.x != "") %>%
-  filter(!str_detect(pid.x,";")) %>%
-  add_row(UAI = "Manuel", pid.x = "z3hdL", pid.y = "z3hdL;hy4EW") %>%
-  add_row(UAI = "Manuel", pid.x = "z3hdL", pid.y = "XDl91") %>%
-  add_row(UAI = "Manuel", pid.x = "Z2FY5", pid.y = "Z2FY5;zepT6	")
+  rename(pid.dst=pid, pid.src=pid.fin) %>%
+  filter(pid.src != "") %>%
+  filter(!str_detect(pid.dst,";")) %>%
+  add_row(UAI = "Manuel", pid.dst = "z3hdL", pid.src = "z3hdL;hy4EW") %>%
+  add_row(UAI = "Manuel", pid.dst = "z3hdL", pid.src = "XDl91") %>%
+  add_row(UAI = "Manuel", pid.dst = "Z2FY5", pid.src = "Z2FY5;zepT6") %>%
+  add_row(UAI = "Manuel", pid.dst = "HAU8L", pid.src = "a5ZAn")
+
 
 fix.fin %>% spoiler_table()
 ```
@@ -187,8 +190,8 @@ fix.fin %>% spoiler_table()
 ### Application du fix
 
 ```{r fix}
-pidfix <- fix.fin$pid.x
-names(pidfix) <- fix.fin$pid.y
+pidfix <- fix.fin$pid.dst
+names(pidfix) <- fix.fin$pid.src
   
 etab.data.long.fixed <- etab.data.long %>%
   mutate(pid = recode(pid, !!!pidfix)) 
@@ -237,10 +240,10 @@ cpesr <- etab.cpesr %>%
   select(pid, everything()) 
 ```
 
-### université cpesr double pid
+### Détection double pid
 
 ```{r cpesr.pid.doublepid, results='asis'}
-cpesr %>% filter(Groupe == "Universités et assimilés") %>% group_by(pid) %>% filter(n()>1) %>% spoiler_table()
+cpesr %>% filter(!is.na(pid)) %>% group_by(pid) %>% filter(n()>1) %>% spoiler_table()
 ```
 
 ### université cpesr sans pid
@@ -382,8 +385,9 @@ fix.wikidata %>% spoiler_table()
 
 #### Sigles récupérables sur wikidata
 
-```{r sigles.wikidata.load, results='hide', cache=TRUE}
+```{r sigles.wikidata.load, results='hide', cache=FALSE}
 #wikidataESR::wdesr_get_cache() 
+wikidataESR::wdesr_clear_cache()
 
 fix.alias.wikidata <- etab %>%
   #filter(UAI %in% esr.uais$dans.tdb) %>%
@@ -432,4 +436,64 @@ etab %>% spoiler_table()
 ```{r save}
 write.csv2(etab, "dataESR/fr-cpesrtmp-etablissements.csv", row.names = FALSE)
 write.csv2(fix.fin,"dataESR/fr-cpesrtmp-pidfix.csv", row.names = FALSE)
+```
+
+
+## Autres vérifications
+
+```{r disp.fun}
+check_dispo <- function(file, vars) {
+  read.csv2(file, na.strings = "") %>% 
+    select(vars) %>%
+    rename(Année = 1) %>%
+    mutate(Année = as.character(Année)) %>%
+    pivot_longer(-Année) %>%
+    group_by(Année,name) %>%
+    summarise(
+      nb_na = sum(is.na(value)),
+      dispo = round(sum(!is.na(value)) / n(), digits = 2)
+      ) %>%
+    arrange(name,Année) %>%
+    ggplot(aes(x=Année,y=name,color=dispo)) +
+    geom_point(size=10) +
+    geom_text(aes(label=scales::percent(dispo)),color="black", size=3) +
+    scale_color_distiller(palette="RdBu", direction = 0) +
+    theme(legend.position = "None")
+}
+```
+
+### Portée variables finances
+
+```{r disp.fin}
+check_dispo("dataESR/fr-esr-operateurs-indicateurs-financiers.csv",c(
+  "exercice",
+  "Produits.de.fonctionnement.encaissables",
+  "Charges.de.personnel",
+  "Ressources.propres.encaissables",
+  "Droits.d.inscription",
+  "Formation.continue..diplômes.propres.et.VAE",
+  "Taxe.d.apprentissage",
+  "Valorisation",
+  "ANR.hors.investissements.d.avenir",
+  "ANR.investissements.d.avenir",
+  "Contrats.et.prestations.de.recherche.hors.ANR",
+  "Acquisitions.d.immobilisations"))
+```
+
+### Portée variables finances 2021
+
+```{r disp.fin.21}
+check_dispo("dataESR/fr-esr-operateurs-indicateurs-financiers.2021v1.csv",c(
+  "exercice",
+  "Produits.de.fonctionnement.encaissables",
+  "Dépenses.de.personnel",
+  "Ressources.propres.encaissables",
+  "Droits.d.inscription",
+  "Formation.continue..diplômes.propres.et.VAE",
+  "Taxe.d.apprentissage",
+  "Valorisation",
+  "ANR.hors.investissements.d.avenir",
+  "ANR.investissements.d.avenir",
+  "Contrats.et.prestations.de.recherche.hors.ANR",
+  "Acquisitions.d.immobilisations"))
 ```

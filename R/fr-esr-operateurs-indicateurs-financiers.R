@@ -17,25 +17,32 @@
 # [27] "code.de.la.region"                                   "source"                                             
 # [29] "id...paysage"                                        "CAF...Acquisitions.d.immobilisations"               
 # [31] "Capacité.d.autofinancement"                          "Charges.de.fonctionnement.décaissables"             
-# [33] "Charges.décaissables...Produits.encaissables"        "Dépenses.de.personnel"                              
-# [35] "Dépenses.de.personnel...Produits.encaissables"       "Excédent.Brut.d.Exploitation..EBE."                 
+# [33] "Charges.de.personnel"                                "Charges.de.personnel...Produits.encaissables"       
+# [35] "Charges.décaissables...Produits.encaissables"        "Excédent.Brut.d.Exploitation..EBE."                 
 # [37] "Fonds.de.roulement.en.jours.de.charges.décaissables" "Formation.continue..diplômes.propres.et.VAE"        
 # [39] "Recettes.propres"                                    "Ressources.propres.encaissables"                    
 # [41] "Résultat.net.comptable"                              "Résultat.net.comptable.hors.SIE"                    
 # [43] "Solde.budgétaire"                                    "Subventions.Union.Européenne"                       
 # [45] "Subventions.de.la.région"                            "Taux.de.rémunération.des.permanents"                
-# [47] "Trésorerie"                                          "Trésorerie.en.jours.de.charges.décaissables"        
-
+# [47] "Trésorerie"                                          "Trésorerie.en.jours.de.charges.décaissables"      
 
 kpiesr_read.fin <- function(pidfix=list("x"="x")) {
   fin <- read.csv2("dataESR/fr-esr-operateurs-indicateurs-financiers.csv", na.strings="", dec=".") %>%
+    # fix Taxe d'apprentissage
+    left_join(
+      read.csv2("dataESR/fr-esr-operateurs-indicateurs-financiers.2021v1.csv", na.strings="", dec=".") %>%
+        select(exercice, id...paysage, TA21 = Taxe.d.apprentissage) %>%
+        filter(exercice < 2021) 
+    ) %>%
+    mutate(Taxe.d.apprentissage = ifelse(is.na(Taxe.d.apprentissage),TA21,Taxe.d.apprentissage)) %>%
+    # fin fix
     group_by(
       pid = recode(id...paysage,!!!pidfix),
       Rentrée = exercice-1) %>% # l'exercice comptable est sur l'année civile
       #RCE = rce,
     summarise(
       kpi.FIN.P.ressources = sum(Produits.de.fonctionnement.encaissables),
-      kpi.FIN.S.masseSalariale = sum(Dépenses.de.personnel),
+      kpi.FIN.S.masseSalariale = sum(Charges.de.personnel),
       kpi.FIN.S.SCSP = sum(kpi.FIN.P.ressources) - sum(Ressources.propres.encaissables),
       kpi.FIN.S.recettesFormation = sum(Droits.d.inscription) +
                                     sum(Formation.continue..diplômes.propres.et.VAE) +

@@ -64,8 +64,8 @@ avec trois méthodes de constitution des périmètres d'aggrégation :
 etab <- read.csv2("dataESR/fr-cpesrtmp-etablissements.csv") %>%
   mutate(Groupe = factor(Groupe,levels = unique(Groupe)))
 pidfix.raw <- read.csv2("dataESR/fr-cpesrtmp-pidfix.csv") 
-pidfix <- pidfix.raw$pid.x
-names(pidfix) <- pidfix.raw$pid.y
+pidfix <- pidfix.raw$pid.dst
+names(pidfix) <- pidfix.raw$pid.src
 
 ens <- kpiesr_read.ens(pidfix)
 bia <- kpiesr_read.bia(pidfix)

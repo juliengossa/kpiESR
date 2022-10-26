@@ -6,7 +6,7 @@ date: "`r Sys.Date()`"
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
-knitr::opts_chunk$set(render = "cairo_pdf")
+#knitr::opts_chunk$set(render = "cairo_pdf")
 
 library(tidyverse)
 library(kpiESR)
@@ -496,4 +496,14 @@ check_dispo("dataESR/fr-esr-operateurs-indicateurs-financiers.2021v1.csv",c(
   "ANR.investissements.d.avenir",
   "Contrats.et.prestations.de.recherche.hors.ANR",
   "Acquisitions.d.immobilisations"))
+```
+
+
+### Incohérence BIATSS 
+
+```{r bia.inco}
+read.csv2("dataESR/fr-esr-personnels-biatss-etablissements-publics.csv") %>%
+  select(Année,etablissement_id_paysage,Etablissement,Catégorie, Corps, Effectif,effectif_femmes,effectif_hommes) %>%
+  filter(Effectif != effectif_femmes + effectif_hommes) %>%
+  kableExtra::kable()
 ```

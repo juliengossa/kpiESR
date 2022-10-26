@@ -503,7 +503,7 @@ check_dispo("dataESR/fr-esr-operateurs-indicateurs-financiers.2021v1.csv",c(
 
 ```{r bia.inco}
 read.csv2("dataESR/fr-esr-personnels-biatss-etablissements-publics.csv") %>%
-  select(Année,etablissement_id_paysage,Etablissement,Catégorie, Corps, Effectif,effectif_femmes,effectif_hommes) %>%
+  select(Année,etablissement_id_paysage_actuel,Etablissement,Catégorie, Corps, Effectif,effectif_femmes,effectif_hommes) %>%
   filter(Effectif != effectif_femmes + effectif_hommes) %>%
   kableExtra::kable()
 ```

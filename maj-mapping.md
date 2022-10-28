@@ -1,6 +1,6 @@
 MAJ Appariements
 ================
-2022-10-16
+2022-10-26
 
 ## Chargement des données
 
@@ -1061,3 +1061,116 @@ Voir les données
     ## `.groups` argument.
 
 ![](maj-mapping_files/figure-gfm/disp.fin.21-1.png)<!-- -->
+
+### Incohérence BIATSS
+
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+Année
+</th>
+<th style="text-align:left;">
+etablissement_id_paysage
+</th>
+<th style="text-align:left;">
+Etablissement
+</th>
+<th style="text-align:left;">
+Catégorie
+</th>
+<th style="text-align:left;">
+Corps
+</th>
+<th style="text-align:right;">
+Effectif
+</th>
+<th style="text-align:right;">
+effectif_femmes
+</th>
+<th style="text-align:right;">
+effectif_hommes
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+2015
+</td>
+<td style="text-align:left;">
+4k25D
+</td>
+<td style="text-align:left;">
+Université de Strasbourg
+</td>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:left;">
+Adjoints techniques de recherche et de formation
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1013
+</td>
+<td style="text-align:right;">
+582
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2016
+</td>
+<td style="text-align:left;">
+4k25D
+</td>
+<td style="text-align:left;">
+Université de Strasbourg
+</td>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:left;">
+Adjoints techniques de recherche et de formation
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1068
+</td>
+<td style="text-align:right;">
+611
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2020
+</td>
+<td style="text-align:left;">
+cqyN7
+</td>
+<td style="text-align:left;">
+Université Sorbonne Paris Nord
+</td>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:left;">
+Adjoints techniques de recherche et de formation
+</td>
+<td style="text-align:right;">
+62
+</td>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:right;">
+25
+</td>
+</tr>
+</tbody>
+</table>

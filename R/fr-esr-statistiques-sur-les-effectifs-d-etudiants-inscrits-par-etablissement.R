@@ -161,7 +161,11 @@ kpiesr_read.etu <- function(pidfix=list("x"="x")) {
   etu <- read.csv2("dataESR/fr-esr-statistiques-sur-les-effectifs-d-etudiants-inscrits-par-etablissement-hcp.csv", na.string = "") %>% 
     filter(Attention != "* Attention : doubles comptes, établissement-composante") %>%
     group_by(
-      pid = recode(etablissement_id_paysage_actuel,!!!pidfix),
+      pid = recode(ifelse(
+          !is.na(etablissement_id_paysage_actuel),
+          etablissement_id_paysage_actuel,
+          Identifiant.interne.de.l.établissement),
+        !!!pidfix),
       Rentrée = rentree) %>%
     mutate(pid = ifelse(pid=="" | is.na(pid),"XIGGw",pid)) %>% # fix crade
     summarise(

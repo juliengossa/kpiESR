@@ -53,6 +53,17 @@ hack_label <- function(x) {
   )
 }
 
+kmg_label <- function(x) {
+  case_when(
+    x<=1 ~ scales::percent(x,accuracy = 1),
+    x < 1e3 ~  paste0(round(x)),
+    x < 1e6 ~  paste0(round(x/1e3),"k"),
+    x < 1e9 ~  paste0(round(x/1e6),"M"),
+    TRUE ~ paste0(round(x/1e9),"G")
+  )
+}
+
+
 valeur_labels <- function(kpi, valeur) {
   case_when(
     is.na(valeur) ~ "N/A",

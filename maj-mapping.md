@@ -1071,7 +1071,7 @@ Voir les données
 Année
 </th>
 <th style="text-align:left;">
-etablissement_id_paysage
+etablissement_id_paysage_actuel
 </th>
 <th style="text-align:left;">
 Etablissement

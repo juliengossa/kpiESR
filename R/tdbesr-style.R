@@ -221,7 +221,7 @@ kpiesr_lfc <- list(
                  "kpi.BIA.S.A", 
                  "kpi.BIA.S.B", 
                  "kpi.BIA.S.C"),
-    colors   = colpurples[1:6],
+    colors   = colpurples[1:5],
     y_labels = identity,
     desc     = c("Effectif total BIATSS",
                  "Effectif BIATSS titulaires",

@@ -209,18 +209,18 @@ kpiesr_shinycfg <- list(
 # } 
 
 kpiesr_lfc_labels <- set_names(
-  c(kpiESR::kpiesr_lfc$K$labels, kpiESR::kpiesr_lfc$ETU$labels, kpiESR::kpiesr_lfc$ENS$labels, kpiESR::kpiesr_lfc$KBIA$labels, kpiESR::kpiesr_lfc$FIN$labels),
-  c(kpiESR::kpiesr_lfc$K$factors, kpiESR::kpiesr_lfc$ETU$factors, kpiESR::kpiesr_lfc$ENS$factors, kpiESR::kpiesr_lfc$KBIA$factors, kpiESR::kpiesr_lfc$FIN$factors)
+  c(kpiESR::kpiesr_lfc$K$labels, kpiESR::kpiesr_lfc$ETU$labels, kpiESR::kpiesr_lfc$ENS$labels, kpiESR::kpiesr_lfc$BIA$labels, kpiESR::kpiesr_lfc$FIN$labels),
+  c(kpiESR::kpiesr_lfc$K$factors, kpiESR::kpiesr_lfc$ETU$factors, kpiESR::kpiesr_lfc$ENS$factors, kpiESR::kpiesr_lfc$BIA$factors, kpiESR::kpiesr_lfc$FIN$factors)
 )
 
 kpiesr_lfc_desc <- set_names(
-  c(kpiESR::kpiesr_lfc$K$desc, kpiESR::kpiesr_lfc$ETU$desc, kpiESR::kpiesr_lfc$ENS$desc, kpiESR::kpiesr_lfc$KBIA$desc, kpiESR::kpiesr_lfc$FIN$desc),
-  c(kpiESR::kpiesr_lfc$K$factors, kpiESR::kpiesr_lfc$ETU$factors, kpiESR::kpiesr_lfc$ENS$factors, kpiESR::kpiesr_lfc$KBIA$factors, kpiESR::kpiesr_lfc$FIN$factors)
+  c(kpiESR::kpiesr_lfc$K$desc, kpiESR::kpiesr_lfc$ETU$desc, kpiESR::kpiesr_lfc$ENS$desc, kpiESR::kpiesr_lfc$BIA$desc, kpiESR::kpiesr_lfc$FIN$desc),
+  c(kpiESR::kpiesr_lfc$K$factors, kpiESR::kpiesr_lfc$ETU$factors, kpiESR::kpiesr_lfc$ENS$factors, kpiESR::kpiesr_lfc$BIA$factors, kpiESR::kpiesr_lfc$FIN$factors)
 )
 
 kpiesr_lfc_colors <- set_names(
-  c(kpiESR::kpiesr_lfc$K$colors, kpiESR::kpiesr_lfc$ETU$colors, kpiESR::kpiesr_lfc$ENS$colors, kpiESR::kpiesr_lfc$KBIA$colors, kpiESR::kpiesr_lfc$FIN$colors),
-  c(kpiESR::kpiesr_lfc$K$factors, kpiESR::kpiesr_lfc$ETU$factors, kpiESR::kpiesr_lfc$ENS$factors, kpiESR::kpiesr_lfc$KBIA$factors, kpiESR::kpiesr_lfc$FIN$factors)
+  c(kpiESR::kpiesr_lfc$K$colors, kpiESR::kpiesr_lfc$ETU$colors, kpiESR::kpiesr_lfc$ENS$colors, kpiESR::kpiesr_lfc$BIA$colors, kpiESR::kpiesr_lfc$FIN$colors),
+  c(kpiESR::kpiesr_lfc$K$factors, kpiESR::kpiesr_lfc$ETU$factors, kpiESR::kpiesr_lfc$ENS$factors, kpiESR::kpiesr_lfc$BIA$factors, kpiESR::kpiesr_lfc$FIN$factors)
 )
 
 kpiesr_lfc_y_labels <- list()

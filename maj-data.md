@@ -1,6 +1,6 @@
 Mise à jour des données
 ================
-2022-10-26
+2022-11-01
 
 Ce document décrit le processus de mise à jour des données kpiESR, et
 notamment la constitution d’un jeu de données des établissements, et la
@@ -58,7 +58,7 @@ Voir les données
 |:-----|------------:|------------:|-------:|
 | ens  |        2010 |        2020 |    134 |
 | bia  |        2015 |        2020 |    151 |
-| etu  |        2006 |        2021 |    131 |
+| etu  |        2006 |        2021 |    132 |
 | fin  |        2009 |        2021 |    155 |
 
 </details>
@@ -672,7 +672,7 @@ Voir les données
 
 | pid   | Etablissement                       | Comparable | kpi           |   valeur |     norm | valeur_label | norm_label | rang | evolution |
 |:------|:------------------------------------|:-----------|:--------------|---------:|---------:|:-------------|:-----------|-----:|----------:|
-| HAU8L | Université de Nîmes                 | TRUE       | kpi.K.forPetu | 159.9472 | 159.9472 | 160€         | 160€       |   64 |  70.21431 |
+| HAU8L | Université de Nîmes                 | TRUE       | kpi.K.forPetu | 159.9472 | 159.9472 | 160€         | 160€       |   64 |  84.35607 |
 | HqAYu | Université Toulouse - Jean Jaurès   | TRUE       | kpi.K.forPetu | 230.6532 | 230.6532 | 231€         | 231€       |   63 |  86.07615 |
 | cEt92 | Université de La Réunion            | FALSE      | kpi.K.forPetu | 241.1081 | 241.1081 | 241€         | 241€       |   62 |  54.99174 |
 | atbEK | La Rochelle Université              | TRUE       | kpi.K.forPetu | 248.3207 | 248.3207 | 248€         | 248€       |   61 |  87.98203 |

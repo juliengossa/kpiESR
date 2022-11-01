@@ -166,16 +166,90 @@ esr.pnl <- esr.pnl %>% mutate(Comparable = replace(Comparable,pid %in% outliers$
 
 ## Ecriture des données
 
+
+```{r shiny}
+groupes <- c(unique(as.character(kpiESR::esr.etab$Groupe)))
+etabs <- list()
+etabs["Ensemble"] = list("Ensemble" = "Ensemble")
+for(g in groupes) {
+  etabs[g] <- list(deframe((kpiESR::esr.etab %>% 
+                              filter(Groupe == g) %>%
+                              transmute(Etablissement = as.character(Etablissement), pid = as.character(pid)) %>%
+                              add_row(Etablissement = g, pid = g, .before = 1) )))
+}
+
+groupes <- c("Ensemble", groupes)
+fulletabs <- c(list( "Ensemble" = etabs ), etabs)
+
+kpi_list <- list(
+  "KPI" = set_names(kpiESR::kpiesr_lfc$K$factors,kpiESR::kpiesr_lfc$K$labels),
+  "Etudiants" = set_names(kpiESR::kpiesr_lfc$ETU$factors,kpiESR::kpiesr_lfc$ETU$labels),
+  "Enseignants" = set_names(kpiESR::kpiesr_lfc$ENS$factors,kpiESR::kpiesr_lfc$ENS$labels),
+  "BIATSS" = set_names(kpiESR::kpiesr_lfc$BIA$factors,kpiESR::kpiesr_lfc$BIA$labels),
+  "Finances" = set_names(kpiESR::kpiesr_lfc$FIN$factors,kpiESR::kpiesr_lfc$FIN$labels)
+)
+
+kpiesr_shinycfg <- list(
+  "groupes" = groupes,
+  "etabs" = fulletabs,
+  "kpi_list" = kpi_list
+)
+
+# kpi_infos <- list()
+# 
+# for(k in kpiESR::kpiesr_lfc) {
+#   for(i in seq(1,length(k$factors))) {
+#     kpi_infos[[k$factors[i]]] <- list(
+#       "label" = k$labels[i],
+#       "desc" = k$desc[i],
+#       "y_label" = k$y_labels,
+#       "color" = k$color[i]
+#     )
+#   }
+# } 
+
+kpiesr_lfc_labels <- set_names(
+  c(kpiESR::kpiesr_lfc$K$labels, kpiESR::kpiesr_lfc$ETU$labels, kpiESR::kpiesr_lfc$ENS$labels, kpiESR::kpiesr_lfc$KBIA$labels, kpiESR::kpiesr_lfc$FIN$labels),
+  c(kpiESR::kpiesr_lfc$K$factors, kpiESR::kpiesr_lfc$ETU$factors, kpiESR::kpiesr_lfc$ENS$factors, kpiESR::kpiesr_lfc$KBIA$factors, kpiESR::kpiesr_lfc$FIN$factors)
+)
+
+kpiesr_lfc_desc <- set_names(
+  c(kpiESR::kpiesr_lfc$K$desc, kpiESR::kpiesr_lfc$ETU$desc, kpiESR::kpiesr_lfc$ENS$desc, kpiESR::kpiesr_lfc$KBIA$desc, kpiESR::kpiesr_lfc$FIN$desc),
+  c(kpiESR::kpiesr_lfc$K$factors, kpiESR::kpiesr_lfc$ETU$factors, kpiESR::kpiesr_lfc$ENS$factors, kpiESR::kpiesr_lfc$KBIA$factors, kpiESR::kpiesr_lfc$FIN$factors)
+)
+
+kpiesr_lfc_colors <- set_names(
+  c(kpiESR::kpiesr_lfc$K$colors, kpiESR::kpiesr_lfc$ETU$colors, kpiESR::kpiesr_lfc$ENS$colors, kpiESR::kpiesr_lfc$KBIA$colors, kpiESR::kpiesr_lfc$FIN$colors),
+  c(kpiESR::kpiesr_lfc$K$factors, kpiESR::kpiesr_lfc$ETU$factors, kpiESR::kpiesr_lfc$ENS$factors, kpiESR::kpiesr_lfc$KBIA$factors, kpiESR::kpiesr_lfc$FIN$factors)
+)
+
+kpiesr_lfc_y_labels <- list()
+for(k in kpiESR::kpiesr_lfc) {
+  for(i in seq(1,length(k$factors))) {
+    kpiesr_lfc_y_labels[[k$factors[i]]] <- k$y_labels
+  }
+}
+
+
+```
+
+
+
 ```{r save}
 esr <- set_encoding_utf8(esr)
 esr.pnl <- set_encoding_utf8(esr.pnl)
 esr.etab <- etab
 esr.stats <- kpiesr_get_stats(esr.pnl)
 
-usethis::use_data(esr, esr.pnl, esr.stats, esr.etab,  overwrite = TRUE)
+usethis::use_data(esr, esr.pnl, esr.stats, esr.etab, 
+                  kpiesr_shinycfg,
+                  kpiesr_lfc_labels, kpiesr_lfc_desc, kpiesr_lfc_y_labels, kpiesr_lfc_colors,
+                  overwrite = TRUE)
 
 write.csv2(esr,"kpiesr.csv",row.names = FALSE)
 ```
 
 [kpiesr.csv](kpiesr.csv)
+
+
 

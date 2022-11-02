@@ -80,7 +80,7 @@ kpiesr_plot_evol <- function(rentrée, id, groupe, lfc,
                                      size=style$text_size, color="black",
                                      vjust=0.5, hjust=0, nudge_x = 0.5) } +
     facet_wrap(.~kpi, scales="free", nrow = 1, labeller = label_wrap_gen(style$label_wrap), drop = FALSE) +
-    scale_x_continuous(breaks=scale_min_breaker) +
+    scale_x_continuous(breaks=style$evol_x_breaker) +
     scale_y_continuous(breaks=style$evol_y_breaker, position = style$yaxis_position) +#scales::breaks_extended(n = 3, w = c(0.25, 0.2, 0.5, 0.05))) +
     scale_color_manual(values=lfc$colors,breaks=lfc$labels) +
     scale_fill_manual(values=lfc$colors,breaks=lfc$labels) +
@@ -93,7 +93,7 @@ kpiesr_plot_evol <- function(rentrée, id, groupe, lfc,
 }
 
 
-# kpiesr_plot_evol(2020,"4k25D","Ensemble", kpiesr_lfc[["K"]], style = kpiesr_style(line_size = 1, evol_y_breaker = scale_100_breaker)) + ggcpesrthemes::theme_cpesr() + theme()
+# kpiesr_plot_evol(2020,"4k25D","Ensemble", kpiesr_lfc[["K"]], style = kpiesr_style(line_size = 1, evol_x_breaker = scale_minmax_breaker, evol_y_breaker = scale_breaker)) + ggcpesrthemes::theme_cpesr() + theme()
 # kpiesr_plot_evol(2020,"nkbwh","Ensemble", kpiesr_lfc[["K"]], style = kpiesr_style(line_size = 1)) + ggcpesrthemes::theme_cpesr() + theme()
 # kpiesr_plot_evol(2019,"4k25D","Université", kpiesr_lfc[["K"]], style = kpiesr_style(line_size = 1)) + ggcpesrthemes::theme_cpesr() + theme()
 # kpiesr_plot_evol(2019,"4k25D","Université", kpiesr_lfc[["ENS"]]) + ggcpesrthemes::theme_cpesr() + theme()

@@ -22,6 +22,8 @@ la constitution d'un jeu de données des établissements, et la fusion de cinq j
 
 Ces jeux sont notés `etab`, `ens.tit`, `ens.np`, `bia`, `etu` et `fin`.
 
+Le jeu de données sur les patrimoines immobilier est ajouté de façon expérimentale : `imo`
+
 La constitution du jeu de données `etab` est effectuées [à part](maj-mapping.md).
 
 
@@ -32,7 +34,7 @@ La constitution du jeu de données `etab` est effectuées [à part](maj-mapping.
   1. Vérification et fix des données manquantes
   1. Fusion des données DataESR et CPESR
 1. Constitution des jeux de données `esr`
-    1. Fusion de `ens.tit`, `ens.np`, `bia`, `etu` et `fin`
+    1. Fusion de `ens.tit`, `ens.np`, `bia`, `etu`, `fin` et `imo`
     1. Vérification d'éventuels problèmes de fusion
     1. Vérification des outliers
 1. Ecriture des données
@@ -56,7 +58,7 @@ avec trois méthodes de constitution des périmètres d'aggrégation :
 
 
 
-## Fusion de `ens.tit`, `ens.np`, `bia`, `etu` et `fin`
+## Fusion de `ens.tit`, `ens.np`, `bia`, `etu`, `fin` et `imo`
 
 ### Lecture des données
 
@@ -71,6 +73,7 @@ ens <- kpiesr_read.ens(pidfix)
 bia <- kpiesr_read.bia(pidfix)
 etu <- kpiesr_read.etu(pidfix) 
 fin <- kpiesr_read.fin(pidfix)
+imo <- kpiesr_read.imo(pidfix)
 ```
 
 
@@ -83,6 +86,8 @@ bind_rows(
   etu %>% summarise(data = "etu",
     Rentrée.min = min(Rentrée), Rentrée.max = max(Rentrée), nb_pid = n_distinct(pid,na.rm = TRUE)),
   fin %>% summarise(data = "fin",
+    Rentrée.min = min(Rentrée), Rentrée.max = max(Rentrée), nb_pid = n_distinct(pid,na.rm = TRUE)),
+  imo %>% summarise(data = "imo",
     Rentrée.min = min(Rentrée), Rentrée.max = max(Rentrée), nb_pid = n_distinct(pid,na.rm = TRUE))
 ) %>% spoiler_table()
 ```
@@ -95,6 +100,7 @@ esr.src <- ens %>%
   full_join(etu) %>%
   full_join(bia) %>%
   full_join(fin) %>%
+  full_join(imo) %>%
   full_join(etab %>% select(pid,Etablissement,Groupe, Groupe.détaillé, Comparable)) %>%
   select(Groupe,pid,Etablissement, Groupe.détaillé, Comparable, Rentrée, everything())
 
@@ -104,6 +110,8 @@ esr <- kpiesr_add_ensembles(esr.src)
 esr <- kpiesr_add_kpis(esr)
 esr.pnl <- kpiesr_pivot_norm_label(esr, rentrée.d)
 ```
+
+
 
 
 ### Vérification des outliers 
@@ -186,7 +194,8 @@ kpi_list <- list(
   "Etudiants" = set_names(kpiESR::kpiesr_lfc$ETU$factors,kpiESR::kpiesr_lfc$ETU$labels),
   "Enseignants" = set_names(kpiESR::kpiesr_lfc$ENS$factors,kpiESR::kpiesr_lfc$ENS$labels),
   "BIATSS" = set_names(kpiESR::kpiesr_lfc$BIA$factors,kpiESR::kpiesr_lfc$BIA$labels),
-  "Finances" = set_names(kpiESR::kpiesr_lfc$FIN$factors,kpiESR::kpiesr_lfc$FIN$labels)
+  "Finances" = set_names(kpiESR::kpiesr_lfc$FIN$factors,kpiESR::kpiesr_lfc$FIN$labels),
+  "Immobilier" = set_names(kpiESR::kpiesr_lfc$IMO$factors,kpiESR::kpiesr_lfc$IMO$labels)
 )
 
 kpiesr_shinycfg <- list(
@@ -209,8 +218,8 @@ kpiesr_shinycfg <- list(
 # } 
 
 kpiesr_lfc_labels <- set_names(
-  c(kpiESR::kpiesr_lfc$K$labels, kpiESR::kpiesr_lfc$ETU$labels, kpiESR::kpiesr_lfc$ENS$labels, kpiESR::kpiesr_lfc$BIA$labels, kpiESR::kpiesr_lfc$FIN$labels),
-  c(kpiESR::kpiesr_lfc$K$factors, kpiESR::kpiesr_lfc$ETU$factors, kpiESR::kpiesr_lfc$ENS$factors, kpiESR::kpiesr_lfc$BIA$factors, kpiESR::kpiesr_lfc$FIN$factors)
+  c(kpiESR::kpiesr_lfc$K$labels, kpiESR::kpiesr_lfc$ETU$labels, kpiESR::kpiesr_lfc$ENS$labels, kpiESR::kpiesr_lfc$BIA$labels, kpiESR::kpiesr_lfc$FIN$labels, kpiESR::kpiesr_lfc$IMO$labels),
+  c(kpiESR::kpiesr_lfc$K$factors, kpiESR::kpiesr_lfc$ETU$factors, kpiESR::kpiesr_lfc$ENS$factors, kpiESR::kpiesr_lfc$BIA$factors, kpiESR::kpiesr_lfc$FIN$factors, kpiESR::kpiesr_lfc$IMO$factors)
 )
 
 kpiesr_lfc_desc <- set_names(
@@ -219,8 +228,8 @@ kpiesr_lfc_desc <- set_names(
 )
 
 kpiesr_lfc_colors <- set_names(
-  c(kpiESR::kpiesr_lfc$K$colors, kpiESR::kpiesr_lfc$ETU$colors, kpiESR::kpiesr_lfc$ENS$colors, kpiESR::kpiesr_lfc$BIA$colors, kpiESR::kpiesr_lfc$FIN$colors),
-  c(kpiESR::kpiesr_lfc$K$factors, kpiESR::kpiesr_lfc$ETU$factors, kpiESR::kpiesr_lfc$ENS$factors, kpiESR::kpiesr_lfc$BIA$factors, kpiESR::kpiesr_lfc$FIN$factors)
+  c(kpiESR::kpiesr_lfc$K$colors, kpiESR::kpiesr_lfc$ETU$colors, kpiESR::kpiesr_lfc$ENS$colors, kpiESR::kpiesr_lfc$BIA$colors, kpiESR::kpiesr_lfc$FIN$colors, kpiESR::kpiesr_lfc$IMO$colors),
+  c(kpiESR::kpiesr_lfc$K$factors, kpiESR::kpiesr_lfc$ETU$factors, kpiESR::kpiesr_lfc$ENS$factors, kpiESR::kpiesr_lfc$BIA$factors, kpiESR::kpiesr_lfc$FIN$factors, kpiESR::kpiesr_lfc$IMO$factors)
 )
 
 kpiesr_lfc_y_labels <- list()

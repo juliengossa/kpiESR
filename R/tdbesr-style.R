@@ -254,6 +254,25 @@ kpiesr_lfc <- list(
                  "Droits d'inscription, Diplôme d'établissement, Formation continue, VAE et Taxe d'apprentissage",
                  "Valorisation, ANR en et hors investissement d'avenir, contrats et prestations de recherche")
   ),
+  IMO = list(
+    labels   = c("Bâtiments",
+                 "Etat satisfaisant",
+                 "Classe énergie ABC",
+                 "Classe GES ABC",
+                 "Propriété propre"),
+    factors  = c("kpi.IMO.P.batiments",
+                 "kpi.IMO.S.état_satisfaisant",
+                 "kpi.IMO.S.énergie_ABC",
+                 "kpi.IMO.S.GES_ABC",
+                 "kpi.IMO.S.propriété_propre"),
+    colors   = coloranges[1:5],
+    y_labels = identity,
+    desc     = c("Nombre de bâtiments",
+                 "Dans une état satisfaisant ou très satisfaisant",
+                 "Classe énergétique A, B ou C (sur A-G)",
+                 "Classe émissions de gaz à effet de serre A, B ou C (sur A-G)",
+                 "Propriété propre de l'établissement")
+  ),
   K = list(
     labels   = c("Taux de titularité",
                  "Taux de SCSP",

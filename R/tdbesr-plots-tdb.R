@@ -10,6 +10,7 @@
 #'
 #' @examples
 kpiesr_plot_all <- function(rentrée, id, groupe,
+                            experimental = FALSE,
                             style.k=kpiesr_style(),
                             style.o=kpiesr_style(),
                             style.o.norm=kpiesr_style(),
@@ -40,6 +41,13 @@ kpiesr_plot_all <- function(rentrée, id, groupe,
     fin.evol = kpiesr_plot_evol_try(rentrée,id,groupe,lfc[["FIN"]], style=style.o,...),
     fin.norm = kpiesr_plot_norm_simple_try(rentrée,id,groupe,omit_first(lfc[["FIN"]]), style=style.o.norm,...)
   )
+  if(experimental) {
+    plots <- append(plots, list(
+      imo.abs = kpiesr_plot_primaire_try(rentrée,id,lfc[["IMO"]], style=style.o,...),
+      imo.evol = kpiesr_plot_evol_try(rentrée,id,groupe,lfc[["IMO"]], style=style.o,...),
+      imo.norm = kpiesr_plot_norm_simple_try(rentrée,id,groupe,omit_first(lfc[["IMO"]]), style=style.o.norm,...)
+    ))
+  }
   return(plots)
 }
 

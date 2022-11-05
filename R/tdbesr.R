@@ -22,6 +22,7 @@ kpiesr_pivot_norm_label <- function(esr, rentrée.ref=2012) {
     mutate(across(starts_with("kpi.BIA.S"), list(norm = ~ ./kpi.BIA.P.effectif))) %>%
     mutate(across(starts_with("kpi.ENS.S"), list(norm = ~ ./kpi.ENS.P.effectif))) %>%
     mutate(across(starts_with("kpi.ETU.S"), list(norm = ~ ./kpi.ETU.P.effectif))) %>%
+    mutate(across(starts_with("kpi.IMO.S"), list(norm = ~ ./kpi.IMO.P.batiments))) %>%
 
     mutate(across(matches("kpi.....P"), list(norm = ~ .))) %>%
     mutate(across(starts_with("kpi.K"), list(norm = ~ .))) %>%

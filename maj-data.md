@@ -1,6 +1,6 @@
 Mise à jour des données
 ================
-2022-11-02
+2022-11-05
 
 Ce document décrit le processus de mise à jour des données kpiESR, et
 notamment la constitution d’un jeu de données des établissements, et la
@@ -8,6 +8,9 @@ fusion de cinq jeux de données (enseignants titulaires, enseignants non
 permanents, personnel BIATSS, étudiants et finances).
 
 Ces jeux sont notés `etab`, `ens.tit`, `ens.np`, `bia`, `etu` et `fin`.
+
+Le jeu de données sur les patrimoines immobilier est ajouté de façon
+expérimentale : `imo`
 
 La constitution du jeu de données `etab` est effectuées [à
 part](maj-mapping.md).
@@ -19,7 +22,7 @@ part](maj-mapping.md).
 3.  Vérification et fix des données manquantes
 4.  Fusion des données DataESR et CPESR
 5.  Constitution des jeux de données `esr`
-    1.  Fusion de `ens.tit`, `ens.np`, `bia`, `etu` et `fin`
+    1.  Fusion de `ens.tit`, `ens.np`, `bia`, `etu`, `fin` et `imo`
     2.  Vérification d’éventuels problèmes de fusion
     3.  Vérification des outliers
 6.  Ecriture des données
@@ -45,7 +48,7 @@ d’aggrégation :
     périodes et périmètres disponibles (et est donc impacté par les
     changement de périmètres).
 
-## Fusion de `ens.tit`, `ens.np`, `bia`, `etu` et `fin`
+## Fusion de `ens.tit`, `ens.np`, `bia`, `etu`, `fin` et `imo`
 
 ### Lecture des données
 
@@ -54,12 +57,171 @@ d’aggrégation :
 Voir les données
 </summary>
 
-| data | Rentrée.min | Rentrée.max | nb_pid |
-|:-----|------------:|------------:|-------:|
-| ens  |        2010 |        2020 |    134 |
-| bia  |        2015 |        2020 |    151 |
-| etu  |        2006 |        2021 |    132 |
-| fin  |        2009 |        2021 |    155 |
+| data | Rentrée.min | Rentrée.max | nb_pid | pid                                 |
+|:-----|------------:|------------:|-------:|:------------------------------------|
+| ens  |        2010 |        2020 |    134 | NA                                  |
+| bia  |        2015 |        2020 |    151 | NA                                  |
+| etu  |        2006 |        2021 |    132 | NA                                  |
+| fin  |        2009 |        2021 |    155 | NA                                  |
+| imo  |        2016 |        2021 |      1 | 06SE7                               |
+| imo  |        2016 |        2021 |      1 | 0Mvk5                               |
+| imo  |        2016 |        2021 |      1 | 13fXQ                               |
+| imo  |        2016 |        2021 |      1 | 1I7hJ                               |
+| imo  |        2016 |        2021 |      1 | 1tI7C                               |
+| imo  |        2016 |        2021 |      1 | 2ALYK                               |
+| imo  |        2016 |        2021 |      1 | 3GxJ8                               |
+| imo  |        2016 |        2021 |      1 | 3Z5e6                               |
+| imo  |        2016 |        2021 |      1 | 44xxV,vb71K,3Z5e6,kr03v             |
+| imo  |        2016 |        2021 |      1 | 4k25D                               |
+| imo  |        2016 |        2021 |      1 | 542Id                               |
+| imo  |        2016 |        2021 |      1 | 54VTe                               |
+| imo  |        2016 |        2021 |      1 | 57OsX                               |
+| imo  |        2016 |        2021 |      1 | 59da6                               |
+| imo  |        2016 |        2021 |      1 | 5cZyU                               |
+| imo  |        2016 |        2021 |      1 | 5eUBS                               |
+| imo  |        2016 |        2021 |      1 | 5tVy4                               |
+| imo  |        2016 |        2021 |      1 | 6a498                               |
+| imo  |        2016 |        2021 |      1 | 6G2TU                               |
+| imo  |        2016 |        2021 |      1 | 6G2TU,TWBzp                         |
+| imo  |        2020 |        2021 |      1 | 6kk6n                               |
+| imo  |        2016 |        2021 |      1 | 7Gzub                               |
+| imo  |        2016 |        2021 |      1 | 7Mpgt                               |
+| imo  |        2016 |        2021 |      1 | 851ij                               |
+| imo  |        2016 |        2021 |      1 | 8618D                               |
+| imo  |        2016 |        2021 |      1 | 8618D,021qP,n2X5f,5cZyU             |
+| imo  |        2016 |        2021 |      1 | 8618D,5cZyU                         |
+| imo  |        2016 |        2021 |      1 | 8j5s2                               |
+| imo  |        2016 |        2021 |      1 | 8JlNN                               |
+| imo  |        2016 |        2021 |      1 | 8k41p                               |
+| imo  |        2016 |        2021 |      1 | 8k41p,iq0rG                         |
+| imo  |        2016 |        2021 |      1 | 8k883                               |
+| imo  |        2016 |        2021 |      1 | 8k883,bxPQe,6G2TU,5cZyU,kyy5N,QXnpG |
+| imo  |        2016 |        2021 |      1 | 8k883,C6Ps7                         |
+| imo  |        2016 |        2021 |      1 | 8tVLr                               |
+| imo  |        2016 |        2021 |      1 | 90I54                               |
+| imo  |        2016 |        2021 |      1 | 9wAap                               |
+| imo  |        2016 |        2021 |      1 | 9wAap,SsRkf                         |
+| imo  |        2016 |        2021 |      1 | 9xlel                               |
+| imo  |        2016 |        2021 |      1 | a2a9U                               |
+| imo  |        2016 |        2021 |      1 | ab5z5                               |
+| imo  |        2016 |        2021 |      1 | atbEK                               |
+| imo  |        2016 |        2021 |      1 | aYLn2,FDijq,wAASR                   |
+| imo  |        2016 |        2021 |      1 | BOl78                               |
+| imo  |        2016 |        2021 |      1 | BWbvP                               |
+| imo  |        2016 |        2021 |      1 | bxPQe                               |
+| imo  |        2016 |        2021 |      1 | bxPQe,6G2TU                         |
+| imo  |        2016 |        2021 |      1 | bxPQe,6G2TU,5cZyU                   |
+| imo  |        2016 |        2021 |      1 | C6Ps7                               |
+| imo  |        2016 |        2021 |      1 | C701f                               |
+| imo  |        2016 |        2021 |      1 | cEt92                               |
+| imo  |        2016 |        2021 |      1 | cqkij                               |
+| imo  |        2016 |        2021 |      1 | cqyN7                               |
+| imo  |        2016 |        2021 |      1 | CUBKB                               |
+| imo  |        2016 |        2021 |      1 | CUBKB,7Gzub                         |
+| imo  |        2016 |        2021 |      1 | cWx2t                               |
+| imo  |        2016 |        2021 |      1 | dj88d                               |
+| imo  |        2016 |        2021 |      1 | Dk1Th                               |
+| imo  |        2016 |        2021 |      1 | Dk1Th,1bXaK                         |
+| imo  |        2021 |        2021 |      1 | DmOC1                               |
+| imo  |        2016 |        2021 |      1 | DOunC                               |
+| imo  |        2016 |        2021 |      1 | dPmxa                               |
+| imo  |        2017 |        2021 |      1 | dQaK0                               |
+| imo  |        2016 |        2021 |      1 | etBz7                               |
+| imo  |        2016 |        2021 |      1 | evv7S                               |
+| imo  |        2016 |        2021 |      1 | EW53M                               |
+| imo  |        2016 |        2021 |      1 | F77ic                               |
+| imo  |        2016 |        2021 |      1 | FKt2q                               |
+| imo  |        2016 |        2021 |      1 | fWJJA                               |
+| imo  |        2016 |        2021 |      1 | G2qA7                               |
+| imo  |        2016 |        2021 |      1 | G4572                               |
+| imo  |        2016 |        2021 |      1 | g6rwB                               |
+| imo  |        2016 |        2021 |      1 | G8QBG                               |
+| imo  |        2016 |        2021 |      1 | gCAyK                               |
+| imo  |        2016 |        2021 |      1 | GJYxj                               |
+| imo  |        2016 |        2021 |      1 | H3nOd                               |
+| imo  |        2016 |        2021 |      1 | HAU8L                               |
+| imo  |        2016 |        2021 |      1 | HCBvW                               |
+| imo  |        2016 |        2021 |      1 | HCBvW,QYw7j                         |
+| imo  |        2016 |        2021 |      1 | hfCvd                               |
+| imo  |        2016 |        2021 |      1 | hlX1r                               |
+| imo  |        2016 |        2021 |      1 | Hm42K                               |
+| imo  |        2016 |        2021 |      1 | HqAYu                               |
+| imo  |        2016 |        2021 |      1 | hy4EW                               |
+| imo  |        2016 |        2021 |      1 | I4SPK                               |
+| imo  |        2016 |        2021 |      1 | I4SPK,p25Q3                         |
+| imo  |        2016 |        2021 |      1 | IlIW8                               |
+| imo  |        2016 |        2021 |      1 | IXHyv                               |
+| imo  |        2016 |        2021 |      1 | j5bS4                               |
+| imo  |        2016 |        2021 |      1 | JaqkX                               |
+| imo  |        2016 |        2021 |      1 | jYUcF                               |
+| imo  |        2016 |        2021 |      1 | jYUcF,IXHyv                         |
+| imo  |        2016 |        2021 |      1 | K4lR3                               |
+| imo  |        2016 |        2021 |      1 | kFcnq                               |
+| imo  |        2016 |        2021 |      1 | kWved                               |
+| imo  |        2016 |        2021 |      1 | Lr94O                               |
+| imo  |        2016 |        2021 |      1 | LsQ24                               |
+| imo  |        2016 |        2021 |      1 | m7K6T                               |
+| imo  |        2016 |        2021 |      1 | m7K6T,mMex4                         |
+| imo  |        2016 |        2021 |      1 | m7K6T,mMex4,4a8B2                   |
+| imo  |        2016 |        2021 |      1 | m84Aa                               |
+| imo  |        2016 |        2021 |      1 | MHneW                               |
+| imo  |        2016 |        2021 |      1 | mMex4                               |
+| imo  |        2016 |        2021 |      1 | Mz286                               |
+| imo  |        2016 |        2021 |      1 | Mz90U                               |
+| imo  |        2016 |        2021 |      1 | n1W55                               |
+| imo  |        2016 |        2021 |      1 | nkbwh                               |
+| imo  |        2016 |        2021 |      1 | NLCOF                               |
+| imo  |        2016 |        2021 |      1 | OJZ4a                               |
+| imo  |        2016 |        2021 |      1 | OYA17                               |
+| imo  |        2016 |        2021 |      1 | p25Q3                               |
+| imo  |        2016 |        2021 |      1 | pVJpw                               |
+| imo  |        2016 |        2021 |      1 | PVnB4                               |
+| imo  |        2016 |        2021 |      1 | QtZkX                               |
+| imo  |        2016 |        2021 |      1 | qUCQp                               |
+| imo  |        2016 |        2021 |      1 | QXnpG                               |
+| imo  |        2016 |        2021 |      1 | QYw7j                               |
+| imo  |        2016 |        2021 |      1 | RdQr7                               |
+| imo  |        2016 |        2021 |      1 | RN4E6                               |
+| imo  |        2016 |        2021 |      1 | RS4WF                               |
+| imo  |        2016 |        2021 |      1 | s3t8T                               |
+| imo  |        2016 |        2021 |      1 | S88MV                               |
+| imo  |        2016 |        2021 |      1 | S8ntZ                               |
+| imo  |        2016 |        2021 |      1 | t6Cq5                               |
+| imo  |        2016 |        2021 |      1 | T6qPJ                               |
+| imo  |        2016 |        2021 |      1 | td273                               |
+| imo  |        2016 |        2021 |      1 | tdEpy                               |
+| imo  |        2016 |        2021 |      1 | TeXD3                               |
+| imo  |        2016 |        2021 |      1 | ti37C                               |
+| imo  |        2016 |        2021 |      1 | ti37C,9wAap                         |
+| imo  |        2016 |        2021 |      1 | ti37C,SsRkf                         |
+| imo  |        2016 |        2021 |      1 | tIJ02                               |
+| imo  |        2016 |        2021 |      1 | tr5VV                               |
+| imo  |        2016 |        2021 |      1 | TSGYA                               |
+| imo  |        2016 |        2021 |      1 | TWBzp                               |
+| imo  |        2016 |        2021 |      1 | u79ZJ                               |
+| imo  |        2016 |        2021 |      1 | u79ZJ,TWBzp                         |
+| imo  |        2016 |        2021 |      1 | U8a0v                               |
+| imo  |        2016 |        2021 |      1 | uhDO3                               |
+| imo  |        2016 |        2021 |      1 | Uxr7Z                               |
+| imo  |        2016 |        2021 |      1 | V13Pk                               |
+| imo  |        2016 |        2021 |      1 | VaJ52                               |
+| imo  |        2016 |        2021 |      1 | vb71K                               |
+| imo  |        2016 |        2021 |      1 | VfvdY                               |
+| imo  |        2016 |        2021 |      1 | vxHYt                               |
+| imo  |        2016 |        2021 |      1 | wAASR                               |
+| imo  |        2016 |        2021 |      1 | WjVHD                               |
+| imo  |        2016 |        2021 |      1 | wp55m                               |
+| imo  |        2016 |        2021 |      1 | xJdyB                               |
+| imo  |        2016 |        2021 |      1 | XR16q                               |
+| imo  |        2016 |        2021 |      1 | XR16q,jYUcF,gPE8e                   |
+| imo  |        2016 |        2021 |      1 | y52D7                               |
+| imo  |        2016 |        2021 |      1 | Y7ch7                               |
+| imo  |        2016 |        2021 |      1 | yH19Y                               |
+| imo  |        2016 |        2021 |      1 | Z2FY5                               |
+| imo  |        2016 |        2021 |      1 | z3hdL                               |
+| imo  |        2016 |        2021 |      1 | zCa4j                               |
+| imo  |        2016 |        2021 |      1 | zepT6                               |
+| imo  |        2016 |        2021 |      1 | zHvr4                               |
 
 </details>
 
@@ -598,6 +760,130 @@ Voir les données
 | 1I7hJ | Université Paul-Valéry - Montpellier 3 | TRUE       | kpi.FIN.S.investissements | 203204620 | 1.7839985 | 203M€        | 178%       |    2 | 9649.6415 |
 | G2qA7 | Université Paris-Saclay                | FALSE      | kpi.FIN.S.investissements | 932270725 | 2.3180325 | 932M€        | 232%       |    1 | 2510.3590 |
 | hy4EW | Université de Guyane                   | FALSE      | kpi.FIN.S.investissements |        NA |        NA | N/A          | N/A        |   NA |        NA |
+
+</details>
+
+##### kpi.IMO.S.état_satisfaisant
+
+<details>
+<summary>
+Voir les données
+</summary>
+
+| pid   | Etablissement                      | Comparable | kpi                         | valeur |      norm | valeur_label | norm_label | rang | evolution |
+|:------|:-----------------------------------|:-----------|:----------------------------|-------:|----------:|:-------------|:-----------|-----:|----------:|
+| pVJpw | Centre universitaire de Mayotte    | FALSE      | kpi.IMO.S.état_satisfaisant |      0 | 0.0000000 | 0            | 0%         |   67 |        NA |
+| hy4EW | Université de Guyane               | FALSE      | kpi.IMO.S.état_satisfaisant |      0 | 0.0000000 | 0            | 0%         |   67 |        NA |
+| C6Ps7 | Université Paris Dauphine - PSL    | FALSE      | kpi.IMO.S.état_satisfaisant |      0 | 0.0000000 | 0            | 0%         |   67 |        NA |
+| NLCOF | Université de Corse Pasquale Paoli | FALSE      | kpi.IMO.S.état_satisfaisant |      2 | 0.0645161 | 2            | 6%         |   66 |  200.0000 |
+| 3Z5e6 | Université Gustave Eiffel          | FALSE      | kpi.IMO.S.état_satisfaisant |     10 | 0.0934579 | 10           | 9%         |   65 |  142.8571 |
+
+</details>
+<details>
+<summary>
+Voir les données
+</summary>
+
+| pid   | Etablissement                        | Comparable | kpi                         | valeur |      norm | valeur_label | norm_label | rang | evolution |
+|:------|:-------------------------------------|:-----------|:----------------------------|-------:|----------:|:-------------|:-----------|-----:|----------:|
+| 542Id | Université Toulouse Capitole         | TRUE       | kpi.IMO.S.état_satisfaisant |     28 | 0.9333333 | 28           | 93%        |    4 | 107.69231 |
+| hlX1r | Université de Poitiers               | TRUE       | kpi.IMO.S.état_satisfaisant |    133 | 0.9568345 | 133          | 96%        |    3 |  99.25373 |
+| tIJ02 | Université Jean Monnet               | TRUE       | kpi.IMO.S.état_satisfaisant |     51 | 0.9807692 | 51           | 98%        |    2 | 108.51064 |
+| BWbvP | Université d’Artois                  | TRUE       | kpi.IMO.S.état_satisfaisant |     35 | 1.0000000 | 35           | 100%       |    1 | 100.00000 |
+| PpsCQ | Université Paris sciences et lettres | FALSE      | kpi.IMO.S.état_satisfaisant |     NA |        NA | N/A          | N/A        |   NA |        NA |
+
+</details>
+
+##### kpi.IMO.S.énergie_ABC
+
+<details>
+<summary>
+Voir les données
+</summary>
+
+| pid   | Etablissement                                | Comparable | kpi                   | valeur | norm | valeur_label | norm_label | rang | evolution |
+|:------|:---------------------------------------------|:-----------|:----------------------|-------:|-----:|:-------------|:-----------|-----:|----------:|
+| pVJpw | Centre universitaire de Mayotte              | FALSE      | kpi.IMO.S.énergie_ABC |      0 |    0 | 0            | 0%         |   62 |        NA |
+| hy4EW | Université de Guyane                         | FALSE      | kpi.IMO.S.énergie_ABC |      0 |    0 | 0            | 0%         |   62 |        NA |
+| Z2FY5 | Université de la Nouvelle-Calédonie          | FALSE      | kpi.IMO.S.énergie_ABC |      0 |    0 | 0            | 0%         |   62 |        NA |
+| 7Gzub | Université Jean Moulin - Lyon 3              | TRUE       | kpi.IMO.S.énergie_ABC |      0 |    0 | 0            | 0%         |   62 |        NA |
+| Uxr7Z | Université Paris 8 - Vincennes - Saint-Denis | TRUE       | kpi.IMO.S.énergie_ABC |      0 |    0 | 0            | 0%         |   62 |        NA |
+
+</details>
+<details>
+<summary>
+Voir les données
+</summary>
+
+| pid   | Etablissement                            | Comparable | kpi                   | valeur |      norm | valeur_label | norm_label | rang | evolution |
+|:------|:-----------------------------------------|:-----------|:----------------------|-------:|----------:|:-------------|:-----------|-----:|----------:|
+| yH19Y | Université du Littoral Côte d’Opale      | TRUE       | kpi.IMO.S.énergie_ABC |     36 | 0.8000000 | 36           | 80%        |    4 |  156.5217 |
+| Mz286 | Université de Pau et des Pays de l’Adour | TRUE       | kpi.IMO.S.énergie_ABC |     38 | 0.8444444 | 38           | 84%        |    3 |        NA |
+| 1I7hJ | Université Paul-Valéry - Montpellier 3   | TRUE       | kpi.IMO.S.énergie_ABC |     47 | 0.9400000 | 47           | 94%        |    2 |  109.3023 |
+| LsQ24 | Université Le Havre Normandie            | TRUE       | kpi.IMO.S.énergie_ABC |     19 | 1.0000000 | 19           | 100%       |    1 |  100.0000 |
+| PpsCQ | Université Paris sciences et lettres     | FALSE      | kpi.IMO.S.énergie_ABC |     NA |        NA | N/A          | N/A        |   NA |        NA |
+
+</details>
+
+##### kpi.IMO.S.GES_ABC
+
+<details>
+<summary>
+Voir les données
+</summary>
+
+| pid   | Etablissement                        | Comparable | kpi               | valeur | norm | valeur_label | norm_label | rang | evolution |
+|:------|:-------------------------------------|:-----------|:------------------|-------:|-----:|:-------------|:-----------|-----:|----------:|
+| pVJpw | Centre universitaire de Mayotte      | FALSE      | kpi.IMO.S.GES_ABC |      0 |    0 | 0            | 0%         |   61 |        NA |
+| hy4EW | Université de Guyane                 | FALSE      | kpi.IMO.S.GES_ABC |      0 |    0 | 0            | 0%         |   61 |        NA |
+| Z2FY5 | Université de la Nouvelle-Calédonie  | FALSE      | kpi.IMO.S.GES_ABC |      0 |    0 | 0            | 0%         |   61 |        NA |
+| zepT6 | Université de la Polynésie Française | FALSE      | kpi.IMO.S.GES_ABC |      0 |    0 | 0            | 0%         |   61 |        NA |
+| HAU8L | Université de Nîmes                  | TRUE       | kpi.IMO.S.GES_ABC |      0 |    0 | 0            | 0%         |   61 |        NA |
+
+</details>
+<details>
+<summary>
+Voir les données
+</summary>
+
+| pid   | Etablissement                            | Comparable | kpi               | valeur |      norm | valeur_label | norm_label | rang | evolution |
+|:------|:-----------------------------------------|:-----------|:------------------|-------:|----------:|:-------------|:-----------|-----:|----------:|
+| 542Id | Université Toulouse Capitole             | TRUE       | kpi.IMO.S.GES_ABC |     25 | 0.8333333 | 25           | 83%        |    4 | 131.57895 |
+| yH19Y | Université du Littoral Côte d’Opale      | TRUE       | kpi.IMO.S.GES_ABC |     38 | 0.8444444 | 38           | 84%        |    3 | 115.15152 |
+| Mz286 | Université de Pau et des Pays de l’Adour | TRUE       | kpi.IMO.S.GES_ABC |     39 | 0.8666667 | 39           | 87%        |    2 |        NA |
+| LsQ24 | Université Le Havre Normandie            | TRUE       | kpi.IMO.S.GES_ABC |     18 | 0.9473684 | 18           | 95%        |    1 |  94.73684 |
+| PpsCQ | Université Paris sciences et lettres     | FALSE      | kpi.IMO.S.GES_ABC |     NA |        NA | N/A          | N/A        |   NA |        NA |
+
+</details>
+
+##### kpi.IMO.S.propriété_propre
+
+<details>
+<summary>
+Voir les données
+</summary>
+
+| pid   | Etablissement           | Comparable | kpi                        | valeur | norm | valeur_label | norm_label | rang | evolution |
+|:------|:------------------------|:-----------|:---------------------------|-------:|-----:|:-------------|:-----------|-----:|----------:|
+| atbEK | La Rochelle Université  | TRUE       | kpi.IMO.S.propriété_propre |      0 |    0 | 0            | 0%         |   42 |        NA |
+| 9xlel | Le Mans Université      | TRUE       | kpi.IMO.S.propriété_propre |      0 |    0 | 0            | 0%         |   42 |        NA |
+| 5tVy4 | Université Bretagne Sud | TRUE       | kpi.IMO.S.propriété_propre |      0 |    0 | 0            | 0%         |   42 |        NA |
+| BWbvP | Université d’Artois     | TRUE       | kpi.IMO.S.propriété_propre |      0 |    0 | 0            | 0%         |   42 |        NA |
+| HCBvW | Université d’Orléans    | TRUE       | kpi.IMO.S.propriété_propre |      0 |    0 | 0            | 0%         |   42 |        NA |
+
+</details>
+<details>
+<summary>
+Voir les données
+</summary>
+
+| pid   | Etablissement                        | Comparable | kpi                        | valeur |      norm | valeur_label | norm_label | rang | evolution |
+|:------|:-------------------------------------|:-----------|:---------------------------|-------:|----------:|:-------------|:-----------|-----:|----------:|
+| pVJpw | Centre universitaire de Mayotte      | FALSE      | kpi.IMO.S.propriété_propre |      3 | 0.7500000 | 3            | 75%        |    4 |        NA |
+| hlX1r | Université de Poitiers               | TRUE       | kpi.IMO.S.propriété_propre |    122 | 0.8776978 | 122          | 88%        |    3 |  100.0000 |
+| RN4E6 | Université d’Évry-Val-d’Essonne      | FALSE      | kpi.IMO.S.propriété_propre |     15 | 0.9375000 | 15           | 94%        |    2 |  107.1429 |
+| 542Id | Université Toulouse Capitole         | TRUE       | kpi.IMO.S.propriété_propre |     30 | 1.0000000 | 30           | 100%       |    1 |  103.4483 |
+| PpsCQ | Université Paris sciences et lettres | FALSE      | kpi.IMO.S.propriété_propre |     NA |        NA | N/A          | N/A        |   NA |        NA |
 
 </details>
 

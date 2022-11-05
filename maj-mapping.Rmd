@@ -80,21 +80,32 @@ fin <- read.csv2("dataESR/fr-esr-operateurs-indicateurs-financiers.csv") %>%
   ) %>%
   unique() 
 
+imo <- read.csv2("dataESR/fr-esr-patrimoine-immobilier-des-operateurs-de-l-enseignement-superieur.csv") %>%
+  transmute(
+    pid = Paysage_id,
+    etab = Etablissement,
+  ) %>%
+  unique() 
+
+
 etab.data <- 
   enstit %>% rename(enstit = etab) %>%
   full_join(ensnp %>% rename(ensnp = etab)) %>%
   full_join(bia %>% rename(bia = etab)) %>%
   full_join(etu %>% rename(etu = etab)) %>%
-  full_join(fin %>% rename(fin = etab)) 
+  full_join(fin %>% rename(fin = etab)) %>%
+  full_join(imo %>% rename(imo = etab))
 
 etab.data.long <- bind_rows(
   enstit %>% mutate(dataset = "enstit"),
   ensnp %>% mutate(dataset = "ensnp"),
   bia %>% mutate(dataset = "bia"),
   etu %>% mutate(dataset = "etu"),
-  fin %>% mutate(dataset = "fin")) %>%
-  separate_rows(UAI,sep=';') %>%
-  group_by(pid,dataset) 
+  fin %>% mutate(dataset = "fin"),
+  imo %>% mutate(dataset = "imo") 
+  ) %>%
+  separate_rows(UAI,sep='[;,]') %>%
+  group_by(pid,dataset)
 
 etab.data.milong <- etab.data.long %>%
   summarise(
@@ -114,7 +125,7 @@ etab.data %>%
 
 ```{r doublepid, results='asis'}
 etab.data %>%
-  filter(str_detect(pid,";")) %>%
+  filter(str_detect(pid,"[;,]")) %>%
   spoiler_table()
 ```
 
@@ -185,13 +196,73 @@ fix.fin <- autofix.fin %>%
 fix.fin %>% spoiler_table()
 ```
 
+## Fix imo
+
+### Autofix imo
+
+```{r autofix.imo}
+autofix.imo.full <- imo %>%
+  filter(str_detect(pid,",")) %>%
+  mutate(pid.imo = pid) %>%
+  rename("etab.imo" = "etab") %>%
+  separate_rows(pid, sep=",") %>% 
+  group_by(pid, pid.imo) %>%
+  slice_head(n=1) %>%
+  ungroup() %>%
+  left_join(
+    bind_rows(enstit, ensnp, etu, bia) %>%
+      filter(!str_detect(pid,";")) %>%
+      group_by(pid) %>%
+      slice_head(n=1)
+    )
+
+autofix.imo <- autofix.imo.full %>%
+  filter(!is.na(etab)) %>%
+  transmute(
+    pid.src = pid.imo,
+    pid.dst = pid,
+    etab = etab
+  ) %>%
+  na.omit() %>%
+  unique() %>%
+  group_by(pid.src) %>%
+  filter(n_distinct(pid.dst) == 1)
+```
 
 
-### Application du fix
+```{r autofix.imo.check, results='asis'}
+autofix.imo.check <- autofix.imo.full %>%
+  group_by(pid.imo) %>%
+  mutate(n_match = n_distinct(pid)) %>%
+  ungroup() %>%
+  arrange(n_match, pid.imo) %>%
+  filter(! pid.imo %in% autofix.imo$pid.src) 
+
+autofix.imo.check %>%
+  spoiler_table("Check sans correspondance")
+```
+
+
+Les bâtiments entre plusieurs établissements sont exclus du jeu de données.
+
+```{r autofix.imo.nonfix, results='asis'}
+read.csv2("dataESR/fr-esr-patrimoine-immobilier-des-operateurs-de-l-enseignement-superieur.csv") %>%
+  group_by(Année) %>%
+  summarise(
+    n_batiments = n(),
+    n_exclus = sum(Paysage_id %in% autofix.imo.check$pid.imo)
+  ) %>%
+  mutate(part = scales::percent(n_exclus / n_batiments, accuracy = 0.01)) %>%
+  spoiler_table("Nombre d'exclusion")
+```
+
+## Application du fix
 
 ```{r fix}
-pidfix <- fix.fin$pid.dst
-names(pidfix) <- fix.fin$pid.src
+fix <- bind_rows(fix.fin, autofix.imo)
+
+pidfix <- fix$pid.dst
+names(pidfix) <- fix$pid.src
   
 etab.data.long.fixed <- etab.data.long %>%
   mutate(pid = recode(pid, !!!pidfix)) 
@@ -203,10 +274,17 @@ etab.data.long.fixed <- etab.data.long %>%
 ```{r data.incomplete.univ}
 incomplete.univ <- etab.data.long.fixed %>% 
   group_by(pid) %>%
-  filter(n_distinct(dataset) != 5) %>%
+  filter(n_distinct(dataset) != 6) %>%
   filter(str_detect(etab,"niversité")) %>%
   arrange(pid, etab) %>%
-  select(pid, dataset, etab, UAI)
+  select(pid, dataset, etab, UAI) %>%
+  unique() %>%
+  group_by(pid) %>%
+  summarise(
+    etab = paste(etab, collapse = ";"),
+    datasets = paste(dataset, collapse = " ")) %>%
+  filter(!pid %in% autofix.imo.check$pid.imo)
+  
 
 incomplete.univ %>%
   kableExtra::kable()
@@ -435,7 +513,7 @@ etab %>% spoiler_table()
 
 ```{r save}
 write.csv2(etab, "dataESR/fr-cpesrtmp-etablissements.csv", row.names = FALSE)
-write.csv2(fix.fin,"dataESR/fr-cpesrtmp-pidfix.csv", row.names = FALSE)
+write.csv2(fix,"dataESR/fr-cpesrtmp-pidfix.csv", row.names = FALSE)
 ```
 
 

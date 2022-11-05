@@ -48,6 +48,7 @@ kpiesr_plot_primaire  <- function(rentrée, id, lfc,
 }
 
 # kpiesr_plot_primaire(2020, "4k25D", kpiesr_lfc[["ETU"]], facet = FALSE)
+# kpiesr_plot_primaire(2020, "4k25D", kpiesr_lfc[["IMO"]], facet = FALSE)
 
 kpiesr_kpi_stats <- function(df.stats,thekpi) {
   lapply(thekpi,function(p) {

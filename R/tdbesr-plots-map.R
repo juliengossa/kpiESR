@@ -15,6 +15,7 @@
 #'
 #' @examples
 kpiesr_plot_map <- function(rentrée, id, groupe, xvar, yvar, xlabel=NA, ylabel=NA,
+                            smooth = FALSE,
                             style = kpiesr_style()) {
   
   df <- kpiESR::esr %>%
@@ -38,6 +39,7 @@ kpiesr_plot_map <- function(rentrée, id, groupe, xvar, yvar, xlabel=NA, ylabel=
   df %>%
     #mutate(label = ifelse(Etablissement == "Université de Lorraine", NA, Etablissement)) %>%
     ggplot(aes(x=x, y=y, size=kpi.ETU.P.effectif, color = PerimEx)) +
+    { if(smooth) geom_smooth(method="lm", alpha=0.3, color="grey", fill="grey70", size=0.2, show_huide=FALSE)} +
     ggrepel::geom_text_repel(aes(label=Sigle), size = 3, color="grey") +
     geom_point() + 
     ggrepel::geom_text_repel(data = df.etab, aes(label=Etablissement), 
@@ -52,5 +54,5 @@ kpiesr_plot_map <- function(rentrée, id, groupe, xvar, yvar, xlabel=NA, ylabel=
 }
 
 #kpiesr_plot_map(2020,"4k25D","Université","kpi.ENS.S.titulaires/kpi.ENS.P.effectif","kpi.BIA.S.titulaires/kpi.BIA.P.effectif")
-#kpiesr_plot_map(2020,"4k25D","Ensemble","kpi.ETU.P.effectif","kpi.ENS.P.effectif")
+# kpiesr_plot_map(2020,"4k25D","Ensemble","kpi.ETU.P.effectif","kpi.ENS.P.effectif", smooth = TRUE) + theme_cpesr()
 

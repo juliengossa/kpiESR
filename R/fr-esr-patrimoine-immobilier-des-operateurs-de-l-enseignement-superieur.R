@@ -25,7 +25,8 @@ kpiesr_read.imo <- function(pidfix=list("x"="x")) {
       kpi.IMO.S.énergie_ABC = sum(Energie.class. %in% c("A","B","C")),
       kpi.IMO.S.GES_ABC = sum(GES %in% c("A","B","C")),
       kpi.IMO.S.propriété_propre = sum(Propriétaire.bat. %in% c("Propre à l'établissement"))
-    )
+    ) %>%
+    ungroup()
 
 }
       

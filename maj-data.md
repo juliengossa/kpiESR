@@ -1,6 +1,6 @@
 Mise à jour des données
 ================
-2022-11-05
+2023-01-03
 
 Ce document décrit le processus de mise à jour des données kpiESR, et
 notamment la constitution d’un jeu de données des établissements, et la
@@ -33,20 +33,20 @@ Les données sont agrégées à trois échelles : *Ensemble*, *Groupe* et
 *Etablissement*, avec trois méthodes de constitution des périmètres
 d’aggrégation :
 
--   *Ensemble* agrège toutes les données dans tous les jeux : sa
-    cohérence dépend de la cohérence du périmètre des jeux de données ;
--   *Groupe* agrège les données des établissements classés dans chaque
-    groupe, selon deux approches différentes :
-    -   pour les universités, toutes les données disponibles sont
-        agrégées (c’est indispensable pour surmonter les nombreuses
-        modifications de périmètre internes à ce groupe) ;
-    -   pour les autres groupes, seules les données des établissements
-        dont toutes les données sont disponibles sur toute la période
-        étudiées (ce afin d’éviter d’avoir des séries impactées par les
-        changements de périmètre);
--   *Etablissement* agrège les données de chaque établissement, sur les
-    périodes et périmètres disponibles (et est donc impacté par les
-    changement de périmètres).
+- *Ensemble* agrège toutes les données dans tous les jeux : sa cohérence
+  dépend de la cohérence du périmètre des jeux de données ;
+- *Groupe* agrège les données des établissements classés dans chaque
+  groupe, selon deux approches différentes :
+  - pour les universités, toutes les données disponibles sont agrégées
+    (c’est indispensable pour surmonter les nombreuses modifications de
+    périmètre internes à ce groupe) ;
+  - pour les autres groupes, seules les données des établissements dont
+    toutes les données sont disponibles sur toute la période étudiées
+    (ce afin d’éviter d’avoir des séries impactées par les changements
+    de périmètre);
+- *Etablissement* agrège les données de chaque établissement, sur les
+  périodes et périmètres disponibles (et est donc impacté par les
+  changement de périmètres).
 
 ## Fusion de `ens.tit`, `ens.np`, `bia`, `etu`, `fin` et `imo`
 
@@ -57,171 +57,13 @@ d’aggrégation :
 Voir les données
 </summary>
 
-| data | Rentrée.min | Rentrée.max | nb_pid | pid                                 |
-|:-----|------------:|------------:|-------:|:------------------------------------|
-| ens  |        2010 |        2020 |    134 | NA                                  |
-| bia  |        2015 |        2020 |    151 | NA                                  |
-| etu  |        2006 |        2021 |    132 | NA                                  |
-| fin  |        2009 |        2021 |    155 | NA                                  |
-| imo  |        2016 |        2021 |      1 | 06SE7                               |
-| imo  |        2016 |        2021 |      1 | 0Mvk5                               |
-| imo  |        2016 |        2021 |      1 | 13fXQ                               |
-| imo  |        2016 |        2021 |      1 | 1I7hJ                               |
-| imo  |        2016 |        2021 |      1 | 1tI7C                               |
-| imo  |        2016 |        2021 |      1 | 2ALYK                               |
-| imo  |        2016 |        2021 |      1 | 3GxJ8                               |
-| imo  |        2016 |        2021 |      1 | 3Z5e6                               |
-| imo  |        2016 |        2021 |      1 | 44xxV,vb71K,3Z5e6,kr03v             |
-| imo  |        2016 |        2021 |      1 | 4k25D                               |
-| imo  |        2016 |        2021 |      1 | 542Id                               |
-| imo  |        2016 |        2021 |      1 | 54VTe                               |
-| imo  |        2016 |        2021 |      1 | 57OsX                               |
-| imo  |        2016 |        2021 |      1 | 59da6                               |
-| imo  |        2016 |        2021 |      1 | 5cZyU                               |
-| imo  |        2016 |        2021 |      1 | 5eUBS                               |
-| imo  |        2016 |        2021 |      1 | 5tVy4                               |
-| imo  |        2016 |        2021 |      1 | 6a498                               |
-| imo  |        2016 |        2021 |      1 | 6G2TU                               |
-| imo  |        2016 |        2021 |      1 | 6G2TU,TWBzp                         |
-| imo  |        2020 |        2021 |      1 | 6kk6n                               |
-| imo  |        2016 |        2021 |      1 | 7Gzub                               |
-| imo  |        2016 |        2021 |      1 | 7Mpgt                               |
-| imo  |        2016 |        2021 |      1 | 851ij                               |
-| imo  |        2016 |        2021 |      1 | 8618D                               |
-| imo  |        2016 |        2021 |      1 | 8618D,021qP,n2X5f,5cZyU             |
-| imo  |        2016 |        2021 |      1 | 8618D,5cZyU                         |
-| imo  |        2016 |        2021 |      1 | 8j5s2                               |
-| imo  |        2016 |        2021 |      1 | 8JlNN                               |
-| imo  |        2016 |        2021 |      1 | 8k41p                               |
-| imo  |        2016 |        2021 |      1 | 8k41p,iq0rG                         |
-| imo  |        2016 |        2021 |      1 | 8k883                               |
-| imo  |        2016 |        2021 |      1 | 8k883,bxPQe,6G2TU,5cZyU,kyy5N,QXnpG |
-| imo  |        2016 |        2021 |      1 | 8k883,C6Ps7                         |
-| imo  |        2016 |        2021 |      1 | 8tVLr                               |
-| imo  |        2016 |        2021 |      1 | 90I54                               |
-| imo  |        2016 |        2021 |      1 | 9wAap                               |
-| imo  |        2016 |        2021 |      1 | 9wAap,SsRkf                         |
-| imo  |        2016 |        2021 |      1 | 9xlel                               |
-| imo  |        2016 |        2021 |      1 | a2a9U                               |
-| imo  |        2016 |        2021 |      1 | ab5z5                               |
-| imo  |        2016 |        2021 |      1 | atbEK                               |
-| imo  |        2016 |        2021 |      1 | aYLn2,FDijq,wAASR                   |
-| imo  |        2016 |        2021 |      1 | BOl78                               |
-| imo  |        2016 |        2021 |      1 | BWbvP                               |
-| imo  |        2016 |        2021 |      1 | bxPQe                               |
-| imo  |        2016 |        2021 |      1 | bxPQe,6G2TU                         |
-| imo  |        2016 |        2021 |      1 | bxPQe,6G2TU,5cZyU                   |
-| imo  |        2016 |        2021 |      1 | C6Ps7                               |
-| imo  |        2016 |        2021 |      1 | C701f                               |
-| imo  |        2016 |        2021 |      1 | cEt92                               |
-| imo  |        2016 |        2021 |      1 | cqkij                               |
-| imo  |        2016 |        2021 |      1 | cqyN7                               |
-| imo  |        2016 |        2021 |      1 | CUBKB                               |
-| imo  |        2016 |        2021 |      1 | CUBKB,7Gzub                         |
-| imo  |        2016 |        2021 |      1 | cWx2t                               |
-| imo  |        2016 |        2021 |      1 | dj88d                               |
-| imo  |        2016 |        2021 |      1 | Dk1Th                               |
-| imo  |        2016 |        2021 |      1 | Dk1Th,1bXaK                         |
-| imo  |        2021 |        2021 |      1 | DmOC1                               |
-| imo  |        2016 |        2021 |      1 | DOunC                               |
-| imo  |        2016 |        2021 |      1 | dPmxa                               |
-| imo  |        2017 |        2021 |      1 | dQaK0                               |
-| imo  |        2016 |        2021 |      1 | etBz7                               |
-| imo  |        2016 |        2021 |      1 | evv7S                               |
-| imo  |        2016 |        2021 |      1 | EW53M                               |
-| imo  |        2016 |        2021 |      1 | F77ic                               |
-| imo  |        2016 |        2021 |      1 | FKt2q                               |
-| imo  |        2016 |        2021 |      1 | fWJJA                               |
-| imo  |        2016 |        2021 |      1 | G2qA7                               |
-| imo  |        2016 |        2021 |      1 | G4572                               |
-| imo  |        2016 |        2021 |      1 | g6rwB                               |
-| imo  |        2016 |        2021 |      1 | G8QBG                               |
-| imo  |        2016 |        2021 |      1 | gCAyK                               |
-| imo  |        2016 |        2021 |      1 | GJYxj                               |
-| imo  |        2016 |        2021 |      1 | H3nOd                               |
-| imo  |        2016 |        2021 |      1 | HAU8L                               |
-| imo  |        2016 |        2021 |      1 | HCBvW                               |
-| imo  |        2016 |        2021 |      1 | HCBvW,QYw7j                         |
-| imo  |        2016 |        2021 |      1 | hfCvd                               |
-| imo  |        2016 |        2021 |      1 | hlX1r                               |
-| imo  |        2016 |        2021 |      1 | Hm42K                               |
-| imo  |        2016 |        2021 |      1 | HqAYu                               |
-| imo  |        2016 |        2021 |      1 | hy4EW                               |
-| imo  |        2016 |        2021 |      1 | I4SPK                               |
-| imo  |        2016 |        2021 |      1 | I4SPK,p25Q3                         |
-| imo  |        2016 |        2021 |      1 | IlIW8                               |
-| imo  |        2016 |        2021 |      1 | IXHyv                               |
-| imo  |        2016 |        2021 |      1 | j5bS4                               |
-| imo  |        2016 |        2021 |      1 | JaqkX                               |
-| imo  |        2016 |        2021 |      1 | jYUcF                               |
-| imo  |        2016 |        2021 |      1 | jYUcF,IXHyv                         |
-| imo  |        2016 |        2021 |      1 | K4lR3                               |
-| imo  |        2016 |        2021 |      1 | kFcnq                               |
-| imo  |        2016 |        2021 |      1 | kWved                               |
-| imo  |        2016 |        2021 |      1 | Lr94O                               |
-| imo  |        2016 |        2021 |      1 | LsQ24                               |
-| imo  |        2016 |        2021 |      1 | m7K6T                               |
-| imo  |        2016 |        2021 |      1 | m7K6T,mMex4                         |
-| imo  |        2016 |        2021 |      1 | m7K6T,mMex4,4a8B2                   |
-| imo  |        2016 |        2021 |      1 | m84Aa                               |
-| imo  |        2016 |        2021 |      1 | MHneW                               |
-| imo  |        2016 |        2021 |      1 | mMex4                               |
-| imo  |        2016 |        2021 |      1 | Mz286                               |
-| imo  |        2016 |        2021 |      1 | Mz90U                               |
-| imo  |        2016 |        2021 |      1 | n1W55                               |
-| imo  |        2016 |        2021 |      1 | nkbwh                               |
-| imo  |        2016 |        2021 |      1 | NLCOF                               |
-| imo  |        2016 |        2021 |      1 | OJZ4a                               |
-| imo  |        2016 |        2021 |      1 | OYA17                               |
-| imo  |        2016 |        2021 |      1 | p25Q3                               |
-| imo  |        2016 |        2021 |      1 | pVJpw                               |
-| imo  |        2016 |        2021 |      1 | PVnB4                               |
-| imo  |        2016 |        2021 |      1 | QtZkX                               |
-| imo  |        2016 |        2021 |      1 | qUCQp                               |
-| imo  |        2016 |        2021 |      1 | QXnpG                               |
-| imo  |        2016 |        2021 |      1 | QYw7j                               |
-| imo  |        2016 |        2021 |      1 | RdQr7                               |
-| imo  |        2016 |        2021 |      1 | RN4E6                               |
-| imo  |        2016 |        2021 |      1 | RS4WF                               |
-| imo  |        2016 |        2021 |      1 | s3t8T                               |
-| imo  |        2016 |        2021 |      1 | S88MV                               |
-| imo  |        2016 |        2021 |      1 | S8ntZ                               |
-| imo  |        2016 |        2021 |      1 | t6Cq5                               |
-| imo  |        2016 |        2021 |      1 | T6qPJ                               |
-| imo  |        2016 |        2021 |      1 | td273                               |
-| imo  |        2016 |        2021 |      1 | tdEpy                               |
-| imo  |        2016 |        2021 |      1 | TeXD3                               |
-| imo  |        2016 |        2021 |      1 | ti37C                               |
-| imo  |        2016 |        2021 |      1 | ti37C,9wAap                         |
-| imo  |        2016 |        2021 |      1 | ti37C,SsRkf                         |
-| imo  |        2016 |        2021 |      1 | tIJ02                               |
-| imo  |        2016 |        2021 |      1 | tr5VV                               |
-| imo  |        2016 |        2021 |      1 | TSGYA                               |
-| imo  |        2016 |        2021 |      1 | TWBzp                               |
-| imo  |        2016 |        2021 |      1 | u79ZJ                               |
-| imo  |        2016 |        2021 |      1 | u79ZJ,TWBzp                         |
-| imo  |        2016 |        2021 |      1 | U8a0v                               |
-| imo  |        2016 |        2021 |      1 | uhDO3                               |
-| imo  |        2016 |        2021 |      1 | Uxr7Z                               |
-| imo  |        2016 |        2021 |      1 | V13Pk                               |
-| imo  |        2016 |        2021 |      1 | VaJ52                               |
-| imo  |        2016 |        2021 |      1 | vb71K                               |
-| imo  |        2016 |        2021 |      1 | VfvdY                               |
-| imo  |        2016 |        2021 |      1 | vxHYt                               |
-| imo  |        2016 |        2021 |      1 | wAASR                               |
-| imo  |        2016 |        2021 |      1 | WjVHD                               |
-| imo  |        2016 |        2021 |      1 | wp55m                               |
-| imo  |        2016 |        2021 |      1 | xJdyB                               |
-| imo  |        2016 |        2021 |      1 | XR16q                               |
-| imo  |        2016 |        2021 |      1 | XR16q,jYUcF,gPE8e                   |
-| imo  |        2016 |        2021 |      1 | y52D7                               |
-| imo  |        2016 |        2021 |      1 | Y7ch7                               |
-| imo  |        2016 |        2021 |      1 | yH19Y                               |
-| imo  |        2016 |        2021 |      1 | Z2FY5                               |
-| imo  |        2016 |        2021 |      1 | z3hdL                               |
-| imo  |        2016 |        2021 |      1 | zCa4j                               |
-| imo  |        2016 |        2021 |      1 | zepT6                               |
-| imo  |        2016 |        2021 |      1 | zHvr4                               |
+| data | Rentrée.min | Rentrée.max | nb_pid |
+|:-----|------------:|------------:|-------:|
+| ens  |        2010 |        2020 |    134 |
+| bia  |        2015 |        2021 |    152 |
+| etu  |        2006 |        2021 |    132 |
+| fin  |        2009 |        2021 |    155 |
+| imo  |        2016 |        2021 |    160 |
 
 </details>
 
@@ -493,11 +335,11 @@ Voir les données
 
 | pid   | Etablissement                        | Comparable | kpi         | valeur |      norm | valeur_label | norm_label | rang | evolution |
 |:------|:-------------------------------------|:-----------|:------------|-------:|----------:|:-------------|:-----------|-----:|----------:|
-| 8j5s2 | Université de Picardie Jules-Verne   | TRUE       | kpi.BIA.S.A |    231 | 0.2156863 | 231          | 22%        |   68 | 119.68912 |
-| zepT6 | Université de la Polynésie Française | FALSE      | kpi.BIA.S.A |     28 | 0.2545455 | 28           | 25%        |   67 | 107.69231 |
-| LsQ24 | Université Le Havre Normandie        | TRUE       | kpi.BIA.S.A |    105 | 0.2685422 | 105          | 27%        |   66 |  92.10526 |
-| hlX1r | Université de Poitiers               | TRUE       | kpi.BIA.S.A |    323 | 0.2691667 | 323          | 27%        |   65 | 102.21519 |
-| g6rwB | Université Paris Nanterre            | TRUE       | kpi.BIA.S.A |    304 | 0.2699822 | 304          | 27%        |   64 | 110.94891 |
+| 8j5s2 | Université de Picardie Jules-Verne   | TRUE       | kpi.BIA.S.A |    231 | 0.2156863 | 231          | 22%        |   69 | 119.68912 |
+| zepT6 | Université de la Polynésie Française | FALSE      | kpi.BIA.S.A |     28 | 0.2545455 | 28           | 25%        |   68 | 107.69231 |
+| LsQ24 | Université Le Havre Normandie        | TRUE       | kpi.BIA.S.A |    105 | 0.2685422 | 105          | 27%        |   67 |  92.10526 |
+| hlX1r | Université de Poitiers               | TRUE       | kpi.BIA.S.A |    323 | 0.2691667 | 323          | 27%        |   66 | 102.21519 |
+| g6rwB | Université Paris Nanterre            | TRUE       | kpi.BIA.S.A |    304 | 0.2699822 | 304          | 27%        |   65 | 110.94891 |
 
 </details>
 <details>
@@ -507,11 +349,11 @@ Voir les données
 
 | pid   | Etablissement                        | Comparable | kpi         | valeur |      norm | valeur_label | norm_label | rang |  evolution |
 |:------|:-------------------------------------|:-----------|:------------|-------:|----------:|:-------------|:-----------|-----:|-----------:|
+| 3Z5e6 | Université Gustave Eiffel            | FALSE      | kpi.BIA.S.A |    299 | 0.4550989 | 299          | 46%        |    4 |   173.8372 |
 | 5tVy4 | Université Bretagne Sud              | TRUE       | kpi.BIA.S.A |    210 | 0.4794521 | 210          | 48%        |    3 |   105.0000 |
 | PpsCQ | Université Paris sciences et lettres | FALSE      | kpi.BIA.S.A |    831 | 0.4828588 | 831          | 48%        |    2 | 16620.0000 |
 | G2qA7 | Université Paris-Saclay              | FALSE      | kpi.BIA.S.A |   1404 | 0.5205784 | 1 404        | 52%        |    1 |   342.4390 |
 | C6Ps7 | Université Paris Dauphine - PSL      | FALSE      | kpi.BIA.S.A |     NA |        NA | N/A          | N/A        |   NA |         NA |
-| cqyN7 | Université Sorbonne Paris Nord       | TRUE       | kpi.BIA.S.A |    271 |        NA | 271          | N/A        |   NA |   101.8797 |
 
 </details>
 
@@ -524,11 +366,11 @@ Voir les données
 
 | pid   | Etablissement                      | Comparable | kpi         | valeur |      norm | valeur_label | norm_label | rang | evolution |
 |:------|:-----------------------------------|:-----------|:------------|-------:|----------:|:-------------|:-----------|-----:|----------:|
-| 5tVy4 | Université Bretagne Sud            | TRUE       | kpi.BIA.S.B |     69 | 0.1575342 | 69           | 16%        |   68 |  87.34177 |
-| 8j5s2 | Université de Picardie Jules-Verne | TRUE       | kpi.BIA.S.B |    189 | 0.1764706 | 189          | 18%        |   67 | 113.85542 |
-| atbEK | La Rochelle Université             | TRUE       | kpi.BIA.S.B |     82 | 0.1933962 | 82           | 19%        |   66 |  93.18182 |
-| G2qA7 | Université Paris-Saclay            | FALSE      | kpi.BIA.S.B |    526 | 0.1950315 | 526          | 20%        |   65 | 136.62338 |
-| zCa4j | Université Savoie Mont Blanc       | TRUE       | kpi.BIA.S.B |    118 | 0.1973244 | 118          | 20%        |   64 | 105.35714 |
+| 5tVy4 | Université Bretagne Sud            | TRUE       | kpi.BIA.S.B |     69 | 0.1575342 | 69           | 16%        |   69 |  87.34177 |
+| 8j5s2 | Université de Picardie Jules-Verne | TRUE       | kpi.BIA.S.B |    189 | 0.1764706 | 189          | 18%        |   68 | 113.85542 |
+| atbEK | La Rochelle Université             | TRUE       | kpi.BIA.S.B |     82 | 0.1933962 | 82           | 19%        |   67 |  93.18182 |
+| G2qA7 | Université Paris-Saclay            | FALSE      | kpi.BIA.S.B |    526 | 0.1950315 | 526          | 20%        |   66 | 136.62338 |
+| zCa4j | Université Savoie Mont Blanc       | TRUE       | kpi.BIA.S.B |    118 | 0.1973244 | 118          | 20%        |   65 | 105.35714 |
 
 </details>
 <details>
@@ -538,11 +380,11 @@ Voir les données
 
 | pid   | Etablissement                        | Comparable | kpi         | valeur |      norm | valeur_label | norm_label | rang | evolution |
 |:------|:-------------------------------------|:-----------|:------------|-------:|----------:|:-------------|:-----------|-----:|----------:|
+| cEt92 | Université de La Réunion             | FALSE      | kpi.BIA.S.B |    243 | 0.3351724 | 243          | 34%        |    4 |  132.0652 |
 | NLCOF | Université de Corse Pasquale Paoli   | FALSE      | kpi.BIA.S.B |    128 | 0.3377309 | 128          | 34%        |    3 |  120.7547 |
 | 3Z5e6 | Université Gustave Eiffel            | FALSE      | kpi.BIA.S.B |    251 | 0.3820396 | 251          | 38%        |    2 |  121.8447 |
 | zepT6 | Université de la Polynésie Française | FALSE      | kpi.BIA.S.B |     59 | 0.5363636 | 59           | 54%        |    1 |  115.6863 |
 | C6Ps7 | Université Paris Dauphine - PSL      | FALSE      | kpi.BIA.S.B |     NA |        NA | N/A          | N/A        |   NA |        NA |
-| cqyN7 | Université Sorbonne Paris Nord       | TRUE       | kpi.BIA.S.B |    255 |        NA | 255          | N/A        |   NA |  122.5962 |
 
 </details>
 
@@ -555,11 +397,11 @@ Voir les données
 
 | pid   | Etablissement                                | Comparable | kpi         | valeur |      norm | valeur_label | norm_label | rang | evolution |
 |:------|:---------------------------------------------|:-----------|:------------|-------:|----------:|:-------------|:-----------|-----:|----------:|
-| 3Z5e6 | Université Gustave Eiffel                    | FALSE      | kpi.BIA.S.C |    107 | 0.1628615 | 107          | 16%        |   68 | 100.00000 |
-| zepT6 | Université de la Polynésie Française         | FALSE      | kpi.BIA.S.C |     23 | 0.2090909 | 23           | 21%        |   67 |  88.46154 |
-| PpsCQ | Université Paris sciences et lettres         | FALSE      | kpi.BIA.S.C |    360 | 0.2091807 | 360          | 21%        |   66 |        NA |
-| Uxr7Z | Université Paris 8 - Vincennes - Saint-Denis | TRUE       | kpi.BIA.S.C |    198 | 0.2601840 | 198          | 26%        |   65 |  80.81633 |
-| G2qA7 | Université Paris-Saclay                      | FALSE      | kpi.BIA.S.C |    767 | 0.2843901 | 767          | 28%        |   64 |  75.12243 |
+| 3Z5e6 | Université Gustave Eiffel                    | FALSE      | kpi.BIA.S.C |    107 | 0.1628615 | 107          | 16%        |   69 | 100.00000 |
+| zepT6 | Université de la Polynésie Française         | FALSE      | kpi.BIA.S.C |     23 | 0.2090909 | 23           | 21%        |   68 |  88.46154 |
+| PpsCQ | Université Paris sciences et lettres         | FALSE      | kpi.BIA.S.C |    360 | 0.2091807 | 360          | 21%        |   67 |        NA |
+| Uxr7Z | Université Paris 8 - Vincennes - Saint-Denis | TRUE       | kpi.BIA.S.C |    198 | 0.2601840 | 198          | 26%        |   66 |  80.81633 |
+| G2qA7 | Université Paris-Saclay                      | FALSE      | kpi.BIA.S.C |    767 | 0.2843901 | 767          | 28%        |   65 |  75.12243 |
 
 </details>
 <details>
@@ -569,11 +411,11 @@ Voir les données
 
 | pid   | Etablissement                       | Comparable | kpi         | valeur |      norm | valeur_label | norm_label | rang | evolution |
 |:------|:------------------------------------|:-----------|:------------|-------:|----------:|:-------------|:-----------|-----:|----------:|
+| LsQ24 | Université Le Havre Normandie       | TRUE       | kpi.BIA.S.C |    192 | 0.4910486 | 192          | 49%        |    4 | 109.09091 |
 | yH19Y | Université du Littoral Côte d’Opale | TRUE       | kpi.BIA.S.C |    265 | 0.5038023 | 265          | 50%        |    3 |  89.22559 |
 | g6rwB | Université Paris Nanterre           | TRUE       | kpi.BIA.S.C |    592 | 0.5257549 | 592          | 53%        |    2 | 166.76056 |
 | 8j5s2 | Université de Picardie Jules-Verne  | TRUE       | kpi.BIA.S.C |    651 | 0.6078431 | 651          | 61%        |    1 | 108.86288 |
 | C6Ps7 | Université Paris Dauphine - PSL     | FALSE      | kpi.BIA.S.C |     NA |        NA | N/A          | N/A        |   NA |        NA |
-| cqyN7 | Université Sorbonne Paris Nord      | TRUE       | kpi.BIA.S.C |    178 |        NA | 178          | N/A        |   NA |  56.86901 |
 
 </details>
 
@@ -586,11 +428,11 @@ Voir les données
 
 | pid   | Etablissement                        | Comparable | kpi                  | valeur |      norm | valeur_label | norm_label | rang | evolution |
 |:------|:-------------------------------------|:-----------|:---------------------|-------:|----------:|:-------------|:-----------|-----:|----------:|
-| pVJpw | Centre universitaire de Mayotte      | FALSE      | kpi.BIA.S.titulaires |     17 | 0.4146341 | 17           | 41%        |   67 | 340.00000 |
-| s3t8T | Université Côte d’Azur               | TRUE       | kpi.BIA.S.titulaires |    780 | 0.4921136 | 780          | 49%        |   66 |  96.41533 |
-| RS4WF | CY Cergy Paris Université            | FALSE      | kpi.BIA.S.titulaires |    474 | 0.4922118 | 474          | 49%        |   65 | 120.91837 |
-| zepT6 | Université de la Polynésie Française | FALSE      | kpi.BIA.S.titulaires |     55 | 0.5000000 | 55           | 50%        |   64 | 114.58333 |
-| 9xlel | Le Mans Université                   | TRUE       | kpi.BIA.S.titulaires |    281 | 0.5026834 | 281          | 50%        |   63 | 102.18182 |
+| pVJpw | Centre universitaire de Mayotte      | FALSE      | kpi.BIA.S.titulaires |     17 | 0.4146341 | 17           | 41%        |   68 | 340.00000 |
+| s3t8T | Université Côte d’Azur               | TRUE       | kpi.BIA.S.titulaires |    780 | 0.4921136 | 780          | 49%        |   67 |  96.41533 |
+| RS4WF | CY Cergy Paris Université            | FALSE      | kpi.BIA.S.titulaires |    474 | 0.4922118 | 474          | 49%        |   66 | 120.91837 |
+| zepT6 | Université de la Polynésie Française | FALSE      | kpi.BIA.S.titulaires |     55 | 0.5000000 | 55           | 50%        |   65 | 114.58333 |
+| 9xlel | Le Mans Université                   | TRUE       | kpi.BIA.S.titulaires |    281 | 0.5026834 | 281          | 50%        |   64 | 102.18182 |
 
 </details>
 <details>
@@ -598,13 +440,13 @@ Voir les données
 Voir les données
 </summary>
 
-| pid   | Etablissement                     | Comparable | kpi                  | valeur |      norm | valeur_label | norm_label | rang | evolution |
-|:------|:----------------------------------|:-----------|:---------------------|-------:|----------:|:-------------|:-----------|-----:|----------:|
-| z3hdL | Université des Antilles           | FALSE      | kpi.BIA.S.titulaires |    373 | 0.7987152 | 373          | 80%        |    2 | 108.43023 |
-| HqAYu | Université Toulouse - Jean Jaurès | TRUE       | kpi.BIA.S.titulaires |    703 | 0.8099078 | 703          | 81%        |    1 | 100.14245 |
-| hy4EW | Université de Guyane              | FALSE      | kpi.BIA.S.titulaires |     NA |        NA | N/A          | N/A        |   NA |        NA |
-| C6Ps7 | Université Paris Dauphine - PSL   | FALSE      | kpi.BIA.S.titulaires |     NA |        NA | N/A          | N/A        |   NA |        NA |
-| cqyN7 | Université Sorbonne Paris Nord    | TRUE       | kpi.BIA.S.titulaires |    475 |        NA | 475          | N/A        |   NA |  91.34615 |
+| pid   | Etablissement                            | Comparable | kpi                  | valeur |      norm | valeur_label | norm_label | rang | evolution |
+|:------|:-----------------------------------------|:-----------|:---------------------|-------:|----------:|:-------------|:-----------|-----:|----------:|
+| EW53M | Université Polytechnique Hauts-de-France | TRUE       | kpi.BIA.S.titulaires |    448 | 0.7777778 | 448          | 78%        |    3 |  101.3575 |
+| z3hdL | Université des Antilles                  | FALSE      | kpi.BIA.S.titulaires |    373 | 0.7987152 | 373          | 80%        |    2 |  108.4302 |
+| HqAYu | Université Toulouse - Jean Jaurès        | TRUE       | kpi.BIA.S.titulaires |    703 | 0.8099078 | 703          | 81%        |    1 |  100.1425 |
+| hy4EW | Université de Guyane                     | FALSE      | kpi.BIA.S.titulaires |     NA |        NA | N/A          | N/A        |   NA |        NA |
+| C6Ps7 | Université Paris Dauphine - PSL          | FALSE      | kpi.BIA.S.titulaires |     NA |        NA | N/A          | N/A        |   NA |        NA |
 
 </details>
 
@@ -1051,11 +893,11 @@ Voir les données
 
 | pid   | Etablissement                          | Comparable | kpi           |    valeur |      norm | valeur_label | norm_label | rang | evolution |
 |:------|:---------------------------------------|:-----------|:--------------|----------:|----------:|:-------------|:-----------|-----:|----------:|
-| TWBzp | Université Panthéon-Assas              | FALSE      | kpi.K.titPper | 0.5237643 | 0.5237643 | 52%          | 52%        |   67 |  99.94854 |
-| PpsCQ | Université Paris sciences et lettres   | FALSE      | kpi.K.titPper | 0.5377091 | 0.5377091 | 54%          | 54%        |   66 |  94.50739 |
-| 6G2TU | Université Paris 1 - Panthéon Sorbonne | TRUE       | kpi.K.titPper | 0.5524428 | 0.5524428 | 55%          | 55%        |   65 |  98.39545 |
-| RS4WF | CY Cergy Paris Université              | FALSE      | kpi.K.titPper | 0.5577110 | 0.5577110 | 56%          | 56%        |   64 |  83.63011 |
-| 3Z5e6 | Université Gustave Eiffel              | FALSE      | kpi.K.titPper | 0.5660237 | 0.5660237 | 57%          | 57%        |   63 |  84.74321 |
+| TWBzp | Université Panthéon-Assas              | FALSE      | kpi.K.titPper | 0.5237643 | 0.5237643 | 52%          | 52%        |   68 |  99.94854 |
+| PpsCQ | Université Paris sciences et lettres   | FALSE      | kpi.K.titPper | 0.5377091 | 0.5377091 | 54%          | 54%        |   67 |  94.50739 |
+| 6G2TU | Université Paris 1 - Panthéon Sorbonne | TRUE       | kpi.K.titPper | 0.5524428 | 0.5524428 | 55%          | 55%        |   66 |  98.39545 |
+| RS4WF | CY Cergy Paris Université              | FALSE      | kpi.K.titPper | 0.5577110 | 0.5577110 | 56%          | 56%        |   65 |  83.63011 |
+| 3Z5e6 | Université Gustave Eiffel              | FALSE      | kpi.K.titPper | 0.5660237 | 0.5660237 | 57%          | 57%        |   64 |  84.74321 |
 
 </details>
 <details>
@@ -1065,11 +907,11 @@ Voir les données
 
 | pid   | Etablissement                            | Comparable | kpi           |    valeur |      norm | valeur_label | norm_label | rang | evolution |
 |:------|:-----------------------------------------|:-----------|:--------------|----------:|----------:|:-------------|:-----------|-----:|----------:|
+| HqAYu | Université Toulouse - Jean Jaurès        | TRUE       | kpi.K.titPper | 0.7776184 | 0.7776184 | 78%          | 78%        |    3 |  101.2701 |
 | EW53M | Université Polytechnique Hauts-de-France | TRUE       | kpi.K.titPper | 0.7855960 | 0.7855960 | 79%          | 79%        |    2 |  100.9466 |
 | z3hdL | Université des Antilles                  | FALSE      | kpi.K.titPper | 0.7922211 | 0.7922211 | 79%          | 79%        |    1 |  103.8645 |
 | hy4EW | Université de Guyane                     | FALSE      | kpi.K.titPper |        NA |        NA | N/A          | N/A        |   NA |        NA |
 | C6Ps7 | Université Paris Dauphine - PSL          | FALSE      | kpi.K.titPper |        NA |        NA | N/A          | N/A        |   NA |        NA |
-| cqyN7 | Université Sorbonne Paris Nord           | TRUE       | kpi.K.titPper |        NA |        NA | N/A          | N/A        |   NA |        NA |
 
 </details>
 
@@ -1080,13 +922,13 @@ Voir les données
 Voir les données
 </summary>
 
-| pid   | Etablissement                            | Comparable | kpi           |    valeur |      norm | valeur_label | norm_label | rang | evolution |
-|:------|:-----------------------------------------|:-----------|:--------------|----------:|----------:|:-------------|:-----------|-----:|----------:|
-| hy4EW | Université de Guyane                     | FALSE      | kpi.K.biaPper | 0.3728070 | 0.3728070 | 37%          | 37%        |   68 |  67.37888 |
-| TWBzp | Université Panthéon-Assas                | FALSE      | kpi.K.biaPper | 0.3745247 | 0.3745247 | 37%          | 37%        |   67 |  99.59166 |
-| m7K6T | Université Toulouse III - Paul Sabatier  | TRUE       | kpi.K.biaPper | 0.4074254 | 0.4074254 | 41%          | 41%        |   66 |  90.72521 |
-| HqAYu | Université Toulouse - Jean Jaurès        | TRUE       | kpi.K.biaPper | 0.4151124 | 0.4151124 | 42%          | 42%        |   65 | 103.10390 |
-| Mz286 | Université de Pau et des Pays de l’Adour | TRUE       | kpi.K.biaPper | 0.4218750 | 0.4218750 | 42%          | 42%        |   64 | 103.80447 |
+| pid   | Etablissement                           | Comparable | kpi           |    valeur |      norm | valeur_label | norm_label | rang | evolution |
+|:------|:----------------------------------------|:-----------|:--------------|----------:|----------:|:-------------|:-----------|-----:|----------:|
+| hy4EW | Université de Guyane                    | FALSE      | kpi.K.biaPper | 0.3728070 | 0.3728070 | 37%          | 37%        |   69 |  67.37888 |
+| TWBzp | Université Panthéon-Assas               | FALSE      | kpi.K.biaPper | 0.3745247 | 0.3745247 | 37%          | 37%        |   68 |  99.59166 |
+| cqyN7 | Université Sorbonne Paris Nord          | TRUE       | kpi.K.biaPper | 0.3915046 | 0.3915046 | 39%          | 39%        |   67 |  98.99545 |
+| m7K6T | Université Toulouse III - Paul Sabatier | TRUE       | kpi.K.biaPper | 0.4074254 | 0.4074254 | 41%          | 41%        |   66 |  90.72521 |
+| HqAYu | Université Toulouse - Jean Jaurès       | TRUE       | kpi.K.biaPper | 0.4151124 | 0.4151124 | 42%          | 42%        |   65 | 103.10390 |
 
 </details>
 <details>
@@ -1096,11 +938,11 @@ Voir les données
 
 | pid   | Etablissement                        | Comparable | kpi           |    valeur |      norm | valeur_label | norm_label | rang | evolution |
 |:------|:-------------------------------------|:-----------|:--------------|----------:|----------:|:-------------|:-----------|-----:|----------:|
+| Z2FY5 | Université de la Nouvelle-Calédonie  | FALSE      | kpi.K.biaPper | 0.5189873 | 0.5189873 | 52%          | 52%        |    4 |  128.5492 |
 | PpsCQ | Université Paris sciences et lettres | FALSE      | kpi.K.biaPper | 0.5430735 | 0.5430735 | 54%          | 54%        |    3 |  108.8680 |
 | 90I54 | Université de Bordeaux               | TRUE       | kpi.K.biaPper | 0.5478705 | 0.5478705 | 55%          | 55%        |    2 |  101.0690 |
 | cEt92 | Université de La Réunion             | FALSE      | kpi.K.biaPper | 0.5695208 | 0.5695208 | 57%          | 57%        |    1 |  101.4551 |
 | C6Ps7 | Université Paris Dauphine - PSL      | FALSE      | kpi.K.biaPper |        NA |        NA | N/A          | N/A        |   NA |        NA |
-| cqyN7 | Université Sorbonne Paris Nord       | TRUE       | kpi.K.biaPper |        NA |        NA | N/A          | N/A        |   NA |        NA |
 
 </details>
 </details>
@@ -1116,6 +958,7 @@ Voir les données
 |:------|:-----------------------------------------------------------------------------------------------------------------------------|
 | hy4EW | Université de Guyane                                                                                                         |
 | TWBzp | Université Panthéon-Assas                                                                                                    |
+| cqyN7 | Université Sorbonne Paris Nord                                                                                               |
 | 6g0Mb | Paris-Est Sup                                                                                                                |
 | 8A0mg | Université Bourgogne - Franche-Comté                                                                                         |
 | 86UpY | Université Paris Lumières                                                                                                    |

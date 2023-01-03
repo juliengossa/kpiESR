@@ -1,20 +1,15 @@
 # https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-personnels-biatss-etablissements-publics
 # 
-# [1] "Année"                           "Année.universitaire"            
-# [3] "Type.de.personnel"               "etablissement_id_paysage"       
-# [5] "Etablissement"                   "etablissement_compos_id_paysage"
-# [7] "Décomposition.des.universités"   "etablissement_id_uai"           
-# [9] "etablissement_code_region"       "Région"                         
-# [11] "etablissement_code_academie"     "Académie"                       
-# [13] "etablissement_coordonnees"       "Catégorie"                      
-# [15] "code_corps"                      "Corps"                          
-# [17] "Filière"                         "etablissement_id_uai_source"    
-# [19] "etablissement_type"              "etablissement_id_paysage_actuel"
-# [21] "etablissement_actuel_lib"        "Effectif"                       
-# [23] "effectif_femmes"                 "effectif_hommes"                
-# [25] "classe_age3"                     "code_filiere"                   
-# [27] "code_bap"                        "BAP"     
-
+# [1] "Année"                           "Année.universitaire"             "Type.de.personnel"              
+# [4] "etablissement_id_paysage"        "Etablissement"                   "etablissement_compos_id_paysage"
+# [7] "Décomposition.des.universités"   "etablissement_id_uai"            "etablissement_code_region"      
+# [10] "Région"                          "etablissement_code_academie"     "Académie"                       
+# [13] "etablissement_coordonnees"       "Catégorie"                       "code_corps"                     
+# [16] "Corps"                           "Filière"                         "etablissement_id_uai_source"    
+# [19] "etablissement_type"              "etablissement_id_paysage_actuel" "etablissement_actuel_lib"       
+# [22] "Effectif"                        "effectif_femmes"                 "effectif_hommes"                
+# [25] "classe_age3"                     "code_filiere"                    "code_bap"                       
+# [28] "BAP"       
 
 kpiesr_read.bia <- function(pidfix=list("x"="x")) {
   biatss <- read.csv2("dataESR/fr-esr-personnels-biatss-etablissements-publics.csv", na.string = "") %>%

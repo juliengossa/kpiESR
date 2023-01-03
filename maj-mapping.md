@@ -1,6 +1,6 @@
 MAJ Appariements
 ================
-2022-11-05
+2023-01-03
 
 ## Chargement des données
 
@@ -233,7 +233,7 @@ Voir les données
 | DmOC1                               | NA       | imo     | NA                                                                                                                           | NA                                                                                                                           | Campus Condorcet                                                                                                             | NA                                                                                                                                                                                                                                     | Etablissement public Campus Condorcet                                    |
 | 8618D                               | NA       | imo     | École normale supérieure PSL                                                                                                 | École normale supérieure PSL                                                                                                 | École normale supérieure PSL                                                                                                 | École normale supérieure PSL                                                                                                                                                                                                           | Ecole normale supérieure PARIS                                           |
 | OYA17                               | NA       | imo     | ISAE-Supméca                                                                                                                 | ISAE-Supméca                                                                                                                 | ISAE-Supméca                                                                                                                 | ISAE-Supméca                                                                                                                                                                                                                           | SUPMÉCA PARIS                                                            |
-| TWBzp                               | NA       | imo     | Université Paris-Panthéon-Assas;NA                                                                                           | Université Paris-Panthéon-Assas;NA                                                                                           | Université Paris-Panthéon-Assas;NA                                                                                           | Université Panthéon-Assas;Université Paris-Panthéon-Assas                                                                                                                                                                              | NA;Université Paris-Panthéon-Assas EPE                                   |
+| TWBzp                               | NA       | imo     | Université Paris-Panthéon-Assas;NA                                                                                           | Université Paris-Panthéon-Assas;NA                                                                                           | Université Paris-Panthéon-Assas                                                                                              | Université Panthéon-Assas;Université Paris-Panthéon-Assas                                                                                                                                                                              | NA;Université Paris-Panthéon-Assas EPE                                   |
 | Uxr7Z                               | NA       | imo     | Université Paris 8 - Vincennes - Saint-Denis                                                                                 | Université Paris 8 - Vincennes - Saint-Denis                                                                                 | Université Paris 8 - Vincennes - Saint-Denis                                                                                 | Université Paris 8 - Vincennes - Saint-Denis                                                                                                                                                                                           | Université PARIS 8 - VINCENNES SAINT-DENIS                               |
 | cqyN7                               | NA       | imo     | Université Sorbonne Paris Nord                                                                                               | Université Sorbonne Paris Nord                                                                                               | Université Sorbonne Paris Nord                                                                                               | Université Sorbonne Paris Nord                                                                                                                                                                                                         | Université PARIS 13 - PARIS NORD                                         |
 | cqyN7,e88zJ                         | NA       | imo     | NA                                                                                                                           | NA                                                                                                                           | NA                                                                                                                           | NA                                                                                                                                                                                                                                     | NA                                                                       |
@@ -292,7 +292,7 @@ Voir les données
 | Qu1gv,qUCQp                         | NA       | imo     | NA                                                                                                                           | NA                                                                                                                           | NA                                                                                                                           | NA                                                                                                                                                                                                                                     | NA                                                                       |
 | Qu1gv,IXHyv                         | NA       | imo     | NA                                                                                                                           | NA                                                                                                                           | NA                                                                                                                           | NA                                                                                                                                                                                                                                     | NA                                                                       |
 | gCAyK                               | NA       | imo     | Centrale Nantes                                                                                                              | Centrale Nantes                                                                                                              | Centrale Nantes                                                                                                              | Centrale Nantes                                                                                                                                                                                                                        | Ecole centrale de Nantes                                                 |
-| qUCQp                               | NA       | imo     | Nantes Université;NA                                                                                                         | Nantes Université;NA                                                                                                         | Nantes Université;NA                                                                                                         | Université de Nantes;Institut universitaire de formation des maîtres de Nantes;Nantes Université                                                                                                                                       | NA;Nantes Université EPE                                                 |
+| qUCQp                               | NA       | imo     | Nantes Université;NA                                                                                                         | Nantes Université;NA                                                                                                         | Nantes Université;NA                                                                                                         | Université de Nantes;Nantes Université;Institut universitaire de formation des maîtres de Nantes                                                                                                                                       | NA;Nantes Université EPE                                                 |
 | 9xlel                               | NA       | imo     | Le Mans Université                                                                                                           | Le Mans Université                                                                                                           | Le Mans Université                                                                                                           | Le Mans Université                                                                                                                                                                                                                     | Université LE MANS - MAINE                                               |
 | IXHyv                               | NA       | imo     | Université d’Angers                                                                                                          | Université d’Angers                                                                                                          | Université d’Angers                                                                                                          | Université d’Angers                                                                                                                                                                                                                    | Université ANGERS                                                        |
 | awbyg,C701f                         | NA       | imo     | NA                                                                                                                           | NA                                                                                                                           | NA                                                                                                                           | NA                                                                                                                                                                                                                                     | NA                                                                       |
@@ -404,7 +404,7 @@ Voir les données
 | n2X5f,VaJ52                         | NA       | imo     | NA                                                                                                                           | NA                                                                                                                           | NA                                                                                                                           | NA                                                                                                                                                                                                                                     | NA                                                                       |
 | etBz7,NExhU                         | NA       | imo     | NA                                                                                                                           | NA                                                                                                                           | NA                                                                                                                           | NA                                                                                                                                                                                                                                     | NA                                                                       |
 | jYUcF,IXHyv                         | NA       | imo     | NA                                                                                                                           | NA                                                                                                                           | NA                                                                                                                           | NA                                                                                                                                                                                                                                     | NA                                                                       |
-| FKt2q                               | NA       | imo     | NA                                                                                                                           | NA                                                                                                                           | NA                                                                                                                           | NA                                                                                                                                                                                                                                     | NA                                                                       |
+| FKt2q                               | NA       | imo     | NA                                                                                                                           | NA                                                                                                                           | Fondation Maison des Sciences de l’homme                                                                                     | NA                                                                                                                                                                                                                                     | NA                                                                       |
 | bxPQe,kyy5N                         | NA       | imo     | NA                                                                                                                           | NA                                                                                                                           | NA                                                                                                                           | NA                                                                                                                                                                                                                                     | NA                                                                       |
 | 06SE7,2JK64                         | NA       | imo     | NA                                                                                                                           | NA                                                                                                                           | NA                                                                                                                           | NA                                                                                                                                                                                                                                     | NA                                                                       |
 | jkNQ3,jYUcF                         | NA       | imo     | NA                                                                                                                           | NA                                                                                                                           | NA                                                                                                                           | NA                                                                                                                                                                                                                                     | NA                                                                       |
@@ -467,8 +467,8 @@ Voir les données
 | 0332929E | 90I54       | vFsty   | Université BORDEAUX 4 - MONTESQUIEU                                         |
 | 0331765P | 90I54       | xE7KR   | Université BORDEAUX 2 - VICTOR SEGALEN                                      |
 | 0062126D | s3t8T       | RDy6Q   | COMUE université Côte d’Azur                                                |
-| 0755700N | PpsCQ       | Olkw0   | Université de recherche Paris sciences et lettres - PSL Research University |
 | 0383412C | Y7ch7       | hB4QE   | COMUE Université Grenoble Alpes                                             |
+| 0755700N | PpsCQ       | Olkw0   | Université de recherche Paris sciences et lettres - PSL Research University |
 | 0342255S | evv7S       | 4TeGd   | Languedoc-Roussillon Universités                                            |
 | 0352756F |             | XIGGw   | Université Bretagne Loire                                                   |
 
@@ -528,8 +528,8 @@ Voir les données
 | 0332929E | 90I54   | vFsty       | Université BORDEAUX 4 - MONTESQUIEU                                         |
 | 0331765P | 90I54   | xE7KR       | Université BORDEAUX 2 - VICTOR SEGALEN                                      |
 | 0062126D | s3t8T   | RDy6Q       | COMUE université Côte d’Azur                                                |
-| 0755700N | PpsCQ   | Olkw0       | Université de recherche Paris sciences et lettres - PSL Research University |
 | 0383412C | Y7ch7   | hB4QE       | COMUE Université Grenoble Alpes                                             |
+| 0755700N | PpsCQ   | Olkw0       | Université de recherche Paris sciences et lettres - PSL Research University |
 | 0342255S | evv7S   | 4TeGd       | Languedoc-Roussillon Universités                                            |
 | 0352756F |         | XIGGw       | Université Bretagne Loire                                                   |
 | Manuel   | z3hdL   | z3hdL;hy4EW | NA                                                                          |
@@ -582,6 +582,8 @@ Check sans correspondance
 | ti37C | Rennes-II “Université de Haute Bretagne”,École des hautes études en santé publique (EHESP),PARTIES COMMUNES PARTENAIRE GENERIQUE - NE PAS MODIFIER                                                                                                 | ti37C,SsRkf                         | 0350937D          | Université Rennes 2                                           |       2 |
 | TWBzp | IEP-Paris - Institut d’études politiques de Paris,Paris-II “Université Panthéon-Assas”                                                                                                                                                             | u79ZJ,TWBzp                         | 0751718K          | Université Paris-Panthéon-Assas                               |       2 |
 | u79ZJ | IEP-Paris - Institut d’études politiques de Paris,Paris-II “Université Panthéon-Assas”                                                                                                                                                             | u79ZJ,TWBzp                         | 0753431X          | Sciences Po                                                   |       2 |
+| FKt2q | EHESS - École des hautes études en sciences sociales,Fondation Maison des sciences de l’homme                                                                                                                                                      | y52D7,FKt2q                         | 0753655R          | Fondation Maison des Sciences de l’homme                      |       2 |
+| y52D7 | EHESS - École des hautes études en sciences sociales,Fondation Maison des sciences de l’homme                                                                                                                                                      | y52D7,FKt2q                         | 0753742K          | École des hautes études en sciences sociales                  |       2 |
 | aYLn2 | Bibliothèque nationale de France (BNF),Institut national d’histoire de l’art (INHA),École nationale des chartes                                                                                                                                    | aYLn2,FDijq,wAASR                   | NA                | NA                                                            |       3 |
 | FDijq | Bibliothèque nationale de France (BNF),Institut national d’histoire de l’art (INHA),École nationale des chartes                                                                                                                                    | aYLn2,FDijq,wAASR                   | 0755026F          | Institut national d’histoire de l’art                         |       3 |
 | wAASR | Bibliothèque nationale de France (BNF),Institut national d’histoire de l’art (INHA),École nationale des chartes                                                                                                                                    | aYLn2,FDijq,wAASR                   | 0753478Y          | École nationale des Chartes                                   |       3 |
@@ -621,12 +623,12 @@ Nombre d’exclusion
 
 | Année | n_batiments | n_exclus | part  |
 |------:|------------:|---------:|:------|
-|  2017 |        5904 |       27 | 0.46% |
-|  2018 |        6019 |       27 | 0.45% |
-|  2019 |        6072 |       27 | 0.44% |
-|  2020 |        6116 |       27 | 0.44% |
-|  2021 |        6260 |       27 | 0.43% |
-|  2022 |        6307 |       28 | 0.44% |
+|  2017 |        5904 |       30 | 0.51% |
+|  2018 |        6019 |       30 | 0.50% |
+|  2019 |        6072 |       30 | 0.49% |
+|  2020 |        6116 |       30 | 0.49% |
+|  2021 |        6260 |       30 | 0.48% |
+|  2022 |        6307 |       31 | 0.49% |
 
 </details>
 
@@ -889,7 +891,7 @@ Voir les données
 | ClZg2                               | 0492498Z | COMUE Angers-Le Mans                                                                                                                                                                                                                               |
 | CUBKB,7Gzub                         | NA       | Lyon-II “Université Lumière”,Lyon-III “Université Jean Moulin”                                                                                                                                                                                     |
 | Dk1Th,1bXaK                         | NA       | INALCO - Institut national des langues et civilisations orientales,Bibliothèque universitaire des langues et civilisations (BULAC)                                                                                                                 |
-| FKt2q                               | NA       | Fondation Maison des sciences de l’homme                                                                                                                                                                                                           |
+| FKt2q                               | 0753655R | Fondation Maison des Sciences de l’homme                                                                                                                                                                                                           |
 | HCBvW,QYw7j                         | NA       | Université Orléans,INSA-CVL - Institut national des sciences appliquées du Centre Val de Loire                                                                                                                                                     |
 | I4SPK,p25Q3                         | NA       | École nationale supérieure d’ingénieurs de Caen,Université de Caen Normandie                                                                                                                                                                       |
 | jYUcF,IXHyv                         | NA       | ENSAM - École nationale supérieure d’arts et métiers,Université d’Angers                                                                                                                                                                           |
@@ -902,6 +904,7 @@ Voir les données
 | u79ZJ,TWBzp                         | NA       | IEP-Paris - Institut d’études politiques de Paris,Paris-II “Université Panthéon-Assas”                                                                                                                                                             |
 | uCPtX                               | 0755598C | Université Sorbonne Paris Cité (USPC)                                                                                                                                                                                                              |
 | XR16q,jYUcF,gPE8e                   | NA       | CNAM - Conservatoire national des arts et métiers,ENSAM - École nationale supérieure d’arts et métiers,Office national d’information sur les enseignements et les professions (ONISEP),PARTIES COMMUNES PARTENAIRE GENERIQUE - NE PAS MODIFIER     |
+| y52D7,FKt2q                         | NA       | EHESS - École des hautes études en sciences sociales,Fondation Maison des sciences de l’homme                                                                                                                                                      |
 
 </details>
 
@@ -914,10 +917,11 @@ Voir les données
 
     ## Joining, by = "UAI"
 
-| pid   | UAI      | etab                                  | Etablissement                                          | Sigle | Type                                       | Académie | Rattachement | Fusion | url.siteweb                          | url.wikidata                                | url.legifrance                                                                                       | twitter | dataset |
-|:------|:---------|:--------------------------------------|:-------------------------------------------------------|:------|:-------------------------------------------|:---------|:-------------|:-------|:-------------------------------------|:--------------------------------------------|:-----------------------------------------------------------------------------------------------------|:--------|:--------|
-| t6C0i | 0333178A | COMUE D’AQUITAINE                     | Communauté d’universités et établissements d’Aquitaine | NA    | Communauté d’universités et établissements | Bordeaux | NA           | NA     | <http://www.cue-aquitaine.fr/>       | <https://www.wikidata.org/entity/Q16541346> | <http://legifrance.gouv.fr/affichTexte.do?cidTexte=JORFTEXT000030348150&dateTexte=&categorieLien=id> | NA      | etab.19 |
-| uCPtX | 0755598C | Université Sorbonne Paris Cité (USPC) | Université Sorbonne Paris Cité                         | NA    | Communauté d’universités et établissements | Paris    | NA           | NA     | <http://www.sorbonne-paris-cite.fr/> | <https://www.wikidata.org/entity/Q3491149>  | <http://legifrance.gouv.fr/affichTexte.do?cidTexte=JORFTEXT000030002051&dateTexte=&categorieLien=id> | NA      | etab.19 |
+| pid   | UAI      | etab                                     | Etablissement                                          | Sigle | Type                                       | Académie | Rattachement | Fusion | url.siteweb                          | url.wikidata                                | url.legifrance                                                                                       | twitter | dataset |
+|:------|:---------|:-----------------------------------------|:-------------------------------------------------------|:------|:-------------------------------------------|:---------|:-------------|:-------|:-------------------------------------|:--------------------------------------------|:-----------------------------------------------------------------------------------------------------|:--------|:--------|
+| FKt2q | 0753655R | Fondation Maison des Sciences de l’homme | Fondation Maison des Sciences de l’homme               | FMSH  | Autre établissement                        | Paris    | NA           | NA     | <http://www.fmsh.fr/>                | <https://www.wikidata.org/entity/Q3075494>  | NA                                                                                                   | NA      | etab.19 |
+| t6C0i | 0333178A | COMUE D’AQUITAINE                        | Communauté d’universités et établissements d’Aquitaine | NA    | Communauté d’universités et établissements | Bordeaux | NA           | NA     | <http://www.cue-aquitaine.fr/>       | <https://www.wikidata.org/entity/Q16541346> | <http://legifrance.gouv.fr/affichTexte.do?cidTexte=JORFTEXT000030348150&dateTexte=&categorieLien=id> | NA      | etab.19 |
+| uCPtX | 0755598C | Université Sorbonne Paris Cité (USPC)    | Université Sorbonne Paris Cité                         | NA    | Communauté d’universités et établissements | Paris    | NA           | NA     | <http://www.sorbonne-paris-cite.fr/> | <https://www.wikidata.org/entity/Q3491149>  | <http://legifrance.gouv.fr/affichTexte.do?cidTexte=JORFTEXT000030002051&dateTexte=&categorieLien=id> | NA      | etab.19 |
 
 </details>
 
@@ -947,7 +951,6 @@ Voir les données
 | ClZg2                               | 0492498Z | COMUE Angers-Le Mans                                                                                                                                                                                                                               | NA            | NA    | NA    | NA       | NA           | NA     | NA          | NA           | NA             | NA      | NA        |
 | CUBKB,7Gzub                         | NA       | Lyon-II “Université Lumière”,Lyon-III “Université Jean Moulin”                                                                                                                                                                                     | NA            | NA    | École | NA       | NA           | NA     | NA          | NA           | NA             | NA      | etab.21.2 |
 | Dk1Th,1bXaK                         | NA       | INALCO - Institut national des langues et civilisations orientales,Bibliothèque universitaire des langues et civilisations (BULAC)                                                                                                                 | NA            | NA    | École | NA       | NA           | NA     | NA          | NA           | NA             | NA      | etab.21.2 |
-| FKt2q                               | NA       | Fondation Maison des sciences de l’homme                                                                                                                                                                                                           | NA            | NA    | École | NA       | NA           | NA     | NA          | NA           | NA             | NA      | etab.21.2 |
 | HCBvW,QYw7j                         | NA       | Université Orléans,INSA-CVL - Institut national des sciences appliquées du Centre Val de Loire                                                                                                                                                     | NA            | NA    | École | NA       | NA           | NA     | NA          | NA           | NA             | NA      | etab.21.2 |
 | I4SPK,p25Q3                         | NA       | École nationale supérieure d’ingénieurs de Caen,Université de Caen Normandie                                                                                                                                                                       | NA            | NA    | École | NA       | NA           | NA     | NA          | NA           | NA             | NA      | etab.21.2 |
 | jYUcF,IXHyv                         | NA       | ENSAM - École nationale supérieure d’arts et métiers,Université d’Angers                                                                                                                                                                           | NA            | NA    | École | NA       | NA           | NA     | NA          | NA           | NA             | NA      | etab.21.2 |
@@ -958,6 +961,7 @@ Voir les données
 | ti37C,SsRkf                         | NA       | Rennes-II “Université de Haute Bretagne”,École des hautes études en santé publique (EHESP),PARTIES COMMUNES PARTENAIRE GENERIQUE - NE PAS MODIFIER                                                                                                 | NA            | NA    | École | NA       | NA           | NA     | NA          | NA           | NA             | NA      | etab.21.2 |
 | u79ZJ,TWBzp                         | NA       | IEP-Paris - Institut d’études politiques de Paris,Paris-II “Université Panthéon-Assas”                                                                                                                                                             | NA            | NA    | École | NA       | NA           | NA     | NA          | NA           | NA             | NA      | etab.21.2 |
 | XR16q,jYUcF,gPE8e                   | NA       | CNAM - Conservatoire national des arts et métiers,ENSAM - École nationale supérieure d’arts et métiers,Office national d’information sur les enseignements et les professions (ONISEP),PARTIES COMMUNES PARTENAIRE GENERIQUE - NE PAS MODIFIER     | NA            | NA    | École | NA       | NA           | NA     | NA          | NA           | NA             | NA      | etab.21.2 |
+| y52D7,FKt2q                         | NA       | EHESS - École des hautes études en sciences sociales,Fondation Maison des sciences de l’homme                                                                                                                                                      | NA            | NA    | École | NA       | NA           | NA     | NA          | NA           | NA             | NA      | etab.21.2 |
 
 </details>
 
@@ -1388,82 +1392,6 @@ effectif_hommes
 </thead>
 <tbody>
 <tr>
-<td style="text-align:right;">
-2015
-</td>
-<td style="text-align:left;">
-4k25D
-</td>
-<td style="text-align:left;">
-Université de Strasbourg
-</td>
-<td style="text-align:left;">
-C
-</td>
-<td style="text-align:left;">
-Adjoints techniques de recherche et de formation
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1013
-</td>
-<td style="text-align:right;">
-582
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2016
-</td>
-<td style="text-align:left;">
-4k25D
-</td>
-<td style="text-align:left;">
-Université de Strasbourg
-</td>
-<td style="text-align:left;">
-C
-</td>
-<td style="text-align:left;">
-Adjoints techniques de recherche et de formation
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1068
-</td>
-<td style="text-align:right;">
-611
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2020
-</td>
-<td style="text-align:left;">
-cqyN7
-</td>
-<td style="text-align:left;">
-Université Sorbonne Paris Nord
-</td>
-<td style="text-align:left;">
-C
-</td>
-<td style="text-align:left;">
-Adjoints techniques de recherche et de formation
-</td>
-<td style="text-align:right;">
-62
-</td>
-<td style="text-align:right;">
-36
-</td>
-<td style="text-align:right;">
-25
-</td>
 </tr>
 </tbody>
 </table>

@@ -141,7 +141,7 @@ kpiesr_style <- function(
               primaire_margin = 1.15,
               evol_text = TRUE,
               evol_text_percent = FALSE,
-              evol_x_breaker = scale_min_breaker,
+              evol_x_breaker = scale_minmax_breaker,
               evol_y_breaker = scale_breaker,
               bs_point_size = 1,
               strip_labeller = identity,

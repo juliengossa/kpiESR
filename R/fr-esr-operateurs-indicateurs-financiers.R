@@ -28,13 +28,13 @@
 
 kpiesr_read.fin <- function(pidfix=list("x"="x")) {
   fin <- read.csv2("dataESR/fr-esr-operateurs-indicateurs-financiers.csv", na.strings="", dec=".") %>%
-    # fix Taxe d'apprentissage
-    left_join(
-      read.csv2("dataESR/fr-esr-operateurs-indicateurs-financiers.2021v1.csv", na.strings="", dec=".") %>%
-        select(exercice, id...paysage, TA21 = Taxe.d.apprentissage) %>%
-        filter(exercice < 2021) 
-    ) %>%
-    mutate(Taxe.d.apprentissage = ifelse(is.na(Taxe.d.apprentissage),TA21,Taxe.d.apprentissage)) %>%
+    # # fix Taxe d'apprentissage
+    # left_join(
+    #   read.csv2("dataESR/fr-esr-operateurs-indicateurs-financiers.2021v1.csv", na.strings="", dec=".") %>%
+    #     select(exercice, id...paysage, TA21 = Taxe.d.apprentissage) %>%
+    #     filter(exercice < 2021) 
+    # ) %>%
+    # mutate(Taxe.d.apprentissage = ifelse(is.na(Taxe.d.apprentissage),TA21,Taxe.d.apprentissage)) %>%
     # fin fix
     group_by(
       pid = recode(id...paysage,!!!pidfix),

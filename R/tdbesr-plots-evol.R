@@ -89,7 +89,7 @@ kpiesr_plot_evol <- function(rentrée, id, groupe, lfc,
     scale_linetype_manual(values=c(1,2,1) )+
                           #labels=unique(df.series$Etablissement)) +
     coord_cartesian(clip = "off") +
-    guides(color="none", fill="none") 
+    guides(color="none", fill="none")
 }
 
 

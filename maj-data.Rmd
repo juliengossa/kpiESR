@@ -42,7 +42,7 @@ La constitution du jeu de données `etab` est effectuées [à part](maj-mapping.
 ### Attention
 
 Les données sont agrégées à trois échelles : _Ensemble_, _Groupe_ et _Etablissement_, 
-avec trois méthodes de constitution des périmètres d'aggrégation :
+avec trois méthodes de constitution des périmètres d'agrégation :
 
   - _Ensemble_ agrège toutes les données dans tous les jeux : sa cohérence  dépend 
   de la cohérence du périmètre des jeux de données ;

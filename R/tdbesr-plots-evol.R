@@ -46,6 +46,7 @@ kpiesr_plot_evol <- function(rentrée, id, groupe, lfc,
   
   
   df.stats <- kpiESR::esr.stats %>% 
+    filter(Rentrée <= rentrée) %>%
     filter(Groupe == groupe, kpi %in% lfc$factors) %>%
     na.omit() %>%
     mutate(kpi = factor(kpi, levels=lfc$factors, labels=lfc$labels))  %>% filter(kpi %in% df.id$kpi)
@@ -92,8 +93,8 @@ kpiesr_plot_evol <- function(rentrée, id, groupe, lfc,
     guides(color="none", fill="none")
 }
 
-
-# kpiesr_plot_evol(2020,"4k25D","Ensemble", kpiesr_lfc[["K"]], style = kpiesr_style(line_size = 1, evol_x_breaker = scale_minmax_breaker, evol_y_breaker = scale_breaker)) + ggcpesrthemes::theme_cpesr() + theme()
+# kpiesr_plot_evol(2022,"Ensemble","Ensemble", kpiesr_lfc[["K"]], style = kpiesr_style(line_size = 1, evol_x_breaker = scale_minmax_breaker, evol_y_breaker = scale_breaker)) + ggcpesrthemes::theme_cpesr() + theme()
+# kpiesr_plot_evol(2022,"4k25D","Ensemble", kpiesr_lfc[["K"]], style = kpiesr_style(line_size = 1, evol_x_breaker = scale_minmax_breaker, evol_y_breaker = scale_breaker)) + ggcpesrthemes::theme_cpesr() + theme()
 # kpiesr_plot_evol(2020,"nkbwh","Ensemble", kpiesr_lfc[["K"]], style = kpiesr_style(line_size = 1)) + ggcpesrthemes::theme_cpesr() + theme()
 # kpiesr_plot_evol(2019,"4k25D","Université", kpiesr_lfc[["K"]], style = kpiesr_style(line_size = 1)) + ggcpesrthemes::theme_cpesr() + theme()
 # kpiesr_plot_evol(2019,"4k25D","Université", kpiesr_lfc[["ENS"]]) + ggcpesrthemes::theme_cpesr() + theme()

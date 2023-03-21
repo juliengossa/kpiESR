@@ -85,9 +85,9 @@ kpiesr_plot_evol <- function(rentrée, id, groupe, lfc,
     scale_y_continuous(breaks=style$evol_y_breaker, position = style$yaxis_position) +#scales::breaks_extended(n = 3, w = c(0.25, 0.2, 0.5, 0.05))) +
     scale_color_manual(values=lfc$colors,breaks=lfc$labels) +
     scale_fill_manual(values=lfc$colors,breaks=lfc$labels) +
-    scale_size_manual(values=c(style$line_size,style$line_size/2,style$line_size/2)) +
+    scale_size_manual(values=c(style$line_size,style$line_size/2,style$line_size/2), name="") +
                       #labels=unique(df.series$Etablissement)) +
-    scale_linetype_manual(values=c(1,2,1) )+
+    scale_linetype_manual(values=c(1,2,1), name="")+
                           #labels=unique(df.series$Etablissement)) +
     coord_cartesian(clip = "off") +
     guides(color="none", fill="none")

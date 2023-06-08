@@ -38,8 +38,8 @@ kpiesr_plot_map <- function(rentrée, id, groupe, xvar, yvar, xlabel=NA, ylabel=
   
   df %>%
     #mutate(label = ifelse(Etablissement == "Université de Lorraine", NA, Etablissement)) %>%
-    ggplot(aes(x=x, y=y, size=kpi.ETU.P.effectif, color = PerimEx)) +
-    { if(smooth) geom_smooth(method="lm", alpha=0.3, color="grey", fill="grey70", size=0.2, show_huide=FALSE)} +
+    ggplot(aes(x=x, y=y, size=kpi.ETU.P.effectif, color = PerimEx, shape = PerimEx)) +
+    { if(smooth) geom_smooth(method="lm", alpha=0.3, color="grey", fill="grey70", size=0.2, show_uide=FALSE)} +
     ggrepel::geom_text_repel(aes(label=Sigle), size = 3, color="grey") +
     geom_point() + 
     ggrepel::geom_text_repel(data = df.etab, aes(label=Etablissement), 
@@ -48,11 +48,12 @@ kpiesr_plot_map <- function(rentrée, id, groupe, xvar, yvar, xlabel=NA, ylabel=
                              xlim=c(xlabel,xlabel), ylim=c(ylabel,ylabel)) +
     geom_point(data = df.etab, shape = 21, stroke = 1, color="black", fill="#ae2573") +
     scale_color_discrete(name="Type") +
+    scale_shape_discrete(name="Type") +
     scale_fill_discrete(name="", guide="none") +
     scale_size(range=c(0.1,6), name="Etudiants") +
     guides(colour = guide_legend(override.aes = list(size=4)))
 }
 
-#kpiesr_plot_map(2020,"4k25D","Université","kpi.ENS.S.titulaires/kpi.ENS.P.effectif","kpi.BIA.S.titulaires/kpi.BIA.P.effectif")
+# kpiesr_plot_map(2020,"4k25D","Université","kpi.ENS.S.titulaires/kpi.ENS.P.effectif","kpi.BIA.S.titulaires/kpi.BIA.P.effectif")
 # kpiesr_plot_map(2020,"4k25D","Ensemble","kpi.ETU.P.effectif","kpi.ENS.P.effectif", smooth = TRUE) + theme_cpesr()
 

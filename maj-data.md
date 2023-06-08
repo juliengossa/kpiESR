@@ -1,6 +1,6 @@
 Mise à jour des données
 ================
-2023-01-04
+2023-05-20
 
 Ce document décrit le processus de mise à jour des données kpiESR, et
 notamment la constitution d’un jeu de données des établissements, et la
@@ -31,7 +31,7 @@ part](maj-mapping.md).
 
 Les données sont agrégées à trois échelles : *Ensemble*, *Groupe* et
 *Etablissement*, avec trois méthodes de constitution des périmètres
-d’aggrégation :
+d’agrégation :
 
 - *Ensemble* agrège toutes les données dans tous les jeux : sa cohérence
   dépend de la cohérence du périmètre des jeux de données ;
@@ -211,11 +211,11 @@ Voir les données
 
 | pid   | Etablissement                        | Comparable | kpi                | valeur |      norm | valeur_label | norm_label | rang | evolution |
 |:------|:-------------------------------------|:-----------|:-------------------|-------:|----------:|:-------------|:-----------|-----:|----------:|
-| PpsCQ | Université Paris sciences et lettres | FALSE      | kpi.ETU.S.cycle1_L |   4229 | 0.2409824 | 4 229        | 24%        |   69 |        NA |
-| G2qA7 | Université Paris-Saclay              | FALSE      | kpi.ETU.S.cycle1_L |  18721 | 0.3933148 | 18 721       | 39%        |   68 |  131.3017 |
-| etBz7 | Université Claude Bernard - Lyon 1   | TRUE       | kpi.ETU.S.cycle1_L |  21505 | 0.4818076 | 21 505       | 48%        |   67 |  129.6185 |
-| 5cZyU | Université de Paris                  | TRUE       | kpi.ETU.S.cycle1_L |  27242 | 0.4931125 | 27 242       | 49%        |   66 |  108.0517 |
-| bxPQe | Sorbonne Université                  | TRUE       | kpi.ETU.S.cycle1_L |  26157 | 0.5067418 | 26 157       | 51%        |   65 |  118.8630 |
+| PpsCQ | Université Paris sciences et lettres | FALSE      | kpi.ETU.S.cycle1_L |   4229 | 0.2409824 | 4 229        | 24%        |   67 |        NA |
+| G2qA7 | Université Paris-Saclay              | FALSE      | kpi.ETU.S.cycle1_L |  16354 | 0.3615662 | 16 354       | 36%        |   66 | 114.70052 |
+| etBz7 | Université Claude Bernard - Lyon 1   | TRUE       | kpi.ETU.S.cycle1_L |  17432 | 0.4297724 | 17 432       | 43%        |   65 | 105.06901 |
+| 5cZyU | Université de Paris                  | TRUE       | kpi.ETU.S.cycle1_L |  23588 | 0.4572115 | 23 588       | 46%        |   64 |  93.55862 |
+| bxPQe | Sorbonne Université                  | TRUE       | kpi.ETU.S.cycle1_L |  22395 | 0.4679664 | 22 395       | 47%        |   63 | 101.76770 |
 
 </details>
 <details>
@@ -223,13 +223,13 @@ Voir les données
 Voir les données
 </summary>
 
-| pid   | Etablissement                       | Comparable | kpi                | valeur |      norm | valeur_label | norm_label | rang | evolution |
-|:------|:------------------------------------|:-----------|:-------------------|-------:|----------:|:-------------|:-----------|-----:|----------:|
-| Z2FY5 | Université de la Nouvelle-Calédonie | FALSE      | kpi.ETU.S.cycle1_L |   3298 | 0.9133204 | 3 298        | 91%        |    4 |  138.1651 |
-| HAU8L | Université de Nîmes                 | TRUE       | kpi.ETU.S.cycle1_L |   4940 | 0.9183863 | 4 940        | 92%        |    3 |  150.6557 |
-| RN4E6 | Université d’Évry-Val-d’Essonne     | FALSE      | kpi.ETU.S.cycle1_L |   6743 | 0.9475829 | 6 743        | 95%        |    2 |  102.8523 |
-| pVJpw | Centre universitaire de Mayotte     | FALSE      | kpi.ETU.S.cycle1_L |   1256 | 1.0000000 | 1 256        | 100%       |    1 |  174.6871 |
-| C6Ps7 | Université Paris Dauphine - PSL     | FALSE      | kpi.ETU.S.cycle1_L |     NA |        NA | N/A          | N/A        |   NA |        NA |
+| pid   | Etablissement                   | Comparable | kpi                | valeur |      norm | valeur_label | norm_label | rang | evolution |
+|:------|:--------------------------------|:-----------|:-------------------|-------:|----------:|:-------------|:-----------|-----:|----------:|
+| RN4E6 | Université d’Évry-Val-d’Essonne | FALSE      | kpi.ETU.S.cycle1_L |   6743 | 0.9475829 | 6 743        | 95%        |    2 |  102.8523 |
+| pVJpw | Centre universitaire de Mayotte | FALSE      | kpi.ETU.S.cycle1_L |   1256 | 1.0000000 | 1 256        | 100%       |    1 |  174.6871 |
+| 9wAap | Université de Rennes 1          | TRUE       | kpi.ETU.S.cycle1_L |     NA |        NA | N/A          | N/A        |   NA |        NA |
+| C6Ps7 | Université Paris Dauphine - PSL | FALSE      | kpi.ETU.S.cycle1_L |     NA |        NA | N/A          | N/A        |   NA |        NA |
+| 542Id | Université Toulouse Capitole    | TRUE       | kpi.ETU.S.cycle1_L |     NA |        NA | N/A          | N/A        |   NA |        NA |
 
 </details>
 
@@ -242,11 +242,11 @@ Voir les données
 
 | pid   | Etablissement                        | Comparable | kpi                | valeur |      norm | valeur_label | norm_label | rang | evolution |
 |:------|:-------------------------------------|:-----------|:-------------------|-------:|----------:|:-------------|:-----------|-----:|----------:|
-| pVJpw | Centre universitaire de Mayotte      | FALSE      | kpi.ETU.S.cycle2_M |      0 | 0.0000000 | 0            | 0%         |   69 |        NA |
-| RN4E6 | Université d’Évry-Val-d’Essonne      | FALSE      | kpi.ETU.S.cycle2_M |    358 | 0.0503092 | 358          | 5%         |   68 |  18.08081 |
-| Z2FY5 | Université de la Nouvelle-Calédonie  | FALSE      | kpi.ETU.S.cycle2_M |    266 | 0.0736638 | 266          | 7%         |   67 | 148.60335 |
-| HAU8L | Université de Nîmes                  | TRUE       | kpi.ETU.S.cycle2_M |    401 | 0.0745492 | 401          | 7%         |   66 | 153.05344 |
-| zepT6 | Université de la Polynésie Française | FALSE      | kpi.ETU.S.cycle2_M |    378 | 0.1292750 | 378          | 13%        |   65 |  86.10478 |
+| pVJpw | Centre universitaire de Mayotte      | FALSE      | kpi.ETU.S.cycle2_M |      0 | 0.0000000 | 0            | 0%         |   67 |        NA |
+| RN4E6 | Université d’Évry-Val-d’Essonne      | FALSE      | kpi.ETU.S.cycle2_M |    358 | 0.0503092 | 358          | 5%         |   66 |  18.08081 |
+| Z2FY5 | Université de la Nouvelle-Calédonie  | FALSE      | kpi.ETU.S.cycle2_M |    266 | 0.0736638 | 266          | 7%         |   65 | 148.60335 |
+| HAU8L | Université de Nîmes                  | TRUE       | kpi.ETU.S.cycle2_M |    401 | 0.0745492 | 401          | 7%         |   64 | 153.05344 |
+| zepT6 | Université de la Polynésie Française | FALSE      | kpi.ETU.S.cycle2_M |    378 | 0.1292750 | 378          | 13%        |   63 |  86.10478 |
 
 </details>
 <details>
@@ -256,11 +256,11 @@ Voir les données
 
 | pid   | Etablissement                        | Comparable | kpi                | valeur |      norm | valeur_label | norm_label | rang | evolution |
 |:------|:-------------------------------------|:-----------|:-------------------|-------:|----------:|:-------------|:-----------|-----:|----------:|
-| 5cZyU | Université de Paris                  | TRUE       | kpi.ETU.S.cycle2_M |  25571 | 0.4628654 | 25 571       | 46%        |    4 |  96.76455 |
-| etBz7 | Université Claude Bernard - Lyon 1   | TRUE       | kpi.ETU.S.cycle2_M |  21709 | 0.4863781 | 21 709       | 49%        |    3 | 126.12712 |
-| G2qA7 | Université Paris-Saclay              | FALSE      | kpi.ETU.S.cycle2_M |  24733 | 0.5196227 | 24 733       | 52%        |    2 | 236.02443 |
+| G2qA7 | Université Paris-Saclay              | FALSE      | kpi.ETU.S.cycle2_M |  24733 | 0.5468152 | 24 733       | 55%        |    2 |  236.0244 |
 | PpsCQ | Université Paris sciences et lettres | FALSE      | kpi.ETU.S.cycle2_M |  11104 | 0.6327426 | 11 104       | 63%        |    1 |        NA |
+| 9wAap | Université de Rennes 1               | TRUE       | kpi.ETU.S.cycle2_M |     NA |        NA | N/A          | N/A        |   NA |        NA |
 | C6Ps7 | Université Paris Dauphine - PSL      | FALSE      | kpi.ETU.S.cycle2_M |     NA |        NA | N/A          | N/A        |   NA |        NA |
+| 542Id | Université Toulouse Capitole         | TRUE       | kpi.ETU.S.cycle2_M |     NA |        NA | N/A          | N/A        |   NA |        NA |
 
 </details>
 
@@ -273,11 +273,11 @@ Voir les données
 
 | pid   | Etablissement                                      | Comparable | kpi                | valeur |      norm | valeur_label | norm_label | rang | evolution |
 |:------|:---------------------------------------------------|:-----------|:-------------------|-------:|----------:|:-------------|:-----------|-----:|----------:|
-| pVJpw | Centre universitaire de Mayotte                    | FALSE      | kpi.ETU.S.cycle3_D |      0 | 0.0000000 | 0            | 0%         |   68 |        NA |
-| 7Mpgt | Université de Franche-Comté                        | TRUE       | kpi.ETU.S.cycle3_D |      0 | 0.0000000 | 0            | 0%         |   68 | 0.0000000 |
-| Lr94O | Université de Bourgogne                            | TRUE       | kpi.ETU.S.cycle3_D |      1 | 0.0000314 | 1            | 0%         |   67 | 0.0919963 |
-| V13Pk | Université de Versailles Saint-Quentin-en-Yvelines | TRUE       | kpi.ETU.S.cycle3_D |      1 | 0.0000664 | 1            | 0%         |   66 | 0.1416431 |
-| RN4E6 | Université d’Évry-Val-d’Essonne                    | FALSE      | kpi.ETU.S.cycle3_D |     15 | 0.0021079 | 15           | 0%         |   65 | 6.1475410 |
+| pVJpw | Centre universitaire de Mayotte                    | FALSE      | kpi.ETU.S.cycle3_D |      0 | 0.0000000 | 0            | 0%         |   66 |        NA |
+| 7Mpgt | Université de Franche-Comté                        | TRUE       | kpi.ETU.S.cycle3_D |      0 | 0.0000000 | 0            | 0%         |   66 | 0.0000000 |
+| Lr94O | Université de Bourgogne                            | TRUE       | kpi.ETU.S.cycle3_D |      1 | 0.0000338 | 1            | 0%         |   65 | 0.0919963 |
+| V13Pk | Université de Versailles Saint-Quentin-en-Yvelines | TRUE       | kpi.ETU.S.cycle3_D |      1 | 0.0000747 | 1            | 0%         |   64 | 0.1416431 |
+| RN4E6 | Université d’Évry-Val-d’Essonne                    | FALSE      | kpi.ETU.S.cycle3_D |     15 | 0.0021079 | 15           | 0%         |   63 | 6.1475410 |
 
 </details>
 <details>
@@ -285,13 +285,13 @@ Voir les données
 Voir les données
 </summary>
 
-| pid   | Etablissement                          | Comparable | kpi                | valeur |      norm | valeur_label | norm_label | rang | evolution |
-|:------|:---------------------------------------|:-----------|:-------------------|-------:|----------:|:-------------|:-----------|-----:|----------:|
-| 6G2TU | Université Paris 1 - Panthéon Sorbonne | TRUE       | kpi.ETU.S.cycle3_D |   2256 | 0.0566009 | 2 256        | 6%         |    4 |  82.39591 |
-| 8k883 | Université Sorbonne Nouvelle - Paris 3 | TRUE       | kpi.ETU.S.cycle3_D |    890 | 0.0569126 | 890          | 6%         |    3 |  62.50000 |
-| G2qA7 | Université Paris-Saclay                | FALSE      | kpi.ETU.S.cycle3_D |   4144 | 0.0870625 | 4 144        | 9%         |    2 | 161.62246 |
-| PpsCQ | Université Paris sciences et lettres   | FALSE      | kpi.ETU.S.cycle3_D |   2216 | 0.1262750 | 2 216        | 13%        |    1 | 839.39394 |
-| C6Ps7 | Université Paris Dauphine - PSL        | FALSE      | kpi.ETU.S.cycle3_D |     NA |        NA | N/A          | N/A        |   NA |        NA |
+| pid   | Etablissement                        | Comparable | kpi                | valeur |      norm | valeur_label | norm_label | rang | evolution |
+|:------|:-------------------------------------|:-----------|:-------------------|-------:|----------:|:-------------|:-----------|-----:|----------:|
+| G2qA7 | Université Paris-Saclay              | FALSE      | kpi.ETU.S.cycle3_D |   4144 | 0.0916186 | 4 144        | 9%         |    2 |  161.6225 |
+| PpsCQ | Université Paris sciences et lettres | FALSE      | kpi.ETU.S.cycle3_D |   2216 | 0.1262750 | 2 216        | 13%        |    1 |  839.3939 |
+| 9wAap | Université de Rennes 1               | TRUE       | kpi.ETU.S.cycle3_D |     NA |        NA | N/A          | N/A        |   NA |        NA |
+| C6Ps7 | Université Paris Dauphine - PSL      | FALSE      | kpi.ETU.S.cycle3_D |     NA |        NA | N/A          | N/A        |   NA |        NA |
+| 542Id | Université Toulouse Capitole         | TRUE       | kpi.ETU.S.cycle3_D |     NA |        NA | N/A          | N/A        |   NA |        NA |
 
 </details>
 
@@ -304,11 +304,11 @@ Voir les données
 
 | pid   | Etablissement                            | Comparable | kpi             | valeur |      norm | valeur_label | norm_label | rang | evolution |
 |:------|:-----------------------------------------|:-----------|:----------------|-------:|----------:|:-------------|:-----------|-----:|----------:|
-| 5tVy4 | Université Bretagne Sud                  | TRUE       | kpi.ETU.S.DU_DE |     43 | 0.0039819 | 43           | 0%         |   69 |  67.18750 |
-| BWbvP | Université d’Artois                      | TRUE       | kpi.ETU.S.DU_DE |    100 | 0.0068055 | 100          | 1%         |   68 | 121.95122 |
-| yH19Y | Université du Littoral Côte d’Opale      | TRUE       | kpi.ETU.S.DU_DE |     94 | 0.0083489 | 94           | 1%         |   67 |  92.15686 |
-| 3Z5e6 | Université Gustave Eiffel                | FALSE      | kpi.ETU.S.DU_DE |    136 | 0.0086663 | 136          | 1%         |   66 |        NA |
-| EW53M | Université Polytechnique Hauts-de-France | TRUE       | kpi.ETU.S.DU_DE |    143 | 0.0108325 | 143          | 1%         |   65 | 269.81132 |
+| 5tVy4 | Université Bretagne Sud                  | TRUE       | kpi.ETU.S.DU_DE |     43 | 0.0043347 | 43           | 0%         |   67 |  67.18750 |
+| BWbvP | Université d’Artois                      | TRUE       | kpi.ETU.S.DU_DE |    100 | 0.0078771 | 100          | 1%         |   66 | 121.95122 |
+| 3Z5e6 | Université Gustave Eiffel                | FALSE      | kpi.ETU.S.DU_DE |    136 | 0.0086663 | 136          | 1%         |   65 |        NA |
+| yH19Y | Université du Littoral Côte d’Opale      | TRUE       | kpi.ETU.S.DU_DE |     94 | 0.0091672 | 94           | 1%         |   64 |  92.15686 |
+| EW53M | Université Polytechnique Hauts-de-France | TRUE       | kpi.ETU.S.DU_DE |    143 | 0.0116222 | 143          | 1%         |   63 | 269.81132 |
 
 </details>
 <details>
@@ -316,13 +316,13 @@ Voir les données
 Voir les données
 </summary>
 
-| pid   | Etablissement                          | Comparable | kpi             | valeur |      norm | valeur_label | norm_label | rang | evolution |
-|:------|:---------------------------------------|:-----------|:----------------|-------:|----------:|:-------------|:-----------|-----:|----------:|
-| evv7S | Université de Montpellier              | TRUE       | kpi.ETU.S.DU_DE |   5030 | 0.1050236 | 5 030        | 11%        |    4 |  133.5280 |
-| 6G2TU | Université Paris 1 - Panthéon Sorbonne | TRUE       | kpi.ETU.S.DU_DE |   4474 | 0.1122485 | 4 474        | 11%        |    3 |  173.7476 |
-| TWBzp | Université Panthéon-Assas              | FALSE      | kpi.ETU.S.DU_DE |   3000 | 0.1588142 | 3 000        | 16%        |    2 |  104.3841 |
-| PpsCQ | Université Paris sciences et lettres   | FALSE      | kpi.ETU.S.DU_DE |   3667 | 0.2089578 | 3 667        | 21%        |    1 |        NA |
-| C6Ps7 | Université Paris Dauphine - PSL        | FALSE      | kpi.ETU.S.DU_DE |     NA |        NA | N/A          | N/A        |   NA |        NA |
+| pid   | Etablissement                        | Comparable | kpi             | valeur |      norm | valeur_label | norm_label | rang | evolution |
+|:------|:-------------------------------------|:-----------|:----------------|-------:|----------:|:-------------|:-----------|-----:|----------:|
+| TWBzp | Université Panthéon-Assas            | FALSE      | kpi.ETU.S.DU_DE |   3000 | 0.1588142 | 3 000        | 16%        |    2 |  104.3841 |
+| PpsCQ | Université Paris sciences et lettres | FALSE      | kpi.ETU.S.DU_DE |   3667 | 0.2089578 | 3 667        | 21%        |    1 |        NA |
+| 9wAap | Université de Rennes 1               | TRUE       | kpi.ETU.S.DU_DE |     NA |        NA | N/A          | N/A        |   NA |        NA |
+| C6Ps7 | Université Paris Dauphine - PSL      | FALSE      | kpi.ETU.S.DU_DE |     NA |        NA | N/A          | N/A        |   NA |        NA |
+| 542Id | Université Toulouse Capitole         | TRUE       | kpi.ETU.S.DU_DE |     NA |        NA | N/A          | N/A        |   NA |        NA |
 
 </details>
 
@@ -769,11 +769,11 @@ Voir les données
 
 | pid   | Etablissement                        | Comparable | kpi           |   valeur |     norm | valeur_label | norm_label | rang |  evolution |
 |:------|:-------------------------------------|:-----------|:--------------|---------:|---------:|:-------------|:-----------|-----:|-----------:|
-| PpsCQ | Université Paris sciences et lettres | FALSE      | kpi.K.resPetu | 2522.072 | 2522.072 | 3k€          | 3k€        |   69 |   9.847451 |
-| pVJpw | Centre universitaire de Mayotte      | FALSE      | kpi.K.resPetu | 3012.010 | 3012.010 | 3k€          | 3k€        |   68 | 100.014182 |
-| HAU8L | Université de Nîmes                  | TRUE       | kpi.K.resPetu | 4736.144 | 4736.144 | 5k€          | 5k€        |   67 | 107.083611 |
-| 7Gzub | Université Jean Moulin - Lyon 3      | TRUE       | kpi.K.resPetu | 5159.809 | 5159.809 | 5k€          | 5k€        |   66 | 124.629224 |
-| TWBzp | Université Panthéon-Assas            | FALSE      | kpi.K.resPetu | 5367.756 | 5367.756 | 5k€          | 5k€        |   65 |  97.824674 |
+| PpsCQ | Université Paris sciences et lettres | FALSE      | kpi.K.resPetu | 2522.072 | 2522.072 | 3k€          | 3k€        |   67 |   9.847451 |
+| pVJpw | Centre universitaire de Mayotte      | FALSE      | kpi.K.resPetu | 3012.010 | 3012.010 | 3k€          | 3k€        |   66 | 100.014182 |
+| HAU8L | Université de Nîmes                  | TRUE       | kpi.K.resPetu | 4736.144 | 4736.144 | 5k€          | 5k€        |   65 | 107.083611 |
+| 7Gzub | Université Jean Moulin - Lyon 3      | TRUE       | kpi.K.resPetu | 5159.809 | 5159.809 | 5k€          | 5k€        |   64 | 124.629224 |
+| TWBzp | Université Panthéon-Assas            | FALSE      | kpi.K.resPetu | 5367.756 | 5367.756 | 5k€          | 5k€        |   63 |  97.824674 |
 
 </details>
 <details>
@@ -781,13 +781,13 @@ Voir les données
 Voir les données
 </summary>
 
-| pid   | Etablissement                      | Comparable | kpi           |   valeur |     norm | valeur_label | norm_label | rang | evolution |
-|:------|:-----------------------------------|:-----------|:--------------|---------:|---------:|:-------------|:-----------|-----:|----------:|
-| NLCOF | Université de Corse Pasquale Paoli | FALSE      | kpi.K.resPetu | 12838.95 | 12838.95 | 13k€         | 13k€       |    4 |  94.11804 |
-| bxPQe | Sorbonne Université                | TRUE       | kpi.K.resPetu | 13406.22 | 13406.22 | 13k€         | 13k€       |    3 |  99.02131 |
-| RN4E6 | Université d’Évry-Val-d’Essonne    | FALSE      | kpi.K.resPetu | 13418.53 | 13418.53 | 13k€         | 13k€       |    2 | 142.88041 |
-| 3Z5e6 | Université Gustave Eiffel          | FALSE      | kpi.K.resPetu | 15736.90 | 15736.90 | 16k€         | 16k€       |    1 | 188.09230 |
-| C6Ps7 | Université Paris Dauphine - PSL    | FALSE      | kpi.K.resPetu |       NA |       NA | N/A          | N/A        |   NA |        NA |
+| pid   | Etablissement                   | Comparable | kpi           |   valeur |     norm | valeur_label | norm_label | rang | evolution |
+|:------|:--------------------------------|:-----------|:--------------|---------:|---------:|:-------------|:-----------|-----:|----------:|
+| bxPQe | Sorbonne Université             | TRUE       | kpi.K.resPetu | 14522.73 | 14522.73 | 15k€         | 15k€       |    2 |  107.2682 |
+| 3Z5e6 | Université Gustave Eiffel       | FALSE      | kpi.K.resPetu | 15736.90 | 15736.90 | 16k€         | 16k€       |    1 |  188.0923 |
+| 9wAap | Université de Rennes 1          | TRUE       | kpi.K.resPetu |       NA |       NA | N/A          | N/A        |   NA |        NA |
+| C6Ps7 | Université Paris Dauphine - PSL | FALSE      | kpi.K.resPetu |       NA |       NA | N/A          | N/A        |   NA |        NA |
+| 542Id | Université Toulouse Capitole    | TRUE       | kpi.K.resPetu |       NA |       NA | N/A          | N/A        |   NA |        NA |
 
 </details>
 
@@ -800,11 +800,11 @@ Voir les données
 
 | pid   | Etablissement                       | Comparable | kpi           |   valeur |     norm | valeur_label | norm_label | rang | evolution |
 |:------|:------------------------------------|:-----------|:--------------|---------:|---------:|:-------------|:-----------|-----:|----------:|
-| HAU8L | Université de Nîmes                 | TRUE       | kpi.K.forPetu | 159.9472 | 159.9472 | 160€         | 160€       |   64 |  84.35607 |
-| HqAYu | Université Toulouse - Jean Jaurès   | TRUE       | kpi.K.forPetu | 230.6532 | 230.6532 | 231€         | 231€       |   63 |  86.07615 |
-| cEt92 | Université de La Réunion            | FALSE      | kpi.K.forPetu | 241.1081 | 241.1081 | 241€         | 241€       |   62 |  54.99174 |
-| atbEK | La Rochelle Université              | TRUE       | kpi.K.forPetu | 248.3207 | 248.3207 | 248€         | 248€       |   61 |  87.98203 |
-| n1W55 | Université de Perpignan Via Domitia | TRUE       | kpi.K.forPetu | 249.1491 | 249.1491 | 249€         | 249€       |   60 |  76.17273 |
+| HAU8L | Université de Nîmes                 | TRUE       | kpi.K.forPetu | 159.9472 | 159.9472 | 160€         | 160€       |   62 |  84.35607 |
+| HqAYu | Université Toulouse - Jean Jaurès   | TRUE       | kpi.K.forPetu | 230.6532 | 230.6532 | 231€         | 231€       |   61 |  86.07615 |
+| atbEK | La Rochelle Université              | TRUE       | kpi.K.forPetu | 248.3207 | 248.3207 | 248€         | 248€       |   60 |  87.98203 |
+| cEt92 | Université de La Réunion            | FALSE      | kpi.K.forPetu | 249.0325 | 249.0325 | 249€         | 249€       |   59 |  56.79913 |
+| n1W55 | Université de Perpignan Via Domitia | TRUE       | kpi.K.forPetu | 249.1491 | 249.1491 | 249€         | 249€       |   58 |  76.17273 |
 
 </details>
 <details>
@@ -814,11 +814,11 @@ Voir les données
 
 | pid   | Etablissement                        | Comparable | kpi           | valeur | norm | valeur_label | norm_label | rang | evolution |
 |:------|:-------------------------------------|:-----------|:--------------|-------:|-----:|:-------------|:-----------|-----:|----------:|
-| Z2FY5 | Université de la Nouvelle-Calédonie  | FALSE      | kpi.K.forPetu |     NA |   NA | N/A          | N/A        |   NA |        NA |
-| zepT6 | Université de la Polynésie Française | FALSE      | kpi.K.forPetu |     NA |   NA | N/A          | N/A        |   NA |        NA |
+| 9wAap | Université de Rennes 1               | TRUE       | kpi.K.forPetu |     NA |   NA | N/A          | N/A        |   NA |        NA |
 | z3hdL | Université des Antilles              | FALSE      | kpi.K.forPetu |     NA |   NA | N/A          | N/A        |   NA |        NA |
 | C6Ps7 | Université Paris Dauphine - PSL      | FALSE      | kpi.K.forPetu |     NA |   NA | N/A          | N/A        |   NA |        NA |
 | PpsCQ | Université Paris sciences et lettres | FALSE      | kpi.K.forPetu |     NA |   NA | N/A          | N/A        |   NA |        NA |
+| 542Id | Université Toulouse Capitole         | TRUE       | kpi.K.forPetu |     NA |   NA | N/A          | N/A        |   NA |        NA |
 
 </details>
 
@@ -862,11 +862,11 @@ Voir les données
 
 | pid   | Etablissement                          | Comparable | kpi           |   valeur |     norm | valeur_label | norm_label | rang | evolution |
 |:------|:---------------------------------------|:-----------|:--------------|---------:|---------:|:-------------|:-----------|-----:|----------:|
-| HAU8L | Université de Nîmes                    | TRUE       | kpi.K.ensPetu | 2.003370 | 2.003370 | 2.0          | 2.0        |   69 | 118.23223 |
-| 542Id | Université Toulouse Capitole           | TRUE       | kpi.K.ensPetu | 2.098374 | 2.098374 | 2.1          | 2.1        |   68 |  96.90771 |
-| 7Gzub | Université Jean Moulin - Lyon 3        | TRUE       | kpi.K.ensPetu | 2.278061 | 2.278061 | 2.3          | 2.3        |   67 |  97.85379 |
-| TWBzp | Université Panthéon-Assas              | FALSE      | kpi.K.ensPetu | 2.336709 | 2.336709 | 2.3          | 2.3        |   66 |  79.71001 |
-| 6G2TU | Université Paris 1 - Panthéon Sorbonne | TRUE       | kpi.K.ensPetu | 2.417425 | 2.417425 | 2.4          | 2.4        |   65 |  85.13517 |
+| HAU8L | Université de Nîmes                    | TRUE       | kpi.K.ensPetu | 2.003370 | 2.003370 | 2.0          | 2.0        |   67 | 118.23223 |
+| 7Gzub | Université Jean Moulin - Lyon 3        | TRUE       | kpi.K.ensPetu | 2.278061 | 2.278061 | 2.3          | 2.3        |   66 |  97.85379 |
+| TWBzp | Université Panthéon-Assas              | FALSE      | kpi.K.ensPetu | 2.336709 | 2.336709 | 2.3          | 2.3        |   65 |  79.71001 |
+| 6G2TU | Université Paris 1 - Panthéon Sorbonne | TRUE       | kpi.K.ensPetu | 2.417425 | 2.417425 | 2.4          | 2.4        |   64 |  85.13517 |
+| CUBKB | Université Lumière - Lyon 2            | TRUE       | kpi.K.ensPetu | 2.743542 | 2.743542 | 2.7          | 2.7        |   63 |  93.45121 |
 
 </details>
 <details>
@@ -876,11 +876,11 @@ Voir les données
 
 | pid   | Etablissement                           | Comparable | kpi           |   valeur |     norm | valeur_label | norm_label | rang | evolution |
 |:------|:----------------------------------------|:-----------|:--------------|---------:|---------:|:-------------|:-----------|-----:|----------:|
-| PpsCQ | Université Paris sciences et lettres    | FALSE      | kpi.K.ensPetu | 5.732733 | 5.732733 | 5.7          | 5.7        |    4 |  94.40144 |
-| m7K6T | Université Toulouse III - Paul Sabatier | TRUE       | kpi.K.ensPetu | 5.734461 | 5.734461 | 5.7          | 5.7        |    3 |  83.23842 |
-| RN4E6 | Université d’Évry-Val-d’Essonne         | FALSE      | kpi.K.ensPetu | 6.111815 | 6.111815 | 6.1          | 6.1        |    2 | 119.11063 |
-| NLCOF | Université de Corse Pasquale Paoli      | FALSE      | kpi.K.ensPetu | 6.209987 | 6.209987 | 6.2          | 6.2        |    1 |  82.39014 |
+| m7K6T | Université Toulouse III - Paul Sabatier | TRUE       | kpi.K.ensPetu | 6.452647 | 6.452647 | 6.5          | 6.5        |    2 |  93.66324 |
+| NLCOF | Université de Corse Pasquale Paoli      | FALSE      | kpi.K.ensPetu | 6.761152 | 6.761152 | 6.8          | 6.8        |    1 |  89.70265 |
+| 9wAap | Université de Rennes 1                  | TRUE       | kpi.K.ensPetu |       NA |       NA | N/A          | N/A        |   NA |        NA |
 | C6Ps7 | Université Paris Dauphine - PSL         | FALSE      | kpi.K.ensPetu |       NA |       NA | N/A          | N/A        |   NA |        NA |
+| 542Id | Université Toulouse Capitole            | TRUE       | kpi.K.ensPetu |       NA |       NA | N/A          | N/A        |   NA |        NA |
 
 </details>
 
@@ -954,30 +954,14 @@ Voir les données
 Voir les données
 </summary>
 
-| pid   | Etablissement                                                                                                                |
-|:------|:-----------------------------------------------------------------------------------------------------------------------------|
-| hy4EW | Université de Guyane                                                                                                         |
-| TWBzp | Université Panthéon-Assas                                                                                                    |
-| cqyN7 | Université Sorbonne Paris Nord                                                                                               |
-| 6g0Mb | Paris-Est Sup                                                                                                                |
-| 8A0mg | Université Bourgogne - Franche-Comté                                                                                         |
-| 86UpY | Université Paris Lumières                                                                                                    |
-| XR16q | Conservatoire national des arts et métiers                                                                                   |
-| dPmxa | École nationale d’ingénieurs de Brest                                                                                        |
-| dj88d | Institut national des sciences appliquées de Toulouse                                                                        |
-| wp55m | IAE Paris - Sorbonne Business School                                                                                         |
-| 13fXQ | École nationale supérieure Louis Lumière                                                                                     |
-| TSGYA | École française d’Extrême-Orient                                                                                             |
-| kWved | École normale supérieure de Lyon                                                                                             |
-| j5bS4 | École normale supérieure de Rennes                                                                                           |
-| u79ZJ | Sciences Po                                                                                                                  |
-| 0Mvk5 | Collège de France                                                                                                            |
-| SsRkf | École des hautes études en santé publique                                                                                    |
-| y52D7 | École des hautes études en sciences sociales                                                                                 |
-| 59da6 | École nationale supérieure des sciences de l’information et des bibliothèques                                                |
-| a2a9U | Institut national supérieur de formation et de recherche pour l’éducation des jeunes handicapés et les enseignements adaptés |
-| VaJ52 | Muséum national d’histoire naturelle                                                                                         |
-| zHvr4 | École nationale supérieure des arts et techniques du théâtre                                                                 |
+| pid   | Etablissement                        |
+|:------|:-------------------------------------|
+| hy4EW | Université de Guyane                 |
+| TWBzp | Université Panthéon-Assas            |
+| cqyN7 | Université Sorbonne Paris Nord       |
+| 6g0Mb | Paris-Est Sup                        |
+| 8A0mg | Université Bourgogne - Franche-Comté |
+| 86UpY | Université Paris Lumières            |
 
 </details>
 

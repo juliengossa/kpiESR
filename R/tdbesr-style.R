@@ -51,6 +51,7 @@ number_format <- function(x) {
 
 hack_label <- function(x) {
   case_when(
+    x == 0 ~ "0",
     x<=1 ~ scales::percent(x,accuracy = 1),
     x<=100 ~ format(x,digits=3, nsmall=1, scientific = FALSE),
     #x<=2000 ~ euro(x),
@@ -162,7 +163,8 @@ kpiesr_style <- function(
               y_scale = TRUE,
               grid = FALSE,
               title = FALSE,
-              plotly = FALSE) {
+              plotly = FALSE,
+              legend_wordwrap = 200) {
   return(
     as.list(environment())
     )

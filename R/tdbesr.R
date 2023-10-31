@@ -149,14 +149,14 @@ kpiesr_add_ensembles <- function(esr, rentrée.ref=2013) {
   esr.ensemble <- esr %>% 
     group_by(Rentrée) %>%
     summarise(across(starts_with("kpi"), ~ sum(.x,na.rm = TRUE))) %>%
-    na_if(0) %>%
+    mutate(across(starts_with("kpi"), ~ ifelse(.x==0,NA,.x))) %>% # vérifier
     mutate(Groupe = "Ensemble", pid="Ensemble", Etablissement="Ensemble")
 
   esr.groupe <- esr %>% 
     #filter(UAI %in% esr.uais$dans.evol) %>%
     group_by(Rentrée, Groupe) %>%
     summarise(across(starts_with("kpi"), ~ sum(.x,na.rm = TRUE))) %>%
-    na_if(0) %>%
+    mutate(across(starts_with("kpi"), ~ ifelse(.x==0,NA,.x))) %>% # vérifier
     mutate(pid=Groupe, Etablissement=Groupe, Groupe="Groupe")
   
   esr <- bind_rows(esr,esr.groupe,esr.ensemble) %>%

@@ -1,6 +1,6 @@
 
 # https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-enseignants-titulaires-esr-public/information/?disjunctive.annee
-# Version du 2 aout 2022
+# Version du 31 octobre 2023
 #
 # [1] "Rentrée"                                                    "Établissement"                                             
 # [3] "Type.établissement"                                         "Sexe"                                                      
@@ -18,23 +18,22 @@
 # [27] "quotite"
 
 # https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-enseignants-nonpermanents-esr-public/information/
-# Version du 2 aout 2022
+# Version du 31 octobre 2023
 #
-# [1] "Rentrée"                                                    "Établissement"                                             
-# [3] "Type.établissement"                                         "Sexe"                                                      
-# [5] "Categorie.de.personnels"                                    "Grandes.disciplines"                                       
-# [7] "Groupes.CNU"                                                "Sections.CNU"                                              
-# [9] "Code.categorie.personnels"                                  "Code.groupe.CNU"                                           
-# [11] "Code.grande.discipline"                                     "effectif"                                                  
-# [13] "code_section_cnu"                                           "Année.universitaire"                                       
-# [15] "etablissement_id_paysage"                                   "etablissement_compos_id_paysage"                           
-# [17] "Décomposition.pour.les.universités.à.statuts.expérimentaux" "etablissement_id_uai"                                      
-# [19] "etablissement_code_academie"                                "Académie"                                                  
-# [21] "etablissement_code_region"                                  "Région"                                                    
-# [23] "etablissement_coordonnees"                                  "etablissement_id_uai_source"                               
-# [25] "etablissement_id_paysage_actuel"                            "etablissement_actuel_lib"                                  
-# [27] "classe_age3"                                                "quotite"      
-
+# [1] "Rentrée"                                                "Établissement"                                         
+# [3] "Type.établissement"                                     "Sexe"                                                  
+# [5] "Categorie.de.personnels"                                "Grande.discipline"                                     
+# [7] "Groupes.CNU"                                            "Code.groupe.CNU"                                       
+# [9] "Code.grande.discipline"                                 "effectif"                                              
+# [11] "Code.categorie.personnels"                              "Année.universitaire"                                   
+# [13] "Décomposition.des.universitéss.à.statuts.expérimentaux" "etablissement_id_paysage"                              
+# [15] "etablissement_compos_id_paysage"                        "etablissement_id_uai"                                  
+# [17] "code_academie"                                          "Académie"                                              
+# [19] "etablissement_code_region"                              "Région"                                                
+# [21] "etablissement_coordonnees"                              "etablissement_id_uai_source"                           
+# [23] "etablissement_id_paysage_actuel"                        "Établissement.actuel"                                  
+# [25] "Categories.personnels.regroupées"                       "Quotité"                                               
+# [27] "Classes.d.âge"                
 
 kpiesr_read.ens <- function(pidfix=list("x"="x")) {
 
@@ -57,10 +56,10 @@ kpiesr_read.ens <- function(pidfix=list("x"="x")) {
     pid = recode(etablissement_id_paysage_actuel,!!!pidfix),
     Rentrée,
     Catégorie = case_when(
-      code_categorie_persg %in% c("LRU","MCF ASS-INV", "PR ASS-INV", "ASS INV (corps NR)") ~ "EC_contractuel",
-      code_categorie_persg %in% c("CONT 2D") ~ "AM2D_contractuel",
-      code_categorie_persg %in% c("ATER") ~ "ATER",
-      code_categorie_persg %in% c("DOCT AVEC ENS","DOCT SANS ENS") ~ "Doc",
+      Code.categorie.personnels %in% c("LRU","MCF INV","MCF ASS", "PR INV","PR ASS", "INV (corps NR)", "ASS (corps NR)") ~ "EC_contractuel",
+      Code.categorie.personnels %in% c("CONT 2D") ~ "AM2D_contractuel",
+      Code.categorie.personnels %in% c("ATER") ~ "ATER",
+      Code.categorie.personnels %in% c("DOCT AVEC ENS","DOCT SANS ENS") ~ "Doc",
       TRUE ~ "Autres"),
     #Discipline = Code.grande.discipline,
     effectif) %>%
@@ -87,3 +86,4 @@ kpiesr_read.ens <- function(pidfix=list("x"="x")) {
   return(ens)
 }
 
+# ens <- kpiesr_read.ens()

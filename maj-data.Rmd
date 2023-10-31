@@ -12,7 +12,7 @@ library(kpiESR)
 library(ggcpesrthemes)
 
 rentrée.d <- 2013
-rentrée.f <- 2020
+rentrée.f <- 2022
 ```
 
 
@@ -259,6 +259,7 @@ write.csv2(esr,"kpiesr.csv",row.names = FALSE)
 ```
 
 [kpiesr.csv](kpiesr.csv)
+
 
 
 

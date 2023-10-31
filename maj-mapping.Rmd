@@ -9,17 +9,21 @@ knitr::opts_chunk$set(echo = FALSE)
 #knitr::opts_chunk$set(render = "cairo_pdf")
 
 library(tidyverse)
-library(kpiESR)
+#library(kpiESR)
 library(ggcpesrthemes)
 theme_set(theme_cpesr())
 rentrée.ref = 2020
+
+source("R/fr-esr-principaux-etablissements-enseignement-superieur.R")
 ```
 
 ## Chargement des données
 
 ```{r etabs.load}
 etabs <- bind_rows(
-  kpiesr_read.etab.2021v2() %>% mutate(dataset = "etab.21.2"),
+  kpiesr_read.etab() %>% mutate(dataset = "etab.23"),
+  kpiesr_read.etab("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.2022.csv") %>% mutate(dataset = "etab.22"),
+  kpiesr_read.etab("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.2021.csv") %>% mutate(dataset = "etab.21.2"),
   kpiesr_read.etab.2021v1() %>% mutate(dataset = "etab.21.1"),
   kpiesr_read.etab.2020v1()%>% mutate(dataset = "etab.20"),
   kpiesr_read.etab.2019v1() %>% mutate(dataset = "etab.19") 
@@ -43,7 +47,7 @@ enstit <- read.csv2("dataESR/fr-esr-enseignants-titulaires-esr-public.csv") %>%
   transmute(
     pid = etablissement_id_paysage_actuel,
     UAI = etablissement_id_uai,
-    etab = etablissement_actuel_lib,
+    etab = Etablissement.actuel,
   ) %>%
   unique() 
 
@@ -51,7 +55,7 @@ ensnp <- read.csv2("dataESR/fr-esr-enseignants-nonpermanents-esr-public.csv") %>
   transmute(
     pid = etablissement_id_paysage_actuel,
     UAI = etablissement_id_uai,
-    etab = etablissement_actuel_lib,
+    etab = Établissement.actuel,
   ) %>%
   unique() 
 
@@ -190,7 +194,7 @@ fix.fin <- autofix.fin %>%
   add_row(UAI = "Manuel", pid.dst = "z3hdL", pid.src = "z3hdL;hy4EW") %>%
   add_row(UAI = "Manuel", pid.dst = "z3hdL", pid.src = "XDl91") %>%
   add_row(UAI = "Manuel", pid.dst = "Z2FY5", pid.src = "Z2FY5;zepT6") %>%
-  add_row(UAI = "Manuel", pid.dst = "HAU8L", pid.src = "a5ZAn")
+  add_row(UAI = "Manuel", pid.dst = "HAU8L", pid.src = "a5ZAn") 
 
 
 fix.fin %>% spoiler_table()
@@ -445,12 +449,12 @@ fix_etab <- function(etab, fixdf) {
 ```{r fix.wikidatav, results='asis'}
 fix.wikidata <- tribble(
   ~ "pid", ~ "url.wikidata",
-  "qUCQp", "https://www.wikidata.org/entity/Q259388",  
-  "EW53M", "https://www.wikidata.org/entity/Q1548539",
-  "evv7S", "https://www.wikidata.org/entity/Q776223",
-  "K4lR3", "https://www.wikidata.org/entity/Q1319786",
-  "U8a0v", "https://www.wikidata.org/entity/Q3551621",
-  "6kk6n", "https://www.wikidata.org/entity/Q273604",
+  #"qUCQp", "https://www.wikidata.org/entity/Q259388",  
+  #"EW53M", "https://www.wikidata.org/entity/Q1548539",
+  #"evv7S", "https://www.wikidata.org/entity/Q776223",
+  #"K4lR3", "https://www.wikidata.org/entity/Q1319786",
+  #"U8a0v", "https://www.wikidata.org/entity/Q3551621",
+  #"6kk6n", "https://www.wikidata.org/entity/Q273604",
   "VfvdY", "https://www.wikidata.org/entity/Q630461"
 )
 
@@ -464,8 +468,8 @@ fix.wikidata %>% spoiler_table()
 #### Sigles récupérables sur wikidata
 
 ```{r sigles.wikidata.load, results='hide', cache=FALSE}
-#wikidataESR::wdesr_get_cache() 
-wikidataESR::wdesr_clear_cache()
+wikidataESR::wdesr_get_cache() 
+#wikidataESR::wdesr_clear_cache()
 
 fix.alias.wikidata <- etab %>%
   #filter(UAI %in% esr.uais$dans.tdb) %>%

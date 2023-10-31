@@ -45,15 +45,17 @@
 # [115] "identifiant_programme_lolf_chef_de_file" "libelle_mission_chef_de_file"            "compte_googleplus"   
 
 
-kpiesr_read.etab.2021v2 <- function() {
+kpiesr_read.etab <- function(filename = "dataESR/fr-esr-principaux-etablissements-enseignement-superieur.csv") {
   
-  etab <- read.csv2("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.csv", 
+  etab <- read.csv2(filename, 
                     na.string = "") %>%
     transmute(
       UAI = uai...identifiant,
       Etablissement = Libellé,
       Sigle = ifelse(!is.na(sigle),sigle,nom_court),
       Type = type.d.établissement,
+      Typologie = typologie_d_universites_et_assimiles,
+      Secteur = secteur_d_etablissement,
       Académie = Académie,
       Rattachement = rattachement,
       Fusion = (universites_fusionnees == "Oui"),
@@ -63,6 +65,10 @@ kpiesr_read.etab.2021v2 <- function() {
       twitter = compte_twitter
     ) 
 }
+
+# kpiesr_read.etab("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.csv")
+# kpiesr_read.etab("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.2022.csv")
+# kpiesr_read.etab("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.2021.csv")
 
 # Version du 13 aout 2021
 # [1] "Libellé"                                 "nom_court"                               "sigle"                                   "type.d.établissement"                   
@@ -203,19 +209,19 @@ kpiesr_read.etab.2019v1 <- function() {
     filter(!is.na(UAI),!UAI=="")
 }
 
-kpiesr_read.etab <- function() {
-  etab.21.2 <- kpiesr_read.etab.2021v1()
-  etab.21.1 <- kpiesr_read.etab.2021v1()
-  etab.20 <- kpiesr_read.etab.2020v1()
-  etab.19 <- kpiesr_read.etab.2019v1()
-  
-  #etiquettes <- read.csv("dataESR/etiquettes.csv")
-  
-  etab <- etab.21.2 %>% mutate(version="2021.2")
-  etab <- bind_rows(etab, etab.21.1 %>% filter(!UAI %in% etab$UAI) %>% mutate(version="2021.1"))
-  etab <- bind_rows(etab, etab.20 %>% filter(!UAI %in% etab$UAI) %>% mutate(version="2020"))
-  etab <- bind_rows(etab, etab.19 %>% filter(!UAI %in% etab$UAI) %>% mutate(version="2019"))
-   
-  return(etab)
-}
+# kpiesr_read.etab <- function() {
+#   etab.21.2 <- kpiesr_read.etab.2021v1()
+#   etab.21.1 <- kpiesr_read.etab.2021v1()
+#   etab.20 <- kpiesr_read.etab.2020v1()
+#   etab.19 <- kpiesr_read.etab.2019v1()
+#   
+#   #etiquettes <- read.csv("dataESR/etiquettes.csv")
+#   
+#   etab <- etab.21.2 %>% mutate(version="2021.2")
+#   etab <- bind_rows(etab, etab.21.1 %>% filter(!UAI %in% etab$UAI) %>% mutate(version="2021.1"))
+#   etab <- bind_rows(etab, etab.20 %>% filter(!UAI %in% etab$UAI) %>% mutate(version="2020"))
+#   etab <- bind_rows(etab, etab.19 %>% filter(!UAI %in% etab$UAI) %>% mutate(version="2019"))
+#    
+#   return(etab)
+# }
 

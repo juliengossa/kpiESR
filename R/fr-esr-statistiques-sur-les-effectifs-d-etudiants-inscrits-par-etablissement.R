@@ -176,4 +176,6 @@ kpiesr_read.etu <- function(pidfix=list("x"="x")) {
       #kpi.ETU.S.diplome.national = Type.de.diplôme...Diplômes.nationaux,
       kpi.ETU.S.DU_DE = sum(Type.de.diplôme...Diplômes.d.établissement, na.rm = TRUE) ) %>%
     ungroup() %>%
-    arrange(pid,Rentrée)}
+    arrange(pid,Rentrée)
+  
+  }

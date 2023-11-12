@@ -114,6 +114,7 @@ kpiesr_add_kpis <- function (df) {
   mutate(df,
     kpi.K.dotPres = kpi.FIN.S.SCSP / kpi.FIN.P.ressources ,
     kpi.K.resPetu = kpi.FIN.P.ressources / (kpi.ETU.S.cycle1_L+kpi.ETU.S.cycle2_M),
+    #kpi.K.resPetu = (kpi.FIN.S.SCSP + kpi.FIN.S.recettesFormation) / (kpi.ETU.S.cycle1_L + kpi.ETU.S.cycle2_M),
     kpi.K.forPetu = kpi.FIN.S.recettesFormation / kpi.ETU.P.effectif,
     kpi.K.recPect = kpi.FIN.S.recettesRecherche / kpi.ENS.S.EC,
     kpi.K.ensPetu = (kpi.ENS.S.titulaires + kpi.ENS.S.contractuels) / (kpi.ETU.S.cycle1_L+kpi.ETU.S.cycle2_M) * 100,

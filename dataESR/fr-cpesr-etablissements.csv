@@ -72,7 +72,7 @@ UAI,Etablissement,Type,Groupe,PerimEx,Association,Comparable
 0932560C,Campus Condorcet,Pôle de recherche et d'enseignement supérieur,Regroupements,,,TRUE
 0755581J,HESAM Université,Communauté d'universités et établissements,Regroupements,,,TRUE
 0142382N,Normandie Université,Communauté d'universités et établissements,Regroupements,,,TRUE
-0772710C,Paris-Est Sup,Communauté d'universités et établissements,Regroupements,,,TRUE
+0772710C,Paris-Est Sup,Communauté d'universités et établissements,Regroupements,,,FALSE
 0251985X,Université Bourgogne - Franche-Comté,Communauté d'universités et établissements,Regroupements,,,TRUE
 0352756F,Université Bretagne Loire,Communauté d'universités et établissements,Regroupements,,,TRUE
 0861420B,Université confédérale Léonard de Vinci,Communauté d'universités et établissements,Regroupements,,,TRUE
@@ -80,25 +80,25 @@ UAI,Etablissement,Type,Groupe,PerimEx,Association,Comparable
 0312758E,Université fédérale de Toulouse Midi-Pyrénées,Communauté d'universités et établissements,Regroupements,,,TRUE
 0755698L,Université Paris Lumières,Communauté d'universités et établissements,Regroupements,,,TRUE
 0753480A,Collège de France,Grand établissement,Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs),,,TRUE
-0350095N,École des hautes études en santé publique,Grand établissement,Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs),,,TRUE
+0350095N,École des hautes études en santé publique,Grand établissement,Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs),,,FALSE
 0753742K,École des hautes études en sciences sociales,Grand établissement,Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs),,,TRUE
 0753489K,École du Louvre,École,Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs),,,TRUE
 0672678X,École nationale d'administration,École,Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs),,,TRUE
 0753478Y,École nationale des Chartes,Grand établissement,Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs),,,TRUE
 0310143M,École nationale supérieure de formation de l’enseignement agricole,École,Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs),,,TRUE
 0782019W,École nationale supérieure de paysage,École,Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs),,,TRUE
-0692459Y,École nationale supérieure des sciences de l'information et des bibliothèques,Grand établissement,Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs),,,TRUE
+0692459Y,École nationale supérieure des sciences de l'information et des bibliothèques,Grand établissement,Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs),,,FALSE
 0753486G,École pratique des hautes études,Grand établissement,Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs),,,TRUE
 0753428U,Institut de physique du globe,Grand établissement,Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs),,,TRUE
 0755026F,Institut national d'histoire de l'art,Grand établissement,Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs),,,TRUE
 0753488J,Institut national des langues et civilisations orientales,Grand établissement,Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs),,,FALSE
 0754446A,Institut national du patrimoine,École,Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs),,,TRUE
 0752559Z,"Institut national du sport, de l'expertise et de la performance",Grand établissement,Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs),,,TRUE
-0922605G,Institut national supérieur de formation et de recherche pour l'éducation des jeunes handicapés et les enseignements adaptés,École,Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs),,,TRUE
+0922605G,Institut national supérieur de formation et de recherche pour l'éducation des jeunes handicapés et les enseignements adaptés,École,Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs),,,FALSE
 0811293R,Institut national universitaire Jean-François Champollion,Autre établissement,Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs),,,FALSE
 0753494R,Muséum national d'histoire naturelle,Grand établissement,Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs),,,TRUE
 0753496T,Observatoire de Paris,Grand établissement,Instituts ou écoles nationaux spécialisés et grands établissements (hors écoles d'ingénieurs),,,TRUE
-0753431X,Sciences Po,Grand établissement,Instituts d'études politiques,,,TRUE
+0753431X,Sciences Po,Grand établissement,Instituts d'études politiques,,,FALSE
 0130221V,Sciences Po Aix,Autre établissement,Instituts d'études politiques,,,TRUE
 0330192E,Sciences Po Bordeaux,Autre établissement,Instituts d'études politiques,,,TRUE
 0380134P,Sciences Po Grenoble,Institut d'étude politique,Instituts d'études politiques,,,TRUE
@@ -117,7 +117,7 @@ UAI,Etablissement,Type,Groupe,PerimEx,Association,Comparable
 0940608A,École nationale vétérinaire d'Alfort,École,Ecoles vétérinaires,,,TRUE
 0310153Y,École nationale vétérinaire de Toulouse,École,Ecoles vétérinaires,,,TRUE
 0694123G,École normale supérieure de Lyon,École,Ecoles normales supérieures,,,TRUE
-0352440M,École normale supérieure de Rennes,École,Ecoles normales supérieures,,,TRUE
+0352440M,École normale supérieure de Rennes,École,Ecoles normales supérieures,,,FALSE
 0912423P,École normale supérieure Paris-Saclay,École,Ecoles normales supérieures,,,TRUE
 0753455Y,École normale supérieure PSL,École normale supérieure,Ecoles normales supérieures,,,TRUE
 1340004B,Casa de Velázquez de Madrid,Autre établissement,Ecoles françaises à l'étranger,,,TRUE
@@ -127,7 +127,7 @@ UAI,Etablissement,Type,Groupe,PerimEx,Association,Comparable
 3010001R,Institut français d'archéologie orientale du Caire,Autre établissement,Ecoles françaises à l'étranger,,,TRUE
 0511931X,Centre national des arts du cirque,École,Ecoles des arts du spectacle,,,TRUE
 0753495S,Conservatoire national supérieur de musique et de danse de Paris,École,Ecoles des arts du spectacle,,,TRUE
-0693735K,École nationale supérieure des arts et techniques du théâtre,École,Ecoles des arts du spectacle,,,TRUE
+0693735K,École nationale supérieure des arts et techniques du théâtre,École,Ecoles des arts du spectacle,,,FALSE
 0753457A,École nationale supérieure des métiers de l'image et du son,École,Ecoles des arts du spectacle,,,TRUE
 0932066R,École nationale supérieure Louis Lumière,École,Ecoles des arts du spectacle,,,TRUE
 0754595M,Pôle supérieur d'enseignement artistique Paris - Boulogne-Billancourt,École,Ecoles des arts du spectacle,,,TRUE
@@ -181,7 +181,7 @@ UAI,Etablissement,Type,Groupe,PerimEx,Association,Comparable
 0171435T,École d'ingénieurs en génie des systèmes industriels,École,Ecoles d'ingénieurs,,,TRUE
 0951820M,École de biologie industrielle,École,Ecoles d'ingénieurs,,,TRUE
 0130230E,Ecole de l'air et de l'espace,Grand établissement,Ecoles d'ingénieurs,,,TRUE
-0290119X,École nationale d'ingénieurs de Brest,École,Ecoles d'ingénieurs,,,TRUE
+0290119X,École nationale d'ingénieurs de Brest,École,Ecoles d'ingénieurs,,,FALSE
 0650048Z,École nationale d'ingénieurs de Tarbes,École,Ecoles d'ingénieurs,,,TRUE
 0311256X,École nationale de l'aviation civile,Grand établissement,Ecoles d'ingénieurs,,,TRUE
 0312069F,École nationale de la météorologie,École,Ecoles d'ingénieurs,,,TRUE
@@ -194,7 +194,7 @@ UAI,Etablissement,Type,Groupe,PerimEx,Association,Comparable
 0340112M,École nationale supérieure de chimie de Montpellier,École,Ecoles d'ingénieurs,,,TRUE
 0350077U,École nationale supérieure de chimie de Rennes,École,Ecoles d'ingénieurs,,,TRUE
 0951376E,École nationale supérieure de l'électronique et de ses applications de Cergy,École,Ecoles d'ingénieurs,,,TRUE
-0860073M,École nationale supérieure de mécanique et d'aérotechnique de Poitiers,École,Ecoles d'ingénieurs,,,TRUE
+0860073M,École nationale supérieure de mécanique et d'aérotechnique de Poitiers,École,Ecoles d'ingénieurs,,,FALSE
 0250082D,École nationale supérieure de mécanique et des microtechniques,École,Ecoles d'ingénieurs,,,TRUE
 0290125D,École nationale supérieure de techniques avancées Bretagne,École,Ecoles d'ingénieurs,,,TRUE
 0330203S,École nationale supérieure des sciences agronomiques de Bordeaux Aquitaine,École,Ecoles d'ingénieurs,,,TRUE

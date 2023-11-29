@@ -120,7 +120,8 @@ kpiesr_add_kpis <- function (df) {
     kpi.K.ensPetu = (kpi.ENS.S.titulaires + kpi.ENS.S.contractuels) / (kpi.ETU.S.cycle1_L+kpi.ETU.S.cycle2_M) * 100,
     #kpi.K.titPens = kpi.ENS.S.titulaires / kpi.ENS.P.effectif,
     kpi.K.titPper = (kpi.ENS.S.titulaires + kpi.BIA.S.titulaires) / (kpi.ENS.P.effectif + kpi.BIA.P.effectif),
-    kpi.K.biaPper = kpi.BIA.P.effectif / (kpi.BIA.P.effectif + kpi.ENS.P.effectif)
+    kpi.K.biaPper = kpi.BIA.P.effectif / (kpi.BIA.P.effectif + kpi.ENS.P.effectif),
+    kpi.K.dotPetu = kpi.FIN.S.SCSP / (kpi.ETU.S.cycle1_L+kpi.ETU.S.cycle2_M)
 
     #kpi.K.selPfor = kpi.ADM.S.sélective / kpi.ADM.P.formations,
     #kpi.K.2.resPens = kpi.FIN.P.ressources / kpi.ENS.P.effectif,

@@ -1,6 +1,6 @@
 Mise à jour des données
 ================
-2023-11-12
+2023-11-29
 
 Ce document décrit le processus de mise à jour des données kpiESR, et
 notamment la constitution d’un jeu de données des établissements, et la
@@ -943,6 +943,37 @@ Voir les données
 | zepT6 | Université de la Polynésie Française               | FALSE      | kpi.K.biaPper |     NA |   NA | N/A          | N/A        |   NA |        NA |
 | z3hdL | Université des Antilles                            | FALSE      | kpi.K.biaPper |     NA |   NA | N/A          | N/A        |   NA |        NA |
 | yH19Y | Université du Littoral Côte d’Opale                | TRUE       | kpi.K.biaPper |     NA |   NA | N/A          | N/A        |   NA |        NA |
+
+</details>
+
+##### kpi.K.dotPetu
+
+<details>
+<summary>
+Voir les données
+</summary>
+
+| pid   | Etablissement                        | Comparable | kpi           |    valeur |      norm | valeur_label | norm_label | rang |  evolution |
+|:------|:-------------------------------------|:-----------|:--------------|----------:|----------:|:-------------|:-----------|-----:|-----------:|
+| PpsCQ | Université Paris sciences et lettres | FALSE      | kpi.K.dotPetu |  408.1148 |  408.1148 | 408          | 408        |   69 |   5.839126 |
+| pVJpw | Centre universitaire de Mayotte      | FALSE      | kpi.K.dotPetu | 2740.1030 | 2740.1030 | 2 740        | 2 740      |   68 | 108.151368 |
+| TWBzp | Université Panthéon-Assas            | FALSE      | kpi.K.dotPetu | 3627.7575 | 3627.7575 | 3 628        | 3 628      |   67 |  82.093821 |
+| 7Gzub | Université Jean Moulin - Lyon 3      | TRUE       | kpi.K.dotPetu | 4015.3979 | 4015.3979 | 4 015        | 4 015      |   66 | 120.339236 |
+| HAU8L | Université de Nîmes                  | TRUE       | kpi.K.dotPetu | 4152.6744 | 4152.6744 | 4 153        | 4 153      |   65 | 106.743635 |
+
+</details>
+<details>
+<summary>
+Voir les données
+</summary>
+
+| pid   | Etablissement                           | Comparable | kpi           |   valeur |     norm | valeur_label | norm_label | rang | evolution |
+|:------|:----------------------------------------|:-----------|:--------------|---------:|---------:|:-------------|:-----------|-----:|----------:|
+| zepT6 | Université de la Polynésie Française    | FALSE      | kpi.K.dotPetu | 11604.24 | 11604.24 | 11 604       | 11 604     |    4 |  166.0945 |
+| m7K6T | Université Toulouse III - Paul Sabatier | TRUE       | kpi.K.dotPetu | 11708.70 | 11708.70 | 11 709       | 11 709     |    3 |  113.4247 |
+| 3Z5e6 | Université Gustave Eiffel               | FALSE      | kpi.K.dotPetu | 11904.53 | 11904.53 | 11 905       | 11 905     |    2 |  174.1003 |
+| RN4E6 | Université d’Évry-Val-d’Essonne         | FALSE      | kpi.K.dotPetu | 12091.49 | 12091.49 | 12 091       | 12 091     |    1 |  156.9508 |
+| C6Ps7 | Université Paris Dauphine - PSL         | FALSE      | kpi.K.dotPetu |       NA |       NA | N/A          | N/A        |   NA |        NA |
 
 </details>
 </details>

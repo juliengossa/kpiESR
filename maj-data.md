@@ -1,6 +1,6 @@
 Mise à jour des données
 ================
-2023-11-29
+2024-01-10
 
 Ce document décrit le processus de mise à jour des données kpiESR, et
 notamment la constitution d’un jeu de données des établissements, et la
@@ -460,10 +460,10 @@ Voir les données
 | pid   | Etablissement                        | Comparable | kpi                      |    valeur |      norm | valeur_label | norm_label | rang | evolution |
 |:------|:-------------------------------------|:-----------|:-------------------------|----------:|----------:|:-------------|:-----------|-----:|----------:|
 | pVJpw | Centre universitaire de Mayotte      | FALSE      | kpi.FIN.S.masseSalariale |   1864023 | 0.1890125 | 1.9M€        | 19%        |   70 |  217.2146 |
-| PpsCQ | Université Paris sciences et lettres | FALSE      | kpi.FIN.S.masseSalariale |  11517364 | 0.2179722 | 11.5M€       | 22%        |   69 |  120.0583 |
-| G2qA7 | Université Paris-Saclay              | FALSE      | kpi.FIN.S.masseSalariale | 334365635 | 0.6759195 | 334M€        | 68%        |   68 |  122.8027 |
-| OJZ4a | Université de Haute-Alsace           | FALSE      | kpi.FIN.S.masseSalariale |  82837198 | 0.6835167 | 83M€         | 68%        |   67 |  118.9038 |
-| Z2FY5 | Université de la Nouvelle-Calédonie  | FALSE      | kpi.FIN.S.masseSalariale |  27720989 | 0.7279341 | 28M€         | 73%        |   66 |  107.5731 |
+| PpsCQ | Université Paris sciences et lettres | FALSE      | kpi.FIN.S.masseSalariale |  11517364 | 0.2179722 | 11.5M€       | 22%        |   69 |  153.0489 |
+| G2qA7 | Université Paris-Saclay              | FALSE      | kpi.FIN.S.masseSalariale | 334365635 | 0.6759195 | 334M€        | 68%        |   68 |  123.8635 |
+| OJZ4a | Université de Haute-Alsace           | FALSE      | kpi.FIN.S.masseSalariale |  82837198 | 0.6835167 | 83M€         | 68%        |   67 |  124.3297 |
+| Z2FY5 | Université de la Nouvelle-Calédonie  | FALSE      | kpi.FIN.S.masseSalariale |  27720989 | 0.7279341 | 28M€         | 73%        |   66 |  144.3514 |
 
 </details>
 <details>
@@ -473,11 +473,11 @@ Voir les données
 
 | pid   | Etablissement                                | Comparable | kpi                      |    valeur |      norm | valeur_label | norm_label | rang | evolution |
 |:------|:---------------------------------------------|:-----------|:-------------------------|----------:|----------:|:-------------|:-----------|-----:|----------:|
-| g6rwB | Université Paris Nanterre                    | TRUE       | kpi.FIN.S.masseSalariale | 183700870 | 0.8600053 | 184M€        | 86%        |    5 |  119.7537 |
-| Uxr7Z | Université Paris 8 - Vincennes - Saint-Denis | TRUE       | kpi.FIN.S.masseSalariale | 136154413 | 0.8727420 | 136M€        | 87%        |    4 |  115.4871 |
-| 1I7hJ | Université Paul-Valéry - Montpellier 3       | TRUE       | kpi.FIN.S.masseSalariale | 105290087 | 0.8739183 | 105M€        | 87%        |    3 |  116.3822 |
-| hy4EW | Université de Guyane                         | FALSE      | kpi.FIN.S.masseSalariale |  23796534 | 0.8772226 | 24M€         | 88%        |    2 |  123.4560 |
-| z3hdL | Université des Antilles                      | FALSE      | kpi.FIN.S.masseSalariale |  92173097 | 0.9249267 | 92M€         | 92%        |    1 |  116.3883 |
+| g6rwB | Université Paris Nanterre                    | TRUE       | kpi.FIN.S.masseSalariale | 183700870 | 0.8600053 | 184M€        | 86%        |    5 |  124.5519 |
+| Uxr7Z | Université Paris 8 - Vincennes - Saint-Denis | TRUE       | kpi.FIN.S.masseSalariale | 136154413 | 0.8727420 | 136M€        | 87%        |    4 |  122.7287 |
+| 1I7hJ | Université Paul-Valéry - Montpellier 3       | TRUE       | kpi.FIN.S.masseSalariale | 105290087 | 0.8739183 | 105M€        | 87%        |    3 |  122.0574 |
+| hy4EW | Université de Guyane                         | FALSE      | kpi.FIN.S.masseSalariale |  23796534 | 0.8772226 | 24M€         | 88%        |    2 |  168.3978 |
+| z3hdL | Université des Antilles                      | FALSE      | kpi.FIN.S.masseSalariale |  92173097 | 0.9249267 | 92M€         | 92%        |    1 |  109.7025 |
 
 </details>
 

@@ -21,9 +21,10 @@ source("R/fr-esr-principaux-etablissements-enseignement-superieur.R")
 
 ```{r etabs.load}
 etabs <- bind_rows(
-  kpiesr_read.etab() %>% mutate(dataset = "etab.23"),
-  kpiesr_read.etab("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.2022.csv") %>% mutate(dataset = "etab.22"),
-  kpiesr_read.etab("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.2021.csv") %>% mutate(dataset = "etab.21.2"),
+  kpiesr_read.etab() %>% mutate(dataset = "etab.24"),
+  kpiesr_read.etab.2022("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.2023.csv") %>% mutate(dataset = "etab.23"),
+  kpiesr_read.etab.2022("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.2022.csv") %>% mutate(dataset = "etab.22"),
+  kpiesr_read.etab.2022("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.2021.csv") %>% mutate(dataset = "etab.21.2"),
   kpiesr_read.etab.2021v1() %>% mutate(dataset = "etab.21.1"),
   kpiesr_read.etab.2020v1()%>% mutate(dataset = "etab.20"),
   kpiesr_read.etab.2019v1() %>% mutate(dataset = "etab.19") 
@@ -38,6 +39,13 @@ etabs %>%
   group_by(dataset) %>%
   summarise(nb_etabs = n()) %>%
   kableExtra::kable()
+```
+
+## Fix Typologie manquante 
+
+```{r typo.fix}
+etabs <- etabs %>%
+  mutate(Typologie = ifelse(Etablissement == "Université de Lorraine","Université pluridisciplinaire avec santé",Typologie))
 ```
 
 ## Chargement des données data
@@ -296,7 +304,6 @@ incomplete.univ %>%
 
 
 
-
 ## Chargement des données CPESR
 
 ```{r cpesr.load}
@@ -455,7 +462,8 @@ fix.wikidata <- tribble(
   #"K4lR3", "https://www.wikidata.org/entity/Q1319786",
   #"U8a0v", "https://www.wikidata.org/entity/Q3551621",
   #"6kk6n", "https://www.wikidata.org/entity/Q273604",
-  "VfvdY", "https://www.wikidata.org/entity/Q630461"
+  "VfvdY", "https://www.wikidata.org/entity/Q630461",
+  "J8X6q", "https://www.wikidata.org/entity/Q2826570"
 )
 
 etab <- fix_etab(etab, fix.wikidata) 
@@ -503,6 +511,12 @@ etab <- etab %>%
   mutate(Sigle = ifelse(is.na(Sigle),Etablissement,Sigle))
 ```
 
+#### Réduction de "Université" à "U." dans les sigles
+
+```{r sigles.red}
+etab <- etab %>%
+  mutate(Sigle = str_replace(Sigle, "Université", "U."))
+```
 
 ### Ecriture des fichiers
 

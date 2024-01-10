@@ -36,6 +36,13 @@ kpiesr_read.fin <- function(pidfix=list("x"="x")) {
     # ) %>%
     # mutate(Taxe.d.apprentissage = ifelse(is.na(Taxe.d.apprentissage),TA21,Taxe.d.apprentissage)) %>%
     # fin fix
+    
+    # fix masse salariale
+    mutate(Charges.de.personnel = case_when(
+      is.na(Charges.de.personnel) ~ Charges.de.personnel...Produits.encaissables * Produits.de.fonctionnement.encaissables / 100,
+      TRUE ~ Charges.de.personnel
+    )) %>%
+    
     group_by(
       pid = recode(id...paysage,!!!pidfix),
       Rentrée = exercice-1) %>% # l'exercice comptable est sur l'année civile

@@ -3,72 +3,103 @@
 # - établissement.expérimental seulement pour Université de Paris (avec une type unique aussi)
 # - donner l'année plutôt que "oui" dans "universités.fusionnées"
 
-# Version du 29 décembre 2021
-# [1] "Libellé"                                 "nom_court"                               "sigle"                                  
-# [4] "type.d.établissement"                    "typologie_d_universites_et_assimiles"    "secteur_d_etablissement"                
-# [7] "vague_contractuelle"                     "localisation"                            "Site.internet"                          
-# [10] "Géolocalisation"                         "uai...identifiant"                       "siret"                                  
-# [13] "siren"                                   "rna"                                     "Identifiant.wikidata"                   
-# [16] "Elément.wikidata"                        "identifiant_idref"                       "Identifiant.ETER"                       
-# [19] "Identifiant.ROR"                         "Elément.ROR"                             "Identifiant.GRID"                       
-# [22] "Elément.GRID"                            "Identifiant.OrgRef"                      "Identifiant.ISNI"                       
-# [25] "Elément.ISNI"                            "identifiant_funding_data"                "Elément.Funding.Data"                   
-# [28] "identifiant_dataesr"                     "anciens_codes_uai"                       "rattachement_identifiants"              
-# [31] "rattachement"                            "association_identifiants"                "association"                            
-# [34] "date_creation"                           "texte_de_ref_creation_lib"               "texte_de_ref_creation"                  
-# [37] "date_fermeture"                          "texte_de_ref_fermeture_lib"              "texte_de_ref_fermeture"                 
-# [40] "dernier_decret_legifrance_lib"           "dernier_decret_legifrance"               "Code.commune"                           
-# [43] "Commune"                                 "Code.unité.urbaine"                      "Unité.urbaine"                          
-# [46] "Code.département"                        "Département"                             "Code.académie"                          
-# [49] "Académie"                                "Code.région"                             "Région"                                 
-# [52] "Ancien.code.région"                      "Ancienne.région"                         "Mention.distribution"                   
-# [55] "Adresse"                                 "Lieu.dit"                                "Boite.postale"                          
-# [58] "Code.postal"                             "Localité"                                "Pays"                                   
-# [61] "Numéro.de.téléphone"                     "statut_juridique_court"                  "Statut.juridique"                       
-# [64] "qualification_court"                     "Qualification"                           "compte_facebook"                        
-# [67] "compte_twitter"                          "compte_instagram"                        "compte_flickr"                          
-# [70] "compte_pinterest"                        "flux_rss"                                "compte_linkedin"                        
-# [73] "compte_viadeo"                           "compte_france_culture"                   "compte_scribd"                          
-# [76] "compte_scoopit"                          "compte_tumblr"                           "compte_youtube"                         
-# [79] "compte_vimeo"                            "compte_dailymotion"                      "autres"                                 
-# [82] "compte_gitHub"                           "Page.Wikipédia.en.français"              "Page.Wikipédia.en.anglais"              
-# [85] "scanr"                                   "hal"                                     "mooc"                                   
-# [88] "article"                                 "uo_lib_officiel"                         "English.name"                           
-# [91] "Site.internet.en.anglais"                "Site.internet.en.chinois"                "Site.internet.en.espagnol"              
-# [94] "Site.internet.en.allemand"               "Site.internet.en.italien"                "Effectifs.d.étudiants.inscrits.2010.11" 
-# [97] "Effectifs.d.étudiants.inscrits.2011.12"  "Effectifs.d.étudiants.inscrits.2012.13"  "Effectifs.d.étudiants.inscrits.2013.14" 
-# [100] "Effectifs.d.étudiants.inscrits.2014.15"  "Effectifs.d.étudiants.inscrits.2015.16"  "Effectifs.d.étudiants.inscrits.2016.17" 
-# [103] "Effectifs.d.étudiants.inscrits.2017.18"  "uai_rgp_loi_esr_2013"                    "universites_fusionnees"                 
-# [106] "etablissement_experimental"              "implantations"                           "identifiant_programmes_lolf"            
-# [109] "statut_operateur_lolf"                   "libelle_missions_lolf"                   "libelle_programmes_lolf"                
-# [112] "libelle_programme_lolf_chef_de_file"     "identifiants_autres_programmes_lolf"     "libelles_autres_programmes_lolf"        
-# [115] "identifiant_programme_lolf_chef_de_file" "libelle_mission_chef_de_file"            "compte_googleplus"   
+# Version du 1 janvier 2024
+# [1] "identifiant.interne"                    "libellé"                                "nom.court"                             
+# [4] "sigle"                                  "type.d.établissement"                   "typologie.d.universités.et.assimilés"  
+# [7] "secteur.d.établissement"                "vague.contractuelle"                    "localisation"                          
+# [10] "site.internet"                          "géolocalisation"                        "uai...identifiant"                     
+# [13] "anciens.codes.uai"                      "siret"                                  "siren"                                 
+# [16] "rna"                                    "Identifiant.wikidata"                   "Elément.wikidata"                      
+# [19] "identifiant_idref"                      "Identifiant.ETER"                       "Identifiant.ROR"                       
+# [22] "Elément.ROR"                            "Identifiant.PIC"                        "Identifiant.OrgRef"                    
+# [25] "Identifiant.ISNI"                       "Elément.ISNI"                           "Elément.Funding.Data"                  
+# [28] "date_creation"                          "texte_de_ref_creation_lib"              "texte_de_ref_creation"                 
+# [31] "Code.commune"                           "Commune"                                "Code.unité.urbaine"                    
+# [34] "Unité.urbaine"                          "Code.département"                       "Département"                           
+# [37] "Code.académie"                          "Académie"                               "Code.région"                           
+# [40] "Région"                                 "Ancien.code.région"                     "Ancienne.région"                       
+# [43] "Mention.distribution"                   "Adresse"                                "Lieu.dit"                              
+# [46] "Boite.postale"                          "Code.postal"                            "Localité"                              
+# [49] "Pays"                                   "Numéro.de.téléphone"                    "statut_juridique_court"                
+# [52] "Statut.juridique"                       "compte_facebook"                        "compte_twitter"                        
+# [55] "compte_instagram"                       "compte_flickr"                          "compte_pinterest"                      
+# [58] "flux_rss"                               "compte_linkedin"                        "compte_france_culture"                 
+# [61] "compte_scribd"                          "compte_scoopit"                         "compte_tumblr"                         
+# [64] "compte_youtube"                         "compte_vimeo"                           "compte_dailymotion"                    
+# [67] "compte_github"                          "Page.Wikipédia.en.français"             "Page.Wikipédia.en.anglais"             
+# [70] "scanr"                                  "hal"                                    "mooc"                                  
+# [73] "article"                                "uo_lib_officiel"                        "English.name"                          
+# [76] "Site.internet.en.anglais"               "Site.internet.en.chinois"               "Site.internet.en.espagnol"             
+# [79] "Site.internet.en.allemand"              "Site.internet.en.italien"               "universites_fusionnees"                
+# [82] "etablissement_experimental"             "champ_recherche"                        "inscrits"                              
+# [85] "Effectifs.d.étudiants.inscrits.2010.11" "Effectifs.d.étudiants.inscrits.2011.12" "Effectifs.d.étudiants.inscrits.2012.13"
+# [88] "Effectifs.d.étudiants.inscrits.2013.14" "Effectifs.d.étudiants.inscrits.2014.15" "Effectifs.d.étudiants.inscrits.2015.16"
+# [91] "Effectifs.d.étudiants.inscrits.2016.17" "Effectifs.d.étudiants.inscrits.2017.18" "Effectifs.d.étudiants.inscrits.2018.19"
+# [94] "Effectifs.d.étudiants.inscrits.2019.20" "Effectifs.d.étudiants.inscrits.2020.21" "Effectifs.d.étudiants.inscrits.2021.22"
+# [97] "Effectifs.d.étudiants.inscrits.2022.23"
+
+varren <- function(x) {
+  x <- str_to_lower(x)
+  x <- str_replace_all(x, '_','.')
+  x <- stringi::stri_trans_general(x, id = "Latin-ASCII")
+  return(x)
+}
 
 
 kpiesr_read.etab <- function(filename = "dataESR/fr-esr-principaux-etablissements-enseignement-superieur.csv") {
   
-  etab <- read.csv2(filename, 
-                    na.string = "") %>%
+  etab <- read.csv2(filename, na.string = "") %>%
+    rename_with(varren) %>%
+    
     transmute(
       UAI = uai...identifiant,
-      Etablissement = Libellé,
-      Sigle = ifelse(!is.na(sigle),sigle,nom_court),
-      Type = type.d.établissement,
-      Typologie = typologie_d_universites_et_assimiles,
-      Secteur = secteur_d_etablissement,
-      Académie = Académie,
-      Rattachement = rattachement,
-      Fusion = (universites_fusionnees == "Oui"),
-      url.siteweb = Site.internet,
-      url.wikidata = Elément.wikidata,
-      url.legifrance = dernier_decret_legifrance,
-      twitter = compte_twitter
+      Etablissement = libelle,
+      Sigle = ifelse(!is.na(sigle),sigle,nom.court),
+      Type = type.d.etablissement,
+      Typologie = typologie.d.universites.et.assimiles,
+      Secteur = secteur.d.etablissement,
+      Statut = statut.juridique.court,
+      EPE = (etablissement.experimental == "Oui"),
+      Fusion = (universites.fusionnees == "Oui"),
+      Vague = vague.contractuelle,
+      Académie = academie,
+      url.siteweb = site.internet,
+      url.wikidata = element.wikidata,
+      url.legifrance = texte.de.ref.creation,
+      twitter = compte.twitter
     ) 
 }
 
-# kpiesr_read.etab("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.csv")
-# kpiesr_read.etab("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.2022.csv")
-# kpiesr_read.etab("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.2021.csv")
+kpiesr_read.etab("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.csv")
+
+
+## Version 2022
+kpiesr_read.etab.2022 <- function(filename) {
+  
+  etab <- read.csv2(filename, na.string = "") %>%
+    rename_with(varren) %>%
+    
+    transmute(
+      UAI = uai...identifiant,
+      Etablissement = libelle,
+      Sigle = ifelse(!is.na(sigle),sigle,nom.court),
+      Type = type.d.etablissement,
+      Typologie = typologie.d.universites.et.assimiles,
+      Secteur = secteur.d.etablissement,
+      Académie = academie,
+      Rattachement = rattachement,
+      Fusion = (universites.fusionnees == "Oui"),
+      url.siteweb = site.internet,
+      url.wikidata = element.wikidata,
+      url.legifrance = dernier.decret.legifrance,
+      twitter = compte.twitter
+    ) 
+}
+
+# kpiesr_read.etab.2022("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.2023.csv")
+# kpiesr_read.etab.2022("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.2022.csv")
+# kpiesr_read.etab.2022("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.2021.csv")
+
 
 # Version du 13 aout 2021
 # [1] "Libellé"                                 "nom_court"                               "sigle"                                   "type.d.établissement"                   

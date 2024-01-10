@@ -1,6 +1,6 @@
 MAJ Appariements
 ================
-2023-11-12
+2024-01-10
 
 ## Chargement des données
 
@@ -53,11 +53,21 @@ etab.22
 etab.23
 </td>
 <td style="text-align:right;">
-248
+33
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+etab.24
+</td>
+<td style="text-align:right;">
+232
 </td>
 </tr>
 </tbody>
 </table>
+
+## Fix Typologie manquante
 
 ## Chargement des données data
 
@@ -518,14 +528,11 @@ Voir les données
 
     ## Joining with `by = join_by(UAI)`
 
-| pid                           | UAI | etab                                                                                                                                                                                                                                               | Etablissement                                | Sigle       | Type  | Typologie | Secteur | Académie | Rattachement | Fusion | url.siteweb            | url.wikidata                               | url.legifrance | twitter | dataset |
-|:------------------------------|:----|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------------------------------------|:------------|:------|:----------|:--------|:---------|:-------------|:-------|:-----------------------|:-------------------------------------------|:---------------|:--------|:--------|
-| 2ALYK,Y7ch7                   | NA  | IPG - Institut polytechnique Grenoble,Université Grenoble Alpes                                                                                                                                                                                    | Groupe Institut catholique d’arts et métiers | Groupe ICAM | École | NA        | Privé   | Paris    | NA           | NA     | <https://www.icam.fr/> | <https://www.wikidata.org/entity/Q3151859> | NA             | NA      | etab.23 |
-| 6G2TU,TWBzp                   | NA  | Paris-I “Université Panthéon-Sorbonne”,Paris-II “Université Panthéon-Assas”                                                                                                                                                                        | Groupe Institut catholique d’arts et métiers | Groupe ICAM | École | NA        | Privé   | Paris    | NA           | NA     | <https://www.icam.fr/> | <https://www.wikidata.org/entity/Q3151859> | NA             | NA      | etab.23 |
-| 8618D,5cZyU                   | NA  | ENS - École Normale Supérieure,CROUS de l’académie de Paris (CROUS de Paris),Centre national de la recherche scientifique (CNRS),Université de Paris                                                                                               | Groupe Institut catholique d’arts et métiers | Groupe ICAM | École | NA        | Privé   | Paris    | NA           | NA     | <https://www.icam.fr/> | <https://www.wikidata.org/entity/Q3151859> | NA             | NA      | etab.23 |
-| 8k883,bxPQe,6G2TU,5cZyU,QXnpG | NA  | Paris-III “Université La Sorbonne Nouvelle”,Sorbonne Université,Paris-I “Université Panthéon-Sorbonne”,EDUCATION NATIONALE SERVICES DÉCONCENTRÉS,Université de Paris,Chancellerie des Universités de Paris,EPHE - École pratique des hautes études | Groupe Institut catholique d’arts et métiers | Groupe ICAM | École | NA        | Privé   | Paris    | NA           | NA     | <https://www.icam.fr/> | <https://www.wikidata.org/entity/Q3151859> | NA             | NA      | etab.23 |
-| 8k883,bxPQe,6G2TU,O2v0H,QXnpG | NA  | Paris-III “Université La Sorbonne Nouvelle”,Sorbonne Université,Paris-I “Université Panthéon-Sorbonne”,EDUCATION NATIONALE SERVICES DÉCONCENTRÉS,Université de Paris,Chancellerie des Universités de Paris,EPHE - École pratique des hautes études | Groupe Institut catholique d’arts et métiers | Groupe ICAM | École | NA        | Privé   | Paris    | NA           | NA     | <https://www.icam.fr/> | <https://www.wikidata.org/entity/Q3151859> | NA             | NA      | etab.23 |
-| CUBKB,7Gzub                   | NA  | Lyon-II “Université Lumière”,Lyon-III “Université Jean Moulin”                                                                                                                                                                                     | Groupe Institut catholique d’arts et métiers | Groupe ICAM | École | NA        | Privé   | Paris    | NA           | NA     | <https://www.icam.fr/> | <https://www.wikidata.org/entity/Q3151859> | NA             | NA      | etab.23 |
+| pid   | UAI      | etab                                     | Etablissement                                          | Sigle | Type                                       | Typologie | Secteur | Statut | EPE | Fusion | Vague | Académie | url.siteweb                          | url.wikidata                                | url.legifrance                                                                                       | twitter | dataset | Rattachement |
+|:------|:---------|:-----------------------------------------|:-------------------------------------------------------|:------|:-------------------------------------------|:----------|:--------|:-------|:----|:-------|:------|:---------|:-------------------------------------|:--------------------------------------------|:-----------------------------------------------------------------------------------------------------|:--------|:--------|:-------------|
+| FKt2q | 0753655R | Fondation Maison des Sciences de l’homme | Fondation Maison des Sciences de l’homme               | FMSH  | Autre établissement                        | NA        | NA      | NA     | NA  | NA     | NA    | Paris    | <http://www.fmsh.fr/>                | <https://www.wikidata.org/entity/Q3075494>  | NA                                                                                                   | NA      | etab.19 | NA           |
+| t6C0i | 0333178A | COMUE D’AQUITAINE                        | Communauté d’universités et établissements d’Aquitaine | NA    | Communauté d’universités et établissements | NA        | NA      | NA     | NA  | NA     | NA    | Bordeaux | <http://www.cue-aquitaine.fr/>       | <https://www.wikidata.org/entity/Q16541346> | <http://legifrance.gouv.fr/affichTexte.do?cidTexte=JORFTEXT000030348150&dateTexte=&categorieLien=id> | NA      | etab.19 | NA           |
+| uCPtX | 0755598C | Université Sorbonne Paris Cité (USPC)    | Université Sorbonne Paris Cité                         | NA    | Communauté d’universités et établissements | NA        | NA      | NA     | NA  | NA     | NA    | Paris    | <http://www.sorbonne-paris-cite.fr/> | <https://www.wikidata.org/entity/Q3491149>  | <http://legifrance.gouv.fr/affichTexte.do?cidTexte=JORFTEXT000030002051&dateTexte=&categorieLien=id> | NA      | etab.19 | NA           |
 
 </details>
 
@@ -538,11 +545,14 @@ Voir les données
 
     ## Joining with `by = join_by(UAI)`
 
-| pid   | UAI      | etab                         | Etablissement | Sigle | Type | Typologie | Secteur | Académie | Rattachement | Fusion | url.siteweb | url.wikidata | url.legifrance | twitter | dataset |
-|:------|:---------|:-----------------------------|:--------------|:------|:-----|:----------|:--------|:---------|:-------------|:-------|:------------|:-------------|:---------------|:--------|:--------|
-| 8DrrS | 0755449R | Musée du Quai Branly         | NA            | NA    | NA   | NA        | NA      | NA       | NA           | NA     | NA          | NA           | NA             | NA      | NA      |
-| ClZg2 | 0492498Z | COMUE Angers-Le Mans         | NA            | NA    | NA   | NA        | NA      | NA       | NA           | NA     | NA          | NA           | NA             | NA      | NA      |
-| wc3zx | 0311514C | Toulouse School of Economics | NA            | NA    | NA   | NA        | NA      | NA       | NA           | NA     | NA          | NA           | NA             | NA      | NA      |
+| pid                           | UAI      | etab                                                                                                                                                                                                                                               | Etablissement | Sigle | Type  | Typologie | Secteur | Statut | EPE | Fusion | Vague | Académie | url.siteweb | url.wikidata | url.legifrance | twitter | dataset | Rattachement |
+|:------------------------------|:---------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------------|:------|:------|:----------|:--------|:-------|:----|:-------|:------|:---------|:------------|:-------------|:---------------|:--------|:--------|:-------------|
+| 2ALYK,Y7ch7                   | NA       | IPG - Institut polytechnique Grenoble,Université Grenoble Alpes                                                                                                                                                                                    | NA            | NA    | École | NA        | NA      | NA     | NA  | NA     | NA    | NA       | NA          | NA           | NA             | NA      | etab.24 | NA           |
+| 6G2TU,TWBzp                   | NA       | Paris-I “Université Panthéon-Sorbonne”,Paris-II “Université Panthéon-Assas”                                                                                                                                                                        | NA            | NA    | École | NA        | NA      | NA     | NA  | NA     | NA    | NA       | NA          | NA           | NA             | NA      | etab.24 | NA           |
+| 8618D,5cZyU                   | NA       | ENS - École Normale Supérieure,CROUS de l’académie de Paris (CROUS de Paris),Centre national de la recherche scientifique (CNRS),Université de Paris                                                                                               | NA            | NA    | École | NA        | NA      | NA     | NA  | NA     | NA    | NA       | NA          | NA           | NA             | NA      | etab.24 | NA           |
+| 8DrrS                         | 0755449R | Musée du Quai Branly                                                                                                                                                                                                                               | NA            | NA    | NA    | NA        | NA      | NA     | NA  | NA     | NA    | NA       | NA          | NA           | NA             | NA      | NA      | NA           |
+| 8k883,bxPQe,6G2TU,5cZyU,QXnpG | NA       | Paris-III “Université La Sorbonne Nouvelle”,Sorbonne Université,Paris-I “Université Panthéon-Sorbonne”,EDUCATION NATIONALE SERVICES DÉCONCENTRÉS,Université de Paris,Chancellerie des Universités de Paris,EPHE - École pratique des hautes études | NA            | NA    | École | NA        | NA      | NA     | NA  | NA     | NA    | NA       | NA          | NA           | NA             | NA      | etab.24 | NA           |
+| 8k883,bxPQe,6G2TU,O2v0H,QXnpG | NA       | Paris-III “Université La Sorbonne Nouvelle”,Sorbonne Université,Paris-I “Université Panthéon-Sorbonne”,EDUCATION NATIONALE SERVICES DÉCONCENTRÉS,Université de Paris,Chancellerie des Universités de Paris,EPHE - École pratique des hautes études | NA            | NA    | École | NA        | NA      | NA     | NA  | NA     | NA    | NA       | NA          | NA           | NA             | NA      | etab.24 | NA           |
 
 </details>
 
@@ -575,8 +585,8 @@ Voir les données
 Voir les données
 </summary>
 
-| pid | Etablissement | Groupe | Groupe.détaillé | Type | nb_datasets | UAI | PerimEx | Association | Comparable | Sigle | Typologie | Secteur | Académie | Rattachement | Fusion | url.siteweb | url.wikidata | url.legifrance | twitter | dataset | Plotable |
-|:----|:--------------|:-------|:----------------|:-----|------------:|:----|:--------|:------------|:-----------|:------|:----------|:--------|:---------|:-------------|:-------|:------------|:-------------|:---------------|:--------|:--------|:---------|
+| pid | Etablissement | Groupe | Groupe.détaillé | Type | nb_datasets | UAI | PerimEx | Association | Comparable | Sigle | Typologie | Secteur | Statut | EPE | Fusion | Vague | Académie | url.siteweb | url.wikidata | url.legifrance | twitter | dataset | Rattachement | Plotable |
+|:----|:--------------|:-------|:----------------|:-----|------------:|:----|:--------|:------------|:-----------|:------|:----------|:--------|:-------|:----|:-------|:------|:---------|:------------|:-------------|:---------------|:--------|:--------|:-------------|:---------|
 
 </details>
 <details>
@@ -584,8 +594,8 @@ Voir les données
 Voir les données
 </summary>
 
-| pid | Etablissement | Groupe | Groupe.détaillé | Type | nb_datasets | UAI | PerimEx | Association | Comparable | Sigle | Typologie | Secteur | Académie | Rattachement | Fusion | url.siteweb | url.wikidata | url.legifrance | twitter | dataset | Plotable |
-|:----|:--------------|:-------|:----------------|:-----|------------:|:----|:--------|:------------|:-----------|:------|:----------|:--------|:---------|:-------------|:-------|:------------|:-------------|:---------------|:--------|:--------|:---------|
+| pid | Etablissement | Groupe | Groupe.détaillé | Type | nb_datasets | UAI | PerimEx | Association | Comparable | Sigle | Typologie | Secteur | Statut | EPE | Fusion | Vague | Académie | url.siteweb | url.wikidata | url.legifrance | twitter | dataset | Rattachement | Plotable |
+|:----|:--------------|:-------|:----------------|:-----|------------:|:----|:--------|:------------|:-----------|:------|:----------|:--------|:-------|:----|:-------|:------|:---------|:------------|:-------------|:---------------|:--------|:--------|:-------------|:---------|
 
 </details>
 
@@ -614,9 +624,10 @@ Voir les données
 Voir les données
 </summary>
 
-| pid   | url.wikidata                              |
-|:------|:------------------------------------------|
-| VfvdY | <https://www.wikidata.org/entity/Q630461> |
+| pid   | url.wikidata                               |
+|:------|:-------------------------------------------|
+| VfvdY | <https://www.wikidata.org/entity/Q630461>  |
+| J8X6q | <https://www.wikidata.org/entity/Q2826570> |
 
 </details>
 
@@ -624,29 +635,29 @@ Voir les données
 
 #### Sigles récupérables sur wikidata
 
-    ## Warning: There were 9 warnings in `mutate()`.
+    ## Warning: There were 10 warnings in `mutate()`.
     ## The first warning was:
     ## ℹ In argument: `wikidata.alias = `$`(...)`.
     ## Caused by warning in `wdesr_get_item_status()`:
-    ## ! The instance of wikidata item Q74452784 is not recommended: université.
+    ## ! The instance of wikidata item Q2946102 is not recommended: institut d'enseignement supérieur.
     ##   Reason is: Statut trop imprécis.
-    ##   Please check https://www.wikidata.org/wiki/Q74452784
+    ##   Please check https://www.wikidata.org/wiki/Q2946102
     ##   using the guideline at https://github.com/cpesr
-    ## ℹ Run `dplyr::last_dplyr_warnings()` to see the 8 remaining warnings.
+    ## ℹ Run `dplyr::last_dplyr_warnings()` to see the 9 remaining warnings.
 
 <details>
 <summary>
 Voir les données
 </summary>
 
-| pid   | Etablissement                          | Sigle     |
-|:------|:---------------------------------------|:----------|
-| 4k25D | Université de Strasbourg               | Unistra   |
-| 7Gzub | Université Jean Moulin - Lyon 3        | Lyon 3    |
-| 8k883 | Université Sorbonne Nouvelle - Paris 3 | Paris 3   |
-| 91D9w | Université de Rennes 1                 | UR1       |
-| BWbvP | Université d’Artois                    | U. Artois |
-| C701f | Université de Toulon                   | Ustv      |
+| pid   | Etablissement                                | Sigle                |
+|:------|:---------------------------------------------|:---------------------|
+| 91D9w | Université de Rennes 1                       | UR1                  |
+| BWbvP | Université d’Artois                          | U. Artois            |
+| G2qA7 | Université Paris-Saclay                      | UPSaclay             |
+| HCBvW | Université d’Orléans                         | Université d’Orléans |
+| TWBzp | Université Panthéon-Assas                    | Assas                |
+| Uxr7Z | Université Paris 8 - Vincennes - Saint-Denis | UP8                  |
 
 </details>
 
@@ -660,13 +671,15 @@ Voir les données
 | UAI      | pid   | Etablissement                                            | Sigle | url.wikidata |
 |:---------|:------|:---------------------------------------------------------|:------|:-------------|
 | 0755040W | 1bXaK | Bibliothèque universitaire des langues et civilisations  | NA    | NA           |
-| 0341920C | J8X6q | Agence bibliographique de l’enseignement supérieur       | NA    | NA           |
 | 0342032Z | QuDx7 | Centre informatique national de l’enseignement supérieur | NA    | NA           |
 | 0772428W | fV2g5 | Centre technique du livre de l’enseignement supérieur    | NA    | NA           |
 | 0752744A | vQ6Hh | Académie des sciences d’outre-mer                        | NA    | NA           |
-| 0597239Y | U8a0v | Université de Lille                                      | NA    | NA           |
+| 0912423P | 6kk6n | École normale supérieure Paris-Saclay                    | NA    | NA           |
+| 0632086A | S8ntZ | Clermont Auvergne INP                                    | NA    | NA           |
 
 </details>
+
+#### Réduction de “Université” à “U.” dans les sigles
 
 ### Ecriture des fichiers
 
@@ -675,14 +688,14 @@ Voir les données
 Voir les données
 </summary>
 
-| pid   | Etablissement                   | Groupe                   | Groupe.détaillé          | Type                | nb_datasets | UAI      | PerimEx | Association | Comparable | Sigle                  | Typologie                                | Secteur | Académie      | Rattachement | Fusion | url.siteweb                       | url.wikidata                                | url.legifrance                                                 | twitter                               | dataset | Plotable |
-|:------|:--------------------------------|:-------------------------|:-------------------------|:--------------------|------------:|:---------|:--------|:------------|:-----------|:-----------------------|:-----------------------------------------|:--------|:--------------|:-------------|:-------|:----------------------------------|:--------------------------------------------|:---------------------------------------------------------------|:--------------------------------------|:--------|:---------|
-| xJdyB | Aix-Marseille Université        | Universités et assimilés | Universités et assimilés | Université          |           6 | 0134009M | IDEx    | Udice       | TRUE       | AMU                    | Université pluridisciplinaire avec santé | Public  | Aix-Marseille | NA           | TRUE   | <https://www.univ-amu.fr/>        | <https://www.wikidata.org/entity/Q2302586>  | <https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000046004125/> | <https://twitter.com/univamu>         | etab.23 | TRUE     |
-| vxHYt | Avignon Université              | Universités et assimilés | Universités et assimilés | Université          |           6 | 0840685N |         | AUREF       | TRUE       | AU                     | Université pluridisciplinaire hors santé | Public  | Aix-Marseille | NA           | NA     | <https://univ-avignon.fr/>        | <https://www.wikidata.org/entity/Q2033119>  | <https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000032101280/> | <https://twitter.com/univavignon>     | etab.23 | TRUE     |
-| RS4WF | CY Cergy Paris Université       | Universités et assimilés | Universités et assimilés | Université          |           6 | 0952259P | ISITE   |             | FALSE      | CY                     | Université pluridisciplinaire hors santé | Public  | Versailles    | NA           | NA     | <https://www.cyu.fr/>             | <https://www.wikidata.org/entity/Q74452784> | <https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000042393673/> | <https://twitter.com/UniversiteCergy> | etab.23 | TRUE     |
-| pVJpw | Centre universitaire de Mayotte | Universités et assimilés | Universités et assimilés | Autre établissement |           6 | 9760358K |         |             | FALSE      | CU de Mayotte          | Université pluridisciplinaire hors santé | Public  | Mayotte       | NA           | NA     | <http://www.univ-mayotte.fr/>     | <https://www.wikidata.org/entity/Q2946102>  | <https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000042896857/> | NA                                    | etab.23 | TRUE     |
-| atbEK | La Rochelle Université          | Universités et assimilés | Universités et assimilés | Université          |           6 | 0171463Y |         | AUREF       | TRUE       | La Rochelle Université | Université pluridisciplinaire hors santé | Public  | Poitiers      | NA           | NA     | <https://www.univ-larochelle.fr/> | <https://www.wikidata.org/entity/Q1500822>  | <https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000041885628/> | <https://twitter.com/UnivLaRochelle>  | etab.23 | TRUE     |
-| 9xlel | Le Mans Université              | Universités et assimilés | Universités et assimilés | Université          |           6 | 0720916E |         | AUREF       | TRUE       | LMU                    | Université pluridisciplinaire hors santé | Public  | Nantes        | NA           | NA     | <http://www.univ-lemans.fr/>      | <https://www.wikidata.org/entity/Q834825>   | <https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000042841466/> | <https://twitter.com/LeMansUniv>      | etab.23 | TRUE     |
+| pid   | Etablissement                   | Groupe                   | Groupe.détaillé          | Type                | nb_datasets | UAI      | PerimEx | Association | Comparable | Sigle           | Typologie                                | Secteur | Statut | EPE  | Fusion | Vague   | Académie      | url.siteweb                       | url.wikidata                                | url.legifrance                                                 | twitter                               | dataset | Rattachement | Plotable |
+|:------|:--------------------------------|:-------------------------|:-------------------------|:--------------------|------------:|:---------|:--------|:------------|:-----------|:----------------|:-----------------------------------------|:--------|:-------|:-----|:-------|:--------|:--------------|:----------------------------------|:--------------------------------------------|:---------------------------------------------------------------|:--------------------------------------|:--------|:-------------|:---------|
+| xJdyB | Aix-Marseille Université        | Universités et assimilés | Universités et assimilés | Université          |           6 | 0134009M | IDEx    | Udice       | TRUE       | AMU             | Université pluridisciplinaire avec santé | public  | EPSCP  | NA   | TRUE   | Vague C | Aix-Marseille | <https://www.univ-amu.fr/>        | <https://www.wikidata.org/entity/Q2302586>  | <https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000024502554/> | <https://twitter.com/univamu>         | etab.24 | NA           | TRUE     |
+| vxHYt | Avignon Université              | Universités et assimilés | Universités et assimilés | Université          |           6 | 0840685N |         | AUREF       | TRUE       | AU              | Université pluridisciplinaire hors santé | public  | EPSCP  | NA   | NA     | Vague C | Aix-Marseille | <https://univ-avignon.fr/>        | <https://www.wikidata.org/entity/Q2033119>  | <https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000000503527>  | <https://twitter.com/univavignon>     | etab.24 | NA           | TRUE     |
+| RS4WF | CY Cergy Paris Université       | Universités et assimilés | Universités et assimilés | Université          |           6 | 0952259P | ISITE   |             | FALSE      | CYU             | Université pluridisciplinaire hors santé | public  | EPSCP  | TRUE | NA     | Vague E | Versailles    | <https://www.cyu.fr/>             | <https://www.wikidata.org/entity/Q74452784> | <https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000039287925/> | <https://twitter.com/UniversiteCergy> | etab.24 | NA           | TRUE     |
+| pVJpw | Centre universitaire de Mayotte | Universités et assimilés | Universités et assimilés | Autre établissement |           6 | 9760358K |         |             | FALSE      | CUFR de Mayotte | Université pluridisciplinaire hors santé | public  | EPSCP  | NA   | NA     | Vague E | Mayotte       | <http://www.univ-mayotte.fr/>     | <https://www.wikidata.org/entity/Q2946102>  | NA                                                             | <https://twitter.com/CufrMayotte>     | etab.24 | NA           | TRUE     |
+| atbEK | La Rochelle Université          | Universités et assimilés | Universités et assimilés | Université          |           6 | 0171463Y |         | AUREF       | TRUE       | U. La Rochelle  | Université pluridisciplinaire hors santé | public  | EPSCP  | NA   | NA     | Vague B | Poitiers      | <https://www.univ-larochelle.fr/> | <https://www.wikidata.org/entity/Q1500822>  | <https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000000726433/> | <https://twitter.com/UnivLaRochelle>  | etab.24 | NA           | TRUE     |
+| 9xlel | Le Mans Université              | Universités et assimilés | Universités et assimilés | Université          |           6 | 0720916E |         | AUREF       | TRUE       | LMU             | Université pluridisciplinaire hors santé | public  | EPSCP  | NA   | NA     | Vague B | Nantes        | <http://www.univ-lemans.fr/>      | <https://www.wikidata.org/entity/Q834825>   | <https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000000883893/> | <https://twitter.com/LeMansUniv>      | etab.24 | NA           | TRUE     |
 
 </details>
 

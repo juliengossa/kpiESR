@@ -66,7 +66,9 @@ kpiesr_read.etab <- function(filename = "dataESR/fr-esr-principaux-etablissement
       url.siteweb = site.internet,
       url.wikidata = element.wikidata,
       url.legifrance = texte.de.ref.creation,
-      twitter = compte.twitter
+      twitter = compte.twitter,
+      siren = as.character(siren),
+      siret = as.character(siret)
     ) 
 }
 
@@ -92,7 +94,9 @@ kpiesr_read.etab.2022 <- function(filename) {
       url.siteweb = site.internet,
       url.wikidata = element.wikidata,
       url.legifrance = dernier.decret.legifrance,
-      twitter = compte.twitter
+      twitter = compte.twitter,
+      siren = as.character(siren),
+      siret = as.character(siret)
     ) 
 }
 
@@ -149,7 +153,9 @@ kpiesr_read.etab.2021v1 <- function() {
       url.siteweb = Site.internet,
       url.wikidata = Elément.wikidata,
       url.legifrance = dernier_decret_legifrance,
-      twitter = compte_twitter
+      twitter = compte_twitter,
+      siren = as.character(siren),
+      siret = as.character(siret)
     ) 
 }
 
@@ -199,7 +205,9 @@ kpiesr_read.etab.2020v1 <- function() {
       url.siteweb = Site.internet,
       url.wikidata = Elément.wikidata,
       url.legifrance = dernier_decret_legifrance,
-      twitter = compte_twitter
+      twitter = compte_twitter,
+      siren = as.character(siren),
+      siret = as.character(siret)
     ) %>%
     filter(!is.na(UAI),!UAI=="")
 }

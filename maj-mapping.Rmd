@@ -20,7 +20,7 @@ source("R/fr-esr-principaux-etablissements-enseignement-superieur.R")
 ## Chargement des données
 
 ```{r etabs.load}
-etabs <- bind_rows(
+etabs.all <- bind_rows(
   kpiesr_read.etab() %>% mutate(dataset = "etab.24"),
   kpiesr_read.etab.2022("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.2023.csv") %>% mutate(dataset = "etab.23"),
   kpiesr_read.etab.2022("dataESR/fr-esr-principaux-etablissements-enseignement-superieur.2022.csv") %>% mutate(dataset = "etab.22"),
@@ -28,10 +28,24 @@ etabs <- bind_rows(
   kpiesr_read.etab.2021v1() %>% mutate(dataset = "etab.21.1"),
   kpiesr_read.etab.2020v1()%>% mutate(dataset = "etab.20"),
   kpiesr_read.etab.2019v1() %>% mutate(dataset = "etab.19") 
-) %>%
+) 
+
+etabs <- etabs.all %>%
   group_by(UAI) %>%
   slice_head(n=1)
 ```
+
+### Sauvegarde SIREN SIRET
+
+```{r siren}
+etabs.all %>%
+  select(siren,siret,Etablissement) %>%
+  group_by(siren,siret) %>%
+  slice_head(n=1) %>%
+  write.csv2("dataESR/fr-cpesr-siren.csv", row.names = FALSE, quote = TRUE)
+```
+
+### Statistiques
 
 
 ```{r etabs.stats}

@@ -255,10 +255,10 @@ usethis::use_data(esr, esr.pnl, esr.stats, esr.etab,
                   kpiesr_lfc_labels, kpiesr_lfc_desc, kpiesr_lfc_y_labels, kpiesr_lfc_colors,
                   overwrite = TRUE)
 
-write.csv2(esr,"kpiesr.csv",row.names = FALSE)
+write.csv2(esr,"data/fr-cpesr-kpiesr.csv",row.names = FALSE)
 ```
 
-[kpiesr.csv](kpiesr.csv)
+[fr-cpesr-kpiesr.csv](data/fr-cpesr-kpiesr.csv)
 
 
 

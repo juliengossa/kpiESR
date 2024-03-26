@@ -39,9 +39,10 @@ etabs <- etabs.all %>%
 
 ```{r siren}
 etabs.all %>%
-  select(siren,siret,Etablissement) %>%
+  select(siren,siret,Etablissement, Secteur,dataset) %>%
   group_by(siren,siret) %>%
-  slice_head(n=1) %>%
+  slice_head(n=1) %>%  
+  arrange(desc(dataset)) %>% 
   write.csv2("dataESR/fr-cpesr-siren.csv", row.names = FALSE, quote = TRUE)
 ```
 

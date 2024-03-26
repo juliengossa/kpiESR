@@ -1,6 +1,6 @@
 Mise à jour des données
 ================
-2024-01-10
+2024-03-26
 
 Ce document décrit le processus de mise à jour des données kpiESR, et
 notamment la constitution d’un jeu de données des établissements, et la
@@ -998,4 +998,4 @@ Voir les données
 
 ## Ecriture des données
 
-[kpiesr.csv](kpiesr.csv)
+[fr-cpesr-kpiesr.csv](data/fr-cpesr-kpiesr.csv)

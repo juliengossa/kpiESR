@@ -13,7 +13,7 @@ l’ESR](https://github.com/cpesr/tdbESR-rapport).
 ## Jeu de données assemblées
 
 Un exemplaire du dernier assemblage est disponible en [format
-csv](dataESR/tdbesr.csv).
+csv](dfr-cpesr-kpiesr.csv).
 
 *Attention : ces données peuvent être en retard par rapport aux données
 publiées sur \#DataESR*
@@ -23,8 +23,8 @@ publiées sur \#DataESR*
 Pour des raisons de cohérence des indicateurs, et compte tenu de la
 diversité des profils, les modifications suivantes ont été apportées :
 
--   le type de Université de Lorraine est considéré comme *Université*,
-    au lieu de *Grand établissement*.
+- le type de Université de Lorraine est considéré comme *Université*, au
+  lieu de *Grand établissement*.
 
 ## Installation du paquet R
 
@@ -53,10 +53,13 @@ colnames(kpiESR::esr)
     ## [21] "kpi.BIA.S.titulaires"        "kpi.FIN.P.ressources"       
     ## [23] "kpi.FIN.S.masseSalariale"    "kpi.FIN.S.SCSP"             
     ## [25] "kpi.FIN.S.recettesFormation" "kpi.FIN.S.recettesRecherche"
-    ## [27] "kpi.FIN.S.investissements"   "kpi.K.dotPres"              
-    ## [29] "kpi.K.resPetu"               "kpi.K.forPetu"              
-    ## [31] "kpi.K.recPect"               "kpi.K.ensPetu"              
-    ## [33] "kpi.K.titPper"               "kpi.K.biaPper"
+    ## [27] "kpi.FIN.S.investissements"   "kpi.IMO.P.batiments"        
+    ## [29] "kpi.IMO.S.état_satisfaisant" "kpi.IMO.S.énergie_ABC"      
+    ## [31] "kpi.IMO.S.GES_ABC"           "kpi.IMO.S.propriété_propre" 
+    ## [33] "kpi.K.dotPres"               "kpi.K.resPetu"              
+    ## [35] "kpi.K.forPetu"               "kpi.K.recPect"              
+    ## [37] "kpi.K.ensPetu"               "kpi.K.titPper"              
+    ## [39] "kpi.K.biaPper"               "kpi.K.dotPetu"
 
 En plus du jeu de données `esr`, un autre jeu de donnée “long” est
 disponible, ajoutant des valeurs normalisées :
@@ -77,54 +80,56 @@ ajoute :
 
 ### Etudiants
 
--   `kpi.ETU.P.effectif` : *Etudiants* Effectif total étudiant (Hors
-    double inscription CPGE)
--   `kpi.ETU.S.cycle1_L` : *Cycle 1 (L)* Effectif étudiant inscrit en
-    premier cycle (L, DUT, etc.)
--   `kpi.ETU.S.cycle2_M` : *Cycle 2 (M)* Effectif étudiant inscrit en
-    deuxième cycle (M)
--   `kpi.ETU.S.cycle3_D` : *Cycle 3 (D)* Effectif étudiant inscrit en
-    troisième cycle (Doctorat, HDR)
--   `kpi.ETU.S.DU_DE` : *DU* Effectif étudiant inscrit en diplôme
-    d’établissement (DU, non-national)
+- `kpi.ETU.P.effectif` : *Etudiants* Effectif total étudiant (Hors
+  double inscription CPGE)
+- `kpi.ETU.S.cycle1_L` : *Cycle 1 (L)* Effectif étudiant inscrit en
+  premier cycle (L, DUT, etc.)
+- `kpi.ETU.S.cycle2_M` : *Cycle 2 (M)* Effectif étudiant inscrit en
+  deuxième cycle (M)
+- `kpi.ETU.S.cycle3_D` : *Cycle 3 (D)* Effectif étudiant inscrit en
+  troisième cycle (Doctorat, HDR)
+- `kpi.ETU.S.DU_DE` : *DU* Effectif étudiant inscrit en diplôme
+  d’établissement (DU, non-national)
 
 ### Enseignants
 
--   `kpi.ENS.P.effectif` : *Enseignants* Effectif total enseignant
--   `kpi.ENS.S.titulaires` : *Titulaires* Effectif titulaire
--   `kpi.ENS.S.EC` : *EC* Effectif enseignant-chercheur
--   `kpi.ENS.S.DocATER` : *Doc et ATER* Effectif doctorant et ATER
--   `kpi.ENS.S.contractuels` : *Autres contractuels* Effectif autres
-    contractuels
+- `kpi.ENS.P.effectif` : *Enseignants* Effectif total enseignant
+- `kpi.ENS.S.titulaires` : *Titulaires* Effectif titulaire
+- `kpi.ENS.S.EC` : *EC* Effectif enseignant-chercheur
+- `kpi.ENS.S.DocATER` : *Doc et ATER* Effectif doctorant et ATER
+- `kpi.ENS.S.contractuels` : *Autres contractuels* Effectif autres
+  contractuels
 
 ### Finances
 
--   `kpi.FIN.P.ressources` : *Ressources* Ressources totales (produits
-    encaissables)
--   `kpi.FIN.S.masseSalariale` : *Masse salariale* Masse salariale
-    (dépenses de personnels)
--   `kpi.FIN.S.SCSP` : *SCSP* Subvention pour charge de service public
-    (dotation d’Etat directe)
--   `kpi.FIN.S.recettesFormation` : *Recettes formation* Droits
-    d’inscription, Diplôme d’établissement, Formation continue, VAE et
-    Taxe d’apprentissage
--   `kpi.FIN.S.recettesRecherche` : *Recettes recherche* Valorisation,
-    ANR en et hors investissement d’avenir, contrats et prestations de
-    recherche
+- `kpi.FIN.P.ressources` : *Ressources* Ressources totales (produits
+  encaissables)
+- `kpi.FIN.S.masseSalariale` : *Masse salariale* Masse salariale
+  (dépenses de personnels)
+- `kpi.FIN.S.SCSP` : *SCSP* Subvention pour charge de service public
+  (dotation d’Etat directe)
+- `kpi.FIN.S.recettesFormation` : *Recettes formation* Droits
+  d’inscription, Diplôme d’établissement, Formation continue, VAE et
+  Taxe d’apprentissage
+- `kpi.FIN.S.recettesRecherche` : *Recettes recherche* Valorisation, ANR
+  en et hors investissement d’avenir, contrats et prestations de
+  recherche
 
 ### Indicateurs clés de performance
 
--   `kpi.K.titPper` : *Taux de titularité* Part des titulaires dans les
-    personnels
--   `kpi.K.dotPres` : *Taux de SCSP* Part des Subventions pour charge de
-    service public dans les ressources
--   `kpi.K.ensPetu` : *Taux d’encadrement pédagogique* Nombre
-    d’enseignants titulaires pour 100 étudiants en cycles 1 et 2
--   `kpi.K.biaPper` : *Taux d’encadrement administratif* Part des
-    personnels BIATSS dans les personnels
--   `kpi.K.resPetu` : *Ressources par étudiant* Ressources divisées par
-    le nombre d’étudiants
--   `kpi.K.forPetu` : *Recetttes formation par étudiant* Recettes
-    formation divisées par le nombre d’étudiants
--   `kpi.K.recPect` : *Recettes recherche par EC* Recettes recherche
-    divisées par le nombre d’enseignants-chercheurs titulaires
+- `kpi.K.titPper` : *Taux de titularité* Part des titulaires dans les
+  personnels
+- `kpi.K.dotPres` : *Taux de SCSP* Part des Subventions pour charge de
+  service public (SCSP) dans les ressources
+- `kpi.K.ensPetu` : *Taux d’encadrement pédagogique* Nombre
+  d’enseignants (titulaires et contractuels, hors doctorants et
+  vacataires) pour 100 étudiants en cycles 1 et 2
+- `kpi.K.biaPper` : *Taux d’encadrement administratif* Part des
+  personnels BIATSS dans les personnels
+- `kpi.K.resPetu` : *Ressources par étudiant* Ressources divisées par le
+  nombre d’étudiants
+- `kpi.K.forPetu` : *Recettes formation par étudiant* Recettes formation
+  divisées par le nombre d’étudiants
+- `kpi.K.recPect` : *Recettes recherche par EC* Recettes recherche
+  divisées par le nombre d’enseignants-chercheurs (titulaires et
+  contractuels)

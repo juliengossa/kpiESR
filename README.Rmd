@@ -13,7 +13,7 @@ Elle assemble plusieurs jeux de données, et calcule ensuite plusieurs indicateu
 
 ## Jeu de données assemblées
 
-Un exemplaire du dernier assemblage est disponible en [format csv](dfr-cpesr-kpiesr.csv).
+Un exemplaire du dernier assemblage est disponible en [format csv](data/fr-cpesr-kpiesr.csv).
 
 _Attention : ces données peuvent être en retard par rapport aux données publiées sur #DataESR_
 

@@ -13,7 +13,7 @@ l’ESR](https://github.com/cpesr/tdbESR-rapport).
 ## Jeu de données assemblées
 
 Un exemplaire du dernier assemblage est disponible en [format
-csv](dfr-cpesr-kpiesr.csv).
+csv](data/fr-cpesr-kpiesr.csv).
 
 *Attention : ces données peuvent être en retard par rapport aux données
 publiées sur \#DataESR*

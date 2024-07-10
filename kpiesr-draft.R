@@ -366,3 +366,15 @@ esr %>%
   geom_line()
 
 
+esr %>%
+  filter(Rentrée %in% c(2021,2016)) %>%
+  arrange(Rentrée) %>%
+  mutate(across(starts_with("kpi"), ~ .x/first(.x) * 100, .names = "{.col}_val100")) %>% 
+  filter(Rentrée == 2021) %>% 
+  left_join(esr.etab %>% select(pid,PerimEx,Typologie)) %>% 
+  write.csv2("esrval100.csv",row.names = FALSE)
+
+
+  
+
+

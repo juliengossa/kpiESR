@@ -1,6 +1,6 @@
 Mise à jour des données
 ================
-2024-03-26
+2024-07-08
 
 Ce document décrit le processus de mise à jour des données kpiESR, et
 notamment la constitution d’un jeu de données des établissements, et la

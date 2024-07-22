@@ -294,7 +294,7 @@ kpiesr_lfc <- list(
     y_labels = identity,
     desc     = c("Part des titulaires dans les personnels",
                  "Part des Subventions pour charge de service public (SCSP) dans les ressources",
-                 "Nombre d'enseignants (titulaires et contractuels, hors doctorants et vacataires) pour 100 étudiants en cycles 1 et 2",
+                 "Nombre d'enseignants titulaires pour 100 étudiants en cycles 1 et 2",
                  "Part des personnels BIATSS dans les personnels",
                  "Ressources divisées par le nombre d'étudiants",
                  "Recettes formation divisées par le nombre d'étudiants",

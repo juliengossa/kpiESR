@@ -1,6 +1,6 @@
 Mise à jour des données
 ================
-2024-07-08
+2024-09-06
 
 Ce document décrit le processus de mise à jour des données kpiESR, et
 notamment la constitution d’un jeu de données des établissements, et la
@@ -62,7 +62,7 @@ Voir les données
 | ens  |        2010 |        2021 |    134 |
 | bia  |        2015 |        2021 |    152 |
 | etu  |        2006 |        2022 |    132 |
-| fin  |        2009 |        2022 |    156 |
+| fin  |        2009 |        2023 |    156 |
 | imo  |        2016 |        2022 |    160 |
 
 </details>
@@ -459,11 +459,11 @@ Voir les données
 
 | pid   | Etablissement                        | Comparable | kpi                      |    valeur |      norm | valeur_label | norm_label | rang | evolution |
 |:------|:-------------------------------------|:-----------|:-------------------------|----------:|----------:|:-------------|:-----------|-----:|----------:|
-| pVJpw | Centre universitaire de Mayotte      | FALSE      | kpi.FIN.S.masseSalariale |   1864023 | 0.1890125 | 1.9M€        | 19%        |   70 |  217.2146 |
-| PpsCQ | Université Paris sciences et lettres | FALSE      | kpi.FIN.S.masseSalariale |  11517364 | 0.2179722 | 11.5M€       | 22%        |   69 |  153.0489 |
-| G2qA7 | Université Paris-Saclay              | FALSE      | kpi.FIN.S.masseSalariale | 334365635 | 0.6759195 | 334M€        | 68%        |   68 |  123.8635 |
-| OJZ4a | Université de Haute-Alsace           | FALSE      | kpi.FIN.S.masseSalariale |  82837198 | 0.6835167 | 83M€         | 68%        |   67 |  124.3297 |
-| Z2FY5 | Université de la Nouvelle-Calédonie  | FALSE      | kpi.FIN.S.masseSalariale |  27720989 | 0.7279341 | 28M€         | 73%        |   66 |  144.3514 |
+| pVJpw | Centre universitaire de Mayotte      | FALSE      | kpi.FIN.S.masseSalariale |   1669563 | 0.1726121 | 1.7M€        | 17%        |   68 |  194.5542 |
+| PpsCQ | Université Paris sciences et lettres | FALSE      | kpi.FIN.S.masseSalariale |   9019346 | 0.1980367 | 9M€          | 20%        |   67 |  119.8539 |
+| OJZ4a | Université de Haute-Alsace           | FALSE      | kpi.FIN.S.masseSalariale |  80493139 | 0.6536094 | 80M€         | 65%        |   66 |  120.8115 |
+| G2qA7 | Université Paris-Saclay              | FALSE      | kpi.FIN.S.masseSalariale | 330372170 | 0.6860005 | 330M€        | 69%        |   65 |  122.3841 |
+| HAU8L | Université de Nîmes                  | TRUE       | kpi.FIN.S.masseSalariale |  20682089 | 0.6960349 | 21M€         | 70%        |   64 |  179.3573 |
 
 </details>
 <details>
@@ -473,11 +473,11 @@ Voir les données
 
 | pid   | Etablissement                                | Comparable | kpi                      |    valeur |      norm | valeur_label | norm_label | rang | evolution |
 |:------|:---------------------------------------------|:-----------|:-------------------------|----------:|----------:|:-------------|:-----------|-----:|----------:|
-| g6rwB | Université Paris Nanterre                    | TRUE       | kpi.FIN.S.masseSalariale | 183700870 | 0.8600053 | 184M€        | 86%        |    5 |  124.5519 |
-| Uxr7Z | Université Paris 8 - Vincennes - Saint-Denis | TRUE       | kpi.FIN.S.masseSalariale | 136154413 | 0.8727420 | 136M€        | 87%        |    4 |  122.7287 |
-| 1I7hJ | Université Paul-Valéry - Montpellier 3       | TRUE       | kpi.FIN.S.masseSalariale | 105290087 | 0.8739183 | 105M€        | 87%        |    3 |  122.0574 |
-| hy4EW | Université de Guyane                         | FALSE      | kpi.FIN.S.masseSalariale |  23796534 | 0.8772226 | 24M€         | 88%        |    2 |  168.3978 |
-| z3hdL | Université des Antilles                      | FALSE      | kpi.FIN.S.masseSalariale |  92173097 | 0.9249267 | 92M€         | 92%        |    1 |  109.7025 |
+| Uxr7Z | Université Paris 8 - Vincennes - Saint-Denis | TRUE       | kpi.FIN.S.masseSalariale | 135311959 | 0.8624770 | 135M€        | 86%        |    3 |  121.9693 |
+| 9xlel | Le Mans Université                           | TRUE       | kpi.FIN.S.masseSalariale |  89239805 | 0.8691082 | 89M€         | 87%        |    2 |  132.2899 |
+| ti37C | Université Rennes 2                          | TRUE       | kpi.FIN.S.masseSalariale | 110259303 | 0.8702093 | 110M€        | 87%        |    1 |  130.3243 |
+| qUCQp | Nantes Université                            | TRUE       | kpi.FIN.S.masseSalariale |        NA |        NA | N/A          | N/A        |   NA |        NA |
+| hy4EW | Université de Guyane                         | FALSE      | kpi.FIN.S.masseSalariale |        NA |        NA | N/A          | N/A        |   NA |        NA |
 
 </details>
 
@@ -488,13 +488,13 @@ Voir les données
 Voir les données
 </summary>
 
-| pid   | Etablissement                        | Comparable | kpi            |    valeur |      norm | valeur_label | norm_label | rang | evolution |
-|:------|:-------------------------------------|:-----------|:---------------|----------:|----------:|:-------------|:-----------|-----:|----------:|
-| PpsCQ | Université Paris sciences et lettres | FALSE      | kpi.FIN.S.SCSP |   6370264 | 0.1205606 | 6.4M€        | 12%        |   70 |  279.2092 |
-| pVJpw | Centre universitaire de Mayotte      | FALSE      | kpi.FIN.S.SCSP |   3723800 | 0.3775945 | 3.7M€        | 38%        |   69 |  130.8795 |
-| C6Ps7 | Université Paris Dauphine - PSL      | FALSE      | kpi.FIN.S.SCSP |  62108365 | 0.5541827 | 62M€         | 55%        |   68 |  107.6936 |
-| 3Z5e6 | Université Gustave Eiffel            | FALSE      | kpi.FIN.S.SCSP | 175079902 | 0.6225772 | 175M€        | 62%        |   67 |  246.2723 |
-| 90I54 | Université de Bordeaux               | TRUE       | kpi.FIN.S.SCSP | 359850709 | 0.6336613 | 360M€        | 63%        |   66 |  111.8019 |
+| pid   | Etablissement                        | Comparable | kpi            |   valeur |      norm | valeur_label | norm_label | rang | evolution |
+|:------|:-------------------------------------|:-----------|:---------------|---------:|----------:|:-------------|:-----------|-----:|----------:|
+| PpsCQ | Université Paris sciences et lettres | FALSE      | kpi.FIN.S.SCSP |  9642272 | 0.2117142 | 9.6M€        | 21%        |   68 |  422.6216 |
+| C6Ps7 | Université Paris Dauphine - PSL      | FALSE      | kpi.FIN.S.SCSP | 63039652 | 0.5461735 | 63M€         | 55%        |   67 |  109.3084 |
+| pVJpw | Centre universitaire de Mayotte      | FALSE      | kpi.FIN.S.SCSP |  5667133 | 0.5859113 | 5.7M€        | 59%        |   66 |  199.1814 |
+| OJZ4a | Université de Haute-Alsace           | FALSE      | kpi.FIN.S.SCSP | 81505600 | 0.6618307 | 82M€         | 66%        |   65 |  117.4418 |
+| NLCOF | Université de Corse Pasquale Paoli   | FALSE      | kpi.FIN.S.SCSP | 45499751 | 0.6730802 | 45M€         | 67%        |   64 |  127.8109 |
 
 </details>
 <details>
@@ -504,11 +504,11 @@ Voir les données
 
 | pid   | Etablissement                          | Comparable | kpi            |    valeur |      norm | valeur_label | norm_label | rang | evolution |
 |:------|:---------------------------------------|:-----------|:---------------|----------:|----------:|:-------------|:-----------|-----:|----------:|
-| 8k883 | Université Sorbonne Nouvelle - Paris 3 | TRUE       | kpi.FIN.S.SCSP | 100693049 | 0.8787062 | 101M€        | 88%        |    5 |  110.1321 |
-| zepT6 | Université de la Polynésie Française   | FALSE      | kpi.FIN.S.SCSP |  29347132 | 0.8865381 | 29M€         | 89%        |    4 |  124.3496 |
-| hy4EW | Université de Guyane                   | FALSE      | kpi.FIN.S.SCSP |  24450940 | 0.9013463 | 24M€         | 90%        |    3 |  150.7886 |
-| HqAYu | Université Toulouse - Jean Jaurès      | TRUE       | kpi.FIN.S.SCSP | 177580558 | 0.9166297 | 178M€        | 92%        |    2 |  123.8226 |
-| z3hdL | Université des Antilles                | FALSE      | kpi.FIN.S.SCSP |  95463551 | 0.9579454 | 95M€         | 96%        |    1 |  105.1857 |
+| z3hdL | Université des Antilles                | FALSE      | kpi.FIN.S.SCSP |  97264516 | 0.8998906 | 97M€         | 90%        |    3 |  107.1700 |
+| HqAYu | Université Toulouse - Jean Jaurès      | TRUE       | kpi.FIN.S.SCSP | 181666433 | 0.9152949 | 182M€        | 92%        |    2 |  126.6716 |
+| 8k883 | Université Sorbonne Nouvelle - Paris 3 | TRUE       | kpi.FIN.S.SCSP | 106604738 | 0.9261143 | 107M€        | 93%        |    1 |  116.5979 |
+| qUCQp | Nantes Université                      | TRUE       | kpi.FIN.S.SCSP |        NA |        NA | N/A          | N/A        |   NA |        NA |
+| hy4EW | Université de Guyane                   | FALSE      | kpi.FIN.S.SCSP |        NA |        NA | N/A          | N/A        |   NA |        NA |
 
 </details>
 
@@ -521,11 +521,11 @@ Voir les données
 
 | pid   | Etablissement                            | Comparable | kpi                         |  valeur |      norm | valeur_label | norm_label | rang | evolution |
 |:------|:-----------------------------------------|:-----------|:----------------------------|--------:|----------:|:-------------|:-----------|-----:|----------:|
-| z3hdL | Université des Antilles                  | FALSE      | kpi.FIN.S.recettesFormation | 1475165 | 0.0148028 | 1.5M€        | 1%         |   67 |  51.19193 |
-| 7Mpgt | Université de Franche-Comté              | TRUE       | kpi.FIN.S.recettesFormation | 3778577 | 0.0167252 | 3.8M€        | 2%         |   66 |  63.83379 |
-| EW53M | Université Polytechnique Hauts-de-France | TRUE       | kpi.FIN.S.recettesFormation | 2270000 | 0.0207992 | 2.3M€        | 2%         |   65 |  53.92620 |
-| n1W55 | Université de Perpignan Via Domitia      | TRUE       | kpi.FIN.S.recettesFormation | 1843771 | 0.0229201 | 1.8M€        | 2%         |   64 |  65.27314 |
-| LsQ24 | Université Le Havre Normandie            | TRUE       | kpi.FIN.S.recettesFormation | 1954360 | 0.0247041 | 2M€          | 2%         |   63 |  71.45714 |
+| pVJpw | Centre universitaire de Mayotte          | FALSE      | kpi.FIN.S.recettesFormation |   75098 | 0.0077642 | 0.08M€       | 1%         |   64 |  30.83461 |
+| n1W55 | Université de Perpignan Via Domitia      | TRUE       | kpi.FIN.S.recettesFormation | 1684725 | 0.0208868 | 1.7M€        | 2%         |   63 |  59.64260 |
+| EW53M | Université Polytechnique Hauts-de-France | TRUE       | kpi.FIN.S.recettesFormation | 2378456 | 0.0211359 | 2.4M€        | 2%         |   62 |  56.50268 |
+| atbEK | La Rochelle Université                   | TRUE       | kpi.FIN.S.recettesFormation | 2066209 | 0.0235176 | 2.1M€        | 2%         |   61 | 100.05119 |
+| LsQ24 | Université Le Havre Normandie            | TRUE       | kpi.FIN.S.recettesFormation | 2054563 | 0.0246609 | 2.1M€        | 2%         |   60 |  75.12086 |
 
 </details>
 <details>
@@ -533,13 +533,13 @@ Voir les données
 Voir les données
 </summary>
 
-| pid   | Etablissement                        | Comparable | kpi                         |   valeur |      norm | valeur_label | norm_label | rang | evolution |
-|:------|:-------------------------------------|:-----------|:----------------------------|---------:|----------:|:-------------|:-----------|-----:|----------:|
-| RS4WF | CY Cergy Paris Université            | FALSE      | kpi.FIN.S.recettesFormation | 37167591 | 0.1776978 | 37M€         | 18%        |    2 | 745.80249 |
-| C6Ps7 | Université Paris Dauphine - PSL      | FALSE      | kpi.FIN.S.recettesFormation | 26935546 | 0.2403414 | 27M€         | 24%        |    1 |  97.21146 |
-| PpsCQ | Université Paris sciences et lettres | FALSE      | kpi.FIN.S.recettesFormation |       NA |        NA | N/A          | N/A        |   NA |        NA |
-| Z2FY5 | Université de la Nouvelle-Calédonie  | FALSE      | kpi.FIN.S.recettesFormation |       NA |        NA | N/A          | N/A        |   NA |        NA |
-| zepT6 | Université de la Polynésie Française | FALSE      | kpi.FIN.S.recettesFormation |       NA |        NA | N/A          | N/A        |   NA |        NA |
+| pid   | Etablissement                          | Comparable | kpi                         | valeur | norm | valeur_label | norm_label | rang | evolution |
+|:------|:---------------------------------------|:-----------|:----------------------------|-------:|-----:|:-------------|:-----------|-----:|----------:|
+| PpsCQ | Université Paris sciences et lettres   | FALSE      | kpi.FIN.S.recettesFormation |     NA |   NA | N/A          | N/A        |   NA |        NA |
+| 8k883 | Université Sorbonne Nouvelle - Paris 3 | TRUE       | kpi.FIN.S.recettesFormation |     NA |   NA | N/A          | N/A        |   NA |        NA |
+| hy4EW | Université de Guyane                   | FALSE      | kpi.FIN.S.recettesFormation |     NA |   NA | N/A          | N/A        |   NA |        NA |
+| Z2FY5 | Université de la Nouvelle-Calédonie    | FALSE      | kpi.FIN.S.recettesFormation |     NA |   NA | N/A          | N/A        |   NA |        NA |
+| zepT6 | Université de la Polynésie Française   | FALSE      | kpi.FIN.S.recettesFormation |     NA |   NA | N/A          | N/A        |   NA |        NA |
 
 </details>
 
@@ -550,13 +550,13 @@ Voir les données
 Voir les données
 </summary>
 
-| pid   | Etablissement                                | Comparable | kpi                         | valeur |      norm | valeur_label | norm_label | rang | evolution |
-|:------|:---------------------------------------------|:-----------|:----------------------------|-------:|----------:|:-------------|:-----------|-----:|----------:|
-| hy4EW | Université de Guyane                         | FALSE      | kpi.FIN.S.recettesRecherche |      0 | 0.0000000 | 0M€          | 0%         |   64 |        NA |
-| cEt92 | Université de La Réunion                     | FALSE      | kpi.FIN.S.recettesRecherche |  81666 | 0.0006208 | 0.08M€       | 0%         |   63 |  14.15971 |
-| Uxr7Z | Université Paris 8 - Vincennes - Saint-Denis | TRUE       | kpi.FIN.S.recettesRecherche | 456211 | 0.0029243 | 0.46M€       | 0%         |   62 |  21.13606 |
-| RN4E6 | Université d’Évry-Val-d’Essonne              | FALSE      | kpi.FIN.S.recettesRecherche | 358093 | 0.0036691 | 0.36M€       | 0%         |   61 |  23.17358 |
-| 7Gzub | Université Jean Moulin - Lyon 3              | TRUE       | kpi.FIN.S.recettesRecherche | 515944 | 0.0039182 | 0.52M€       | 0%         |   60 | 488.03342 |
+| pid   | Etablissement                     | Comparable | kpi                         |  valeur |      norm | valeur_label | norm_label | rang |  evolution |
+|:------|:----------------------------------|:-----------|:----------------------------|--------:|----------:|:-------------|:-----------|-----:|-----------:|
+| pVJpw | Centre universitaire de Mayotte   | FALSE      | kpi.FIN.S.recettesRecherche |       0 | 0.0000000 | 0M€          | 0%         |   65 |    0.00000 |
+| C6Ps7 | Université Paris Dauphine - PSL   | FALSE      | kpi.FIN.S.recettesRecherche |  668266 | 0.0057898 | 0.67M€       | 1%         |   64 |   35.31869 |
+| gap5Q | Université Toulouse Capitole      | TRUE       | kpi.FIN.S.recettesRecherche |  809405 | 0.0069165 | 0.81M€       | 1%         |   63 |   83.19699 |
+| HqAYu | Université Toulouse - Jean Jaurès | TRUE       | kpi.FIN.S.recettesRecherche | 1513574 | 0.0076259 | 1.5M€        | 1%         |   62 |  106.89349 |
+| 7Gzub | Université Jean Moulin - Lyon 3   | TRUE       | kpi.FIN.S.recettesRecherche | 1078776 | 0.0081709 | 1.1M€        | 1%         |   61 | 1020.41838 |
 
 </details>
 <details>
@@ -564,13 +564,13 @@ Voir les données
 Voir les données
 </summary>
 
-| pid   | Etablissement                          | Comparable | kpi                         | valeur | norm | valeur_label | norm_label | rang | evolution |
-|:------|:---------------------------------------|:-----------|:----------------------------|-------:|-----:|:-------------|:-----------|-----:|----------:|
-| tIJ02 | Université Jean Monnet                 | TRUE       | kpi.FIN.S.recettesRecherche |     NA |   NA | N/A          | N/A        |   NA |        NA |
-| PpsCQ | Université Paris sciences et lettres   | FALSE      | kpi.FIN.S.recettesRecherche |     NA |   NA | N/A          | N/A        |   NA |        NA |
-| 8k883 | Université Sorbonne Nouvelle - Paris 3 | TRUE       | kpi.FIN.S.recettesRecherche |     NA |   NA | N/A          | N/A        |   NA |        NA |
-| gap5Q | Université Toulouse Capitole           | TRUE       | kpi.FIN.S.recettesRecherche |     NA |   NA | N/A          | N/A        |   NA |        NA |
-| z3hdL | Université des Antilles                | FALSE      | kpi.FIN.S.recettesRecherche |     NA |   NA | N/A          | N/A        |   NA |        NA |
+| pid   | Etablissement                        | Comparable | kpi                         | valeur | norm | valeur_label | norm_label | rang | evolution |
+|:------|:-------------------------------------|:-----------|:----------------------------|-------:|-----:|:-------------|:-----------|-----:|----------:|
+| qUCQp | Nantes Université                    | TRUE       | kpi.FIN.S.recettesRecherche |     NA |   NA | N/A          | N/A        |   NA |        NA |
+| PpsCQ | Université Paris sciences et lettres | FALSE      | kpi.FIN.S.recettesRecherche |     NA |   NA | N/A          | N/A        |   NA |        NA |
+| hy4EW | Université de Guyane                 | FALSE      | kpi.FIN.S.recettesRecherche |     NA |   NA | N/A          | N/A        |   NA |        NA |
+| HAU8L | Université de Nîmes                  | TRUE       | kpi.FIN.S.recettesRecherche |     NA |   NA | N/A          | N/A        |   NA |        NA |
+| z3hdL | Université des Antilles              | FALSE      | kpi.FIN.S.recettesRecherche |     NA |   NA | N/A          | N/A        |   NA |        NA |
 
 </details>
 
@@ -581,13 +581,13 @@ Voir les données
 Voir les données
 </summary>
 
-| pid   | Etablissement                          | Comparable | kpi                       |  valeur |      norm | valeur_label | norm_label | rang |  evolution |
-|:------|:---------------------------------------|:-----------|:--------------------------|--------:|----------:|:-------------|:-----------|-----:|-----------:|
-| pVJpw | Centre universitaire de Mayotte        | FALSE      | kpi.FIN.S.investissements |       0 | 0.0000000 | 0M€          | 0%         |   68 |    0.00000 |
-| PpsCQ | Université Paris sciences et lettres   | FALSE      | kpi.FIN.S.investissements |  758333 | 0.0143519 | 0.76M€       | 1%         |   67 | 9027.77381 |
-| 6G2TU | Université Paris 1 - Panthéon Sorbonne | TRUE       | kpi.FIN.S.investissements | 6532356 | 0.0268029 | 6.5M€        | 3%         |   66 |  282.28835 |
-| TWBzp | Université Panthéon-Assas              | FALSE      | kpi.FIN.S.investissements | 3436000 | 0.0346920 | 3.4M€        | 3%         |   65 |   90.92744 |
-| 8k883 | Université Sorbonne Nouvelle - Paris 3 | TRUE       | kpi.FIN.S.investissements | 4157226 | 0.0362784 | 4.2M€        | 4%         |   64 |  250.28072 |
+| pid   | Etablissement                          | Comparable | kpi                       |   valeur |      norm | valeur_label | norm_label | rang | evolution |
+|:------|:---------------------------------------|:-----------|:--------------------------|---------:|----------:|:-------------|:-----------|-----:|----------:|
+| PpsCQ | Université Paris sciences et lettres   | FALSE      | kpi.FIN.S.investissements |    45073 | 0.0009897 | 0.05M€       | 0%         |   68 |  536.5833 |
+| 8k883 | Université Sorbonne Nouvelle - Paris 3 | TRUE       | kpi.FIN.S.investissements |  2672875 | 0.0232202 | 2.7M€        | 2%         |   67 |  160.9172 |
+| 6G2TU | Université Paris 1 - Panthéon Sorbonne | TRUE       | kpi.FIN.S.investissements |  6789803 | 0.0273703 | 6.8M€        | 3%         |   66 |  293.4136 |
+| ti37C | Université Rennes 2                    | TRUE       | kpi.FIN.S.investissements |  6589597 | 0.0520077 | 6.6M€        | 5%         |   65 |  154.1178 |
+| 5cZyU | Université de Paris                    | TRUE       | kpi.FIN.S.investissements | 35870601 | 0.0538666 | 36M€         | 5%         |   64 |  132.0454 |
 
 </details>
 <details>
@@ -595,13 +595,13 @@ Voir les données
 Voir les données
 </summary>
 
-| pid   | Etablissement                          | Comparable | kpi                       |   valeur |      norm | valeur_label | norm_label | rang | evolution |
-|:------|:---------------------------------------|:-----------|:--------------------------|---------:|----------:|:-------------|:-----------|-----:|----------:|
-| C6Ps7 | Université Paris Dauphine - PSL        | FALSE      | kpi.FIN.S.investissements | 30506000 | 0.2722000 | 31M€         | 27%        |    3 | 1132.2417 |
-| NLCOF | Université de Corse Pasquale Paoli     | FALSE      | kpi.FIN.S.investissements | 18145200 | 0.2745891 | 18.1M€       | 27%        |    2 |  164.5732 |
-| 1I7hJ | Université Paul-Valéry - Montpellier 3 | TRUE       | kpi.FIN.S.investissements | 63348095 | 0.5257956 | 63M€         | 53%        |    1 | 3008.2308 |
-| 3Z5e6 | Université Gustave Eiffel              | FALSE      | kpi.FIN.S.investissements |       NA |        NA | N/A          | N/A        |   NA |        NA |
-| hy4EW | Université de Guyane                   | FALSE      | kpi.FIN.S.investissements |       NA |        NA | N/A          | N/A        |   NA |        NA |
+| pid   | Etablissement                   | Comparable | kpi                       |   valeur |      norm | valeur_label | norm_label | rang | evolution |
+|:------|:--------------------------------|:-----------|:--------------------------|---------:|----------:|:-------------|:-----------|-----:|----------:|
+| 7Gzub | Université Jean Moulin - Lyon 3 | TRUE       | kpi.FIN.S.investissements | 31210228 | 0.2363931 | 31M€         | 24%        |    3 |  379.0728 |
+| HAU8L | Université de Nîmes             | TRUE       | kpi.FIN.S.investissements |  7709292 | 0.2594485 | 7.7M€        | 26%        |    2 |  774.2536 |
+| RN4E6 | Université d’Évry-Val-d’Essonne | FALSE      | kpi.FIN.S.investissements | 31010281 | 0.3026222 | 31M€         | 30%        |    1 | 1863.2160 |
+| qUCQp | Nantes Université               | TRUE       | kpi.FIN.S.investissements |       NA |        NA | N/A          | N/A        |   NA |        NA |
+| hy4EW | Université de Guyane            | FALSE      | kpi.FIN.S.investissements |       NA |        NA | N/A          | N/A        |   NA |        NA |
 
 </details>
 
@@ -738,11 +738,11 @@ Voir les données
 
 | pid   | Etablissement                        | Comparable | kpi           |    valeur |      norm | valeur_label | norm_label | rang | evolution |
 |:------|:-------------------------------------|:-----------|:--------------|----------:|----------:|:-------------|:-----------|-----:|----------:|
-| PpsCQ | Université Paris sciences et lettres | FALSE      | kpi.K.dotPres | 0.1205606 | 0.1205606 | 12%          | 12%        |   70 |  50.73611 |
-| pVJpw | Centre universitaire de Mayotte      | FALSE      | kpi.K.dotPres | 0.3775945 | 0.3775945 | 38%          | 38%        |   69 |  44.88340 |
-| C6Ps7 | Université Paris Dauphine - PSL      | FALSE      | kpi.K.dotPres | 0.5541827 | 0.5541827 | 55%          | 55%        |   68 |  88.46639 |
-| 3Z5e6 | Université Gustave Eiffel            | FALSE      | kpi.K.dotPres | 0.6225772 | 0.6225772 | 62%          | 62%        |   67 |  76.17786 |
-| 90I54 | Université de Bordeaux               | TRUE       | kpi.K.dotPres | 0.6336613 | 0.6336613 | 63%          | 63%        |   66 |  86.73637 |
+| PpsCQ | Université Paris sciences et lettres | FALSE      | kpi.K.dotPres | 0.2117142 | 0.2117142 | 21%          | 21%        |   68 |  89.09672 |
+| C6Ps7 | Université Paris Dauphine - PSL      | FALSE      | kpi.K.dotPres | 0.5461735 | 0.5461735 | 55%          | 55%        |   67 |  87.18785 |
+| pVJpw | Centre universitaire de Mayotte      | FALSE      | kpi.K.dotPres | 0.5859113 | 0.5859113 | 59%          | 59%        |   66 |  69.64531 |
+| OJZ4a | Université de Haute-Alsace           | FALSE      | kpi.K.dotPres | 0.6618307 | 0.6618307 | 66%          | 66%        |   65 |  86.03892 |
+| NLCOF | Université de Corse Pasquale Paoli   | FALSE      | kpi.K.dotPres | 0.6730802 | 0.6730802 | 67%          | 67%        |   64 |  98.55056 |
 
 </details>
 <details>
@@ -752,11 +752,11 @@ Voir les données
 
 | pid   | Etablissement                          | Comparable | kpi           |    valeur |      norm | valeur_label | norm_label | rang | evolution |
 |:------|:---------------------------------------|:-----------|:--------------|----------:|----------:|:-------------|:-----------|-----:|----------:|
-| 8k883 | Université Sorbonne Nouvelle - Paris 3 | TRUE       | kpi.K.dotPres | 0.8787062 | 0.8787062 | 88%          | 88%        |    5 |  98.76884 |
-| zepT6 | Université de la Polynésie Française   | FALSE      | kpi.K.dotPres | 0.8865381 | 0.8865381 | 89%          | 89%        |    4 |  99.20685 |
-| hy4EW | Université de Guyane                   | FALSE      | kpi.K.dotPres | 0.9013463 | 0.9013463 | 90%          | 90%        |    3 | 106.08272 |
-| HqAYu | Université Toulouse - Jean Jaurès      | TRUE       | kpi.K.dotPres | 0.9166297 | 0.9166297 | 92%          | 92%        |    2 | 102.75201 |
-| z3hdL | Université des Antilles                | FALSE      | kpi.K.dotPres | 0.9579454 | 0.9579454 | 96%          | 96%        |    1 | 107.72057 |
+| z3hdL | Université des Antilles                | FALSE      | kpi.K.dotPres | 0.8998906 | 0.8998906 | 90%          | 90%        |    3 |  101.1923 |
+| HqAYu | Université Toulouse - Jean Jaurès      | TRUE       | kpi.K.dotPres | 0.9152949 | 0.9152949 | 92%          | 92%        |    2 |  102.6024 |
+| 8k883 | Université Sorbonne Nouvelle - Paris 3 | TRUE       | kpi.K.dotPres | 0.9261143 | 0.9261143 | 93%          | 93%        |    1 |  104.0976 |
+| qUCQp | Nantes Université                      | TRUE       | kpi.K.dotPres |        NA |        NA | N/A          | N/A        |   NA |        NA |
+| hy4EW | Université de Guyane                   | FALSE      | kpi.K.dotPres |        NA |        NA | N/A          | N/A        |   NA |        NA |
 
 </details>
 
@@ -769,11 +769,11 @@ Voir les données
 
 | pid   | Etablissement                          | Comparable | kpi           |   valeur |     norm | valeur_label | norm_label | rang | evolution |
 |:------|:---------------------------------------|:-----------|:--------------|---------:|---------:|:-------------|:-----------|-----:|----------:|
-| PpsCQ | Université Paris sciences et lettres   | FALSE      | kpi.K.resPetu | 3385.142 | 3385.142 | 3k€          | 3k€        |   69 |  13.21732 |
-| TWBzp | Université Panthéon-Assas              | FALSE      | kpi.K.resPetu | 4749.808 | 4749.808 | 5k€          | 5k€        |   68 |  86.56288 |
-| HAU8L | Université de Nîmes                    | TRUE       | kpi.K.resPetu | 5039.677 | 5039.677 | 5k€          | 5k€        |   67 | 113.94645 |
-| 7Gzub | Université Jean Moulin - Lyon 3        | TRUE       | kpi.K.resPetu | 5366.794 | 5366.794 | 5k€          | 5k€        |   66 | 129.62869 |
-| 1I7hJ | Université Paul-Valéry - Montpellier 3 | TRUE       | kpi.K.resPetu | 5950.828 | 5950.828 | 6k€          | 6k€        |   65 | 111.41689 |
+| PpsCQ | Université Paris sciences et lettres   | FALSE      | kpi.K.resPetu | 2917.792 | 2917.792 | 3k€          | 3k€        |   67 |  11.39254 |
+| TWBzp | Université Panthéon-Assas              | FALSE      | kpi.K.resPetu | 5075.020 | 5075.020 | 5k€          | 5k€        |   66 |  92.48971 |
+| 7Gzub | Université Jean Moulin - Lyon 3        | TRUE       | kpi.K.resPetu | 5380.942 | 5380.942 | 5k€          | 5k€        |   65 | 129.97044 |
+| HAU8L | Université de Nîmes                    | TRUE       | kpi.K.resPetu | 5547.826 | 5547.826 | 6k€          | 6k€        |   64 | 125.43563 |
+| 1I7hJ | Université Paul-Valéry - Montpellier 3 | TRUE       | kpi.K.resPetu | 6184.605 | 6184.605 | 6k€          | 6k€        |   63 | 115.79388 |
 
 </details>
 <details>
@@ -783,11 +783,11 @@ Voir les données
 
 | pid   | Etablissement                      | Comparable | kpi           |   valeur |     norm | valeur_label | norm_label | rang | evolution |
 |:------|:-----------------------------------|:-----------|:--------------|---------:|---------:|:-------------|:-----------|-----:|----------:|
-| RN4E6 | Université d’Évry-Val-d’Essonne    | FALSE      | kpi.K.resPetu | 15425.32 | 15425.32 | 15k€         | 15k€       |    4 |  164.2488 |
-| NLCOF | Université de Corse Pasquale Paoli | FALSE      | kpi.K.resPetu | 16409.55 | 16409.55 | 16k€         | 16k€       |    3 |  120.2930 |
-| bxPQe | Sorbonne Université                | TRUE       | kpi.K.resPetu | 16839.52 | 16839.52 | 17k€         | 17k€       |    2 |  124.3804 |
-| 3Z5e6 | Université Gustave Eiffel          | FALSE      | kpi.K.resPetu | 19121.37 | 19121.37 | 19k€         | 19k€       |    1 |  228.5445 |
+| NLCOF | Université de Corse Pasquale Paoli | FALSE      | kpi.K.resPetu | 16786.52 | 16786.52 | 17k€         | 17k€       |    2 |  123.0564 |
+| 3Z5e6 | Université Gustave Eiffel          | FALSE      | kpi.K.resPetu | 17823.09 | 17823.09 | 18k€         | 18k€       |    1 |  213.0270 |
+| qUCQp | Nantes Université                  | TRUE       | kpi.K.resPetu |       NA |       NA | N/A          | N/A        |   NA |        NA |
 | C6Ps7 | Université Paris Dauphine - PSL    | FALSE      | kpi.K.resPetu |       NA |       NA | N/A          | N/A        |   NA |        NA |
+| hy4EW | Université de Guyane               | FALSE      | kpi.K.resPetu |       NA |       NA | N/A          | N/A        |   NA |        NA |
 
 </details>
 
@@ -798,13 +798,13 @@ Voir les données
 Voir les données
 </summary>
 
-| pid   | Etablissement                            | Comparable | kpi           |   valeur |     norm | valeur_label | norm_label | rang | evolution |
-|:------|:-----------------------------------------|:-----------|:--------------|---------:|---------:|:-------------|:-----------|-----:|----------:|
-| z3hdL | Université des Antilles                  | FALSE      | kpi.K.forPetu | 130.7654 | 130.7654 | 131€         | 131€       |   66 |  48.80500 |
-| 7Mpgt | Université de Franche-Comté              | TRUE       | kpi.K.forPetu | 179.0540 | 179.0540 | 179€         | 179€       |   65 |  62.35463 |
-| EW53M | Université Polytechnique Hauts-de-France | TRUE       | kpi.K.forPetu | 188.7577 | 188.7577 | 189€         | 189€       |   64 |  44.97138 |
-| pVJpw | Centre universitaire de Mayotte          | FALSE      | kpi.K.forPetu | 215.4761 | 215.4761 | 215€         | 215€       |   63 |  99.35481 |
-| n1W55 | Université de Perpignan Via Domitia      | TRUE       | kpi.K.forPetu | 229.3818 | 229.3818 | 229€         | 229€       |   62 |  70.12924 |
+| pid   | Etablissement                            | Comparable | kpi           |    valeur |      norm | valeur_label | norm_label | rang | evolution |
+|:------|:-----------------------------------------|:-----------|:--------------|----------:|----------:|:-------------|:-----------|-----:|----------:|
+| pVJpw | Centre universitaire de Mayotte          | FALSE      | kpi.K.forPetu |  55.25975 |  55.25975 | 55€          | 55€        |   63 |  25.47996 |
+| EW53M | Université Polytechnique Hauts-de-France | TRUE       | kpi.K.forPetu | 197.77615 | 197.77615 | 198€         | 198€       |   62 |  47.12002 |
+| cEt92 | Université de La Réunion                 | FALSE      | kpi.K.forPetu | 204.75555 | 204.75555 | 205€         | 205€       |   61 |  46.70048 |
+| n1W55 | Université de Perpignan Via Domitia      | TRUE       | kpi.K.forPetu | 209.59505 | 209.59505 | 210€         | 210€       |   60 |  64.07980 |
+| g6rwB | Université Paris Nanterre                | TRUE       | kpi.K.forPetu | 248.35449 | 248.35449 | 248€         | 248€       |   59 |  75.47979 |
 
 </details>
 <details>
@@ -812,13 +812,13 @@ Voir les données
 Voir les données
 </summary>
 
-| pid   | Etablissement                        | Comparable | kpi           |   valeur |     norm | valeur_label | norm_label | rang | evolution |
-|:------|:-------------------------------------|:-----------|:--------------|---------:|---------:|:-------------|:-----------|-----:|----------:|
-| RN4E6 | Université d’Évry-Val-d’Essonne      | FALSE      | kpi.K.forPetu | 2494.872 | 2494.872 | 2495€        | 2495€      |    1 |  758.9286 |
-| C6Ps7 | Université Paris Dauphine - PSL      | FALSE      | kpi.K.forPetu |       NA |       NA | N/A          | N/A        |   NA |        NA |
-| PpsCQ | Université Paris sciences et lettres | FALSE      | kpi.K.forPetu |       NA |       NA | N/A          | N/A        |   NA |        NA |
-| Z2FY5 | Université de la Nouvelle-Calédonie  | FALSE      | kpi.K.forPetu |       NA |       NA | N/A          | N/A        |   NA |        NA |
-| zepT6 | Université de la Polynésie Française | FALSE      | kpi.K.forPetu |       NA |       NA | N/A          | N/A        |   NA |        NA |
+| pid   | Etablissement                          | Comparable | kpi           | valeur | norm | valeur_label | norm_label | rang | evolution |
+|:------|:---------------------------------------|:-----------|:--------------|-------:|-----:|:-------------|:-----------|-----:|----------:|
+| PpsCQ | Université Paris sciences et lettres   | FALSE      | kpi.K.forPetu |     NA |   NA | N/A          | N/A        |   NA |        NA |
+| 8k883 | Université Sorbonne Nouvelle - Paris 3 | TRUE       | kpi.K.forPetu |     NA |   NA | N/A          | N/A        |   NA |        NA |
+| hy4EW | Université de Guyane                   | FALSE      | kpi.K.forPetu |     NA |   NA | N/A          | N/A        |   NA |        NA |
+| Z2FY5 | Université de la Nouvelle-Calédonie    | FALSE      | kpi.K.forPetu |     NA |   NA | N/A          | N/A        |   NA |        NA |
+| zepT6 | Université de la Polynésie Française   | FALSE      | kpi.K.forPetu |     NA |   NA | N/A          | N/A        |   NA |        NA |
 
 </details>
 
@@ -953,13 +953,13 @@ Voir les données
 Voir les données
 </summary>
 
-| pid   | Etablissement                        | Comparable | kpi           |    valeur |      norm | valeur_label | norm_label | rang |  evolution |
-|:------|:-------------------------------------|:-----------|:--------------|----------:|----------:|:-------------|:-----------|-----:|-----------:|
-| PpsCQ | Université Paris sciences et lettres | FALSE      | kpi.K.dotPetu |  408.1148 |  408.1148 | 408          | 408        |   69 |   5.839126 |
-| pVJpw | Centre universitaire de Mayotte      | FALSE      | kpi.K.dotPetu | 2740.1030 | 2740.1030 | 2 740        | 2 740      |   68 | 108.151368 |
-| TWBzp | Université Panthéon-Assas            | FALSE      | kpi.K.dotPetu | 3627.7575 | 3627.7575 | 3 628        | 3 628      |   67 |  82.093821 |
-| 7Gzub | Université Jean Moulin - Lyon 3      | TRUE       | kpi.K.dotPetu | 4015.3979 | 4015.3979 | 4 015        | 4 015      |   66 | 120.339236 |
-| HAU8L | Université de Nîmes                  | TRUE       | kpi.K.dotPetu | 4152.6744 | 4152.6744 | 4 153        | 4 153      |   65 | 106.743635 |
+| pid   | Etablissement                        | Comparable | kpi           |   valeur |     norm | valeur_label | norm_label | rang |  evolution |
+|:------|:-------------------------------------|:-----------|:--------------|---------:|---------:|:-------------|:-----------|-----:|-----------:|
+| PpsCQ | Université Paris sciences et lettres | FALSE      | kpi.K.dotPetu |  617.738 |  617.738 | 618          | 618        |   67 |   8.838321 |
+| TWBzp | Université Panthéon-Assas            | FALSE      | kpi.K.dotPetu | 3690.034 | 3690.034 | 3 690        | 3 690      |   66 |  83.503089 |
+| 7Gzub | Université Jean Moulin - Lyon 3      | TRUE       | kpi.K.dotPetu | 4131.131 | 4131.131 | 4 131        | 4 131      |   65 | 123.807678 |
+| pVJpw | Centre universitaire de Mayotte      | FALSE      | kpi.K.dotPetu | 4170.076 | 4170.076 | 4 170        | 4 170      |   64 | 164.592133 |
+| HAU8L | Université de Nîmes                  | TRUE       | kpi.K.dotPetu | 4482.856 | 4482.856 | 4 483        | 4 483      |   63 | 115.230882 |
 
 </details>
 <details>
@@ -967,13 +967,13 @@ Voir les données
 Voir les données
 </summary>
 
-| pid   | Etablissement                           | Comparable | kpi           |   valeur |     norm | valeur_label | norm_label | rang | evolution |
-|:------|:----------------------------------------|:-----------|:--------------|---------:|---------:|:-------------|:-----------|-----:|----------:|
-| zepT6 | Université de la Polynésie Française    | FALSE      | kpi.K.dotPetu | 11604.24 | 11604.24 | 11 604       | 11 604     |    4 |  166.0945 |
-| m7K6T | Université Toulouse III - Paul Sabatier | TRUE       | kpi.K.dotPetu | 11708.70 | 11708.70 | 11 709       | 11 709     |    3 |  113.4247 |
-| 3Z5e6 | Université Gustave Eiffel               | FALSE      | kpi.K.dotPetu | 11904.53 | 11904.53 | 11 905       | 11 905     |    2 |  174.1003 |
-| RN4E6 | Université d’Évry-Val-d’Essonne         | FALSE      | kpi.K.dotPetu | 12091.49 | 12091.49 | 12 091       | 12 091     |    1 |  156.9508 |
-| C6Ps7 | Université Paris Dauphine - PSL         | FALSE      | kpi.K.dotPetu |       NA |       NA | N/A          | N/A        |   NA |        NA |
+| pid   | Etablissement                        | Comparable | kpi           |   valeur |     norm | valeur_label | norm_label | rang | evolution |
+|:------|:-------------------------------------|:-----------|:--------------|---------:|---------:|:-------------|:-----------|-----:|----------:|
+| zepT6 | Université de la Polynésie Française | FALSE      | kpi.K.dotPetu | 12313.47 | 12313.47 | 12 313       | 12 313     |    2 |  176.2458 |
+| RN4E6 | Université d’Évry-Val-d’Essonne      | FALSE      | kpi.K.dotPetu | 12627.46 | 12627.46 | 12 627       | 12 627     |    1 |  163.9078 |
+| qUCQp | Nantes Université                    | TRUE       | kpi.K.dotPetu |       NA |       NA | N/A          | N/A        |   NA |        NA |
+| C6Ps7 | Université Paris Dauphine - PSL      | FALSE      | kpi.K.dotPetu |       NA |       NA | N/A          | N/A        |   NA |        NA |
+| hy4EW | Université de Guyane                 | FALSE      | kpi.K.dotPetu |       NA |       NA | N/A          | N/A        |   NA |        NA |
 
 </details>
 </details>

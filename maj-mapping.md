@@ -1,6 +1,6 @@
 MAJ Appariements
 ================
-2024-03-26
+2024-09-06
 
 ## Chargement des données
 
@@ -8,68 +8,14 @@ MAJ Appariements
 
 ### Statistiques
 
-<table>
-<thead>
-<tr>
-<th style="text-align:left;">
-dataset
-</th>
-<th style="text-align:right;">
-nb_etabs
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-etab.19
-</td>
-<td style="text-align:right;">
-75
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-etab.20
-</td>
-<td style="text-align:right;">
-14
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-etab.21.2
-</td>
-<td style="text-align:right;">
-7
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-etab.22
-</td>
-<td style="text-align:right;">
-10
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-etab.23
-</td>
-<td style="text-align:right;">
-33
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-etab.24
-</td>
-<td style="text-align:right;">
-232
-</td>
-</tr>
-</tbody>
-</table>
+| dataset   | nb_etabs |
+|:----------|---------:|
+| etab.19   |       75 |
+| etab.20   |       14 |
+| etab.21.2 |        7 |
+| etab.22   |       10 |
+| etab.23   |       33 |
+| etab.24   |      232 |
 
 ## Fix Typologie manquante
 
@@ -250,230 +196,32 @@ Nombre d’exclusion
 
 ### Check : données incomplètes Universités
 
-<table>
-<thead>
-<tr>
-<th style="text-align:left;">
-pid
-</th>
-<th style="text-align:left;">
-etab
-</th>
-<th style="text-align:left;">
-datasets
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Université Bretagne Loire;Université Bretagne Loire;Université
-européenne de Bretagne
-</td>
-<td style="text-align:left;">
-etu fin etu
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-4a8B2
-</td>
-<td style="text-align:left;">
-Université fédérale de Toulouse Midi-Pyrénées;Université fédérale de
-Toulouse Midi-Pyrénées
-</td>
-<td style="text-align:left;">
-bia fin
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-52U59
-</td>
-<td style="text-align:left;">
-Université confédérale Léonard de Vinci;Université confédérale Léonard
-de Vinci
-</td>
-<td style="text-align:left;">
-bia fin
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-6g0Mb
-</td>
-<td style="text-align:left;">
-Université PARIS-EST
-</td>
-<td style="text-align:left;">
-fin
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-86UpY
-</td>
-<td style="text-align:left;">
-Université Paris Lumières;Université Paris Lumières;Université Paris
-Lumières
-</td>
-<td style="text-align:left;">
-bia etu fin
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-8A0mg
-</td>
-<td style="text-align:left;">
-Université BOURGOGNE FRANCHE-COMTÉ;Université Bourgogne -
-Franche-Comté;Université Bourgogne - Franche-Comté
-</td>
-<td style="text-align:left;">
-fin bia etu
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-EPci7
-</td>
-<td style="text-align:left;">
-HESAM Université
-</td>
-<td style="text-align:left;">
-bia
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-G1r6y
-</td>
-<td style="text-align:left;">
-Normandie Université
-</td>
-<td style="text-align:left;">
-bia
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-PpsCQ
-</td>
-<td style="text-align:left;">
-Université Paris sciences et lettres;Université Paris sciences et
-lettres;Université Paris sciences et lettres;Université Paris sciences
-et lettres;Université Paris sciences et lettres;Université de Paris
-sciences et lettres;Université de recherche Paris sciences et lettres -
-PSL Research University;Université de recherche
-Paris-Sciences-et-Lettres
-</td>
-<td style="text-align:left;">
-enstit ensnp bia bia etu fin fin etu
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-iq0rG
-</td>
-<td style="text-align:left;">
-Université de Lyon;Université de Lyon
-</td>
-<td style="text-align:left;">
-bia fin
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-tIJ02
-</td>
-<td style="text-align:left;">
-Université Jean Monnet;Université Jean Monnet;Université Jean
-Monnet;Université Jean Monnet;Université SAINT-ETIENNE - JEAN MONNET
-</td>
-<td style="text-align:left;">
-enstit ensnp bia etu fin
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-u79ZJ
-</td>
-<td style="text-align:left;">
-IEP-Paris - Institut d’études politiques de Paris,Paris-II "Université
-Panthéon-Assas"
-</td>
-<td style="text-align:left;">
-imo
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-uCPtX
-</td>
-<td style="text-align:left;">
-Université Sorbonne Paris Cité (USPC)
-</td>
-<td style="text-align:left;">
-fin
-</td>
-</tr>
-</tbody>
-</table>
+| pid   | etab                                                                                                                                                                                                                                                                                                                                                           | datasets                             |
+|:------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-------------------------------------|
+|       | Université Bretagne Loire;Université Bretagne Loire;Université européenne de Bretagne                                                                                                                                                                                                                                                                          | etu fin etu                          |
+| 4a8B2 | Université fédérale de Toulouse Midi-Pyrénées;Université fédérale de Toulouse Midi-Pyrénées                                                                                                                                                                                                                                                                    | bia fin                              |
+| 52U59 | Université confédérale Léonard de Vinci;Université confédérale Léonard de Vinci                                                                                                                                                                                                                                                                                | bia fin                              |
+| 6g0Mb | Université PARIS-EST                                                                                                                                                                                                                                                                                                                                           | fin                                  |
+| 86UpY | Université Paris Lumières;Université Paris Lumières;Université Paris Lumières                                                                                                                                                                                                                                                                                  | bia etu fin                          |
+| 8A0mg | Université BOURGOGNE FRANCHE-COMTÉ;Université Bourgogne - Franche-Comté;Université Bourgogne - Franche-Comté                                                                                                                                                                                                                                                   | fin bia etu                          |
+| EPci7 | HESAM Université                                                                                                                                                                                                                                                                                                                                               | bia                                  |
+| G1r6y | Normandie Université                                                                                                                                                                                                                                                                                                                                           | bia                                  |
+| PpsCQ | Université Paris sciences et lettres;Université Paris sciences et lettres;Université Paris sciences et lettres;Université Paris sciences et lettres;Université Paris sciences et lettres;Université de Paris sciences et lettres;Université de recherche Paris sciences et lettres - PSL Research University;Université de recherche Paris-Sciences-et-Lettres | enstit ensnp bia bia etu fin fin etu |
+| iq0rG | Université de Lyon;Université de Lyon                                                                                                                                                                                                                                                                                                                          | bia fin                              |
+| tIJ02 | Université Jean Monnet;Université Jean Monnet;Université Jean Monnet;Université Jean Monnet;Université SAINT-ETIENNE - JEAN MONNET                                                                                                                                                                                                                             | enstit ensnp bia etu fin             |
+| u79ZJ | IEP-Paris - Institut d’études politiques de Paris,Paris-II “Université Panthéon-Assas”                                                                                                                                                                                                                                                                         | imo                                  |
+| uCPtX | Université Sorbonne Paris Cité (USPC)                                                                                                                                                                                                                                                                                                                          | fin                                  |
 
 ## Chargement des données CPESR
 
-<table>
-<thead>
-<tr>
-<th style="text-align:right;">
-nb_etabs
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-294
-</td>
-</tr>
-</tbody>
-</table>
+| nb_etabs |
+|---------:|
+|      294 |
 
 ### Détection des établissements en double
 
-<table>
-<thead>
-<tr>
-<th style="text-align:left;">
-UAI
-</th>
-<th style="text-align:left;">
-Etablissement
-</th>
-<th style="text-align:left;">
-Type
-</th>
-<th style="text-align:left;">
-Groupe
-</th>
-<th style="text-align:left;">
-PerimEx
-</th>
-<th style="text-align:left;">
-Association
-</th>
-<th style="text-align:left;">
-Comparable
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
+| UAI | Etablissement | Type | Groupe | PerimEx | Association | Comparable |
+|:----|:--------------|:-----|:-------|:--------|:------------|:-----------|
 
 ## Ajout des pid à cpesr
 
@@ -639,15 +387,15 @@ Voir les données
 
 #### Sigles récupérables sur wikidata
 
-    ## Warning: There were 10 warnings in `mutate()`.
+    ## Warning: There were 12 warnings in `mutate()`.
     ## The first warning was:
     ## ℹ In argument: `wikidata.alias = `$`(...)`.
     ## Caused by warning in `wdesr_get_item_status()`:
-    ## ! The instance of wikidata item Q2946102 is not recommended: institut d'enseignement supérieur.
+    ## ! The instance of wikidata item Q13334 is not recommended: université.
     ##   Reason is: Statut trop imprécis.
-    ##   Please check https://www.wikidata.org/wiki/Q2946102
+    ##   Please check https://www.wikidata.org/wiki/Q13334
     ##   using the guideline at https://github.com/cpesr
-    ## ℹ Run `dplyr::last_dplyr_warnings()` to see the 9 remaining warnings.
+    ## ℹ Run `dplyr::last_dplyr_warnings()` to see the 11 remaining warnings.
 
 <details>
 <summary>
@@ -734,37 +482,5 @@ Voir les données
 
 ### Incohérence BIATSS
 
-<table>
-<thead>
-<tr>
-<th style="text-align:right;">
-Année
-</th>
-<th style="text-align:left;">
-etablissement_id_paysage_actuel
-</th>
-<th style="text-align:left;">
-Etablissement
-</th>
-<th style="text-align:left;">
-Catégorie
-</th>
-<th style="text-align:left;">
-Corps
-</th>
-<th style="text-align:right;">
-Effectif
-</th>
-<th style="text-align:right;">
-effectif_femmes
-</th>
-<th style="text-align:right;">
-effectif_hommes
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
+| Année | etablissement_id_paysage_actuel | Etablissement | Catégorie | Corps | Effectif | effectif_femmes | effectif_hommes |
+|------:|:--------------------------------|:--------------|:----------|:------|---------:|----------------:|----------------:|

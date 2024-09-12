@@ -95,7 +95,7 @@ bind_rows(
 
 ### Fusion des données
 
-```{r fina<wl}
+```{r final}
 esr.src <- ens %>% 
   full_join(etu) %>%
   full_join(bia) %>%
